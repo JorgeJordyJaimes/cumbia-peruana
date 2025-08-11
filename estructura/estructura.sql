@@ -1,10 +1,14 @@
 DROP DATABASE IF EXISTS Cumbia_Peruana;
 
--- Crear la base de datos
+-- Crear la base de datos si no existe y seleccionarla
 CREATE DATABASE IF NOT EXISTS Cumbia_Peruana;
 USE Cumbia_Peruana;
 
--- Tabla Grupos
+---
+--- Tablas maestras
+---
+
+-- Tabla Grupos: Almacena la información de los grupos musicales.
 CREATE TABLE Grupos (
     id_grupo INT AUTO_INCREMENT PRIMARY KEY,
     nombre_grupo VARCHAR(100) NOT NULL,
@@ -12,34 +16,39 @@ CREATE TABLE Grupos (
     region VARCHAR(100)
 );
 
--- Tabla Cantantes
-CREATE TABLE Cantantes (
-    id_cantante INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_cantante VARCHAR(100) NOT NULL,
+-- Tabla Musicos: Almacena la información de los músicos.
+CREATE TABLE Musicos (
+    id_musico INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
     apodo VARCHAR(100),
-    genero VARCHAR(50)
+    instrumento_principal VARCHAR(50),
+    fecha_nacimiento DATE,
+    lugar_nacimiento VARCHAR(100)
 );
 
--- Tabla Compositores
+-- Tabla Compositores: Almacena la información de los compositores.
 CREATE TABLE Compositores (
     id_compositor INT AUTO_INCREMENT PRIMARY KEY,
     nombre_compositor VARCHAR(100)
 );
 
--- Tabla Sellos_Discograficos
+-- Tabla Sellos_Discograficos: Almacena la información de los sellos discográficos.
 CREATE TABLE Sellos_Discograficos (
     id_sello INT AUTO_INCREMENT PRIMARY KEY,
     nombre_sello VARCHAR(100) NOT NULL
 );
 
--- Tabla Generos
+-- Tabla Generos: Almacena los géneros musicales (ej. Cumbia, Huayno, etc.).
 CREATE TABLE Generos (
     id_genero INT AUTO_INCREMENT PRIMARY KEY,
     nombre_genero VARCHAR(50)
 );
 
--- Tabla Albumes
--- Esta tabla almacena los álbumes de los grupos
+---
+--- Tablas de relaciones
+---
+
+-- Tabla Albumes: Almacena los álbumes de los grupos.
 CREATE TABLE Albumes (
     id_album INT AUTO_INCREMENT PRIMARY KEY,
     id_grupo INT,
@@ -47,48 +56,55 @@ CREATE TABLE Albumes (
     numero_catalogo VARCHAR(50),
     año_publicacion YEAR,
     nombre_album VARCHAR(100) NOT NULL,
-    tipo_album ENUM('45','EP', 'LP', 'Casete') NOT NULL,
-    comentario VARCHAR (100),
-    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo),
-    FOREIGN KEY (id_sello) REFERENCES Sellos_Discograficos(id_sello)
+    tipo_album ENUM('45','EP', 'LP', 'Casete', 'CD') NOT NULL,
+    comentario VARCHAR (255), -- Aumentado el tamaño para comentarios más largos
+    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
+    FOREIGN KEY (id_sello) REFERENCES Sellos_Discograficos(id_sello) ON DELETE CASCADE
 );
 
--- Tabla Temas
--- Esta tabla almacena los temas de los álbumes
+-- Tabla Temas: Almacena información sobre un tema musical (canción) único.
+-- Hemos separado la información del tema de su aparición en un álbum
+-- para manejar casos donde un tema puede aparecer en varios álbumes (ej. un single y un LP).
 CREATE TABLE Temas (
     id_tema INT AUTO_INCREMENT PRIMARY KEY,
-    id_album INT,
-    id_compositor INT,
-    id_cantante INT,
-    id_genero INT,
     titulo_tema VARCHAR(100) NOT NULL,
-    numero_pista INT,
     duracion TIME,
-    lado ENUM('A', 'B') NULL,
-    en_lp BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (id_album) REFERENCES Albumes(id_album),
-    FOREIGN KEY (id_compositor) REFERENCES Compositores(id_compositor),
-    FOREIGN KEY (id_cantante) REFERENCES Cantantes(id_cantante),
-    FOREIGN KEY (id_genero) REFERENCES Generos(id_genero)
+    id_compositor INT,
+    id_genero INT,
+    id_grupo INT,
+    FOREIGN KEY (id_compositor) REFERENCES Compositores(id_compositor) ON DELETE SET NULL,
+    FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE SET NULL,
+    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE SET NULL
 );
 
--- Tabla Temas_en_LP
--- Esta tabla relaciona un tema con su versión en un LP
-CREATE TABLE Temas_en_LP (
-    id_tema_lp INT AUTO_INCREMENT PRIMARY KEY,
+-- Tabla Albumes_Temas: Tabla intermedia para la relación muchos a muchos entre Albumes y Temas.
+-- Esta tabla maneja la información específica de un tema en un álbum particular.
+CREATE TABLE Albumes_Temas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_album INT,
     id_tema INT,
-    id_album_lp INT,
-    numero_pista_lp INT,
-    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema),
-    FOREIGN KEY (id_album_lp) REFERENCES Albumes(id_album)
+    numero_pista INT,
+    lado ENUM('A', 'B'),
+    FOREIGN KEY (id_album) REFERENCES Albumes(id_album) ON DELETE CASCADE,
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE
 );
 
--- Tabla de Versiones
--- Esta tabla relaciona un tema original con su versión
+-- Tabla Tema_Musicos: Tabla intermedia para la relación muchos a muchos entre Temas y Músicos.
+-- Esto permite asignar múltiples músicos a un solo tema y especificar su rol.
+CREATE TABLE Tema_Musicos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_tema INT,
+    id_musico INT,
+    instrumento VARCHAR(50),
+    rol ENUM('guitarra líder', 'segunda guitarra', 'bajista', 'baterista', 'tecladista', 'percusionista', 'cantante', 'coros', 'productor') NOT NULL,
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
+    FOREIGN KEY (id_musico) REFERENCES Musicos(id_musico) ON DELETE CASCADE
+);
+
+-- Tabla Versiones: Relaciona un tema original con su versión.
 CREATE TABLE Versiones (
     id_version INT AUTO_INCREMENT PRIMARY KEY,
     id_tema_original INT,
-    id_tema_version INT,
-    FOREIGN KEY (id_tema_original) REFERENCES Temas(id_tema),
-    FOREIGN KEY (id_tema_version) REFERENCES Temas(id_tema)
+    FOREIGN KEY (id_tema_original) REFERENCES Temas(id_tema) ON DELETE CASCADE,
+    CONSTRAINT fk_temas_diferentes CHECK (id_tema_original <> id_tema_version)
 );
