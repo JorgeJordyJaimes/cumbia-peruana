@@ -69,6 +69,7 @@ CREATE TABLE Temas (
     id_tema INT AUTO_INCREMENT PRIMARY KEY,
     titulo_tema VARCHAR(100) NOT NULL,
     duracion TIME,
+    letra VARCHAR(5000),
     id_compositor INT,
     id_genero INT,
     id_grupo INT,
@@ -105,6 +106,5 @@ CREATE TABLE Tema_Musicos (
 CREATE TABLE Versiones (
     id_version INT AUTO_INCREMENT PRIMARY KEY,
     id_tema_original INT,
-    FOREIGN KEY (id_tema_original) REFERENCES Temas(id_tema) ON DELETE CASCADE,
-    CONSTRAINT fk_temas_diferentes CHECK (id_tema_original <> id_tema_version)
+    FOREIGN KEY (id_tema_original) REFERENCES Temas(id_tema) ON DELETE CASCADE
 );
