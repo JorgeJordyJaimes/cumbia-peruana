@@ -18,12 +18,13 @@ CREATE TABLE Personas (
     lugar_nacimiento VARCHAR(100)
 );
 
--- Tabla Grupos: Almacena la información de los grupos musicales.
+-- TABLA MODIFICADA: Grupos, ahora con una clave foránea para el director
 CREATE TABLE Grupos (
     id_grupo INT AUTO_INCREMENT PRIMARY KEY,
     nombre_grupo VARCHAR(100) NOT NULL,
-    director VARCHAR(100),
-    region VARCHAR(100)
+    id_director INT, -- Cambiado de VARCHAR(100) a INT
+    region VARCHAR(100),
+    FOREIGN KEY (id_director) REFERENCES Personas(id_persona) ON DELETE SET NULL
 );
 
 -- Tabla Musicos: Almacena la información de los músicos.
