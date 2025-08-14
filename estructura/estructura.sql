@@ -63,10 +63,11 @@ CREATE TABLE Albumes (
     numero_catalogo VARCHAR(50),
     año_publicacion YEAR,
     nombre_album VARCHAR(100) NOT NULL,
-    tipo_album ENUM('45','EP', 'LP', 'Casete', 'CD') NOT NULL,
-    comentario VARCHAR (255), -- Aumentado el tamaño para comentarios más largos
+    id_tipo_album INT NOT NULL, -- Ahora usa la clave foránea a Tipos_Album
+    comentario TEXT,
     FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
-    FOREIGN KEY (id_sello) REFERENCES Sellos_Discograficos(id_sello) ON DELETE CASCADE
+    FOREIGN KEY (id_sello) REFERENCES Sellos_Discograficos(id_sello) ON DELETE CASCADE,
+    FOREIGN KEY (id_tipo_album) REFERENCES Tipos_Album(id_tipo_album) ON DELETE CASCADE
 );
 
 -- Tabla Temas: Almacena información sobre un tema musical (canción) único.
