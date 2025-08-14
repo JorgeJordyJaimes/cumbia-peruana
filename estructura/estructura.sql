@@ -91,13 +91,24 @@ CREATE TABLE Temas_Compositores (
 
 -- Tabla Albumes_Temas: Tabla intermedia para la relación muchos a muchos entre Albumes y Temas.
 CREATE TABLE Albumes_Temas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_albumes_temas INT AUTO_INCREMENT PRIMARY KEY,
     id_album INT,
     id_tema INT,
     numero_pista INT,
     lado VARCHAR(10),
     FOREIGN KEY (id_album) REFERENCES Albumes(id_album) ON DELETE CASCADE,
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE
+);
+
+-- TABLA NUEVA: Grupos_Musicos para el historial de miembros.
+CREATE TABLE Grupos_Musicos (
+    id_grupo INT,
+    id_musico INT,
+    desde DATE,
+    hasta DATE,
+    PRIMARY KEY (id_grupo, id_musico),
+    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
+    FOREIGN KEY (id_musico) REFERENCES Personas(id_persona) ON DELETE CASCADE
 );
 
 -- Tabla Tema_Musicos: Tabla intermedia para la relación muchos a muchos entre Temas y Músicos.
