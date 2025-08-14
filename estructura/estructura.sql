@@ -123,9 +123,11 @@ CREATE TABLE Tema_Musicos (
     FOREIGN KEY (id_rol) REFERENCES Roles(id_rol) ON DELETE CASCADE
 );
 
--- Tabla Versiones: Relaciona un tema original con su versión.
+-- TABLA MODIFICADA: Versiones para mayor claridad
 CREATE TABLE Versiones (
     id_version INT AUTO_INCREMENT PRIMARY KEY,
-    id_tema_original INT,
+    id_tema INT NOT NULL UNIQUE,
+    id_tema_original INT NOT NULL,
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
     FOREIGN KEY (id_tema_original) REFERENCES Temas(id_tema) ON DELETE CASCADE
 );
