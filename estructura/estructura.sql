@@ -70,20 +70,14 @@ CREATE TABLE Albumes (
     FOREIGN KEY (id_tipo_album) REFERENCES Tipos_Album(id_tipo_album) ON DELETE CASCADE
 );
 
--- Tabla Temas: Almacena información sobre un tema musical (canción) único.
--- Hemos separado la información del tema de su aparición en un álbum
--- para manejar casos donde un tema puede aparecer en varios álbumes (ej. un single y un LP).
+-- TABLA MODIFICADA: Tabla Temas, ahora sin id_grupo
 CREATE TABLE Temas (
     id_tema INT AUTO_INCREMENT PRIMARY KEY,
     titulo_tema VARCHAR(100) NOT NULL,
     duracion TIME,
-    letra VARCHAR(5000),
-    id_compositor INT,
+    letra TEXT, -- Cambiado a TEXT para textos largos
     id_genero INT,
-    id_grupo INT,
-    FOREIGN KEY (id_compositor) REFERENCES Compositores(id_compositor) ON DELETE SET NULL,
-    FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE SET NULL,
-    FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE SET NULL
+    FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE SET NULL
 );
 
 -- Tabla Albumes_Temas: Tabla intermedia para la relación muchos a muchos entre Albumes y Temas.
