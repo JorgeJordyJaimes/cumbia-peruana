@@ -27,6 +27,24 @@ CREATE TABLE Grupos (
     FOREIGN KEY (id_director) REFERENCES Personas(id_persona) ON DELETE SET NULL
 );
 
+-- Tabla Sellos_Discograficos: Almacena la información de los sellos discográficos.
+CREATE TABLE Sellos_Discograficos (
+    id_sello INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_sello VARCHAR(100) NOT NULL
+);
+
+-- Tabla Generos: Almacena los géneros musicales (ej. Cumbia, Huayno, etc.).
+CREATE TABLE Generos (
+    id_genero INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_genero VARCHAR(50)
+);
+
+-- Tabla Tipos_Album: Nueva tabla de referencia para los tipos de álbumes
+CREATE TABLE Tipos_Album (
+    id_tipo_album INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_tipo VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- Tabla Musicos: Almacena la información de los músicos.
 CREATE TABLE Musicos (
     id_musico INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,17 +61,9 @@ CREATE TABLE Compositores (
     nombre_compositor VARCHAR(100)
 );
 
--- Tabla Sellos_Discograficos: Almacena la información de los sellos discográficos.
-CREATE TABLE Sellos_Discograficos (
-    id_sello INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_sello VARCHAR(100) NOT NULL
-);
 
--- Tabla Generos: Almacena los géneros musicales (ej. Cumbia, Huayno, etc.).
-CREATE TABLE Generos (
-    id_genero INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_genero VARCHAR(50)
-);
+
+
 
 ---
 --- Tablas de relaciones
