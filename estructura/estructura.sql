@@ -112,15 +112,15 @@ CREATE TABLE Grupos_Musicos (
 );
 
 -- Tabla Tema_Musicos: Tabla intermedia para la relación muchos a muchos entre Temas y Músicos.
--- Esto permite asignar múltiples músicos a un solo tema y especificar su rol.
 CREATE TABLE Tema_Musicos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_tema_musicos INT AUTO_INCREMENT PRIMARY KEY,
     id_tema INT,
     id_musico INT,
     instrumento VARCHAR(50),
-    rol ENUM('guitarra líder', 'segunda guitarra', 'bajista', 'baterista', 'tecladista', 'percusionista', 'cantante', 'coros', 'productor') NOT NULL,
+    id_rol INT NOT NULL,
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
-    FOREIGN KEY (id_musico) REFERENCES Musicos(id_musico) ON DELETE CASCADE
+    FOREIGN KEY (id_musico) REFERENCES Personas(id_persona) ON DELETE CASCADE,
+    FOREIGN KEY (id_rol) REFERENCES Roles(id_rol) ON DELETE CASCADE
 );
 
 -- Tabla Versiones: Relaciona un tema original con su versión.
