@@ -45,25 +45,11 @@ CREATE TABLE Tipos_Album (
     nombre_tipo VARCHAR(50) NOT NULL UNIQUE
 );
 
--- Tabla Musicos: Almacena la información de los músicos.
-CREATE TABLE Musicos (
-    id_musico INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apodo VARCHAR(100),
-    instrumento_principal VARCHAR(50),
-    fecha_nacimiento DATE,
-    lugar_nacimiento VARCHAR(100)
+-- Tabla Roles: Tabla de referencia para los roles de los músicos.
+CREATE TABLE Roles (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_rol VARCHAR(50) NOT NULL UNIQUE
 );
-
--- Tabla Compositores: Almacena la información de los compositores.
-CREATE TABLE Compositores (
-    id_compositor INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_compositor VARCHAR(100)
-);
-
-
-
-
 
 ---
 --- Tablas de relaciones
