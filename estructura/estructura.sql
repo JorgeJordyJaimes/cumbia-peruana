@@ -1,15 +1,16 @@
+-- Eliminar la base de datos si existe y volver a crearla
 DROP DATABASE IF EXISTS Cumbia_Peruana;
+CREATE DATABASE IF NOT EXISTS Cumbia_Peruana
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_0900_ai_ci;
 
--- Crear la base de datos si no existe y seleccionarla
-CREATE DATABASE IF NOT EXISTS Cumbia_Peruana;
 USE Cumbia_Peruana;
 
 ---
 --- Tablas maestras
 ---
 
--- Tabla Personas: Almacena la información personal de los involucrados en la escena, 
--- permite que tengan diferentes roles al mismo tiempo
+-- Tabla Personas: Nueva tabla para normalizar músicos y compositores
 CREATE TABLE Personas (
     id_persona INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -64,7 +65,7 @@ CREATE TABLE Albumes (
     año_publicacion YEAR,
     nombre_album VARCHAR(100) NOT NULL,
     id_tipo_album INT NOT NULL, -- Ahora usa la clave foránea a Tipos_Album
-    comentario TEXT,
+    comentario VARCHAR(255),
     FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
     FOREIGN KEY (id_sello) REFERENCES Sellos_Discograficos(id_sello) ON DELETE CASCADE,
     FOREIGN KEY (id_tipo_album) REFERENCES Tipos_Album(id_tipo_album) ON DELETE CASCADE
@@ -91,11 +92,11 @@ CREATE TABLE Temas_Compositores (
 
 -- Tabla Albumes_Temas: Tabla intermedia para la relación muchos a muchos entre Albumes y Temas.
 CREATE TABLE Albumes_Temas (
-    id_albumes_temas INT AUTO_INCREMENT PRIMARY KEY,
+    id_album_tema INT AUTO_INCREMENT PRIMARY KEY,
     id_album INT,
     id_tema INT,
     numero_pista INT,
-    lado VARCHAR(10),
+    lado VARCHAR(10), -- Cambiado a VARCHAR(10) para más flexibilidad
     FOREIGN KEY (id_album) REFERENCES Albumes(id_album) ON DELETE CASCADE,
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE
 );
