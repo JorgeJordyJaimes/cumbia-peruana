@@ -8,6 +8,16 @@ USE Cumbia_Peruana;
 --- Tablas maestras
 ---
 
+-- Tabla Personas: Almacena la información personal de los involucrados en la escena, 
+-- permite que tengan diferentes roles al mismo tiempo
+CREATE TABLE Personas (
+    id_persona INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apodo VARCHAR(100),
+    fecha_nacimiento DATE,
+    lugar_nacimiento VARCHAR(100)
+);
+
 -- Tabla Grupos: Almacena la información de los grupos musicales.
 CREATE TABLE Grupos (
     id_grupo INT AUTO_INCREMENT PRIMARY KEY,
