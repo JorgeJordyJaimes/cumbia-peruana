@@ -80,6 +80,15 @@ CREATE TABLE Temas (
     FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE SET NULL
 );
 
+-- TABLA NUEVA: Temas_Compositores para la relación muchos a muchos.
+CREATE TABLE Temas_Compositores (
+    id_tema INT,
+    id_compositor INT,
+    PRIMARY KEY (id_tema, id_compositor),
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
+    FOREIGN KEY (id_compositor) REFERENCES Personas(id_persona) ON DELETE CASCADE
+);
+
 -- Tabla Albumes_Temas: Tabla intermedia para la relación muchos a muchos entre Albumes y Temas.
 -- Esta tabla maneja la información específica de un tema en un álbum particular.
 CREATE TABLE Albumes_Temas (
