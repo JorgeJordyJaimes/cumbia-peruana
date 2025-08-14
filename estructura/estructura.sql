@@ -90,13 +90,12 @@ CREATE TABLE Temas_Compositores (
 );
 
 -- Tabla Albumes_Temas: Tabla intermedia para la relación muchos a muchos entre Albumes y Temas.
--- Esta tabla maneja la información específica de un tema en un álbum particular.
 CREATE TABLE Albumes_Temas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_album INT,
     id_tema INT,
     numero_pista INT,
-    lado ENUM('A', 'B'),
+    lado VARCHAR(10),
     FOREIGN KEY (id_album) REFERENCES Albumes(id_album) ON DELETE CASCADE,
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE
 );
