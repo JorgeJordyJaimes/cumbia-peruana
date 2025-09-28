@@ -1,4 +1,4 @@
-USE cumbia_peruana;
+USE Cumbia_Peruana;
 
 SELECT * FROM personas;
 
@@ -360,4 +360,8 @@ VALUES
 ('Mario Egúsquiza', ''),
 ('Nesito Palomino Pedrosoca', ''),
 ('Pascual Coronado Capcha', 'Pascualillo'),
-('Williams Alanya Ramírez', '');
+('Williams Alanya Ramírez', ''),
+('Marco Antonio Reátegui Marín', 'Tony'),
+('Víctor Yaipén Uypán', ""),
+('Lizardo Paolo', ""),
+('Eusebio Pérez Campojo', "");
