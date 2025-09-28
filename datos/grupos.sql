@@ -305,7 +305,6 @@ VALUES
 ('Grupo América', 17),
 ('Grupo Arco Iris', 231),
 ('Grupo Arizona', 232),
-('Grupo Aroma', 93),
 ('Grupo Bahia Blanca', 233),
 ('Grupo Banana Show', NULL),
 ('Grupo Brisas Azules', 112),
@@ -579,5 +578,12 @@ VALUES
 ('Los Tellos', NULL),
 ('Los Thermis de San Martín', NULL),
 ('Los Zheros', 352),
-('Paco Zambrano y sus Ratones', NULL);
+('Paco Zambrano y sus Ratones', NULL),
+('Tony Marín', 357),
+('Tony Marín y Los Tierra Roja', 357),
+('Grupo 5', 358),
+('Grupo Paraiso de Lizardo Paolo', 359),
+('Eusebio y su Banjo', 360),
+('V Revelación de Jaén', NULL),
+('Variado', NULL);
 
