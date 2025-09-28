@@ -63,7 +63,7 @@ CREATE TABLE Albumes (
     id_sello INT,
     numero_catalogo VARCHAR(50),
     año_publicacion YEAR,
-    nombre_album VARCHAR(100) NOT NULL,
+    nombre_album VARCHAR(100),
     id_tipo_album INT NOT NULL, -- Ahora usa la clave foránea a Tipos_Album
     comentario VARCHAR(255),
     FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE,
