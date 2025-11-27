@@ -334,7 +334,7 @@ VALUES
 ('Grupo Espejo', 245),
 ('Grupo Estelar', NULL),
 ('Grupo Estrella', 31),
-('Grupo Fantasia', 246),
+('Grupo Fantasia de Monsefú', 246),
 ('Grupo Flecha Verde', 247),
 ('Grupo Flor Silvers', 248),
 ('Grupo Fresa de Juvenil de Tarapoto', NULL),
