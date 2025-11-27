@@ -27,4 +27,5 @@ VALUES ('Infopesa'), ('Horóscopo'), ('Sonoradio'), ('Odeón'), ('Midas'), ('FTA
 ('Venus'), ('Cocodrilo'), ('Promusen');
 
 
-
+INSERT INTO sellos_discograficos (nombre_sello) 
+VALUES ('Ninsa')
