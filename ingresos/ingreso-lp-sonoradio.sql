@@ -17,7 +17,7 @@ VALUES (2, 3, 'Al Rojo Vivo', 'SE-9379', 1971, 2), (2, 3, 'Paseo Tropical', 'SE-
 (2, 3, 'Música de Fiesta Vol. 2', 'SE-9674', 1980, 2), (2, 3, 'Antología de la Cumbia Peruana Vol. 1', 'SE-9703', 1980, 2), (2, 3, 'Antología de la Cumbia Peruana Vol. 2', 'SE-9720', 1981, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 3', 'SE-9736', 1981, 2), (2, 3, 'Antología de la Cumbia Peruana Vol. 4', 'SE-9757', 1982, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 5', 'SE-9777', 1982, 2), (2, 3, 'Disco de Oro', 'SE-9794', 1983, 2), (2, 3, 'Antología de la Cumbia Peruana Vol. 6', 'SE-9798', 1983, 2), 
-(2, 3, 'Antología de la Cumbia Peruana Vol. 7', 'SE-9818', 1984, 2), (2, 43, 'Antología de la Cumbia Peruana Vol. 7', 'SE-8699', 1984, 2), (2, 43, 'Costa, Sierra, Selva', 'SE-8745', 1985, 2), 
+(2, 3, 'Antología de la Cumbia Peruana Vol. 7', 'SE-9818', 1984, 2), (2, 43, 'Antología de la Cumbia Peruana Vol. 8', 'SE-8699', 1984, 2), (2, 43, 'Costa, Sierra, Selva', 'SE-8745', 1985, 2), 
 (2, 43, 'Dimensión Bailable Vol. 1', 'SE-8761', 1985, 2), (2, 204, 'Dimensión Bailable Vol. 2', '02.049', 1986, 2);
 
 ----------------------------------------------------------- LOS YUNGAS -----------------------------------------------------------
