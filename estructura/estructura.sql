@@ -75,7 +75,7 @@ CREATE TABLE Albumes (
 CREATE TABLE Temas (
     id_tema INT AUTO_INCREMENT PRIMARY KEY,
     titulo_tema VARCHAR(100) NOT NULL,
-    duracion TIME,
+    duracion_segundos INT,
     letra TEXT, -- Cambiado a TEXT para textos largos
     id_genero INT,
     FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE SET NULL
