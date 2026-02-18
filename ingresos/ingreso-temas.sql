@@ -6,7 +6,7 @@ SELECT * FROM temas;
 
 -------------------------------------- GRUPO CELESTE - EN EL CAMPO - DIFA --------------------------------------
 INSERT INTO Temas (titulo_tema, duracion_segundos, letra)
-VALUES ('En el campo', 213, 'Cuando por la mañana se oye un lamento
+VALUES ('Recuerdos', 213, 'Cuando por la mañana se oye un lamento
 Y mis ojos me dicen que es solo el viento
 
 Me acuerdo de las tardes, esas tardes hermosas
