@@ -1,3 +1,4 @@
+
 USE cumbia_peruana;
 
 INSERT INTO Tipos_Album (nombre_tipo)
