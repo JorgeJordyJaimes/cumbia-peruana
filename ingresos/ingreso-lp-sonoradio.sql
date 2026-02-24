@@ -33,3 +33,8 @@ VALUES (5, 3, '¡Rítmos Tropicales!', 'SE-9478', 1974, 2), (5, 3, 'Bailando con
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES (330, 3, 'El Poder Musical', 'SE-9841', 1984, 2), (330, 5, 'Con Cariño', 'LPG-216049', 1984, 2),
 (330, 1, 'Pa Todo el Año', 'INF-208375', 1985, 2), (330, 1, 'Cumbias Poderosas', 'INF-208394', 1986, 2);
+
+----------------------------------------------------------- LOS WEMBLER'S DE IQUITOS -----------------------------------------------------------
+
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES 
