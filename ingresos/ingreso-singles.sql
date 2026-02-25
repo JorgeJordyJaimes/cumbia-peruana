@@ -12,7 +12,7 @@ VALUES
 (12, 11, '009', 1974, 1, ''),
 (12, 11, '141', 1982, 1, ''),
 (12, 11, '142', 1982, 1, ''),
-(12, 11, '144', 1982, 1, ''),
+(12, 11, '144', 1982, 1, '');
 
 -- DISCOPE
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -27,7 +27,7 @@ VALUES
 (12, 25, '018', 1975, 1, ''),
 (12, 25, '019', 1975, 1, ''),
 (12, 25, '76-032', 1976, 1, ''),
-(12, 25, '76-033', 1976, 1, ''),
+(12, 25, '76-033', 1976, 1, '');
 
 -- PRODIC
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -41,7 +41,7 @@ VALUES
 (12, 49, '011', 1978, 1, ''),
 (12, 49, '012', 1978, 1, ''), 
 (12, 49, '013', 1979, 1, ''), 
-(12, 49, '001-80', 1980, 1, ''),
+(12, 49, '001-80', 1980, 1, '');
 
 -- INFOPESA
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -49,12 +49,12 @@ VALUES
 (12, 1, '171110', 1980, 1, ''),
 (12, 1, '171143', 1980, 1, ''), 
 (12, 1, '171168', 1980, 1, ''), 
-(12, 1, '171336', 1982, 1, ''),
+(12, 1, '171336', 1982, 1, '');
 
 -- SONORADIO
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
 VALUES
-(12, 3, '13742', 1981, 1, ''), 
+(12, 3, '13742', 1981, 1, '');
 
 -- EMUCEL
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -64,7 +64,7 @@ VALUES
 (12, 62, '81-003', 1981, 1, ''),  
 (12, 62, '83-001', 1983, 1, ''), 
 (12, 62, '83-002', 1983, 1, ''),
-(12, 62, '84-004', 1984, 1, ''), 
+(12, 62, '84-004', 1984, 1, '');
 
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -133,4 +133,60 @@ VALUES
 (23, 9, '44', 1987, 1, '');
 
 ---------------------------------------------------------------------------------------- CIELO GRIS ----------------------------------------------------------------------------------------
+
+-- CARACOL
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 13, '3', 1975, 1, ''), 
+(22, 13, '13', 1975, 1, ''), 
+(22, 13, '18', 1976, 1, '');
+
+-- PRODITA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 84, '78-02', 1978, 1, ''), 
+(22, 84, '79-03', 1979, 1, ''), 
+(22, 84, '80-03', 1980, 1, '');
+
+-- HORÓSCOPO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 2, '1036', 1980, 1, ''), 
+(22, 2, '1047', 1980, 1, ''), 
+(22, 2, '1059', 1981, 1, ''), 
+(22, 2, '1069', 1981, 1, ''),
+(22, 2, '1211', 1985, 1, '');
+
+-- SONORADIO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 3, '13805', 1983, 1, ''),
+(22, 3, '13812', 1984, 1, '');
+
+-- MIDAS
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 5, '110063', 1982, 1, ''),
+(22, 5, '110071', 1982, 1, ''),
+(22, 5, '110091', 1982, 1, ''),
+(22, 5, '110100', 1983, 1, ''),
+(22, 5, '110189', 1986, 1, ''),
+(22, 5, '110190', 1986, 1, ''),
+(22, 5, '110195', 1987, 1, '');
+
+-- AVISPA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 93, '1002', 1978, 1, '');
+
+-- KOZMOZ
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 93, '1002', 1983, 1, '');
+
+-- ROSA RECORD
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(22, 33, '11', 1984, 1, '');
+
 
