@@ -4,6 +4,13 @@ USE Cumbia_Peruana;
 SELECT * FROM Albumes
 WHERE id_tipo_album = 3;
 
+---------------------------------------------------------------------------------------- LOS DESTELLOS ---------------------------------------------------------------------------------
+
+-- ODEON
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(1, 4, 'Los Destellos', 'DC-009', 1969, 3);
+
 --------------------------------------------------------- JUANECO Y SU COMBO --------------------------------------------------------------
 
 -- IEMPSA
