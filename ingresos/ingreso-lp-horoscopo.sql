@@ -17,14 +17,17 @@ VALUES
 (1, 4, 'Clase Aparte', 'ELD-2034', 1971, 2), 
 (1, 4, 'Constelación', 'ELD-2105', 1972, 2), 
 (1, 4, 'Arrollando', 'ELD-020112', 1973, 2), 
-(1, 4, 'Destellantes', 'ELD-0201126', 1974, 2), 
-(1, 4, 'Linda Chiquilina', 'ELD-0201218', 1975, 2), 
-(1, 4, 'Ojos Azules', 'ELD-0201314', 1976, 2), 
+(1, 4, 'Destellantes', 'ELD-0201126', 1974, 2),
+(1, 4, 'El Millón de Los Destellos', 'ELD-0201170', 1974, 2),
+(1, 4, 'Linda Chiquilina', 'ELD-0201218', 1975, 2),
+(1, 4, 'Ojos Azules', 'ELD-0201314', 1976, 2),
 (1, 4, 'En Jira Por Todo El Perú', 'ELD-0201371', 1976, 2),
-(1, 4, 'Los Incomparables Del Rítmo', 'ELD-0201510', 1977, 2), 
-(1, 4, '10 Años De Triunfo', 'ELD-0201644', 1978, 2), 
+(1, 4, 'Carmen Rosa y otros Éxitos', 'ELD-0201411', 1976, 2),
+(1, 4, 'Los Incomparables Del Rítmo', 'ELD-0201510', 1977, 2),
+(1, 4, '10 Años De Triunfo', 'ELD-0201644', 1978, 2),
 (1, 4, 'Yo Mismo Soy', 'ELD-0201746', 1979, 2),
-(1, 4, 'Para Todo El Mundo', 'ELD-0201834', 1980, 2); 
+(1, 4, 'Para Todo El Mundo', 'ELD-0201834', 1980, 2),
+(1, 4, 'Una Hora con Los Destellos', 'ELD-05011276', 1985, 2);
 
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
