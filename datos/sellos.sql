@@ -25,4 +25,4 @@ VALUES ('Infopesa'), ('Horóscopo'), ('Sonoradio'), ('Odeón'), ('Midas'), ('FTA
 ('PPTQ'), ('Prod Leo'), ('Prodinsa Lima'), ('Prodisa'), ('Prodpisa'), ('Prohisa'), ('Prolama'), ('Promarisa'), ('Pueblo'), ('RBM'), 
 ('RCA'), ('RG'), ('RSD'), ('Santa Cecilia'), ('Selva Record'), ('Sol Disco'), ('Sonido Tuesna'), ('Tauro'), ('Top Hits'), ('Yaba'), 
 ('Casino'), ('Cristal'), ('Discos Huancayo'), ('Discos Oliver'), ('Ifaza'), ('Loretano'), ('Mary Yessy'), ('Profana'), ('Rado'), ('Solinka'), 
-('Venus'), ('Cocodrilo'), ('Promusen'), ('Ninsa'), ('Kozmoz');
+('Venus'), ('Cocodrilo'), ('Promusen'), ('Ninsa'), ('Kozmoz'), ('Ecodiscos');
