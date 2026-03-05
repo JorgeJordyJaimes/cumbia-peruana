@@ -201,7 +201,7 @@ VALUES
 -- IEMPSA
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
 VALUES
-(1, x, '19432775', 1987, 1, '');7
+(1, 36, '19432775', 1987, 1, '');
 
 -- ODEON
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -274,7 +274,170 @@ VALUES
 -- CANPARD
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
 VALUES
+(4, 123, 'CP-003', 1971, 1, '');
+
+-- ECODISCOS
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 206, '81001', 1981, 1, '');
 
 -- FTA
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
 VALUES
+(4, 6, '50601', 1971, 1, ''),
+(4, 6, '50641', 1971, 1, ''),
+(4, 6, '50694', 1972, 1, ''),
+(4, 6, '50726', 1972, 1, ''),
+(4, 6, '50773', 1972, 1, ''),
+(4, 6, '50849', 1973, 1, ''),
+(4, 6, '50871', 1973, 1, ''),
+(4, 6, '50902', 1973, 1, ''),
+(4, 6, '50928', 1974, 1, ''),
+(4, 6, '50951', 1974, 1, ''),
+(4, 6, '50957', 1974, 1, ''),
+(4, 6, '50985', 1974, 1, ''),
+(4, 6, '51003', 1975, 1, ''),
+(4, 6, '51041', 1975, 1, ''),
+(4, 6, '51071', 1976, 1, ''),
+(4, 6, '51093', 1976, 1, ''),
+(4, 6, '51127', 1976, 1, ''),
+(4, 6, '51134', 1976, 1, ''),
+(4, 6, '51306', 1978, 1, ''),
+(4, 6, '51320', 1978, 1, ''),
+(4, 6, '51340', 1979, 1, '');
+
+-- CARACOL
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 13, '24', 1976, 1, ''),
+(4, 13, '33', 1976, 1, ''),
+(4, 13, '47', 1977, 1, ''),
+(4, 13, '48', 1977, 1, ''),
+(4, 13, '51', 1977, 1, ''),
+(4, 13, '55', 1978, 1, ''),
+(4, 13, '58', 1978, 1, ''),
+(4, 13, '60', 1978, 1, ''),
+(4, 13, '62', 1978, 1, ''),
+(4, 13, '73', 1979, 1, '');
+
+-- INFOPESA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 1, '70959', 1978, 1, ''),
+(4, 1, '71078', 1980, 1, ''),
+(4, 1, '171090', 1980, 1, ''),
+(4, 1, '171121', 1980, 1, ''),
+(4, 1, '171164', 1980, 1, ''),
+(4, 1, '171189', 1980, 1, ''),
+(4, 1, '171231', 1981, 1, ''),
+(4, 1, '171259', 1981, 1, ''),
+(4, 1, '171303', 1982, 1, ''),
+(4, 1, '171317', 1982, 1, '');
+
+-- FONOHIT
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 51, '820003', 1982, 1, ''),
+(4, 51, '830011', 1983, 1, ''),
+(4, 51, '830014', 1983, 1, '');
+
+-- SONORADIO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 3, '13834', 1985, 1, ''),
+(4, 3, '13837', 1985, 1, '');
+
+-- HORÓSCOPO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 2, '1244', 1986, 1, ''),
+(4, 2, '1261', 1986, 1, '');
+
+-- CARAVANA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(4, 9, '45', 1987, 1, '');
+
+--------------------------------------------------------------------------------------- LOS ILUSIONISTAS --------------------------------------------------------------------------------------
+
+-- DINSA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(39, 15, '1159', 1973, 1, '');
+
+-- CARACOL
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(39, 13, '37', 1977, 1, ''),
+(39, 13, '45', 1977, 1, ''),
+(39, 13, '53', 1978, 1, ''),
+(39, 13, '59', 1978, 1, ''),
+(39, 13, '63', 1978, 1, ''),
+(39, 13, '71', 1979, 1, ''),
+(39, 13, '74', 1980, 1, ''),
+(39, 13, '112071', 1981, 1, ''),
+(39, 13, '112081', 1981, 1, ''),
+(39, 13, '112084', 1981, 1, ''),
+(39, 13, '112086', 1981, 1, ''),
+(39, 13, '112090', 1981, 1, ''),
+(39, 13, '112091', 1982, 1, '');
+
+-- FONOHIT
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(39, 51, '830009', 1983, 1, ''),
+(39, 51, '840001', 1984, 1, '');
+
+-- INFOPESA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(39, 1, '171473', 1985, 1, '');
+
+--------------------------------------------------------------------------------------- GRUPO NARANJA -----------------------------------------------------------------------------------------
+
+-- DIN-DON
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(43, 94, '78-dd-02', 1978, 1, '');
+
+-- CARACOL
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(43, 13, '19', 1976, 1, ''),
+(43, 13, '21', 1976, 1, ''),
+(43, 13, '31', 1976, 1, ''),
+(43, 13, '67', 1979, 1, ''),
+(43, 13, '2', 1978, 1, '');
+
+-- PODEROSO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(43, 37, '03', 1977, 1, ''),
+(43, 37, '10', 1977, 1, ''),
+(43, 37, '13', 1977, 1, ''),
+(43, 37, '23', 1978, 1, '');
+
+-- INFOPESA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(43, 1, '70944', 1978, 1, ''),
+(43, 1, '70977', 1978, 1, '');
+
+-- ODEON
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(43, 4, '01011444', 1979, 1, ''),
+(43, 4, '01011525', 1979, 1, ''),
+(43, 4, '01011587', 1980, 1, ''),
+(43, 4, '01011681', 1980, 1, ''),
+(43, 4, '01011771', 1981, 1, ''),
+(43, 4, '01011816', 1981, 1, ''),
+(43, 4, '01012017', 1982, 1, '');
+
+-- IEMPSA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(43, 36, '50152824', 1988, 1, ''),
+(43, 36, '51152854', 1988, 1, '');
+
+--------------------------------------------------------------------------------------- GRUPO FIESTA -----------------------------------------------------------------------------------------

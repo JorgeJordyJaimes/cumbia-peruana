@@ -32,3 +32,16 @@ INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_pub
 VALUES 
 (49, 34, "Los Wembler's en el Prado", 'MLP-33-004', 1975, 3);
 
+------------------------------------------------------------------------------------- LOS ORIENTALES DE VÍCTOR ------------------------------------------------------------------------------
+
+-- SONORADIO
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(48, 3, 'Rítmo Para Ti', 'MSR-168', 1976, 2);
+
+-------------------------------------------------------------------------------------- LOS ILUSIONISTAS ---------------------------------------------------------------------------------------
+
+-- CARACOL
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(39, 13, 'Super Disco', '002-MC', 1979, 2);

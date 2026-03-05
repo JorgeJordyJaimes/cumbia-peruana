@@ -110,3 +110,39 @@ VALUES
 (49, 3, 'Fiebre en la Selva', 'SE-9636', 1978, 2),
 (49, 3, 'El Sabor Tropical', 'SE-9644', 1979, 2),
 (49, 3, "Estos son los Famosos Wembler's de Iquitos", 'SE-9671', 1979, 2);
+
+------------------------------------------------------------------------------------- LOS ORIENTALES DE VÍCTOR ------------------------------------------------------------------------------
+
+-- SONORADIO
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(48, 3, 'Con Sabor Tropical', 'SE-9396', 1972, 2),
+(48, 3, '¡Tremendo Rítmo!', 'SE-9444', 1973, 2);
+
+-- DIFA
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(48, 11, 'Lo Fuerte del Gua Gua', 'DLPS-81011', 1981, 2);
+
+---------------------------------------------------------------------------------- LOS TIGRES DE MARINO VALENCIA ----------------------------------------------------------------------------
+
+-- SONORADIO
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(62, 3, 'El Cumbión del Año', 'SE-9643', 1979, 2),
+(62, 3, 'Un Rugido Musical', 'SE-9666', 1979, 2),
+(62, 3, 'Furia Tropical', 'SE-9680', 1980, 2),
+(62, 3, 'Paraiso Tropical', 'SE-9710', 1981, 2),
+(62, 3, 'Fuego Tropical', 'SE-9740', 1981, 2);
+
+-------------------------------------------------------------------------------- LOS TIMPANOS DE CERRO DE PASCO ----------------------------------------------------------------------------
+
+-- SONORADIO
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(67, 3, 'El Super Sonido', 'SE-9768', 1982, 2);
+
+-- LESISA
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
+VALUES
+(67, 54, 'El Super Show de Los Tímpanos', '15-020-99', 1983, 2);
