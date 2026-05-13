@@ -41,7 +41,7 @@ INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_pub
 VALUES
 (7, 2, 'Chacalón y La Nueva Crema','HLP-1001', 1981, 2), 
 (7, 2, 'Éxitos, Éxitos, Éxitos', 'HLP-1002', 1981, 2),
-(7, 2, 'El Soberano de la Cumbia', 'HLP-1009', 1982, 2), 
+(7, 2, 'El Soberano de la Cumbia', 'HLP-1009', 1982, 2),
 (7, 2, 'Los Admirados', 'HLP-1018', 1983, 2),
 (7, 2, 'Tu Vida, Mi Vida', 'HLP-1038', 1985, 2);
 

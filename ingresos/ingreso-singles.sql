@@ -440,4 +440,65 @@ VALUES
 (43, 36, '50152824', 1988, 1, ''),
 (43, 36, '51152854', 1988, 1, '');
 
---------------------------------------------------------------------------------------- GRUPO FIESTA -----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------- GRUPO FIESTA -----------------------------------------------------------------------------------------
+
+-- PODEROSO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(50, 37, '24', 1978, 1, ''),
+(50, 37, '29', 1978, 1, ''),
+(50, 37, '32', 1978, 1, '');
+
+-- ODEON
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(50, 4, '01011478', 1979, 1, ''),
+(50, 4, '01011533', 1979, 1, ''),
+(50, 4, '01011682', 1980, 1, ''),
+(50, 4, '01011705', 1980, 1, ''),
+(50, 4, '01011762', 1981, 1, '');
+
+-- CARACOL
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(50, 13, '68', 1979, 1, ''),
+(50, 13, '112088', 1981, 1, '');
+
+-- SONORADIO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(50, 3, '13766', 1982, 1, ''),
+(50, 3, '13835', 1985, 1, '');
+
+-- CARAVANA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(50, 9, '6', 1983, 1, '');
+
+----------------------------------------------------------------------------------------- LOS ZÍNGAROS -----------------------------------------------------------------------------------------
+
+-- IMSA
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(77, 38, '201', 1974, 1, '');
+
+-- CARACOL
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(77, 13, '2', 1975, 1, ''),
+(77, 13, '12', 1975, 1, ''),
+(77, 13, '26', 1976, 1, ''),
+(77, 13, '80', 1980, 1, ''),
+(77, 13, '112987', 1981, 1, ''),
+(77, 13, '112092', 1983, 1, ''),
+(77, 13, '112093', 1983, 1, '');
+
+-- PODEROSO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(77, 37, '4', 1977, 1, ''),
+(77, 37, '16', 1977, 1, ''),
+(77, 37, '30', 1978, 1, '');
+
+----------------------------------------------------------------------------------------- LOS ZÍNGAROS -----------------------------------------------------------------------------------------
+
