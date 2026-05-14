@@ -9,14 +9,14 @@ SELECT * FROM Albumes;
 -- ODEON
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(1, 4, 'Los Destellos', 'ELD-1735', 1968, 2), 
-(1, 4, 'En Orbita', 'ELD-1795', 1968, 2), 
-(1, 4, 'Solo Ellos: Los Destellos', 'ELD-1855', 1969, 2), 
-(1, 4, 'Mundial', 'ELD-1915', 1970, 2), 
-(1, 4, 'En La Cumbre', 'ELD-1953', 1970, 2), 
-(1, 4, 'Clase Aparte', 'ELD-2034', 1971, 2), 
-(1, 4, 'Constelación', 'ELD-2105', 1972, 2), 
-(1, 4, 'Arrollando', 'ELD-020112', 1973, 2), 
+(1, 4, 'Los Destellos', 'ELD-1735', 1968, 2),
+(1, 4, 'En Orbita', 'ELD-1795', 1968, 2),
+(1, 4, 'Solo Ellos: Los Destellos', 'ELD-1855', 1969, 2),
+(1, 4, 'Mundial', 'ELD-1915', 1970, 2),
+(1, 4, 'En La Cumbre', 'ELD-1953', 1970, 2),
+(1, 4, 'Clase Aparte', 'ELD-2034', 1971, 2),
+(1, 4, 'Constelación', 'ELD-2105', 1972, 2),
+(1, 4, 'Arrollando', 'ELD-020112', 1973, 2),
 (1, 4, 'Destellantes', 'ELD-0201126', 1974, 2),
 (1, 4, 'El Millón de Los Destellos', 'ELD-0201170', 1974, 2),
 (1, 4, 'Linda Chiquilina', 'ELD-0201218', 1975, 2),
@@ -39,7 +39,7 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(7, 2, 'Chacalón y La Nueva Crema','HLP-1001', 1981, 2), 
+(7, 2, 'Chacalón y La Nueva Crema','HLP-1001', 1981, 2),
 (7, 2, 'Éxitos, Éxitos, Éxitos', 'HLP-1002', 1981, 2),
 (7, 2, 'El Soberano de la Cumbia', 'HLP-1009', 1982, 2),
 (7, 2, 'Los Admirados', 'HLP-1018', 1983, 2),
