@@ -88,7 +88,7 @@ INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_t
 VALUES
 (23, 68, '001', 1977, 1, ''),
 (23, 68, '003', 1977, 1, ''),
-(23, 68, '006', 1977, 1, ''),
+(23, 68, '006', 1978, 1, ''),
 (23, 68, '007', 1978, 1, ''),
 (23, 68, '009', 1978, 1, '');
 
@@ -113,7 +113,7 @@ VALUES
 -- MUSIC SHOP
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
 VALUES
-(23, 7, '01-183', 1982, 1, '');
+(23, 7, '01-183', 1985, 1, '');
 
 -- INFOPESA
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -334,7 +334,8 @@ VALUES
 (4, 1, '171231', 1981, 1, ''),
 (4, 1, '171259', 1981, 1, ''),
 (4, 1, '171303', 1982, 1, ''),
-(4, 1, '171317', 1982, 1, '');
+(4, 1, '171317', 1982, 1, ''),
+(4, 1, '171536', 1986, 1, '');
 
 -- FONOHIT
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
@@ -377,8 +378,8 @@ VALUES
 (39, 13, '63', 1978, 1, ''),
 (39, 13, '71', 1979, 1, ''),
 (39, 13, '74', 1980, 1, ''),
-(39, 13, '112071', 1981, 1, ''),
-(39, 13, '112081', 1981, 1, ''),
+(39, 13, '112071', 1980, 1, ''),
+(39, 13, '112081', 1980, 1, ''),
 (39, 13, '112084', 1981, 1, ''),
 (39, 13, '112086', 1981, 1, ''),
 (39, 13, '112090', 1981, 1, ''),
@@ -394,6 +395,11 @@ VALUES
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
 VALUES
 (39, 1, '171473', 1985, 1, '');
+
+-- PRODUCCIONES WALTER LEON
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(39, 207, '005', 1980, 1, '');
 
 --------------------------------------------------------------------------------------- GRUPO NARANJA -----------------------------------------------------------------------------------------
 
@@ -502,5 +508,9 @@ VALUES
 (77, 37, '16', 1977, 1, ''),
 (77, 37, '30', 1978, 1, '');
 
------------------------------------------------------------------------------------------ LOS  -----------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------- CHACALÓN Y LA NUEVA CREMA ---------------------------------------------------------------------------------
+-- HORÓSCOPO
+INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, comentario)
+VALUES
+(7, 2, '1002', 1981, 1, ''),
 

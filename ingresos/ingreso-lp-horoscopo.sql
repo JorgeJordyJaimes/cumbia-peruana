@@ -54,7 +54,7 @@ VALUES
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
 (7, 18, 'La Voz del Pueblo', 'LP-002', 1987, 2),
-(7, 18, 'Loco Amor', 'LP-002', 1988, 2), 
+(7, 18, 'Loco Amor', 'LP-002', 1988, 2),
 (7, 18, 'Niños Pobres del Mundo', 'LP-003', 1989, 2);
 
 --------------------------------------------------------------------------------------- LOS OVNIS -------------------------------------------------------------------------------------
@@ -80,15 +80,15 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(24, 2, 'Yo Claudio', 'HLP-1012', 1982, 2), 
-(24, 2, 'Cumbias Pegaditas Vol. 2', 'HLP-1022', 1984, 2), 
+(24, 2, 'Yo Claudio', 'HLP-1012', 1982, 2),
+(24, 2, 'Cumbias Pegaditas Vol. 2', 'HLP-1022', 1984, 2),
 (24, 2, 'Hoy, Mañana y Siempre', 'HLP-1036', 1985, 2),
-(24, 2, 'Los Inconfundibles e Inimitables', 'HLP-1047', 1986, 2), 
+(24, 2, 'Los Inconfundibles e Inimitables', 'HLP-1047', 1986, 2),
 (24, 2, 'El Apagón Musical', 'HLP-1048', 1986, 2),
-(24, 2, 'Encuentro Tropical del Año', 'HLP-1050', 1986, 2), 
-(24, 2, 'Insuperables', 'HLP-1056', 1986, 2), 
-(24, 2, 'Poder Musical', 'HLP-1060', 1986, 2), 
-(24, 2, 'Los Únicos Por Siempre', 'HLP-1069', 1987, 2), 
+(24, 2, 'Encuentro Tropical del Año', 'HLP-1050', 1986, 2),
+(24, 2, 'Insuperables', 'HLP-1056', 1986, 2),
+(24, 2, 'Poder Musical', 'HLP-1060', 1986, 2),
+(24, 2, 'Los Únicos Por Siempre', 'HLP-1069', 1987, 2),
 (24, 2, 'Somos Profesionales', 'HLP-1070', 1987, 2);
 
 ------------------------------------------------------------------------------------ LA MERMELADA -------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(31, 2, 'La Rica Mermelada', 'HLP-1004', 1981, 2), 
+(31, 2, 'La Rica Mermelada', 'HLP-1004', 1981, 2),
 (31, 2, 'A Bailar con La Mermelada', 'HLP-1013', 1982, 2);
 
 -- IEMPSA
@@ -109,12 +109,12 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)    
 VALUES
-(9, 2, 'Los Auténticos', 'HLP-1006', 1981, 2), 
-(9, 2, 'Los Originales', 'HLP-1014', 1982, 2), 
+(9, 2, 'Los Auténticos', 'HLP-1006', 1981, 2),
+(9, 2, 'Los Originales', 'HLP-1014', 1982, 2),
 (9, 2, 'Los Indiscutibles', 'HLP-1017', 1983, 2),
-(9, 2, 'Feliz Aniversario', 'HLP-1020', 1984, 2), 
-(9, 2, 'En Vivo', 'HLP-1028', 1984, 2), 
-(9, 2, 'Por Los Caminos del Perú y el Mundo', 'HLP-1029', 1984, 2), 
+(9, 2, 'Feliz Aniversario', 'HLP-1020', 1984, 2),
+(9, 2, 'En Vivo', 'HLP-1028', 1984, 2),
+(9, 2, 'Por Los Caminos del Perú y el Mundo', 'HLP-1029', 1984, 2),
 (9, 2, 'A Bailar la Onda Tropical Andina', 'HLP-1042', 1985, 2);
 
 -- ARCO IRIS
@@ -127,7 +127,7 @@ VALUES
 -- COLIBRÍ
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)    
 VALUES
-(9, 17, 'Rica Chicha', 'COL-0510006.1', 1987, 2), 
+(9, 17, 'Rica Chicha', 'COL-0510006.1', 1987, 2),
 (9, 17, 'Cinco Estrellas en Chicha', 'COL-0510010.0', 1987, 2),
 (9, 17, 'Corazón Andino', 'COL-0510017.6', 1987, 2);
 
@@ -136,10 +136,10 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(19, 2, 'Arrollando con Alegría', 'HLP-1016', 1983, 2), 
+(19, 2, 'Arrollando con Alegría', 'HLP-1016', 1983, 2),
 (19, 2, 'A Gozar con Alegría', 'HLP-1026', 1984, 2),
-(19, 2, 'Lo Máximo y Punto', 'HLP-1030', 1984, 2), 
-(19, 2, 'Super Clan', 'HLP-1046', 1986, 2), 
+(19, 2, 'Lo Máximo y Punto', 'HLP-1030', 1984, 2),
+(19, 2, 'Super Clan', 'HLP-1046', 1986, 2),
 (19, 2, 'Para Ti con Alegría', 'HLP-1061', 1986, 2),
 (19, 2, 'Estilo Inconfundible', 'HLP-1073', 1987, 2);
 
@@ -153,14 +153,14 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(28, 2, 'Yo Soy la Cumbia', 'HLP-1033', 1984, 2), 
-(28, 2, 'Pinceladas Musicales', 'HLP-1043', 1985, 2), 
+(28, 2, 'Yo Soy la Cumbia', 'HLP-1033', 1984, 2),
+(28, 2, 'Pinceladas Musicales', 'HLP-1043', 1985, 2),
 (28, 2, 'Siempre Juntos', 'HLP-1063', 1986, 2);
 
 -- PRODISAR
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(28, 8, 'La Fuerza Musical', 'LP-2069', 1987, 2), 
+(28, 8, 'La Fuerza Musical', 'LP-2069', 1987, 2),
 (28, 8, 'Arrollando', 'LP-2087', 1988, 2);
 
 ----------------------------------------------------------------------------------- GRUPO MARAVILLA --------------------------------------------------------------------------------------
@@ -168,13 +168,13 @@ VALUES
 -- FARO RECORD
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(17, 22, 'Tu Corazón y el Mío', 'LPFR-204003', 1982, 2), 
+(17, 22, 'Tu Corazón y el Mío', 'LPFR-204003', 1982, 2),
 (17, 22, 'Al Compás del Halley', 'LPFR-204006', 1987, 2);
 
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(17, 2, 'Siempre Arriba', 'HLP-1015', 1983, 2), 
+(17, 2, 'Siempre Arriba', 'HLP-1015', 1983, 2),
 (17, 2, 'A Sarita Colonia', 'HLP-1031', 1984, 2);
 
 -- INFOPESA
@@ -192,8 +192,8 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(36, 2, 'Bailando al Rítmo', 'HLP-1052', 1986, 2), 
-(36, 2, 'Cruel Traición', 'HLP-1068', 1987, 2), 
+(36, 2, 'Bailando al Rítmo', 'HLP-1052', 1986, 2),
+(36, 2, 'Cruel Traición', 'HLP-1068', 1987, 2),
 (36, 2, 'Por Este Loco Corazón', 'HLP-1072', 1987, 2);
 
 -------------------------------------------------------------- GRUPO IMAGINACIÓN --------------------------------------------------------------
@@ -239,7 +239,7 @@ VALUES
 -- INFOPESA
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(126, 1, 'Ven a Bailar', 'INF-208408', 1987, 2), 
+(126, 1, 'Ven a Bailar', 'INF-208408', 1987, 2),
 (126, 1, 'Por Ella', 'INF-208435', 1988, 2);
 
 -------------------------------------------------------------- GRUPO KARIÑO --------------------------------------------------------------
@@ -287,8 +287,8 @@ VALUES
 -- HORÓSCOPO
 INSERT INTO Albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
-(581, 2, 'Festival Tropical', 'HLP-1019', 1983, 2), 
-(581, 2, 'Festival de Cumbias Vol. 2', 'HLP-1027', 1984, 2), 
+(581, 2, 'Festival Tropical', 'HLP-1019', 1983, 2),
+(581, 2, 'Festival de Cumbias Vol. 2', 'HLP-1027', 1984, 2),
 (581, 2, 'Como Pan Caliente', 'HLP-1041', 1985, 2);
 
 
