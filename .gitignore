@@ -1,0 +1,44 @@
+# Variables de entorno (contraseñas, datos sensibles)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+
+# VS Code
+.vscode/
+
+# PyQt6
+*.ui.autosave
+
+# Base de datos local (si hay backups)
+*.dump
+*.backup
+*.sql~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
