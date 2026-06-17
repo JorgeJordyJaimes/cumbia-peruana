@@ -22,6 +22,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+test_conexion.py
+test_queries.py
 
 # Entornos virtuales
 venv/
