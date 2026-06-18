@@ -285,4 +285,3 @@ VALUES
 (581, 2, 'Festival de Cumbias Vol. 2', 'HLP-1027', 1984, 2),
 (581, 2, 'Como Pan Caliente', 'HLP-1041', 1985, 2);
 
-
