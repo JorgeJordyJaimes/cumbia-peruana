@@ -1,3 +1,18 @@
+
+-- CONSULTA DE TIPOS DE ÁLBUM
+
+SELECT * FROM Tipos_Album;
+
+
+-- CONSULTA DE GRUPOS
+
+SELECT * FROM grupos;
+
+-- CONSULTA DE SELLOS DISCOGRÁFICOS
+
+SELECT * FROM sellos_discograficos;
+
+
 -- CONSULTA DE OTROS SELLOS
 SELECT
     Grupos.nombre_grupo,
@@ -16,10 +31,6 @@ WHERE
 ORDER BY 
     Albumes.año_publicacion ASC,
     Albumes.numero_catalogo ASC;
-
--- CONSULTA DE GRUPOS
-
-SELECT * FROM grupos;
 
 
 --- CONSULTA CATÁLOGO DE INFOPESA
@@ -40,3 +51,4 @@ WHERE
 ORDER BY 
     Albumes.año_publicacion ASC,
     Albumes.numero_catalogo ASC;
+

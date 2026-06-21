@@ -5,5 +5,3 @@ VALUES
 ('EP'),
 ('Casete'),
 ('CD');
-
-SELECT * FROM Tipos_Album;
