@@ -1,1 +1,1 @@
-// Feature: Temas (canciones, compositores, tracklists y versiones)
+export * from './components/tracklist-table';

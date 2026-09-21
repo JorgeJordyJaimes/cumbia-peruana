@@ -1,1 +1,1 @@
-// Feature: Grupos (agrupaciones, directores, músicos e historial de miembros)
+export * from './components/group-card';
