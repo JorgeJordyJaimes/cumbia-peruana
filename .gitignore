@@ -43,3 +43,6 @@ next-env.d.ts
 
 # base de datos local / consultas temporales
 Base de Datos/consultas/
+
+# supabase cli temporal
+supabase/.temp/
