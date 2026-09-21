@@ -1,38 +1,104 @@
-# cumbia-peruana
+# 🪗 Archivo Histórico de la Cumbia Peruana (1968–2005)
 
-Base de datos y plataforma digital que almacena la historia musical y discográfica de la cumbia peruana desde 1968 hasta la primera década del 2000.
+Plataforma digital especializada en la preservación discográfica, genealogía musical y consulta técnica de la cumbia grabada en el Perú durante su era dorada y etapas de evolución (1968–2005).
 
-## Getting Started
+El proyecto combina el rigor musicológico con herramientas de análisis armónico para coleccionistas, investigadores y DJs, modelando con exactitud la realidad del soporte físico (vinilos de 45 RPM, LPs, casetes, CDs y ediciones split).
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🎯 Propósitos del Proyecto
+
+* **🧠 Preservación Cultural y Genealogía Musical:** Mapear la trazabilidad completa de grabaciones: identificar compositores originales, versiones (*covers*), cronología de temas y el árbol genealógico de músicos que formaron parte de múltiples agrupaciones a lo largo del tiempo.
+* **🎛️ Herramienta Técnica para DJs:** Proporcionar un motor de búsqueda armónica que cataloga métricas de audio precisas por cada grabación: valores exactos de **BPM**, tonalidad musical estándar y codificación en la **Rueda Camelot** (1A a 12B).
+* **🗂️ Fidelidad al Formato Físico:** Documentar lanzamientos respetando la industria discográfica peruana de la época: prensajes en 45 RPM, LPs estándar, splits compartidos por lados (Lado A / Lado B de distintos artistas), reediciones y sellos discográficos emblemáticos (Infopesa, Discos Horóscopo, Sono Radio, El Virrey, etc.).
+* **🔍 Rescate Histórico:** Visibilizar agrupaciones y músicos sesionistas que tuvieron producciones reducidas o efímeras, pero cuyo aporte enriqueció el desarrollo de la cumbia costeña, andina, amazónica y psicodélica.
+
+---
+
+## 📚 Modelo de Datos Relacional
+
+A diferencia de una base de datos plana, el sistema utiliza un esquema altamente normalizado en **PostgreSQL** para resolver consultas relacionales complejas:
+
+* **Personas & Músicos:** Biografías, fotos, lugares de nacimiento y créditos por tema con múltiples roles simultáneos (arreglista, primera guitarra, voz, percusión).
+* **Grupos & Historial de Membresía:** Agrupaciones, directores, regiones de origen y períodos de vigencia por músico (`desde` / `hasta`).
+* **Sellos Discográficos:** Información institucional, país de operación y catálogos asociados.
+* **Álbumes & Formatos Físicos:** Identificación de matriz física (LP, 45 RPM, Cassette, CD), números de catálogo, reediciones, relaciones split por lado y carátulas restauradas.
+* **Temas & Grabaciones:** Pistas con duración, metadatos para DJ (BPM, Camelot, tonalidad), letras indexadas para búsqueda de texto completo y compositores.
+* **Versiones:** Relación directa entre canciones matrices/originales y sus adaptaciones posteriores.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+El proyecto está diseñado bajo una arquitectura modular desacoplada:
+
+* **Frontend:** [Next.js](https://nextjs.org/) (App Router, Server Components y TypeScript) con estilado en [Tailwind CSS](https://tailwindcss.com/) y componentes accesibles de [shadcn/ui](https://ui.shadcn.com/).
+* **Diseño UI/UX:** Interfaz *Atmospheric Glassmorphism meets Retro Vinyl Editorial*, inspirada en paneles de catalogación modernos (fondos oscuros, degradados suaves y tipografía display de alta legibilidad).
+* **Base de Datos:** [PostgreSQL](https://www.postgresql.org/) alojado en [Supabase](https://supabase.com/), con índices optimizados B-Tree y GIN para búsqueda de letras y mezclas DJ.
+* **Almacenamiento Multimedia:** Buckets de Supabase Storage para alojar imágenes de portadas, sellos y músicos procesadas localmente en formato **WebP**.
+* **Gestión de Base de Datos e Infraestructura:** Control de versiones mediante migraciones físicas en texto plano (`supabase/migrations/`), garantizando un respaldo auditable dentro del repositorio de GitHub.
+* **Despliegue:** [Vercel](https://vercel.com/) con integración continua desde GitHub.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+├── src/
+│   ├── app/              # Rutas públicas (catálogo, fichas, DJ) y panel de administración
+│   ├── features/         # Módulos de dominio (dj-tools, temas, albumes, grupos, storage)
+│   ├── components/ui/    # Componentes base reutilizables (shadcn/ui)
+│   ├── lib/supabase/     # Clientes de Supabase para navegador y servidor (SSR)
+│   └── types/            # Tipos de TypeScript (database.ts y domain.ts)
+├── supabase/
+│   ├── migrations/       # Migraciones versionadas en SQL (.sql)
+│   └── seed.sql          # Catálogos base (Roles, Géneros, Tipos de Álbum)
+├── Base de Datos/        # Catálogo histórico documental y esquemas relacionales
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Puesta en Marcha
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Requisitos Previos
+* [Node.js](https://nodejs.org/) (v20 o superior).
+* Instancia activa en [Supabase](https://supabase.com/).
 
-## Learn More
+### 2. Configuración de Variables de Entorno
+Copia el archivo de ejemplo y completa tus credenciales:
+```bash
+cp .env.local.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+Configura las variables correspondientes en `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anonima
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Instalación de Dependencias
+```bash
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Servidor de Desarrollo
+Inicia el entorno de desarrollo local en `http://localhost:3000`:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+### 5. Compilación y Calidad de Código
+```bash
+# Comprobación de tipos y build de producción
+npm run build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Verificación de linter
+npm run lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 Licencia
+
+Este proyecto está distribuido bajo la licencia [MIT](LICENSE).
