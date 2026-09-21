@@ -37,6 +37,7 @@ const DEFAULT_FILES = [
   'Base de Datos/datos/vinilos/ingreso-lp-sonoradio.sql',
   'Base de Datos/datos/vinilos/ingreso-singles.sql',
   'Base de Datos/datos/cassete/ingreso-casetes.sql',
+  'Base de Datos/datos/canciones/ingreso-temas.sql',
 ];
 
 const args = process.argv.slice(2);
@@ -105,6 +106,7 @@ async function main() {
       { name: 'Grupos Musicales', table: 'grupos' },
       { name: 'Sellos Discográficos', table: 'sellos_discograficos' },
       { name: 'Álbumes / Singles / Casetes', table: 'albumes' },
+      { name: 'Temas / Obras Musicales', table: 'temas' },
       { name: 'Tipos de Álbum (Formatos)', table: 'tipos_album' },
       { name: 'Géneros Musicales', table: 'generos' },
       { name: 'Roles de Músicos', table: 'roles' },
