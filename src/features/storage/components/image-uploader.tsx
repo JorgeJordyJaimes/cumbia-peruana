@@ -85,10 +85,19 @@ export function ImageUploader({
 
     setErrorMsg(null);
     setSuccess(false);
+
+    // Validación estricta: Solo formato WebP
+    const isWebP = file.type === "image/webp" || file.name.toLowerCase().endsWith(".webp");
+    if (!isWebP) {
+      setErrorMsg("Formato no admitido: Solo se permite subir imágenes en formato WebP (.webp).");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+
     setUploading(true);
 
     try {
-      // 1. Optimizar y convertir a WebP en el navegador
+      // 1. Optimizar y validar resolución a WebP en el navegador
       const webpBlob = await convertToWebP(file);
 
       // Generar nombre determinista: ej. albumes/14-portada-178995.webp
@@ -170,7 +179,7 @@ export function ImageUploader({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/webp,.webp"
             className="hidden"
             onChange={handleFileChange}
             disabled={uploading}
@@ -201,13 +210,13 @@ export function ImageUploader({
             ) : (
               <>
                 <Upload className="h-3.5 w-3.5 text-amber-400" />
-                <span>{previewUrl ? "Reemplazar Archivo" : "Seleccionar Archivo"}</span>
+                <span>{previewUrl ? "Reemplazar WebP" : "Seleccionar Archivo WebP"}</span>
               </>
             )}
           </button>
 
-          <p className="font-mono text-[10px] text-neutral-500">
-            JPG, PNG o WebP. Se optimiza a WebP automáticamente.
+          <p className="font-mono text-[10px] text-amber-400/80">
+            Restricción activa: Solo archivos en formato WebP (.webp).
           </p>
         </div>
       </div>
