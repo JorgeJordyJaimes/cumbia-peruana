@@ -84,15 +84,15 @@ VALUES
 -- ODEON
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES 
-(49, 4, "Al Rítmo de Los Wembler's", 'LD-2195', 1972, 2);
+(49, 4, 'Al Rítmo de Los Wembler''s', 'LD-2195', 1972, 2);
 
 -- DECIBEL
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES 
-(49, 34, "La Danza del Petrolero", 'LP-2001', 1974, 2),
-(49, 34, "La Amenaza Verde", 'LP-2008', 1975, 2),
-(49, 34, "El Encanto de la Selva", 'LP-2024', 1976, 2),
-(49, 34, "Carapira", 'LP-2034', 1976, 2);
+(49, 34, 'La Danza del Petrolero', 'LP-2001', 1974, 2),
+(49, 34, 'La Amenaza Verde', 'LP-2008', 1975, 2),
+(49, 34, 'El Encanto de la Selva', 'LP-2024', 1976, 2),
+(49, 34, 'Carapira', 'LP-2034', 1976, 2);
 
 -- SONORADIO
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
@@ -101,7 +101,7 @@ VALUES
 (49, 3, 'Bailando Hasta el Amanecer', 'SE-9620', 1978, 2),
 (49, 3, 'Fiebre en la Selva', 'SE-9636', 1978, 2),
 (49, 3, 'El Sabor Tropical', 'SE-9644', 1979, 2),
-(49, 3, "Estos son los Famosos Wembler's de Iquitos", 'SE-9671', 1979, 2);
+(49, 3, 'Estos son los Famosos Wembler''s de Iquitos', 'SE-9671', 1979, 2);
 
 ------------------------------------------------------------------------------------- LOS ORIENTALES DE VÍCTOR ------------------------------------------------------------------------------
 
