@@ -1,14 +1,23 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
-import { DistroHeader, DistroHero, DistroHomeCoordinator } from "@/features/home-distro";
+import {
+  RetroHomeCoordinator,
+  RetroHero,
+  GenealogyExplorer,
+  MatchBpmWidget,
+  RadarSonoro,
+  HistoriasDeFondo,
+  NosotrosManifiesto,
+  RetroFooter,
+} from "@/features/home-retro";
+import { CatalogExplorer, type AlbumItem } from "@/features/albumes";
 import { CamelotSelector, type TrackDJItem } from "@/features/dj-tools";
-import type { AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
 import type { CamelotCode } from "@/types/domain";
+import type { ConfiguracionHome } from "@/types/blog";
 import { Disc3, SlidersHorizontal } from "lucide-react";
 
-export const revalidate = 60;
+export const revalidate = 60; // Regenerar cada 60 segundos
 
 interface RawAlbumRow {
   id_album: number;
@@ -46,16 +55,20 @@ interface RawTemaRow {
 export default async function Home() {
   const supabase = await createClient();
 
-  // 1. Estadísticas en vivo
+  // 1. Estadísticas en vivo desde Supabase
   const [
     { count: totalAlbumes },
     { count: totalGrupos },
+    { count: totalPersonas },
+    { count: totalSellos },
   ] = await Promise.all([
     supabase.from("albumes").select("*", { count: "exact", head: true }),
     supabase.from("grupos").select("*", { count: "exact", head: true }),
+    supabase.from("personas").select("*", { count: "exact", head: true }),
+    supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
   ]);
 
-  // 2. Álbumes para el Catálogo
+  // 2. Álbumes del catálogo físico
   const { data: rawAlbumes } = await supabase
     .from("albumes")
     .select(`
@@ -72,7 +85,7 @@ export default async function Home() {
     .order("año_publicacion", { ascending: true })
     .limit(140);
 
-  // 3. Temas para la Consola DJ y Tracklists
+  // 3. Temas con especificaciones DJ
   const { data: rawTemas } = await supabase
     .from("temas")
     .select(`
@@ -97,6 +110,28 @@ export default async function Home() {
     `)
     .not("bpm", "is", null);
 
+  // 4. Configuración del Home
+  const { data: rawHomeConfig } = await supabase
+    .from("configuracion_home")
+    .select("*")
+    .eq("id", 1)
+    .single();
+
+  const homeConfig: ConfiguracionHome = (rawHomeConfig as unknown as ConfiguracionHome) || {
+    id: 1,
+    cintillo_texto: "CATÁLOGO & ARCHIVO DISCOGRÁFICO HISTÓRICO // EDICIONES DE COLECCIÓN 1968–2005",
+    cintillo_activo: true,
+    hero_insignia: "Archivo & Curaduría de Vinilos",
+    hero_titulo: "El árbol genealógico y archivo sonoro de la cumbia peruana",
+    hero_subtitulo:
+      "Conectamos músicos de sesión, guitarras legendarias, sellos históricos y discografías completas. Explora el archivo o sincroniza tu set con Match BPM.",
+    hero_boton_texto: "Explorar Archivo",
+    hero_boton_url: "#genealogia",
+    albumes_destacados_ids: [1, 2, 3],
+    seccion_blog_activa: true,
+    updated_at: new Date().toISOString(),
+  };
+
   // Mapear Álbumes
   const rawAlbumsList = (rawAlbumes as unknown as RawAlbumRow[]) || [];
   const albums: AlbumItem[] = rawAlbumsList.map((a) => ({
@@ -111,7 +146,7 @@ export default async function Home() {
     isCompilation: a.es_recopilatorio,
   }));
 
-  // Mapear Temas DJ
+  // Mapear Pistas para DJ Tools
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
   const djTracks: TrackDJItem[] = rawTemasList.map((t) => {
     const primaryAlbumTema = t.albumes_temas?.[0];
@@ -131,7 +166,7 @@ export default async function Home() {
     };
   });
 
-  // Mapear Tracklists por Álbum
+  // Mapa de pistas por álbum para contraportadas
   const tracksMap: Record<number, TrackItem[]> = {};
   rawTemasList.forEach((t) => {
     const composer = t.temas_compositores?.[0]?.personas?.nombre;
@@ -154,77 +189,95 @@ export default async function Home() {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0c] text-neutral-100 selection:bg-amber-500 selection:text-black">
-      {/* Luces Ambientales Cálidas */}
-      <AmbientGlow variant="warm-solar" className="top-0 left-0" />
-      <AmbientGlow variant="velvet-night" className="top-[35%] right-0" />
+    <div className="relative min-h-screen bg-[#0D0F12] text-[#F3F4F6] selection:bg-[#E5A93C] selection:text-black">
+      {/* Resplandores Atmosféricos de Fondo */}
+      <AmbientGlow variant="warm-solar" className="top-0 left-1/4 opacity-15" />
+      <AmbientGlow variant="velvet-night" className="top-1/3 right-0 opacity-15" />
+      <AmbientGlow variant="chicha-psychedelic" className="bottom-1/4 left-0 opacity-15" />
 
-      {/* 1. Header con Sello Ovalado Central */}
-      <DistroHeader />
-
-      {/* Contenedor Principal */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 pb-24">
-        {/* 2. Hero Dividido en Dos Bloques Asimétricos */}
-        <DistroHero totalAlbumes={totalAlbumes} totalGrupos={totalGrupos} />
-
-        {/* 3. Coordinador Distro: Tira de Formatos, Cuadrícula 4+2+1, Triptych y Catálogo */}
-        <DistroHomeCoordinator albums={albums} tracksMap={tracksMap} />
-
-        {/* 4. Consola Armónica DJ Camelot */}
-        <section id="dj-tools" className="scroll-mt-24 space-y-6 pt-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
-            <div>
-              <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-400">
-                <SlidersHorizontal className="h-4 w-4" />
-                Mezcla Armónica DJ & Tempo Match
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mt-1">
-                Consola Armónica Camelot
-              </h2>
-            </div>
-            <p className="max-w-md font-mono text-xs text-neutral-400">
-              Selecciona una clave de la Rueda Camelot para descubrir temas de cumbia peruana con compatibilidad tonal matemáticamente armónica (+1, -1 o cambio de modo).
-            </p>
-          </div>
-
-          <CamelotSelector tracks={djTracks} />
-        </section>
-      </main>
-
-      {/* Footer Distro Retro */}
-      <footer className="border-t border-white/10 bg-neutral-950 py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 font-mono text-xs text-neutral-400">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <Disc3 className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="font-bold text-white uppercase tracking-wider">Kumbia Sound // Archivo del Vinilo</p>
-              <p className="text-[11px] text-neutral-500">
-                Preservación discográfica de la cumbia y chicha peruana (1968–2005)
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6 text-[11px]">
-            <Link href="#categorias" className="hover:text-amber-400 transition-colors">
-              Formatos
-            </Link>
-            <Link href="#catalogo" className="hover:text-amber-400 transition-colors">
-              Novedades
-            </Link>
-            <Link href="#preservacion" className="hover:text-amber-400 transition-colors">
-              Preservación
-            </Link>
-            <Link href="#dj-tools" className="hover:text-amber-400 transition-colors">
-              Consola Camelot
-            </Link>
-            <Link href="/admin" className="hover:text-amber-400 transition-colors">
-              Panel Admin
-            </Link>
-          </div>
+      {/* Cintillo Superior de Anuncios */}
+      {homeConfig.cintillo_activo && homeConfig.cintillo_texto && (
+        <div className="border-b border-[#E5A93C]/20 bg-[#E5A93C]/10 px-4 py-2 text-center font-mono text-[11px] text-[#E5A93C] tracking-wider">
+          <span>{homeConfig.cintillo_texto}</span>
         </div>
-      </footer>
+      )}
+
+      {/* COORDINADOR CON NAVBAR Y BUSCADOR COMMAND-PALETTE (⌘K) */}
+      <RetroHomeCoordinator>
+        <main className="space-y-4">
+          {/* SECCIÓN 2: HERO SECTION (ABOVE THE FOLD) */}
+          <RetroHero
+            totalAlbumes={totalAlbumes}
+            totalGrupos={totalGrupos}
+            totalSellos={totalSellos}
+            totalPersonas={totalPersonas}
+          />
+
+          {/* SECCIÓN 3: EXPLORADOR GENEALÓGICO (VALOR CULTURAL ÚNICO) */}
+          <GenealogyExplorer />
+
+          {/* SECCIÓN 4: MATCH BPM (PREVIEW INTERACTIVO DJ) */}
+          <MatchBpmWidget />
+
+          {/* SECCIÓN 5: EL RADAR SONORO (CURADURÍA SEMANAL & LITE EMBEDS) */}
+          <RadarSonoro />
+
+          {/* SECCIÓN 6: HISTORIAS DE FONDO (CRÓNICAS & BLOG) */}
+          <HistoriasDeFondo />
+
+          {/* SECCIÓN DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
+          <section id="catalogo-archivo" className="scroll-mt-24 py-16 border-t border-white/5 bg-[#0D0F12]">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                  <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#E5A93C]">
+                    <Disc3 className="h-4 w-4" />
+                    Bóveda de Prensajes Originales
+                  </div>
+                  <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-white mt-1">
+                    Catálogo de 719+ Vinilos & Casetes
+                  </h2>
+                </div>
+                <p className="max-w-md font-mono text-xs text-[#9CA3AF]">
+                  Inspecciona carátulas restauradas, sellos de época y contraportadas con tracklist
+                  completo.
+                </p>
+              </div>
+
+              <CatalogExplorer initialAlbums={albums} tracksMap={tracksMap} />
+            </div>
+          </section>
+
+          {/* CONSOLA EXTENDIDA DE ARMONÍA CAMELOT */}
+          <section id="dj-tools" className="scroll-mt-24 py-16 border-t border-white/5 bg-[#16191E]/40">
+            <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                  <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#10B981]">
+                    <SlidersHorizontal className="h-4 w-4" />
+                    Consola Armónica Integral
+                  </div>
+                  <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-white mt-1">
+                    Rueda Camelot para Sesiones en Vivo
+                  </h2>
+                </div>
+                <p className="max-w-md font-mono text-xs text-[#9CA3AF]">
+                  Explora todas las pistas del catálogo catalogadas con BPM verificado y tonalidad
+                  armónica.
+                </p>
+              </div>
+
+              <CamelotSelector tracks={djTracks} />
+            </div>
+          </section>
+
+          {/* SECCIÓN 7: NOSOTROS / MANIFIESTO */}
+          <NosotrosManifiesto />
+        </main>
+      </RetroHomeCoordinator>
+
+      {/* SECCIÓN 8: FOOTER */}
+      <RetroFooter />
     </div>
   );
 }
