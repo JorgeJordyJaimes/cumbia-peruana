@@ -486,6 +486,96 @@ export interface Database {
           }
         ]
       }
+      articulos: {
+        Row: {
+          id: string
+          titulo: string
+          slug: string
+          resumen: string | null
+          contenido: string
+          imagen_portada_url: string | null
+          autor_nombre: string
+          categoria: string
+          tiempo_lectura: string
+          publicado: boolean
+          fecha_publicacion: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          titulo: string
+          slug: string
+          resumen?: string | null
+          contenido: string
+          imagen_portada_url?: string | null
+          autor_nombre?: string
+          categoria?: string
+          tiempo_lectura?: string
+          publicado?: boolean
+          fecha_publicacion?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          titulo?: string
+          slug?: string
+          resumen?: string | null
+          contenido?: string
+          imagen_portada_url?: string | null
+          autor_nombre?: string
+          categoria?: string
+          tiempo_lectura?: string
+          publicado?: boolean
+          fecha_publicacion?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      configuracion_home: {
+        Row: {
+          id: number
+          cintillo_texto: string
+          cintillo_activo: boolean
+          hero_insignia: string
+          hero_titulo: string
+          hero_subtitulo: string
+          hero_boton_texto: string
+          hero_boton_url: string
+          albumes_destacados_ids: number[]
+          seccion_blog_activa: boolean
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          cintillo_texto?: string
+          cintillo_activo?: boolean
+          hero_insignia?: string
+          hero_titulo?: string
+          hero_subtitulo?: string
+          hero_boton_texto?: string
+          hero_boton_url?: string
+          albumes_destacados_ids?: number[]
+          seccion_blog_activa?: boolean
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          cintillo_texto?: string
+          cintillo_activo?: boolean
+          hero_insignia?: string
+          hero_titulo?: string
+          hero_subtitulo?: string
+          hero_boton_texto?: string
+          hero_boton_url?: string
+          albumes_destacados_ids?: number[]
+          seccion_blog_activa?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

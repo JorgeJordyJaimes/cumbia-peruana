@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { Disc3, Music2, Library, SlidersHorizontal, Layers, Sparkles, Compass, History } from "lucide-react";
+import { Disc3, Music2, Library, SlidersHorizontal, Layers, Sparkles, Compass, History, BookOpen, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { GlassCard } from "@/components/ui/glass-card";
 import { CamelotSelector, type TrackDJItem } from "@/features/dj-tools";
 import { CatalogExplorer, type AlbumItem } from "@/features/albumes";
 import { GroupCard, type GroupItem } from "@/features/grupos";
+import { ArticleCard } from "@/features/blog";
 import type { TrackItem } from "@/features/temas";
 import type { CamelotCode } from "@/types/domain";
+import type { ConfiguracionHome, Articulo } from "@/types/blog";
 
 export const revalidate = 60; // Regenerar cada 60 segundos o bajo demanda
 
@@ -81,6 +83,31 @@ export default async function Home() {
     `)
     .in("id_grupo", [1, 3, 4, 6, 12, 26]);
 
+  // 5. Configuración editable del Home y últimas crónicas del Blog
+  const [
+    { data: rawHomeConfig },
+    { data: rawArticles },
+  ] = await Promise.all([
+    supabase.from("configuracion_home").select("*").eq("id", 1).single(),
+    supabase.from("articulos").select("*").eq("publicado", true).order("fecha_publicacion", { ascending: false }).limit(3),
+  ]);
+
+  const homeConfig: ConfiguracionHome = (rawHomeConfig as unknown as ConfiguracionHome) || {
+    id: 1,
+    cintillo_texto: "CATÁLOGO & ARCHIVO DISCOGRÁFICO HISTÓRICO // EDICIONES DE COLECCIÓN 1968–2005",
+    cintillo_activo: true,
+    hero_insignia: "Archivo Histórico & Motor de Armonía Camelot",
+    hero_titulo: "Preservación del Vinilo y la Cumbia Peruana",
+    hero_subtitulo: "Catálogo histórico de prensajes originales en 45 RPM, LPs y casetes (Infopesa, Odeón, Horóscopo, Sono Radio) con herramientas técnicas de compatibilidad armónica y BPM para DJs y coleccionistas.",
+    hero_boton_texto: `Explorar Catálogo (${totalAlbumes ?? 719})`,
+    hero_boton_url: "#catalogo",
+    albumes_destacados_ids: [1, 2, 3],
+    seccion_blog_activa: true,
+    updated_at: new Date().toISOString(),
+  };
+
+  const latestArticles: Articulo[] = (rawArticles as unknown as Articulo[]) || [];
+
 interface RawAlbumRow {
   id_album: number;
   nombre_album: string | null;
@@ -135,6 +162,17 @@ interface RawGrupoRow {
     coverUrl: a.url_portada,
     isCompilation: a.es_recopilatorio,
   }));
+
+  // Ordenar álbumes priorizando los destacados configurados desde el admin
+  const featuredIds = homeConfig.albumes_destacados_ids || [];
+  const sortedAlbums: AlbumItem[] = [...albums].sort((a, b) => {
+    const aIndex = featuredIds.indexOf(a.id);
+    const bIndex = featuredIds.indexOf(b.id);
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+    return 0;
+  });
 
   // Mapear temas para la consola DJ
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
@@ -195,6 +233,13 @@ interface RawGrupoRow {
       <AmbientGlow variant="warm-solar" className="top-[40%] right-0" />
       <AmbientGlow variant="velvet-night" className="bottom-0 left-0" />
 
+      {/* Cintillo Superior de Anuncios Editable */}
+      {homeConfig.cintillo_activo && homeConfig.cintillo_texto && (
+        <div className="border-b border-amber-500/20 bg-amber-500/10 px-4 py-2 text-center font-mono text-[11px] text-amber-300 tracking-wider">
+          <span>{homeConfig.cintillo_texto}</span>
+        </div>
+      )}
+
       {/* Header Editorial con Glassmorphism */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-neutral-950/70 backdrop-blur-xl">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
@@ -231,6 +276,12 @@ interface RawGrupoRow {
               Consola DJ
             </Link>
             <Link
+              href="/blog"
+              className="text-neutral-300 hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
+            >
+              Crónicas
+            </Link>
+            <Link
               href="#grupos"
               className="hidden md:inline-block text-neutral-300 hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
             >
@@ -254,29 +305,25 @@ interface RawGrupoRow {
           <div className="mx-auto max-w-3xl space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 font-mono text-xs font-semibold text-amber-300 shadow-inner">
               <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
-              Archivo Histórico & Motor de Armonía Camelot
+              {homeConfig.hero_insignia || "Archivo Histórico & Motor de Armonía Camelot"}
             </div>
 
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-tight">
-              Preservación del Vinilo y la{" "}
-              <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">
-                Cumbia Peruana
-              </span>
+              {homeConfig.hero_titulo || "Preservación del Vinilo y la Cumbia Peruana"}
             </h1>
 
             <p className="mx-auto max-w-2xl text-base sm:text-lg text-neutral-300 font-normal leading-relaxed">
-              Catálogo histórico de prensajes originales en 45 RPM, LPs y casetes
-              (Infopesa, Odeón, Horóscopo, Sono Radio) con herramientas técnicas
-              de compatibilidad armónica y BPM para DJs y coleccionistas.
+              {homeConfig.hero_subtitulo ||
+                "Catálogo histórico de prensajes originales en 45 RPM, LPs y casetes con herramientas técnicas de compatibilidad armónica y BPM para DJs y coleccionistas."}
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link
-                href="#catalogo"
+                href={homeConfig.hero_boton_url || "#catalogo"}
                 className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-mono text-xs font-bold uppercase tracking-wider text-black shadow-lg shadow-amber-500/20 hover:bg-amber-400 hover:scale-[1.02] transition-all"
               >
                 <Library className="h-4 w-4" />
-                Explorar Catálogo ({totalAlbumes ?? 719})
+                {homeConfig.hero_boton_texto || `Explorar Catálogo (${totalAlbumes ?? 719})`}
               </Link>
               <Link
                 href="#dj-tools"
@@ -365,7 +412,7 @@ interface RawGrupoRow {
             </p>
           </div>
 
-          <CatalogExplorer initialAlbums={albums} tracksMap={tracksMap} />
+          <CatalogExplorer initialAlbums={sortedAlbums} tracksMap={tracksMap} />
         </section>
 
         {/* Section 3: Iconic Groups & Musical Genealogy */}
@@ -391,6 +438,36 @@ interface RawGrupoRow {
             ))}
           </div>
         </section>
+
+        {/* Section: Últimas Crónicas & Ensayos de Archivo */}
+        {homeConfig.seccion_blog_activa && latestArticles.length > 0 && (
+          <section id="cronicas" className="scroll-mt-20 space-y-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
+              <div>
+                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-400">
+                  <BookOpen className="h-4 w-4" />
+                  Crónicas & Archivo Sonoro
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mt-1">
+                  Ensayos & Reseñas de Archivo
+                </h2>
+              </div>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-1 font-mono text-xs text-amber-400 hover:text-amber-300 hover:underline transition-colors"
+              >
+                <span>Ver todas las crónicas</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {latestArticles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Section 4: Metodología Histórica y Trazabilidad */}
         <section className="space-y-6">
@@ -458,6 +535,9 @@ interface RawGrupoRow {
             </Link>
             <Link href="#dj-tools" className="hover:text-amber-400 transition-colors">
               Consola Camelot
+            </Link>
+            <Link href="/blog" className="hover:text-amber-400 transition-colors">
+              Crónicas & Blog
             </Link>
             <Link href="/admin" className="hover:text-amber-400 transition-colors">
               Panel Administrativo
