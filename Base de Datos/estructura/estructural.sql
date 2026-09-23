@@ -78,6 +78,7 @@ CREATE TABLE Albumes (
     nombre_album VARCHAR(100),
     id_tipo_album INT NOT NULL,
     es_recopilatorio BOOLEAN DEFAULT FALSE,
+    es_varios_artistas BOOLEAN DEFAULT FALSE,
     incluido_en_lp BOOLEAN DEFAULT FALSE,
     extraido_de_lp BOOLEAN DEFAULT FALSE,
     solo_en_45 BOOLEAN DEFAULT FALSE,
@@ -136,9 +137,12 @@ CREATE TABLE Albumes_Temas (
     id_tema INT NOT NULL,
     numero_pista INT,
     lado VARCHAR(10),
+    id_album_origen INT,
+    es_grabacion_inedita BOOLEAN DEFAULT FALSE,
     UNIQUE (id_album, id_tema),
     FOREIGN KEY (id_album) REFERENCES Albumes(id_album) ON DELETE CASCADE,
-    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
+    FOREIGN KEY (id_album_origen) REFERENCES Albumes(id_album) ON DELETE SET NULL
 );
 
 CREATE TABLE Grupos_Musicos (
@@ -184,10 +188,12 @@ CREATE INDEX idx_grupos_nombre ON Grupos(nombre_grupo);
 CREATE INDEX idx_albumes_año ON Albumes(año_publicacion);
 CREATE INDEX idx_albumes_grupo ON Albumes(id_grupo);
 CREATE INDEX idx_albumes_recopilatorio ON Albumes(es_recopilatorio);
+CREATE INDEX idx_albumes_varios_artistas ON Albumes(es_varios_artistas);
 CREATE INDEX idx_albumes_reedicion ON Albumes(es_reedicion);
 CREATE INDEX idx_albumes_incluido_lp ON Albumes(incluido_en_lp);
 CREATE INDEX idx_albumes_extraido_lp ON Albumes(extraido_de_lp);
 CREATE INDEX idx_albumes_solo_45 ON Albumes(solo_en_45);
+CREATE INDEX idx_albumes_temas_album_origen ON Albumes_Temas(id_album_origen);
 CREATE INDEX idx_temas_titulo ON Temas(titulo_tema);
 CREATE INDEX idx_temas_genero ON Temas(id_genero);
 CREATE INDEX idx_temas_grupos_tema ON Temas_Grupos(id_tema);

@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS Albumes (
     nombre_album VARCHAR(100),
     id_tipo_album INT NOT NULL REFERENCES Tipos_Album(id_tipo_album) ON DELETE CASCADE,
     es_recopilatorio BOOLEAN DEFAULT FALSE,
+    es_varios_artistas BOOLEAN DEFAULT FALSE,
     incluido_en_lp BOOLEAN DEFAULT FALSE,
     extraido_de_lp BOOLEAN DEFAULT FALSE,
     solo_en_45 BOOLEAN DEFAULT FALSE,
@@ -106,6 +107,8 @@ CREATE TABLE IF NOT EXISTS Albumes_Temas (
     id_tema INT NOT NULL REFERENCES Temas(id_tema) ON DELETE CASCADE,
     numero_pista INT,
     lado VARCHAR(10),
+    id_album_origen INT REFERENCES Albumes(id_album) ON DELETE SET NULL,
+    es_grabacion_inedita BOOLEAN DEFAULT FALSE,
     UNIQUE (id_album, id_tema)
 );
 
@@ -142,10 +145,12 @@ CREATE INDEX IF NOT EXISTS idx_grupos_nombre ON Grupos(nombre_grupo);
 CREATE INDEX IF NOT EXISTS idx_albumes_año ON Albumes(año_publicacion);
 CREATE INDEX IF NOT EXISTS idx_albumes_grupo ON Albumes(id_grupo);
 CREATE INDEX IF NOT EXISTS idx_albumes_recopilatorio ON Albumes(es_recopilatorio);
+CREATE INDEX IF NOT EXISTS idx_albumes_varios_artistas ON Albumes(es_varios_artistas);
 CREATE INDEX IF NOT EXISTS idx_albumes_reedicion ON Albumes(es_reedicion);
 CREATE INDEX IF NOT EXISTS idx_albumes_incluido_lp ON Albumes(incluido_en_lp);
 CREATE INDEX IF NOT EXISTS idx_albumes_extraido_lp ON Albumes(extraido_de_lp);
 CREATE INDEX IF NOT EXISTS idx_albumes_solo_45 ON Albumes(solo_en_45);
+CREATE INDEX IF NOT EXISTS idx_albumes_temas_album_origen ON Albumes_Temas(id_album_origen);
 CREATE INDEX IF NOT EXISTS idx_temas_titulo ON Temas(titulo_tema);
 CREATE INDEX IF NOT EXISTS idx_temas_genero ON Temas(id_genero);
 CREATE INDEX IF NOT EXISTS idx_temas_bpm ON Temas(bpm);
