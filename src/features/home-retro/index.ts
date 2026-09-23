@@ -8,5 +8,6 @@ export * from "./components/match-bpm-widget";
 export * from "./components/radar-sonoro";
 export * from "./components/historias-de-fondo";
 export * from "./components/nosotros-manifiesto";
+export * from "./components/nosotros-highlight";
 export * from "./components/retro-footer";
 export * from "./components/retro-home-coordinator";

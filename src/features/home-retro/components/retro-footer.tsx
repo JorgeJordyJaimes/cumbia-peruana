@@ -54,24 +54,24 @@ export function RetroFooter() {
             </span>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#catalogo-archivo" className="hover:text-[#E5A93C] transition-colors">
+                <Link href="/#catalogo-archivo" className="hover:text-[#E5A93C] transition-colors">
                   Catálogo de 719+ Vinilos
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#genealogia" className="hover:text-[#E5A93C] transition-colors">
+                <Link href="/genealogia" className="hover:text-[#E5A93C] transition-colors">
                   Explorador Genealógico
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#genealogia" className="hover:text-[#E5A93C] transition-colors">
+                <Link href="/genealogia" className="hover:text-[#E5A93C] transition-colors">
                   Pioneros & Músicos de Sesión
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#radar-sonoro" className="hover:text-[#E5A93C] transition-colors">
+                <Link href="/radar" className="hover:text-[#E5A93C] transition-colors">
                   Radar Sonoro Curado
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -83,9 +83,9 @@ export function RetroFooter() {
             </span>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="#match-bpm" className="hover:text-[#E5A93C] transition-colors">
+                <Link href="/match-bpm" className="hover:text-[#E5A93C] transition-colors">
                   Consola Match BPM DJ
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/blog" className="hover:text-[#E5A93C] transition-colors">
@@ -93,9 +93,9 @@ export function RetroFooter() {
                 </Link>
               </li>
               <li>
-                <a href="#manifiesto" className="hover:text-[#E5A93C] transition-colors">
+                <Link href="/nosotros" className="hover:text-[#E5A93C] transition-colors">
                   Manifiesto de Preservación
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/admin" className="hover:text-[#E5A93C] transition-colors">

@@ -10,11 +10,12 @@ import {
   ChevronDown,
   Layers,
   Users,
-  Building2,
   Music2,
   Radio,
   BookOpen,
   History,
+  GitFork,
+  ShieldCheck,
 } from "lucide-react";
 
 interface RetroNavbarProps {
@@ -83,8 +84,8 @@ export function RetroNavbar({ onOpenCommandPalette }: RetroNavbarProps) {
 
             {isArchiveDropdownOpen && (
               <div className="absolute top-full left-0 w-64 rounded-2xl border border-white/10 bg-[#16191E] p-2 shadow-2xl backdrop-blur-xl animate-in fade-in duration-150">
-                <a
-                  href="#genealogia"
+                <Link
+                  href="/genealogia"
                   className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-colors group"
                 >
                   <Users className="h-4 w-4 text-[#E5A93C] shrink-0 mt-0.5" />
@@ -96,10 +97,10 @@ export function RetroNavbar({ onOpenCommandPalette }: RetroNavbarProps) {
                       Cruces genealógicos y guitarristas legendarios
                     </p>
                   </div>
-                </a>
+                </Link>
 
-                <a
-                  href="#catalogo-archivo"
+                <Link
+                  href="/#catalogo-archivo"
                   className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-colors group"
                 >
                   <Layers className="h-4 w-4 text-[#10B981] shrink-0 mt-0.5" />
@@ -111,48 +112,64 @@ export function RetroNavbar({ onOpenCommandPalette }: RetroNavbarProps) {
                       719+ vinilos en 45 RPM, LPs y casetes
                     </p>
                   </div>
-                </a>
+                </Link>
 
-                <a
-                  href="#sellos"
+                <Link
+                  href="/nosotros"
                   className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-colors group"
                 >
-                  <Building2 className="h-4 w-4 text-[#E5A93C] shrink-0 mt-0.5" />
+                  <ShieldCheck className="h-4 w-4 text-[#E5A93C] shrink-0 mt-0.5" />
                   <div>
                     <p className="font-serif font-bold text-white group-hover:text-[#E5A93C]">
-                      Sellos Históricos
+                      Manifiesto & Equipo
                     </p>
                     <p className="text-[11px] text-[#9CA3AF]">
-                      Infopesa, Discos Horóscopo, Sono Radio
+                      Preservación ética y guardianes del archivo
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
             )}
           </div>
 
-          <a
-            href="#match-bpm"
+          <Link
+            href="/genealogia"
+            className="flex items-center gap-1.5 text-[#F3F4F6] hover:text-[#E5A93C] transition-colors"
+          >
+            <GitFork className="h-3.5 w-3.5 text-[#E5A93C]" />
+            <span>Genealogía</span>
+          </Link>
+
+          <Link
+            href="/match-bpm"
             className="flex items-center gap-1.5 text-[#F3F4F6] hover:text-[#E5A93C] transition-colors"
           >
             <Music2 className="h-3.5 w-3.5 text-[#E5A93C]" />
             <span>Match BPM</span>
-          </a>
+          </Link>
 
-          <a
-            href="#radar-sonoro"
+          <Link
+            href="/radar"
             className="flex items-center gap-1.5 text-[#F3F4F6] hover:text-[#E5A93C] transition-colors"
           >
             <Radio className="h-3.5 w-3.5 text-[#10B981]" />
-            <span>Radar Semanal</span>
-          </a>
+            <span>Radar Sonoro</span>
+          </Link>
 
           <Link
             href="/blog"
             className="flex items-center gap-1.5 text-[#F3F4F6] hover:text-[#E5A93C] transition-colors"
           >
             <BookOpen className="h-3.5 w-3.5 text-[#9CA3AF]" />
-            <span>Blog</span>
+            <span>Crónicas</span>
+          </Link>
+
+          <Link
+            href="/nosotros"
+            className="flex items-center gap-1.5 text-[#F3F4F6] hover:text-[#E5A93C] transition-colors"
+          >
+            <ShieldCheck className="h-3.5 w-3.5 text-[#10B981]" />
+            <span>Nosotros</span>
           </Link>
         </nav>
 
@@ -198,42 +215,49 @@ export function RetroNavbar({ onOpenCommandPalette }: RetroNavbarProps) {
         <div className="md:hidden border-b border-white/10 bg-[#16191E] px-4 py-5 space-y-4 font-mono text-xs animate-in slide-in-from-top-2 duration-200">
           <div className="space-y-1">
             <span className="text-[10px] uppercase tracking-wider text-[#9CA3AF] px-2">
-              Secciones del Archivo
+              Apartados del Archivo
             </span>
-            <a
-              href="#genealogia"
+            <Link
+              href="/genealogia"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block rounded-lg px-3 py-2 text-white hover:bg-white/5 hover:text-[#E5A93C]"
             >
               🧬 Biografías & Genealogía
-            </a>
-            <a
-              href="#catalogo-archivo"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block rounded-lg px-3 py-2 text-white hover:bg-white/5 hover:text-[#E5A93C]"
-            >
-              💿 Discografías & Prensajes
-            </a>
-            <a
-              href="#match-bpm"
+            </Link>
+            <Link
+              href="/match-bpm"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block rounded-lg px-3 py-2 text-[#E5A93C] hover:bg-white/5"
             >
               🎛️ Consola Match BPM
-            </a>
-            <a
-              href="#radar-sonoro"
+            </Link>
+            <Link
+              href="/radar"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block rounded-lg px-3 py-2 text-[#10B981] hover:bg-white/5"
             >
               📻 Radar Sonoro Semanal
-            </a>
+            </Link>
             <Link
               href="/blog"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block rounded-lg px-3 py-2 text-white hover:bg-white/5 hover:text-[#E5A93C]"
             >
               📖 Crónicas & Blog
+            </Link>
+            <Link
+              href="/nosotros"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-lg px-3 py-2 text-white hover:bg-white/5 hover:text-[#E5A93C]"
+            >
+              🛡️ Nosotros & Manifiesto
+            </Link>
+            <Link
+              href="/#catalogo-archivo"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-lg px-3 py-2 text-white hover:bg-white/5 hover:text-[#E5A93C]"
+            >
+              💿 Catálogo de Vinilos
             </Link>
           </div>
 

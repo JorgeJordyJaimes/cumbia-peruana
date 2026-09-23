@@ -88,6 +88,26 @@ export function HistoriasDeFondo() {
             </Link>
           ))}
         </div>
+
+        {/* CTA al Blog Completo */}
+        <div className="rounded-2xl border border-white/10 bg-gradient-to-r from-[#16191E] via-[#1E2229] to-[#16191E] p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center sm:text-left">
+            <p className="font-serif text-base font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+              <BookOpen className="h-4 w-4 text-[#E5A93C]" />
+              ¿Quieres profundizar en biografías y el nacimiento de sellos?
+            </p>
+            <p className="font-mono text-xs text-[#9CA3AF]">
+              Visita el archivo editorial con ensayos sobre Infopesa, el sonido de la guitarra eléctrica en el Perú y crónicas inéditas.
+            </p>
+          </div>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#E5A93C] px-5 py-2.5 font-mono text-xs font-bold text-black hover:bg-[#d6992d] transition-all shrink-0"
+          >
+            <span>Ver Todas las Crónicas</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </section>
   );

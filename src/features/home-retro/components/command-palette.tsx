@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { Search, X, Disc3, Music2, Users, BookOpen, ArrowRight } from "lucide-react";
 import { musicosGenealogia, temasDJMock, historiasFondoMock } from "../data/cumbia-mock";
 
@@ -10,7 +11,8 @@ interface CommandPaletteProps {
   onSelectAction?: (sectionId: string) => void;
 }
 
-export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPaletteProps) {
+export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
 
   // Atajo de teclado global ⌘K o Ctrl+K
@@ -105,12 +107,12 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
         <div className="max-h-[60vh] overflow-y-auto p-4 space-y-4">
           {!query.trim() ? (
             <div className="py-6 text-center space-y-3 font-mono text-xs text-[#9CA3AF]">
-              <p className="text-white/80 font-semibold">Atajos directos del archivo:</p>
+              <p className="text-white/80 font-semibold">Apartados directos del archivo:</p>
               <div className="flex flex-wrap justify-center gap-2">
                 <button
                   type="button"
                   onClick={() => {
-                    onSelectAction?.("genealogia");
+                    router.push("/genealogia");
                     onClose();
                   }}
                   className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 hover:border-[#E5A93C]/40 hover:text-[#E5A93C] transition-colors"
@@ -120,7 +122,7 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                 <button
                   type="button"
                   onClick={() => {
-                    onSelectAction?.("match-bpm");
+                    router.push("/match-bpm");
                     onClose();
                   }}
                   className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 hover:border-[#E5A93C]/40 hover:text-[#E5A93C] transition-colors"
@@ -130,7 +132,7 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                 <button
                   type="button"
                   onClick={() => {
-                    onSelectAction?.("radar");
+                    router.push("/radar");
                     onClose();
                   }}
                   className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 hover:border-[#E5A93C]/40 hover:text-[#E5A93C] transition-colors"
@@ -140,12 +142,22 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                 <button
                   type="button"
                   onClick={() => {
-                    onSelectAction?.("historias");
+                    router.push("/blog");
                     onClose();
                   }}
                   className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 hover:border-[#E5A93C]/40 hover:text-[#E5A93C] transition-colors"
                 >
                   📖 Crónicas & Blog
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    router.push("/nosotros");
+                    onClose();
+                  }}
+                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 hover:border-[#E5A93C]/40 hover:text-[#E5A93C] transition-colors"
+                >
+                  🛡️ Nosotros & Manifiesto
                 </button>
               </div>
             </div>
@@ -163,7 +175,7 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                       key={m.id}
                       type="button"
                       onClick={() => {
-                        onSelectAction?.("genealogia");
+                        router.push("/genealogia");
                         onClose();
                       }}
                       className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 text-left transition-colors group"
@@ -195,7 +207,7 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                       key={t.id}
                       type="button"
                       onClick={() => {
-                        onSelectAction?.("match-bpm");
+                        router.push("/match-bpm");
                         onClose();
                       }}
                       className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 text-left transition-colors group"
@@ -232,9 +244,13 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                     Crónicas Históricas
                   </span>
                   {searchResults.cronicas.map((h) => (
-                    <a
+                    <button
                       key={h.id}
-                      href={`/blog/${h.slug}`}
+                      type="button"
+                      onClick={() => {
+                        router.push(`/blog/${h.slug}`);
+                        onClose();
+                      }}
                       className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 text-left transition-colors group"
                     >
                       <div>
@@ -244,7 +260,7 @@ export function CommandPalette({ isOpen, onClose, onSelectAction }: CommandPalet
                         <p className="font-mono text-xs text-[#9CA3AF]">{h.categoria}</p>
                       </div>
                       <ArrowRight className="h-4 w-4 text-[#9CA3AF] group-hover:text-[#E5A93C]" />
-                    </a>
+                    </button>
                   ))}
                 </div>
               )}

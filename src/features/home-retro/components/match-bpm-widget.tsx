@@ -1,10 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Music2, SlidersHorizontal, Disc3, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { temasDJMock } from "../data/cumbia-mock";
 
-export function MatchBpmWidget() {
+interface MatchBpmWidgetProps {
+  isHighlight?: boolean;
+}
+
+export function MatchBpmWidget({ isHighlight = false }: MatchBpmWidgetProps) {
   const [selectedTemaId, setSelectedTemaId] = useState<string>(temasDJMock[0].id);
 
   const currentTema =
@@ -61,7 +66,7 @@ export function MatchBpmWidget() {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-3 py-1 font-mono text-xs font-semibold text-[#10B981]">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Algoritmo calibrado para cumbia costeña, amazónica, andina y chicha</span>
+              <span>{isHighlight ? "Destacado para DJs de Vinilo" : "Algoritmo calibrado para cumbia costeña, amazónica, andina y chicha"}</span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-[#F3F4F6]">
@@ -74,13 +79,14 @@ export function MatchBpmWidget() {
             </p>
           </div>
 
-          <a
-            href="#dj-tools"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#E5A93C] px-5 py-3 font-mono text-xs font-bold text-black shadow-lg shadow-[#E5A93C]/20 hover:bg-[#d6992d] transition-all shrink-0"
+          <Link
+            href="/match-bpm"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#E5A93C] px-5 py-3 font-mono text-xs font-bold text-black shadow-lg shadow-[#E5A93C]/20 hover:bg-[#d6992d] hover:scale-105 transition-all shrink-0"
           >
             <SlidersHorizontal className="h-4 w-4" />
-            <span>Abrir consola Match BPM completa</span>
-          </a>
+            <span>{isHighlight ? "Abrir consola Match BPM completa" : "Ir a consola completa"}</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
 
         {/* WIDGET COMPACTO DE DEMOSTRACIÓN */}
@@ -233,16 +239,38 @@ export function MatchBpmWidget() {
 
             <div className="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs text-[#9CA3AF]">
               <span>Cálculo armónico basado en afinaciones originales a 440 Hz</span>
-              <a
-                href="#dj-tools"
+              <Link
+                href="/match-bpm"
                 className="text-[#E5A93C] hover:underline flex items-center gap-1 font-semibold"
               >
-                <span>Ver consola extendida</span>
+                <span>Ver consola extendida & Rueda Camelot</span>
                 <ArrowRight className="h-3.5 w-3.5" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
+
+        {/* CTA al Apartado Completo si es Vista Destacada */}
+        {isHighlight && (
+          <div className="rounded-2xl border border-[#10B981]/20 bg-gradient-to-r from-[#16191E] via-[#1E2229] to-[#16191E] p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <p className="font-serif text-base font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                <SlidersHorizontal className="h-4 w-4 text-[#10B981]" />
+                ¿Necesitas mezclar en vivo con todo el repertorio del archivo?
+              </p>
+              <p className="font-mono text-xs text-[#9CA3AF]">
+                Accede a la Rueda Camelot interactiva completa con cientos de temas catalogados con BPM y clave musical real.
+              </p>
+            </div>
+            <Link
+              href="/match-bpm"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#10B981] px-5 py-2.5 font-mono text-xs font-bold text-black hover:bg-[#0ea271] transition-all shrink-0"
+            >
+              <span>Abrir Consola DJ Completa</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

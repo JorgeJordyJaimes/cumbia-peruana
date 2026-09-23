@@ -1,10 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Building2, Disc3, ArrowRight, GitFork, Guitar, Award } from "lucide-react";
 import { musicosGenealogia } from "../data/cumbia-mock";
 
-export function GenealogyExplorer() {
+interface GenealogyExplorerProps {
+  isHighlight?: boolean;
+}
+
+export function GenealogyExplorer({ isHighlight = false }: GenealogyExplorerProps) {
   const [selectedMusicoId, setSelectedMusicoId] = useState(musicosGenealogia[0].id);
 
   const currentMusico =
@@ -18,7 +23,7 @@ export function GenealogyExplorer() {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#E5A93C]">
               <GitFork className="h-4 w-4" />
-              <span>Valor Cultural Único</span>
+              <span>{isHighlight ? "Destacado del Archivo" : "Valor Cultural Único"}</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-[#F3F4F6]">
               Explorador Genealógico & Músicos de Sesión
@@ -30,13 +35,13 @@ export function GenealogyExplorer() {
             </p>
           </div>
 
-          <a
-            href="#catalogo-archivo"
+          <Link
+            href="/genealogia"
             className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[#E5A93C] hover:text-white hover:underline transition-colors shrink-0"
           >
-            <span>Explorar las biografías cruzadas</span>
+            <span>{isHighlight ? "Abrir apartado completo de genealogía" : "Explorar biografías cruzadas"}</span>
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </Link>
         </div>
 
         {/* Selector de Pioneros */}
@@ -167,6 +172,28 @@ export function GenealogyExplorer() {
             </div>
           </div>
         </div>
+
+        {/* CTA al Apartado Completo si es Vista Destacada */}
+        {isHighlight && (
+          <div className="rounded-2xl border border-[#E5A93C]/20 bg-gradient-to-r from-[#16191E] via-[#1E2229] to-[#16191E] p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <p className="font-serif text-base font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                <GitFork className="h-4 w-4 text-[#E5A93C]" />
+                ¿Quieres rastrear más guitarristas, agrupaciones y sellos?
+              </p>
+              <p className="font-mono text-xs text-[#9CA3AF]">
+                Accede a más de 360 músicos de sesión, árboles de cruce y sellos discográficos en el apartado dedicado.
+              </p>
+            </div>
+            <Link
+              href="/genealogia"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#E5A93C] px-5 py-2.5 font-mono text-xs font-bold text-black hover:bg-[#d6992d] transition-all shrink-0"
+            >
+              <span>Abrir Genealogía Completa</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

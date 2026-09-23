@@ -7,15 +7,13 @@ import {
   MatchBpmWidget,
   RadarSonoro,
   HistoriasDeFondo,
-  NosotrosManifiesto,
+  NosotrosHighlight,
   RetroFooter,
 } from "@/features/home-retro";
 import { CatalogExplorer, type AlbumItem } from "@/features/albumes";
-import { CamelotSelector, type TrackDJItem } from "@/features/dj-tools";
 import type { TrackItem } from "@/features/temas";
-import type { CamelotCode } from "@/types/domain";
 import type { ConfiguracionHome } from "@/types/blog";
-import { Disc3, SlidersHorizontal } from "lucide-react";
+import { Disc3 } from "lucide-react";
 
 export const revalidate = 60; // Regenerar cada 60 segundos
 
@@ -146,27 +144,8 @@ export default async function Home() {
     isCompilation: a.es_recopilatorio,
   }));
 
-  // Mapear Pistas para DJ Tools
-  const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
-  const djTracks: TrackDJItem[] = rawTemasList.map((t) => {
-    const primaryAlbumTema = t.albumes_temas?.[0];
-    const primaryAlbum = primaryAlbumTema?.albumes;
-    const primaryGroup = t.temas_grupos?.[0]?.grupos;
-
-    return {
-      id: t.id_tema,
-      title: t.titulo_tema,
-      artist: primaryGroup?.nombre_grupo || "Agrupación Histórica",
-      album: primaryAlbum?.nombre_album || undefined,
-      year: primaryAlbum?.año_publicacion || undefined,
-      bpm: t.bpm || 115,
-      camelot: (t.camelot_code as CamelotCode) || "8A",
-      musicalKey: t.musical_key || "Am",
-      format: "Vinilo",
-    };
-  });
-
   // Mapa de pistas por álbum para contraportadas
+  const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
   const tracksMap: Record<number, TrackItem[]> = {};
   rawTemasList.forEach((t) => {
     const composer = t.temas_compositores?.[0]?.personas?.nombre;
@@ -213,16 +192,16 @@ export default async function Home() {
             totalPersonas={totalPersonas}
           />
 
-          {/* SECCIÓN 3: EXPLORADOR GENEALÓGICO (VALOR CULTURAL ÚNICO) */}
-          <GenealogyExplorer />
+          {/* SECCIÓN 3: EXPLORADOR GENEALÓGICO (DESTACADO CULTURAL) */}
+          <GenealogyExplorer isHighlight />
 
-          {/* SECCIÓN 4: MATCH BPM (PREVIEW INTERACTIVO DJ) */}
-          <MatchBpmWidget />
+          {/* SECCIÓN 4: MATCH BPM (DESTACADO TÉCNICO DJ) */}
+          <MatchBpmWidget isHighlight />
 
-          {/* SECCIÓN 5: EL RADAR SONORO (CURADURÍA SEMANAL & LITE EMBEDS) */}
-          <RadarSonoro />
+          {/* SECCIÓN 5: EL RADAR SONORO (DESTACADO CURATORIAL 45 RPM) */}
+          <RadarSonoro isHighlight />
 
-          {/* SECCIÓN 6: HISTORIAS DE FONDO (CRÓNICAS & BLOG) */}
+          {/* SECCIÓN 6: HISTORIAS DE FONDO (CRÓNICAS & BLOG DESTACADAS) */}
           <HistoriasDeFondo />
 
           {/* SECCIÓN DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
@@ -248,31 +227,8 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* CONSOLA EXTENDIDA DE ARMONÍA CAMELOT */}
-          <section id="dj-tools" className="scroll-mt-24 py-16 border-t border-white/5 bg-[#16191E]/40">
-            <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
-                <div>
-                  <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#10B981]">
-                    <SlidersHorizontal className="h-4 w-4" />
-                    Consola Armónica Integral
-                  </div>
-                  <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-white mt-1">
-                    Rueda Camelot para Sesiones en Vivo
-                  </h2>
-                </div>
-                <p className="max-w-md font-mono text-xs text-[#9CA3AF]">
-                  Explora todas las pistas del catálogo catalogadas con BPM verificado y tonalidad
-                  armónica.
-                </p>
-              </div>
-
-              <CamelotSelector tracks={djTracks} />
-            </div>
-          </section>
-
-          {/* SECCIÓN 7: NOSOTROS / MANIFIESTO */}
-          <NosotrosManifiesto />
+          {/* SECCIÓN 7: NOSOTROS / MANIFIESTO RESUMEN DESTACADO */}
+          <NosotrosHighlight />
         </main>
       </RetroHomeCoordinator>
 

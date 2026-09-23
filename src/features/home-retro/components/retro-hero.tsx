@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Sparkles, Music2, Users, Disc3, X } from "lucide-react";
+import Link from "next/link";
+import { Search, Sparkles, Music2, Users, Disc3, X, Radio, BookOpen, GitFork, ShieldCheck } from "lucide-react";
 import { musicosGenealogia, temasDJMock } from "../data/cumbia-mock";
 
 interface RetroHeroProps {
@@ -143,9 +144,9 @@ export function RetroHero({
                       <Users className="h-3 w-3" /> Músicos & Guitarristas de Sesión
                     </span>
                     {suggestions.musicos.map((m) => (
-                      <a
+                      <Link
                         key={m.id}
-                        href="#genealogia"
+                        href="/genealogia"
                         onClick={() => {
                           setSearchTerm("");
                           onSelectEntity?.("musico", m.id);
@@ -169,7 +170,7 @@ export function RetroHero({
                         <span className="font-mono text-[10px] text-[#9CA3AF] group-hover:text-white">
                           Ver árbol →
                         </span>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -179,12 +180,12 @@ export function RetroHero({
                 suggestions.temas.length > 0 && (
                   <div className="space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#10B981] px-2 flex items-center gap-1">
-                      <Music2 className="h-3 w-3" /> Temas con BPM & Tonalidad
+                      <Music2 className="h-3.5 w-3.5" /> Temas con BPM & Tonalidad
                     </span>
                     {suggestions.temas.map((t) => (
-                      <a
+                      <Link
                         key={t.id}
-                        href="#match-bpm"
+                        href="/match-bpm"
                         onClick={() => {
                           setSearchTerm("");
                           onSelectEntity?.("tema", t.id);
@@ -208,7 +209,7 @@ export function RetroHero({
                             {t.camelot}
                           </span>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -216,24 +217,63 @@ export function RetroHero({
           )}
         </div>
 
-        {/* Acciones Secundarias y CTAs Requeridos */}
+        {/* Acciones Principales */}
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2 font-mono text-xs">
-          <a
-            href="#genealogia"
+          <Link
+            href="/genealogia"
             className="rounded-xl bg-[#E5A93C] px-6 py-3 font-bold text-black shadow-lg shadow-[#E5A93C]/20 hover:bg-[#d6992d] hover:scale-[1.02] transition-all flex items-center gap-2"
           >
-            <Users className="h-4 w-4" />
+            <GitFork className="h-4 w-4" />
             <span>Explorar Árbol Genealógico</span>
-          </a>
+          </Link>
 
-          {/* CTA secundario en botón outline requerido */}
-          <a
-            href="#match-bpm"
+          <Link
+            href="/match-bpm"
             className="rounded-xl border border-white/20 bg-white/5 px-6 py-3 font-bold text-[#F3F4F6] hover:bg-white/10 hover:border-[#E5A93C]/50 hover:text-[#E5A93C] transition-all flex items-center gap-2"
           >
             <Music2 className="h-4 w-4 text-[#E5A93C]" />
             <span>Abrir herramienta Match BPM</span>
-          </a>
+          </Link>
+        </div>
+
+        {/* Pestañas Rápidas a los 5 Apartados del Archivo */}
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-2 font-mono text-[11px]">
+          <span className="text-[#9CA3AF] mr-1">Apartados del Archivo:</span>
+          <Link
+            href="/genealogia"
+            className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-neutral-300 hover:border-[#E5A93C]/50 hover:text-[#E5A93C] transition-colors flex items-center gap-1.5"
+          >
+            <GitFork className="h-3 w-3 text-[#E5A93C]" />
+            <span>Genealogía</span>
+          </Link>
+          <Link
+            href="/match-bpm"
+            className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-neutral-300 hover:border-[#E5A93C]/50 hover:text-[#E5A93C] transition-colors flex items-center gap-1.5"
+          >
+            <Music2 className="h-3 w-3 text-[#E5A93C]" />
+            <span>Match BPM</span>
+          </Link>
+          <Link
+            href="/radar"
+            className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-neutral-300 hover:border-[#10B981]/50 hover:text-[#10B981] transition-colors flex items-center gap-1.5"
+          >
+            <Radio className="h-3 w-3 text-[#10B981]" />
+            <span>Radar Sonoro</span>
+          </Link>
+          <Link
+            href="/blog"
+            className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-neutral-300 hover:border-white/30 hover:text-white transition-colors flex items-center gap-1.5"
+          >
+            <BookOpen className="h-3 w-3 text-neutral-400" />
+            <span>Crónicas & Blog</span>
+          </Link>
+          <Link
+            href="/nosotros"
+            className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-neutral-300 hover:border-[#10B981]/50 hover:text-[#10B981] transition-colors flex items-center gap-1.5"
+          >
+            <ShieldCheck className="h-3 w-3 text-[#10B981]" />
+            <span>Nosotros & Manifiesto</span>
+          </Link>
         </div>
 
         {/* Tira de Datos en Vivo */}

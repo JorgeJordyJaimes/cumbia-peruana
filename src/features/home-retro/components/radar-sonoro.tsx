@@ -1,10 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Radio, Play, ExternalLink, Music } from "lucide-react";
+import Link from "next/link";
+import { Radio, Play, ExternalLink, Music, ArrowRight } from "lucide-react";
 import { radarMock } from "../data/cumbia-mock";
 
-export function RadarSonoro() {
+interface RadarSonoroProps {
+  isHighlight?: boolean;
+}
+
+export function RadarSonoro({ isHighlight = false }: RadarSonoroProps) {
   const [activeTab, setActiveTab] = useState<"semana" | "mes" | "playlist">("semana");
   const [activeEmbedId, setActiveEmbedId] = useState<string | null>(null);
 
@@ -18,7 +23,7 @@ export function RadarSonoro() {
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#10B981]">
               <Radio className="h-4 w-4" />
-              <span>Curaduría Especializada</span>
+              <span>{isHighlight ? "Destacado Curatorial" : "Curaduría Especializada"}</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-[#F3F4F6]">
               El Radar Sonoro
@@ -29,50 +34,60 @@ export function RadarSonoro() {
             </p>
           </div>
 
-          {/* Pestañas (Tabs) Requeridas */}
-          <div className="flex items-center rounded-2xl border border-white/10 bg-[#16191E] p-1.5 font-mono text-xs shrink-0">
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab("semana");
-                setActiveEmbedId(null);
-              }}
-              className={`rounded-xl px-3.5 py-2 transition-all ${
-                activeTab === "semana"
-                  ? "bg-[#E5A93C] text-black font-bold shadow-md shadow-[#E5A93C]/20"
-                  : "text-[#9CA3AF] hover:text-white"
-              }`}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+            {/* Pestañas (Tabs) Requeridas */}
+            <div className="flex items-center rounded-2xl border border-white/10 bg-[#16191E] p-1.5 font-mono text-xs">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("semana");
+                  setActiveEmbedId(null);
+                }}
+                className={`rounded-xl px-3.5 py-2 transition-all ${
+                  activeTab === "semana"
+                    ? "bg-[#E5A93C] text-black font-bold shadow-md shadow-[#E5A93C]/20"
+                    : "text-[#9CA3AF] hover:text-white"
+                }`}
+              >
+                Selección Semanal
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("mes");
+                  setActiveEmbedId(null);
+                }}
+                className={`rounded-xl px-3.5 py-2 transition-all ${
+                  activeTab === "mes"
+                    ? "bg-[#E5A93C] text-black font-bold shadow-md shadow-[#E5A93C]/20"
+                    : "text-[#9CA3AF] hover:text-white"
+                }`}
+              >
+                Álbum del Mes
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("playlist");
+                  setActiveEmbedId(null);
+                }}
+                className={`rounded-xl px-3.5 py-2 transition-all ${
+                  activeTab === "playlist"
+                    ? "bg-[#E5A93C] text-black font-bold shadow-md shadow-[#E5A93C]/20"
+                    : "text-[#9CA3AF] hover:text-white"
+                }`}
+              >
+                Playlists Oficiales
+              </button>
+            </div>
+
+            <Link
+              href="/radar"
+              className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[#10B981] hover:text-white hover:underline transition-colors py-2 px-1"
             >
-              Selección Semanal
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab("mes");
-                setActiveEmbedId(null);
-              }}
-              className={`rounded-xl px-3.5 py-2 transition-all ${
-                activeTab === "mes"
-                  ? "bg-[#E5A93C] text-black font-bold shadow-md shadow-[#E5A93C]/20"
-                  : "text-[#9CA3AF] hover:text-white"
-              }`}
-            >
-              Álbum del Mes
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab("playlist");
-                setActiveEmbedId(null);
-              }}
-              className={`rounded-xl px-3.5 py-2 transition-all ${
-                activeTab === "playlist"
-                  ? "bg-[#E5A93C] text-black font-bold shadow-md shadow-[#E5A93C]/20"
-                  : "text-[#9CA3AF] hover:text-white"
-              }`}
-            >
-              Playlists Oficiales
-            </button>
+              <span>{isHighlight ? "Ver radar completo" : "Explorar archivo"}</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
 
@@ -175,6 +190,28 @@ export function RadarSonoro() {
             </div>
           ))}
         </div>
+
+        {/* CTA al Apartado Completo si es Vista Destacada */}
+        {isHighlight && (
+          <div className="rounded-2xl border border-[#10B981]/20 bg-gradient-to-r from-[#16191E] via-[#1E2229] to-[#16191E] p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <p className="font-serif text-base font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                <Radio className="h-4 w-4 text-[#10B981]" />
+                ¿Buscas álbumes completos del mes o playlists para coleccionistas?
+              </p>
+              <p className="font-mono text-xs text-[#9CA3AF]">
+                Explora el archivo curatorial extendido con pistas raras de 45 RPM y selecciones oficiales de psicodelia.
+              </p>
+            </div>
+            <Link
+              href="/radar"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#10B981] px-5 py-2.5 font-mono text-xs font-bold text-black hover:bg-[#0ea271] transition-all shrink-0"
+            >
+              <span>Ver Radar Completo</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
