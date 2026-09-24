@@ -1,8 +1,10 @@
 --------------------------------------------------------------------------------------- LOS DIABLOS ROJOS ---------------------------------------------------------------------------------------
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES 
+
 (2, 3, 'Al Rojo Vivo', 'SE-9379', 1971, 2), 
 (2, 3, 'Paseo Tropical', 'SE-9409', 1972, 2), 
 (2, 3, 'Vuelo Tropical', 'SE-9431', 1972, 2),
@@ -16,7 +18,6 @@ VALUES
 (2, 3, 'Los Reyes de la Popularidad', 'SE-9596', 1977, 2), 
 (2, 3, 'Flor Delicada', 'SE-9619', 1978, 2), 
 (2, 3, 'Corazón Celoso', 'SE-9637', 1979, 2), 
-(2, 3, 'Lo Mejor de Lo Mejor', 'SE-9639', 1979, 2), 
 (2, 3, 'Música de Fiesta', 'SE-9655', 1979, 2),
 (2, 3, 'Música de Fiesta Vol. 2', 'SE-9674', 1980, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 1', 'SE-9703', 1980, 2), 
@@ -24,27 +25,40 @@ VALUES
 (2, 3, 'Antología de la Cumbia Peruana Vol. 3', 'SE-9736', 1981, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 4', 'SE-9757', 1982, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 5', 'SE-9777', 1982, 2), 
-(2, 3, 'Disco de Oro', 'SE-9794', 1983, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 6', 'SE-9798', 1983, 2), 
 (2, 3, 'Antología de la Cumbia Peruana Vol. 7', 'SE-9818', 1984, 2), 
-(2, 43, 'Antología de la Cumbia Peruana Vol. 8', 'SE-8699', 1984, 2);
+(2, 43,'Antología de la Cumbia Peruana Vol. 8', 'SE-8699', 1984, 2);
 
 -- CBS
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (2, 43, 'Costa, Sierra, Selva', 'SE-8745', 1985, 2), 
 (2, 43, 'Dimensión Bailable Vol. 1', 'SE-8761', 1985, 2);
 
 -- NINSA
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (2, 204, 'Dimensión Bailable Vol. 2', '02.049', 1986, 2);
+
+-- RECOPILATORIO SONO RADIO
+
+INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album, es_recopilatorio)
+VALUES
+
+(2, 3, 'Lo Mejor de Lo Mejor', 'SE-9639', 1979, 2, TRUE),
+(2, 3, 'Disco de Oro', 'SE-9794', 1983, 2, TRUE);
 
 --------------------------------------------------------------------------------------- LOS YUNGAS ---------------------------------------------------------------------------------------
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (5, 3, '¡Rítmos Tropicales!', 'SE-9478', 1974, 2), 
 (5, 3, 'Bailando con... Los Yungas', 'SE-9535', 1975, 2), 
 (5, 3, '¡Qué Tal Rítmo!', 'SE-9556', 1976, 2), 
@@ -57,46 +71,60 @@ VALUES
 (5, 3, 'Diluvio Tropical', 'SE-9773', 1982, 2);
 
 -- INFOPESA
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (5, 1, 'Vuelven', 'INF-208359', 1985, 2);
 
 --------------------------------------------------------------------------------------- GRUPO FANTASIA DE MONSEFÚ -----------------------------------------------------------------------------
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (330, 3, 'El Poder Musical', 'SE-9841', 1984, 2);
 
 -- MIDAS
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (330, 5, 'Con Cariño', 'LPG-216049', 1984, 2),
 (330, 1, 'Pa Todo el Año', 'INF-208375', 1985, 2);
 
 -- INFOPESA
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (330, 1, 'Cumbias Poderosas', 'INF-208394', 1986, 2);
 
 --------------------------------------------------------------------------------------- LOS WEMBLER'S DE IQUITOS ------------------------------------------------------------------------------
 
 -- ODEON
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (49, 4, 'Al Rítmo de Los Wembler''s', 'LD-2195', 1972, 2);
 
 -- DECIBEL
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
-VALUES 
+VALUES
+
 (49, 34, 'La Danza del Petrolero', 'LP-2001', 1974, 2),
 (49, 34, 'La Amenaza Verde', 'LP-2008', 1975, 2),
 (49, 34, 'El Encanto de la Selva', 'LP-2024', 1976, 2),
 (49, 34, 'Carapira', 'LP-2034', 1976, 2);
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
+
 (49, 3, 'Fiesta en la Selva', 'SE-9598', 1977, 2),
 (49, 3, 'Bailando Hasta el Amanecer', 'SE-9620', 1978, 2),
 (49, 3, 'Fiebre en la Selva', 'SE-9636', 1978, 2),
@@ -105,22 +133,28 @@ VALUES
 
 ------------------------------------------------------------------------------------- LOS ORIENTALES DE VÍCTOR ------------------------------------------------------------------------------
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
+
 (48, 3, 'Con Sabor Tropical', 'SE-9396', 1972, 2),
 (48, 3, '¡Tremendo Rítmo!', 'SE-9444', 1973, 2);
 
 -- DIFA
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
+
 (48, 11, 'Lo Fuerte del Gua Gua', 'DLPS-81011', 1981, 2);
 
 ---------------------------------------------------------------------------------- LOS TIGRES DE MARINO VALENCIA ----------------------------------------------------------------------------
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
+
 (62, 3, 'El Cumbión del Año', 'SE-9643', 1979, 2),
 (62, 3, 'Un Rugido Musical', 'SE-9666', 1979, 2),
 (62, 3, 'Furia Tropical', 'SE-9680', 1980, 2),
@@ -129,12 +163,16 @@ VALUES
 
 -------------------------------------------------------------------------------- LOS TIMPANOS DE CERRO DE PASCO ----------------------------------------------------------------------------
 
--- SONORADIO
+-- SONO RADIO
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
+
 (67, 3, 'El Super Sonido', 'SE-9768', 1982, 2);
 
 -- LESISA
+
 INSERT INTO albumes (id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, id_tipo_album)
 VALUES
+
 (67, 54, 'El Super Show de Los Tímpanos', '15-020-99', 1983, 2);
