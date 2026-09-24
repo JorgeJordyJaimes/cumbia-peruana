@@ -153,6 +153,7 @@ export interface Database {
           incluido_en_lp: boolean
           extraido_de_lp: boolean
           solo_en_45: boolean
+          lados_en_lp: "Lado A" | "Lado B" | "Ambos" | null
           id_lp_relacionado: number | null
           es_reedicion: boolean
           id_album_original: number | null
@@ -173,6 +174,7 @@ export interface Database {
           incluido_en_lp?: boolean
           extraido_de_lp?: boolean
           solo_en_45?: boolean
+          lados_en_lp?: "Lado A" | "Lado B" | "Ambos" | null
           id_lp_relacionado?: number | null
           es_reedicion?: boolean
           id_album_original?: number | null
@@ -193,6 +195,7 @@ export interface Database {
           incluido_en_lp?: boolean
           extraido_de_lp?: boolean
           solo_en_45?: boolean
+          lados_en_lp?: "Lado A" | "Lado B" | "Ambos" | null
           id_lp_relacionado?: number | null
           es_reedicion?: boolean
           id_album_original?: number | null

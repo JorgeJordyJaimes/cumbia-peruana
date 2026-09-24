@@ -82,6 +82,7 @@ CREATE TABLE Albumes (
     incluido_en_lp BOOLEAN DEFAULT FALSE,
     extraido_de_lp BOOLEAN DEFAULT FALSE,
     solo_en_45 BOOLEAN DEFAULT FALSE,
+    lados_en_lp VARCHAR(20) DEFAULT NULL,
     id_lp_relacionado INT,
     es_reedicion BOOLEAN DEFAULT FALSE,
     id_album_original INT,
@@ -193,6 +194,7 @@ CREATE INDEX idx_albumes_reedicion ON Albumes(es_reedicion);
 CREATE INDEX idx_albumes_incluido_lp ON Albumes(incluido_en_lp);
 CREATE INDEX idx_albumes_extraido_lp ON Albumes(extraido_de_lp);
 CREATE INDEX idx_albumes_solo_45 ON Albumes(solo_en_45);
+CREATE INDEX idx_albumes_lados_en_lp ON Albumes(lados_en_lp);
 CREATE INDEX idx_albumes_temas_album_origen ON Albumes_Temas(id_album_origen);
 CREATE INDEX idx_temas_titulo ON Temas(titulo_tema);
 CREATE INDEX idx_temas_genero ON Temas(id_genero);

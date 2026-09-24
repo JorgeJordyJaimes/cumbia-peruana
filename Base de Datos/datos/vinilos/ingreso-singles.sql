@@ -13,19 +13,26 @@
 -- 3. solo_en_45 (BOOLEAN) [DEFAULT FALSE]
 --    • Cuándo usarla: Marcar como TRUE cuando las grabaciones contenidas en este disco NUNCA salieron en ningún LP ni compilatorio oficial de la época (rarezas o temas exclusivos en 45 RPM).
 --
--- 4. id_lp_relacionado (INT) [NULLABLE]
+-- 4. lados_en_lp (VARCHAR) [DEFAULT NULL]
+--    • Cuándo usarla: Aplica cuando 'incluido_en_lp = TRUE'.
+--      - Si se deja en NULL o 'Ambos': Se sobreentiende que ambos lados entraron al LP (caso habitual).
+--      - Si solo el Lado A entró al LP (y el Lado B quedó exclusivo en 45): Escribir 'Lado A'.
+--      - Si solo el Lado B entró al LP (y el Lado A quedó exclusivo en 45): Escribir 'Lado B'.
+--      - Si el disco no salió en LP ('solo_en_45 = TRUE'): Se deja en NULL (no se escribe nada).
+--
+-- 5. id_lp_relacionado (INT) [NULLABLE]
 --     • Cuándo usarla: Cuando 'incluido_en_lp = TRUE' o 'extraido_de_lp = TRUE', se ingresa aquí el 'id_album' del LP correspondiente para crear la trazabilidad directa entre el single y el álbum grande.
 --
--- 5. es_reedicion (BOOLEAN) [DEFAULT FALSE]
+-- 6. es_reedicion (BOOLEAN) [DEFAULT FALSE]
 --     • Cuándo usarla: Marcar como TRUE si el vinilo es un re-prensaje posterior, segundo tiraje con cambio de etiqueta/diseño, o reedición bajo otra casa disquera en años posteriores al original.
 --
--- 6. id_album_original (INT) [NULLABLE]
+-- 7. id_album_original (INT) [NULLABLE]
 --     • Cuándo usarla: Cuando 'es_reedicion = TRUE', se ingresa el 'id_album' del prensaje original primigenio (la primera edición) para enlazar el árbol de reediciones.
 --
--- 7. comentario (TEXT)
+-- 8. comentario (TEXT)
 --     • Cuándo usarla: Para documentar particularidades históricas, estado del soporte físico, variantes de color de vinilo, cambios de sello, dedicatorias o notas de coleccionista.
 --
--- 8. url_etiqueta / url_portada / url_contraportada (VARCHAR) [Opcional]
+-- 9. url_etiqueta / url_portada / url_contraportada (VARCHAR) [Opcional]
 --     • Cuándo usarla: Para enlazar las fotografías o digitalizaciones de la galleta/etiqueta central circular ('url_etiqueta') o carátula de papel/funda si la tuviera ('url_portada').
 -- ======================================================================================================================
 
