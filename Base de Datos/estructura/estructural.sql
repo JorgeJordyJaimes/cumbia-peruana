@@ -79,6 +79,7 @@ CREATE TABLE Albumes (
     id_tipo_album INT NOT NULL,
     es_recopilatorio BOOLEAN DEFAULT FALSE,
     es_varios_artistas BOOLEAN DEFAULT FALSE,
+    es_disco_split BOOLEAN DEFAULT FALSE,
     incluido_en_lp BOOLEAN DEFAULT FALSE,
     extraido_de_lp BOOLEAN DEFAULT FALSE,
     solo_en_45 BOOLEAN DEFAULT FALSE,
@@ -190,6 +191,7 @@ CREATE INDEX idx_albumes_año ON Albumes(año_publicacion);
 CREATE INDEX idx_albumes_grupo ON Albumes(id_grupo);
 CREATE INDEX idx_albumes_recopilatorio ON Albumes(es_recopilatorio);
 CREATE INDEX idx_albumes_varios_artistas ON Albumes(es_varios_artistas);
+CREATE INDEX idx_albumes_es_disco_split ON Albumes(es_disco_split);
 CREATE INDEX idx_albumes_reedicion ON Albumes(es_reedicion);
 CREATE INDEX idx_albumes_incluido_lp ON Albumes(incluido_en_lp);
 CREATE INDEX idx_albumes_extraido_lp ON Albumes(extraido_de_lp);

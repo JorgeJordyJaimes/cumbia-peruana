@@ -150,6 +150,7 @@ export interface Database {
           nombre_album: string | null
           id_tipo_album: number
           es_recopilatorio: boolean
+          es_disco_split: boolean
           incluido_en_lp: boolean
           extraido_de_lp: boolean
           solo_en_45: boolean
@@ -171,6 +172,7 @@ export interface Database {
           nombre_album?: string | null
           id_tipo_album: number
           es_recopilatorio?: boolean
+          es_disco_split?: boolean
           incluido_en_lp?: boolean
           extraido_de_lp?: boolean
           solo_en_45?: boolean
@@ -192,6 +194,7 @@ export interface Database {
           nombre_album?: string | null
           id_tipo_album?: number
           es_recopilatorio?: boolean
+          es_disco_split?: boolean
           incluido_en_lp?: boolean
           extraido_de_lp?: boolean
           solo_en_45?: boolean
