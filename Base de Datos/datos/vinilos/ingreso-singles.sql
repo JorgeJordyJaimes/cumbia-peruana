@@ -1,4 +1,56 @@
+-- ======================================================================================================================
+-- GUÍA DE COLUMNAS PARA EL REGISTRO DE SINGLES / DISCOS DE 45 RPM (TABLA: Albumes)
+-- ======================================================================================================================
+-- A continuación se listan y explican las columnas disponibles para registrar discos en formato 45 RPM (Singles)
+-- y los criterios musicológicos para saber cuándo y cómo utilizar cada una:
+--
+-- 1. id_grupo (INT)
+--    • Cuándo usarla: Siempre que el single pertenezca a una agrupación o solista principal identificado (FK hacia la tabla 'Grupos').
+--    • Nota: En caso de discos compartidos (split A/B de diferentes grupos), se coloca el grupo principal o se vincula mediante 'Albumes_Grupos_Lados'.
+--
+-- 2. id_sello (INT)
+--    • Cuándo usarla: Siempre que se conozca la disquera o sello editor que prensó el vinilo (FK hacia 'Sellos_Discograficos', ej. Infopesa, Difa, Horóscopo).
+--
+-- 3. numero_catalogo (VARCHAR)
+--    • Cuándo usarla: Para colocar el código alfanumérico, serie de prensaje o número de matriz oficial grabado en la galleta/etiqueta central o funda (ej. '009', '171110', '76-032').
+--
+-- 4. año_publicacion (SMALLINT)
+--    • Cuándo usarla: Cuando se dispone de la fecha o año exacto/estimado en que el 45 RPM fue lanzado comercialmente (ej. 1974).
+--
+-- 5. id_tipo_album (INT)
+--    • Cuándo usarla: OBLIGATORIO. Para discos de 45 RPM / Singles el valor es SIEMPRE 1 (corresponde a '45' en la tabla 'Tipos_Album').
+--
+-- 6. nombre_album (VARCHAR) [Opcional en singles]
+--    • Cuándo usarla: La mayoría de los 45 RPM no tenían nombre de álbum (solo tema en Lado A y tema en Lado B), por lo que suele quedar NULL o no incluirse.
+--      Solo se llena si el single tuvo un título comercial promocional explícito o nombre de portada especial.
+--
+-- 7. incluido_en_lp (BOOLEAN) [DEFAULT FALSE]
+--    • Cuándo usarla: Marcar como TRUE cuando este single de 45 RPM se grabó y publicó de forma independiente primero, y posteriormente sus canciones fueron incluidas en un LP de larga duración.
+--
+-- 8. extraido_de_lp (BOOLEAN) [DEFAULT FALSE]
+--    • Cuándo usarla: Marcar como TRUE cuando el single de 45 RPM fue cortado y prensado como corte promocional o desprendimiento a partir de un LP que ya existía en el mercado.
+--
+-- 9. solo_en_45 (BOOLEAN) [DEFAULT FALSE]
+--    • Cuándo usarla: Marcar como TRUE cuando las grabaciones contenidas en este disco NUNCA salieron en ningún LP ni compilatorio oficial de la época (rarezas o temas exclusivos en 45 RPM).
+--
+-- 10. id_lp_relacionado (INT) [NULLABLE]
+--     • Cuándo usarla: Cuando 'incluido_en_lp = TRUE' o 'extraido_de_lp = TRUE', se ingresa aquí el 'id_album' del LP correspondiente para crear la trazabilidad directa entre el single y el álbum grande.
+--
+-- 11. es_reedicion (BOOLEAN) [DEFAULT FALSE]
+--     • Cuándo usarla: Marcar como TRUE si el vinilo es un re-prensaje posterior, segundo tiraje con cambio de etiqueta/diseño, o reedición bajo otra casa disquera en años posteriores al original.
+--
+-- 12. id_album_original (INT) [NULLABLE]
+--     • Cuándo usarla: Cuando 'es_reedicion = TRUE', se ingresa el 'id_album' del prensaje original primigenio (la primera edición) para enlazar el árbol de reediciones.
+--
+-- 13. comentario (TEXT)
+--     • Cuándo usarla: Para documentar particularidades históricas, estado del soporte físico, variantes de color de vinilo, cambios de sello, dedicatorias o notas de coleccionista.
+--
+-- 14. url_etiqueta / url_portada / url_contraportada (VARCHAR) [Opcional]
+--     • Cuándo usarla: Para enlazar las fotografías o digitalizaciones de la galleta/etiqueta central circular ('url_etiqueta') o carátula de papel/funda si la tuviera ('url_portada').
+-- ======================================================================================================================
+
 ---------------------------------------------------------------------------------------------------------------------- GRUPO CELESTE ----------------------------------------------------------------------------------------------------------------------
+
 
 -- DIFA
 INSERT INTO Albumes (id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, incluido_en_lp, extraido_de_lp, solo_en_45, es_reedicion, id_album_original, comentario)
