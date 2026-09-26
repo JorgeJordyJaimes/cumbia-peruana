@@ -6,6 +6,11 @@
 -- ============================================================
 
 -- 1. CATÁLOGO DE TEMAS (OBRAS MUSICALES)
+-- Asegurar que las columnas de análisis técnico existan en la tabla física
+ALTER TABLE Temas ADD COLUMN IF NOT EXISTS bpm INT;
+ALTER TABLE Temas ADD COLUMN IF NOT EXISTS camelot_code VARCHAR(10);
+ALTER TABLE Temas ADD COLUMN IF NOT EXISTS musical_key VARCHAR(20);
+
 -- Nota: Campos de análisis técnico (bpm, camelot_code, musical_key, duracion) quedan en NULL para posterior catalogación.
 INSERT INTO Temas (id_tema, titulo_tema, duracion_segundos, id_genero, bpm, camelot_code, musical_key) VALUES
 (1, 'En el campo', NULL, 3, NULL, NULL, NULL),

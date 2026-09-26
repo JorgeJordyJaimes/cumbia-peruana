@@ -113,6 +113,9 @@ CREATE TABLE Temas (
     duracion_segundos INT,
     letra TEXT,
     id_genero INT,
+    bpm INT,
+    camelot_code VARCHAR(10),
+    musical_key VARCHAR(20),
     FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE SET NULL
 );
 
@@ -200,6 +203,8 @@ CREATE INDEX idx_albumes_lados_en_lp ON Albumes(lados_en_lp);
 CREATE INDEX idx_albumes_temas_album_origen ON Albumes_Temas(id_album_origen);
 CREATE INDEX idx_temas_titulo ON Temas(titulo_tema);
 CREATE INDEX idx_temas_genero ON Temas(id_genero);
+CREATE INDEX idx_temas_bpm ON Temas(bpm);
+CREATE INDEX idx_temas_camelot ON Temas(camelot_code);
 CREATE INDEX idx_temas_grupos_tema ON Temas_Grupos(id_tema);
 CREATE INDEX idx_temas_grupos_grupo ON Temas_Grupos(id_grupo);
 CREATE INDEX idx_temas_letra_gin ON Temas USING gin(to_tsvector('spanish', letra));
