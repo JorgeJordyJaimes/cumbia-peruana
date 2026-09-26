@@ -90,79 +90,79 @@ ON CONFLICT (id_tema) DO UPDATE SET
 -- 2. VINCULACIÓN CON DISCOS DE 45 RPM (Álbumes / Singles y Reediciones)
 -- Tabla Albumes_Temas: id_album (332 al 368), id_tema, numero_pista, lado, id_album_origen
 INSERT INTO Albumes_Temas (id_album, id_tema, numero_pista, lado, id_album_origen) VALUES
-(332, 1, 1, 'A', NULL) -- DIFA 9 (1973): En el campo,
-(332, 2, 1, 'B', NULL) -- DIFA 9 (1973): Melodía celeste,
-(333, 3, 1, 'A', 341) -- DIFA 141 (1982): Mi lamento,
-(333, 4, 1, 'B', 341) -- DIFA 141 (1982): Canción del maestro,
-(334, 5, 1, 'A', 337) -- DIFA 142 (1982): Recuerdos,
-(334, 6, 1, 'B', 337) -- DIFA 142 (1982): Pescador,
-(335, 7, 1, 'A', 338) -- DIFA 144 (1982): Viento,
-(335, 8, 1, 'B', 338) -- DIFA 144 (1982): Te perdí,
-(336, 9, 1, 'A', NULL) -- DISCOPE 1 (1974): La noche,
-(336, 10, 1, 'B', NULL) -- DISCOPE 1 (1974): Frescura de invierno,
-(337, 5, 1, 'A', NULL) -- DISCOPE 3 (1974): Recuerdos,
-(337, 6, 1, 'B', NULL) -- DISCOPE 3 (1974): Pescador,
-(338, 7, 1, 'A', NULL) -- DISCOPE 6 (1974): Viento,
-(338, 8, 1, 'B', NULL) -- DISCOPE 6 (1974): Te perdí,
-(339, 11, 1, 'A', 127) -- DISCOPE 14 (1975): Como un ave,
-(339, 12, 1, 'B', 127) -- DISCOPE 14 (1975): No te dejaré,
-(340, 13, 1, 'A', 127) -- DISCOPE 15 (1975): Tu retrato,
-(340, 14, 1, 'B', 127) -- DISCOPE 15 (1975): Pueblo,
-(341, 3, 1, 'A', 127) -- DISCOPE 16 (1975): Mi lamento,
-(341, 4, 1, 'B', 127) -- DISCOPE 16 (1975): Canción del maestro,
-(342, 15, 1, 'A', NULL) -- DISCOPE 18 (1975): La plaga rock de la cárcel,
-(342, 16, 1, 'B', NULL) -- DISCOPE 18 (1975): Soy obrero,
-(343, 17, 1, 'A', NULL) -- DISCOPE 19 (1975): Piel Morena,
-(343, 18, 1, 'B', NULL) -- DISCOPE 19 (1975): Todo lo tengo de ti menos tu amor,
-(344, 19, 1, 'A', 128) -- DISCOPE 76-032 (1976): El reencuentro,
-(344, 20, 1, 'B', 128) -- DISCOPE 76-032 (1976): Soy chofer,
-(345, 21, 1, 'A', 128) -- DISCOPE 76-033 (1976): Juventud,
-(345, 22, 1, 'B', 128) -- DISCOPE 76-033 (1976): Mi destino,
-(346, 23, 1, 'A', NULL) -- PRODIC 1 (1977): Provinciano,
-(346, 24, 1, 'B', NULL) -- PRODIC 1 (1977): Quiero navegar,
-(347, 25, 1, 'A', NULL) -- PRODIC 3 (1977): Vida,
-(347, 26, 1, 'B', NULL) -- PRODIC 3 (1977): Una carta para ti,
-(348, 27, 1, 'A', NULL) -- PRODIC 4 (1977): Espérame,
-(348, 28, 1, 'B', NULL) -- PRODIC 4 (1977): Camina, camina,
-(349, 29, 1, 'A', NULL) -- PRODIC 6 (1978): Perdón amor,
-(349, 30, 1, 'B', NULL) -- PRODIC 6 (1978): Corazón de piedra,
-(350, 31, 1, 'A', NULL) -- PRODIC 9 (1978): Mentirosa,
-(350, 32, 1, 'B', NULL) -- PRODIC 9 (1978): Compañera,
-(351, 33, 1, 'A', NULL) -- PRODIC 10 (1978): Verano,
-(351, 34, 1, 'B', NULL) -- PRODIC 10 (1978): Sin éxito,
-(352, 35, 1, 'A', NULL) -- PRODIC 11 (1979): Gitana,
-(352, 36, 1, 'B', NULL) -- PRODIC 11 (1979): Pobre soy,
-(353, 37, 1, 'A', NULL) -- PRODIC 12 (1979): El viejo molino,
-(353, 38, 1, 'B', NULL) -- PRODIC 12 (1979): Brillantina,
-(354, 39, 1, 'A', NULL) -- PRODIC 13 (1979): Vete ya,
-(354, 40, 1, 'B', NULL) -- PRODIC 13 (1979): Sin ti,
-(355, 41, 1, 'A', NULL) -- PRODIC 001-80 (1980): Muchachita,
-(355, 42, 1, 'B', NULL) -- PRODIC 001-80 (1980): Mujer,
-(356, 42, 1, 'A', 355) -- INFOPESA 171110 (1980): Mujer,
-(356, 41, 1, 'B', 355) -- INFOPESA 171110 (1980): Muchachita,
-(357, 43, 1, 'A', NULL) -- INFOPESA 171143 (1980): Plegaria,
-(357, 44, 1, 'B', NULL) -- INFOPESA 171143 (1980): Mujeres,
-(358, 45, 1, 'A', 130) -- INFOPESA 171168 (1980): Vanidad,
-(358, 46, 1, 'B', 130) -- INFOPESA 171168 (1980): Pides que me vaya,
-(359, 47, 1, 'A', 131) -- INFOPESA 171336 (1982): Lluvia,
-(359, 48, 1, 'B', 131) -- INFOPESA 171336 (1982): Sentimientos,
-(360, 49, 1, 'A', NULL) -- SONORADIO 13742 (1981): Sobreviviendo,
-(360, 50, 1, 'B', NULL) -- SONORADIO 13742 (1981): Parranda Chaca Chaca,
-(361, 51, 1, 'A', NULL) -- EMUCEL 80-001 (1980): Te quiero,
-(361, 52, 1, 'B', NULL) -- EMUCEL 80-001 (1980): La alborada,
-(362, 53, 1, 'A', NULL) -- EMUCEL 81-001 (1981): El aventurero,
-(362, 54, 1, 'B', NULL) -- EMUCEL 81-001 (1981): El enamorado,
-(363, 55, 1, 'A', NULL) -- EMUCEL 81-003 (1981): El Super Show (Mi lamento, Compañera, Recuerdos, Verano, Pescador),
-(363, 56, 1, 'B', NULL) -- EMUCEL 81-003 (1981): El Super Show (Viento, Tu retrato, Soy obrero, Como un ave, Vida),
-(364, 57, 1, 'A', NULL) -- EMUCEL 83-001 (1983): Gaviota,
-(364, 58, 1, 'B', NULL) -- EMUCEL 83-001 (1983): Somos iguales,
-(365, 59, 1, 'A', NULL) -- EMUCEL 83-002 (1983): Cállate,
-(365, 60, 1, 'B', NULL) -- EMUCEL 83-002 (1983): Conflictos,
-(366, 61, 1, 'A', NULL) -- EMUCEL 84-004 (1984): Vuelve a casa,
-(366, 62, 1, 'B', NULL) -- EMUCEL 84-004 (1984): Rutina,
-(367, 63, 1, 'A', NULL) -- HORÓSCOPO 1195 (1985): Caridad,
-(367, 64, 1, 'B', NULL) -- HORÓSCOPO 1195 (1985): Hombre del río,
-(368, 65, 1, 'A', NULL) -- HORÓSCOPO 1229 (1986): Ternura,
+(332, 1, 1, 'A', NULL), -- DIFA 9 (1973): En el campo
+(332, 2, 1, 'B', NULL), -- DIFA 9 (1973): Melodía celeste
+(333, 3, 1, 'A', 341), -- DIFA 141 (1982): Mi lamento
+(333, 4, 1, 'B', 341), -- DIFA 141 (1982): Canción del maestro
+(334, 5, 1, 'A', 337), -- DIFA 142 (1982): Recuerdos
+(334, 6, 1, 'B', 337), -- DIFA 142 (1982): Pescador
+(335, 7, 1, 'A', 338), -- DIFA 144 (1982): Viento
+(335, 8, 1, 'B', 338), -- DIFA 144 (1982): Te perdí
+(336, 9, 1, 'A', NULL), -- DISCOPE 1 (1974): La noche
+(336, 10, 1, 'B', NULL), -- DISCOPE 1 (1974): Frescura de invierno
+(337, 5, 1, 'A', NULL), -- DISCOPE 3 (1974): Recuerdos
+(337, 6, 1, 'B', NULL), -- DISCOPE 3 (1974): Pescador
+(338, 7, 1, 'A', NULL), -- DISCOPE 6 (1974): Viento
+(338, 8, 1, 'B', NULL), -- DISCOPE 6 (1974): Te perdí
+(339, 11, 1, 'A', 127), -- DISCOPE 14 (1975): Como un ave
+(339, 12, 1, 'B', 127), -- DISCOPE 14 (1975): No te dejaré
+(340, 13, 1, 'A', 127), -- DISCOPE 15 (1975): Tu retrato
+(340, 14, 1, 'B', 127), -- DISCOPE 15 (1975): Pueblo
+(341, 3, 1, 'A', 127), -- DISCOPE 16 (1975): Mi lamento
+(341, 4, 1, 'B', 127), -- DISCOPE 16 (1975): Canción del maestro
+(342, 15, 1, 'A', NULL), -- DISCOPE 18 (1975): La plaga rock de la cárcel
+(342, 16, 1, 'B', NULL), -- DISCOPE 18 (1975): Soy obrero
+(343, 17, 1, 'A', NULL), -- DISCOPE 19 (1975): Piel Morena
+(343, 18, 1, 'B', NULL), -- DISCOPE 19 (1975): Todo lo tengo de ti menos tu amor
+(344, 19, 1, 'A', 128), -- DISCOPE 76-032 (1976): El reencuentro
+(344, 20, 1, 'B', 128), -- DISCOPE 76-032 (1976): Soy chofer
+(345, 21, 1, 'A', 128), -- DISCOPE 76-033 (1976): Juventud
+(345, 22, 1, 'B', 128), -- DISCOPE 76-033 (1976): Mi destino
+(346, 23, 1, 'A', NULL), -- PRODIC 1 (1977): Provinciano
+(346, 24, 1, 'B', NULL), -- PRODIC 1 (1977): Quiero navegar
+(347, 25, 1, 'A', NULL), -- PRODIC 3 (1977): Vida
+(347, 26, 1, 'B', NULL), -- PRODIC 3 (1977): Una carta para ti
+(348, 27, 1, 'A', NULL), -- PRODIC 4 (1977): Espérame
+(348, 28, 1, 'B', NULL), -- PRODIC 4 (1977): Camina, camina
+(349, 29, 1, 'A', NULL), -- PRODIC 6 (1978): Perdón amor
+(349, 30, 1, 'B', NULL), -- PRODIC 6 (1978): Corazón de piedra
+(350, 31, 1, 'A', NULL), -- PRODIC 9 (1978): Mentirosa
+(350, 32, 1, 'B', NULL), -- PRODIC 9 (1978): Compañera
+(351, 33, 1, 'A', NULL), -- PRODIC 10 (1978): Verano
+(351, 34, 1, 'B', NULL), -- PRODIC 10 (1978): Sin éxito
+(352, 35, 1, 'A', NULL), -- PRODIC 11 (1979): Gitana
+(352, 36, 1, 'B', NULL), -- PRODIC 11 (1979): Pobre soy
+(353, 37, 1, 'A', NULL), -- PRODIC 12 (1979): El viejo molino
+(353, 38, 1, 'B', NULL), -- PRODIC 12 (1979): Brillantina
+(354, 39, 1, 'A', NULL), -- PRODIC 13 (1979): Vete ya
+(354, 40, 1, 'B', NULL), -- PRODIC 13 (1979): Sin ti
+(355, 41, 1, 'A', NULL), -- PRODIC 001-80 (1980): Muchachita
+(355, 42, 1, 'B', NULL), -- PRODIC 001-80 (1980): Mujer
+(356, 42, 1, 'A', 355), -- INFOPESA 171110 (1980): Mujer
+(356, 41, 1, 'B', 355), -- INFOPESA 171110 (1980): Muchachita
+(357, 43, 1, 'A', NULL), -- INFOPESA 171143 (1980): Plegaria
+(357, 44, 1, 'B', NULL), -- INFOPESA 171143 (1980): Mujeres
+(358, 45, 1, 'A', 130), -- INFOPESA 171168 (1980): Vanidad
+(358, 46, 1, 'B', 130), -- INFOPESA 171168 (1980): Pides que me vaya
+(359, 47, 1, 'A', 131), -- INFOPESA 171336 (1982): Lluvia
+(359, 48, 1, 'B', 131), -- INFOPESA 171336 (1982): Sentimientos
+(360, 49, 1, 'A', NULL), -- SONORADIO 13742 (1981): Sobreviviendo
+(360, 50, 1, 'B', NULL), -- SONORADIO 13742 (1981): Parranda Chaca Chaca
+(361, 51, 1, 'A', NULL), -- EMUCEL 80-001 (1980): Te quiero
+(361, 52, 1, 'B', NULL), -- EMUCEL 80-001 (1980): La alborada
+(362, 53, 1, 'A', NULL), -- EMUCEL 81-001 (1981): El aventurero
+(362, 54, 1, 'B', NULL), -- EMUCEL 81-001 (1981): El enamorado
+(363, 55, 1, 'A', NULL), -- EMUCEL 81-003 (1981): El Super Show (Mi lamento, Compañera, Recuerdos, Verano, Pescador)
+(363, 56, 1, 'B', NULL), -- EMUCEL 81-003 (1981): El Super Show (Viento, Tu retrato, Soy obrero, Como un ave, Vida)
+(364, 57, 1, 'A', NULL), -- EMUCEL 83-001 (1983): Gaviota
+(364, 58, 1, 'B', NULL), -- EMUCEL 83-001 (1983): Somos iguales
+(365, 59, 1, 'A', NULL), -- EMUCEL 83-002 (1983): Cállate
+(365, 60, 1, 'B', NULL), -- EMUCEL 83-002 (1983): Conflictos
+(366, 61, 1, 'A', NULL), -- EMUCEL 84-004 (1984): Vuelve a casa
+(366, 62, 1, 'B', NULL), -- EMUCEL 84-004 (1984): Rutina
+(367, 63, 1, 'A', NULL), -- HORÓSCOPO 1195 (1985): Caridad
+(367, 64, 1, 'B', NULL), -- HORÓSCOPO 1195 (1985): Hombre del río
+(368, 65, 1, 'A', NULL), -- HORÓSCOPO 1229 (1986): Ternura
 (368, 66, 1, 'B', NULL) -- HORÓSCOPO 1229 (1986): Palomita
 ON CONFLICT (id_album, id_tema) DO UPDATE SET
   numero_pista = EXCLUDED.numero_pista,
