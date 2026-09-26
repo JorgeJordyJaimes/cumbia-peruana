@@ -193,3 +193,61 @@ LEFT JOIN Albumes_Temas at ON a.id_album = at.id_album
 WHERE a.es_recopilatorio = TRUE AND a.es_varios_artistas = TRUE
 GROUP BY a.id_album, a.nombre_album, a.numero_catalogo, a.año_publicacion, s.nombre_sello
 ORDER BY a.año_publicacion ASC, a.nombre_album ASC;
+
+
+-- ============================================================
+-- CONSULTAS DE DISCOGRAFÍA Y TRAZABILIDAD: GRUPO CELESTE (45 RPM)
+-- ============================================================
+
+-- 9. CONSULTA INTEGRAL DE SINGLES 45 RPM DEL GRUPO CELESTE
+-- Muestra cada disco de 45 RPM con sus temas por Lado A / Lado B, sello, catálogo,
+-- año, estado de reedición y su disco/LP original relacionado si aplica.
+SELECT
+    a.numero_catalogo AS catalogo,
+    s.nombre_sello AS sello,
+    a.año_publicacion AS año,
+    at.lado,
+    t.id_tema,
+    t.titulo_tema,
+    g.nombre_genero AS genero,
+    CASE
+        WHEN a.es_reedicion = TRUE THEN CONCAT('Reedición (Original: ', s_orig.nombre_sello, ' ', orig.numero_catalogo, ' - ', orig.año_publicacion, ')')
+        WHEN a.extraido_de_lp = TRUE THEN CONCAT('Extraído de LP: ', COALESCE(lp.nombre_album, lp.numero_catalogo), ' (', lp.año_publicacion, ')')
+        WHEN a.incluido_en_lp = TRUE THEN CONCAT('Incluido en LP: ', COALESCE(lp.nombre_album, lp.numero_catalogo), ' (', lp.año_publicacion, ')')
+        WHEN a.solo_en_45 = TRUE THEN 'Exclusivo en 45 RPM'
+        ELSE 'Lanzamiento Estándar'
+    END AS tipo_lanzamiento
+FROM Albumes a
+JOIN Sellos_Discograficos s ON a.id_sello = s.id_sello
+JOIN Albumes_Temas at ON a.id_album = at.id_album
+JOIN Temas t ON at.id_tema = t.id_tema
+LEFT JOIN Generos g ON t.id_genero = g.id_genero
+LEFT JOIN Albumes orig ON a.id_album_original = orig.id_album
+LEFT JOIN Sellos_Discograficos s_orig ON orig.id_sello = s_orig.id_sello
+LEFT JOIN Albumes lp ON a.id_lp_relacionado = lp.id_album
+WHERE a.id_grupo = 12 AND a.id_tipo_album = 1
+ORDER BY a.año_publicacion ASC, a.numero_catalogo ASC, at.lado ASC;
+
+
+-- 10. CONSULTA RESUMEN DE REEDICIONES DEL GRUPO CELESTE
+-- Compara directamente los singles relanzados con su single original matriz
+SELECT
+    reed.numero_catalogo AS cat_reedicion,
+    s_reed.nombre_sello AS sello_reedicion,
+    reed.año_publicacion AS año_reedicion,
+    at_reed.lado AS lado_reedicion,
+    t.titulo_tema,
+    orig.numero_catalogo AS cat_original,
+    s_orig.nombre_sello AS sello_original,
+    orig.año_publicacion AS año_original,
+    at_orig.lado AS lado_original
+FROM Albumes reed
+JOIN Sellos_Discograficos s_reed ON reed.id_sello = s_reed.id_sello
+JOIN Albumes orig ON reed.id_album_original = orig.id_album
+JOIN Sellos_Discograficos s_orig ON orig.id_sello = s_orig.id_sello
+JOIN Albumes_Temas at_reed ON reed.id_album = at_reed.id_album
+JOIN Temas t ON at_reed.id_tema = t.id_tema
+JOIN Albumes_Temas at_orig ON orig.id_album = at_orig.id_album AND at_orig.id_tema = t.id_tema
+WHERE reed.id_grupo = 12 AND reed.es_reedicion = TRUE
+ORDER BY reed.año_publicacion ASC, reed.numero_catalogo ASC, at_reed.lado ASC;
+
