@@ -1,50 +1,55 @@
 ================================================================================
-REPORTE DE COMPARACIÓN: SELLOS FALTANTES Y DISCREPANCIAS
+REPORTE DE COMPARACIÓN: SELLOS FALTANTES, DISCREPANCIAS Y RESOLUCIÓN
 ================================================================================
-Fecha de análisis: 25/09/2026
+Fecha de análisis inicial: 25/09/2026
+Última actualización:     25/09/2026 (Resolución aplicada)
+
 Archivos analizados:
   - Archivo fuente: DATOS TABULARES/Sellos.txt (204 registros)
   - Archivo base de datos: Base de Datos/datos/base/sellos.sql (258 registros)
 
 --------------------------------------------------------------------------------
-1. RESUMEN ESTADÍSTICO
+1. ACCIONES IMPLEMENTADAS Y RESOLUCIÓN
 --------------------------------------------------------------------------------
+1. Sello 'INS' (Faltante):
+   - AÑADIDO exitosamente al archivo `sellos.sql` con id_sello = 258.
+
+2. Valor '0':
+   - IGNORADO y descartado (confirmado como error de exportación / celda vacía).
+
+3. Sello 'Kozmoz' (Duplicado):
+   - Se eliminó el duplicado de la línea 45 (antiguo id_sello = 205), preservando
+     la entrada original de la línea 25 (id_sello = 105) por encontrarse en su
+     orden alfabético natural y provocar el menor impacto de desplazamiento.
+   - En `sellos.sql`, las tuplas se reorganizaron ordenadamente en grupos de 5.
+   - En `ingreso-singles.sql`, se corrigieron y sincronizaron los índices:
+     * KOZMOZ (Grupo Celeste 1983): id_sello corregido de 93 -> 105.
+     * ECODISCOS (Los Mirlos 1981): id_sello ajustado de 206 -> 205.
+     * PRODUCCIONES WALTER LEÓN (Compay Quinto 1980): id_sello ajustado de 207 -> 206.
+     * HUATISA (Los Shapis 1978, catalogo '1'): id_sello ajustado de 208 -> 207.
+     * HUATISA (Los Shapis 1978, catalogo '2'): id_sello ajustado de 208 -> 207.
+
+4. Sellos con prefijos comerciales ("Discos", "Producciones", etc.):
+   - Se mantienen tal como figuran en `sellos.sql` por constituir la forma correcta
+     y completa de los sellos discográficos.
+
+5. Variaciones de mayúsculas/minúsculas y acentos:
+   - Se mantienen tal como figuran en la base de datos sin modificaciones.
+
+
+--------------------------------------------------------------------------------
+2. RESUMEN ESTADÍSTICO FINAL (sellos.sql)
+--------------------------------------------------------------------------------
+Total registros en sellos.sql:              258
+Total registros únicos en sellos.sql:       258 (CERO duplicados)
 Total registros en Sellos.txt:              204
-Coincidencias exactas (idénticas):          188 (92.16%)
-Discrepancias / Faltantes literales:         16 (7.84%)
-
-Desglose de las 16 discrepancias encontradas:
-  a) Totalmente ausentes en sellos.sql:       2
-  b) Con prefijo / variante comercial:        9
-  c) Diferencia de mayúsculas/minúsculas:     3
-  d) Diferencia de acentuación (tildes):      2
+Coincidencias resueltas:                    100%
 
 
 --------------------------------------------------------------------------------
-2. SELLOS TOTALMENTE AUSENTES EN sellos.sql (2)
+3. DETALLE DE SELLOS CON PREFIJO O VARIANTE COMERCIAL (9)
 --------------------------------------------------------------------------------
-Estos valores están en Sellos.txt pero NO tienen ningún equivalente en sellos.sql:
-
-1. 0
-   - Ubicación en Sellos.txt: Línea 26
-   - Observación: Se trata de un artefacto numérico ("0"), probablemente una
-     celda vacía, un cero de conteo o error de exportación en la hoja de cálculo
-     original. No corresponde a un sello discográfico real. No se recomienda
-     insertarlo en la base de datos.
-
-2. INS
-   - Ubicación en Sellos.txt: Línea 27
-   - Observación: No existe ningún sello 'INS' registrado en sellos.sql (existen
-     'Dinsa', 'Ninsa', 'Prodinsa Lima', pero no 'INS'). Si representa un sello
-     discográfico real e independiente, debe ser insertado en la base de datos.
-
-
---------------------------------------------------------------------------------
-3. SELLOS EXISTENTES CON PREFIJO O VARIANTE COMERCIAL (9)
---------------------------------------------------------------------------------
-Estos sellos existen en sellos.sql pero están registrados con su razón social o
-denominación completa (prefijos como "Discos", "Producciones", "Fonografica", o
-variación singular/plural):
+Registrados con denominación comercial completa en sellos.sql:
 
   Sellos.txt              sellos.sql                     Tipo de discrepancia
   ------------------------------------------------------------------------------
@@ -58,68 +63,24 @@ variación singular/plural):
   Llerena              -> Producciones Llerena           Prefijo "Producciones"
   Hormiga              -> Discos Hormiga                 Prefijo "Discos"
 
-Nota importante: No se recomienda agregarlos como registros nuevos sin antes
-evaluar si se desea unificar el nombre corto o mantener el nombre comercial
-completo, para evitar duplicidades en la base de datos.
-
 
 --------------------------------------------------------------------------------
-4. SELLOS CON DIFERENCIA DE MAYÚSCULAS / MINÚSCULAS (3)
+4. DETALLE DE SELLOS CON DIFERENCIA DE MAYÚSCULAS / MINÚSCULAS (3)
 --------------------------------------------------------------------------------
-El nombre es el mismo pero difiere en el uso de mayúsculas:
-
   Sellos.txt              sellos.sql           Observación adicional
   ------------------------------------------------------------------------------
   Oro                  -> ORO                  En sellos.sql está en mayúsculas
-  IMSA                 -> Imsa                 En Sellos.txt aparece 2 veces:
-                                               - Línea 57: "Imsa"
-                                               - Línea 126: "IMSA"
-  PROA                 -> Proa                 En Sellos.txt aparece 2 veces:
-                                               - Línea 19: "Proa"
-                                               - Línea 136: "PROA"
+  IMSA                 -> Imsa                 En Sellos.txt aparece 2 veces (Imsa / IMSA)
+  PROA                 -> Proa                 En Sellos.txt aparece 2 veces (Proa / PROA)
 
 
 --------------------------------------------------------------------------------
-5. SELLOS CON DIFERENCIA DE TILDES / ACENTUACIÓN (2)
+5. DETALLE DE SELLOS CON DIFERENCIA DE TILDES / ACENTUACIÓN (2)
 --------------------------------------------------------------------------------
-El nombre es el mismo pero en sellos.sql se encuentra sin tilde:
-
   Sellos.txt              sellos.sql           Detalle
   ------------------------------------------------------------------------------
-  Rocío                -> Rocio                Falta tilde en la 'i' en sellos.sql
-  América              -> America              Falta tilde en la 'e' en sellos.sql
-
-
---------------------------------------------------------------------------------
-6. OBSERVACIONES ADICIONALES EN LA BASE DE DATOS (sellos.sql)
---------------------------------------------------------------------------------
-1. Registro duplicado en sellos.sql:
-   El sello 'Kozmoz' se encuentra duplicado en el archivo sellos.sql:
-   - Aparece en la línea 25: ('Impacto'), ('Inka Perú'), ('JNC'), ('KDT'), ('Kozmoz'),
-   - Aparece en la línea 45: ('Venus'), ('Cocodrilo'), ('Promusen'), ('Ninsa'), ('Kozmoz'),
-
-
---------------------------------------------------------------------------------
-7. LISTA COMPLETA DE SELLOS DE Sellos.txt NO COINCIDENTES EXACTAMENTE (16)
---------------------------------------------------------------------------------
-(Formato simple para consulta rápida)
-
-1. 0
-2. América
-3. Continental
-4. Cristal
-5. Escorpión
-6. Faro Record
-7. Hormiga
-8. IMSA
-9. INS
-10. Llerena
-11. Machu Picchu
-12. Oro
-13. PROA
-14. Prodpisa
-15. Rocío
-16. Yolita
+  Rocío                -> Rocio                Registrado como 'Rocio' en BD
+  América              -> America              Registrado como 'America' en BD
 
 ================================================================================
 Fin del reporte

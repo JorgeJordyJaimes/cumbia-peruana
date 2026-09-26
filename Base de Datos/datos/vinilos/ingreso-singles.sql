@@ -348,7 +348,8 @@ INSERT INTO Albumes (
     comentario)
 VALUES
 
-(22, 93, '1002', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+(22, 105, '1002', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+
 
 -- ROSA RECORD
 INSERT INTO Albumes (
@@ -481,7 +482,8 @@ INSERT INTO Albumes (
     comentario)
 VALUES
 
-(4, 206, '81001', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+(4, 205, '81001', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+
 
 -- FTA
 INSERT INTO Albumes (
@@ -671,7 +673,8 @@ INSERT INTO Albumes (
     comentario)
 VALUES
 
-(39, 207, '005', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+(39, 206, '005', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+
 
 --------------------------------------------------------------------------------------- GRUPO NARANJA -----------------------------------------------------------------------------------------
 
@@ -974,7 +977,8 @@ INSERT INTO Albumes (
     comentario)
 VALUES
 
-(31, 208, '1', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+(31, 207, '1', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+
 
 ------------------------------------------------------------------------------------------------------------------------ LOS SHAPIS ----------------------------------------------------------------------------------------------------------------------------
 
@@ -1123,7 +1127,8 @@ INSERT INTO Albumes (
     comentario)
 VALUES
 
-(34, 208, '2', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+(34, 207, '2', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, FALSE, NULL, '');
+
 
 -- PENTAFONO
 INSERT INTO Albumes (
