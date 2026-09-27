@@ -58,16 +58,28 @@ export default async function BlogIndexPage() {
 
           <div className="flex items-center gap-4 text-xs font-mono">
             <Link
-              href="/#catalogo"
+              href="/genealogia"
               className="hidden sm:inline-block text-neutral-400 hover:text-amber-400 transition-colors"
             >
-              Vinilos
+              Genealogía
             </Link>
             <Link
-              href="/#dj-tools"
+              href="/match-bpm"
               className="hidden sm:inline-block text-neutral-400 hover:text-amber-400 transition-colors"
             >
-              Consola DJ
+              Match BPM
+            </Link>
+            <Link
+              href="/radar"
+              className="hidden sm:inline-block text-neutral-400 hover:text-amber-400 transition-colors"
+            >
+              Radar
+            </Link>
+            <Link
+              href="/nosotros"
+              className="hidden sm:inline-block text-neutral-400 hover:text-amber-400 transition-colors"
+            >
+              Nosotros
             </Link>
             <Link
               href="/admin"
