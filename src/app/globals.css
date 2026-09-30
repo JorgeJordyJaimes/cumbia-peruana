@@ -9,12 +9,17 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-anton: var(--font-anton), Impact, 'Arial Black', sans-serif;
+  --font-cooper: 'Cooper Black', var(--font-cooper), serif;
 
   --color-gold-solar: #f59e0b;
   --color-cumbia-red: #dc2626;
   --color-chicha-green: #10b981;
   --color-chicha-cyan: #06b6d4;
+  --color-brutalist-cream: #eae6df;
+  --color-brutalist-orange: #f04e23;
+  --color-brutalist-black: #111111;
+  --color-brutalist-dark: #161616;
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -128,4 +133,37 @@
     transparent 3px,
     transparent 5px
   );
+}
+
+/* Swiss / Neo-Brutalist Typographic & Layout Utilities */
+.font-anton {
+  font-family: var(--font-anton), Impact, 'Arial Black', sans-serif;
+}
+
+.font-cooper {
+  font-family: 'Cooper Black', var(--font-cooper), serif;
+}
+
+.writing-vertical-rl {
+  writing-mode: vertical-rl;
+}
+
+.brutalist-border {
+  border: 2px solid #111111;
+}
+
+.brutalist-border-t {
+  border-top: 2px solid #111111;
+}
+
+.brutalist-border-b {
+  border-bottom: 2px solid #111111;
+}
+
+.brutalist-border-l {
+  border-left: 2px solid #111111;
+}
+
+.brutalist-border-r {
+  border-right: 2px solid #111111;
 }

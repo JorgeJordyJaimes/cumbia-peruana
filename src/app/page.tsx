@@ -1,19 +1,16 @@
 import { createClient } from "@/lib/supabase/server";
-import { AmbientGlow } from "@/components/ui/ambient-glow";
 import {
-  RetroHomeCoordinator,
-  RetroHero,
-  GenealogyExplorer,
-  MatchBpmWidget,
-  RadarSonoro,
-  HistoriasDeFondo,
-  NosotrosHighlight,
-  RetroFooter,
-} from "@/features/home-retro";
-import { CatalogExplorer, type AlbumItem } from "@/features/albumes";
+  BrutalistCoordinator,
+  BrutalistHero,
+  BrutalistSelectedWork,
+  BrutalistTriptych,
+  BrutalistCatalogSection,
+  BrutalistStories,
+  BrutalistFooter,
+} from "@/features/home-brutalism";
+import type { AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
 import type { ConfiguracionHome } from "@/types/blog";
-import { Disc3 } from "lucide-react";
 
 export const revalidate = 60; // Regenerar cada 60 segundos
 
@@ -120,11 +117,11 @@ export default async function Home() {
     cintillo_texto: "CATÁLOGO & ARCHIVO DISCOGRÁFICO HISTÓRICO // EDICIONES DE COLECCIÓN 1968–2005",
     cintillo_activo: true,
     hero_insignia: "Archivo & Curaduría de Vinilos",
-    hero_titulo: "El árbol genealógico y archivo sonoro de la cumbia peruana",
+    hero_titulo: "Cumbia con Poder",
     hero_subtitulo:
       "Conectamos músicos de sesión, guitarras legendarias, sellos históricos y discografías completas. Explora el archivo o sincroniza tu set con Match BPM.",
     hero_boton_texto: "Explorar Archivo",
-    hero_boton_url: "#genealogia",
+    hero_boton_url: "/genealogia",
     albumes_destacados_ids: [1, 2, 3],
     seccion_blog_activa: true,
     updated_at: new Date().toISOString(),
@@ -168,72 +165,41 @@ export default async function Home() {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#0D0F12] text-[#F3F4F6] selection:bg-[#E5A93C] selection:text-black">
-      {/* Resplandores Atmosféricos de Fondo */}
-      <AmbientGlow variant="warm-solar" className="top-0 left-1/4 opacity-15" />
-      <AmbientGlow variant="velvet-night" className="top-1/3 right-0 opacity-15" />
-      <AmbientGlow variant="chicha-psychedelic" className="bottom-1/4 left-0 opacity-15" />
-
-      {/* Cintillo Superior de Anuncios */}
+    <div className="relative min-h-screen bg-[#EAE6DF] text-black selection:bg-[#F04E23] selection:text-white">
+      {/* Cintillo Superior Brutalista */}
       {homeConfig.cintillo_activo && homeConfig.cintillo_texto && (
-        <div className="border-b border-[#E5A93C]/20 bg-[#E5A93C]/10 px-4 py-2 text-center font-mono text-[11px] text-[#E5A93C] tracking-wider">
+        <div className="border-b-2 border-black bg-[#F04E23] px-4 py-1.5 text-center font-mono text-[11px] font-bold text-white tracking-widest uppercase">
           <span>{homeConfig.cintillo_texto}</span>
         </div>
       )}
 
-      {/* COORDINADOR CON NAVBAR Y BUSCADOR COMMAND-PALETTE (⌘K) */}
-      <RetroHomeCoordinator>
-        <main className="space-y-4">
-          {/* SECCIÓN 2: HERO SECTION (ABOVE THE FOLD) */}
-          <RetroHero
+      {/* Coordinador con TopBar, Navbar y Buscador Command-Palette (⌘K) */}
+      <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
+        <main>
+          {/* HERO SECTION: Titular Gigante Anton + Foto Recortada con Forma Geométrica y Crosshair */}
+          <BrutalistHero
             totalAlbumes={totalAlbumes}
             totalGrupos={totalGrupos}
             totalSellos={totalSellos}
             totalPersonas={totalPersonas}
           />
 
-          {/* SECCIÓN 3: EXPLORADOR GENEALÓGICO (DESTACADO CULTURAL) */}
-          <GenealogyExplorer isHighlight />
+          {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
+          <BrutalistSelectedWork />
 
-          {/* SECCIÓN 4: MATCH BPM (DESTACADO TÉCNICO DJ) */}
-          <MatchBpmWidget isHighlight />
+          {/* TRÍPTICO BRUTALISTA: Herramientas (1-6) + Bloque Naranja Manifiesto + Registro Técnico */}
+          <BrutalistTriptych />
 
-          {/* SECCIÓN 5: EL RADAR SONORO (DESTACADO CURATORIAL 45 RPM) */}
-          <RadarSonoro isHighlight />
+          {/* CRÓNICAS & INVESTIGACIÓN: Historias de Fondo con estética editorial */}
+          {homeConfig.seccion_blog_activa && <BrutalistStories />}
 
-          {/* SECCIÓN 6: HISTORIAS DE FONDO (CRÓNICAS & BLOG DESTACADAS) */}
-          <HistoriasDeFondo />
-
-          {/* SECCIÓN DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
-          <section id="catalogo-archivo" className="scroll-mt-24 py-16 border-t border-white/5 bg-[#0D0F12]">
-            <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
-                <div>
-                  <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#E5A93C]">
-                    <Disc3 className="h-4 w-4" />
-                    Bóveda de Prensajes Originales
-                  </div>
-                  <h2 className="font-serif text-3xl sm:text-5xl font-black tracking-tight text-white mt-1">
-                    Catálogo de 719+ Vinilos & Casetes
-                  </h2>
-                </div>
-                <p className="max-w-md font-mono text-xs text-[#9CA3AF]">
-                  Inspecciona carátulas restauradas, sellos de época y contraportadas con tracklist
-                  completo.
-                </p>
-              </div>
-
-              <CatalogExplorer initialAlbums={albums} tracksMap={tracksMap} />
-            </div>
-          </section>
-
-          {/* SECCIÓN 7: NOSOTROS / MANIFIESTO RESUMEN DESTACADO */}
-          <NosotrosHighlight />
+          {/* BÓVEDA DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
+          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
         </main>
-      </RetroHomeCoordinator>
+      </BrutalistCoordinator>
 
-      {/* SECCIÓN 8: FOOTER */}
-      <RetroFooter />
+      {/* FOOTER BRUTALISTA CON BADGE VERTICAL Y CÓDIGO DE BARRAS */}
+      <BrutalistFooter />
     </div>
   );
 }
