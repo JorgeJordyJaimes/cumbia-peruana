@@ -5,7 +5,7 @@ export function BrutalistTriptych() {
   const servicios = [
     { num: "01", nombre: "BÓVEDA DE 719+ VINILOS", url: "/#catalogo-vinilos", dot: "#F1730C" },
     { num: "02", nombre: "ÁRBOL DE GUITARRISTAS DE SESIÓN", url: "/genealogia", dot: "#E80000" },
-    { num: "03", nombre: "SINCRONIZADOR CAMELOT PARA DJS", url: "/match-bpm", dot: "#2EF0E8" },
+    { num: "03", nombre: "SINCRONIZADOR CAMELOT PARA DJS", url: "/match-bpm", dot: "#E80000" },
     { num: "04", nombre: "PRENSAJES RAROS EN 45 RPM", url: "/radar", dot: "#F1730C" },
     { num: "05", nombre: "CRÓNICAS & PERIODISMO MUSICAL", url: "/blog", dot: "#1F1305" },
     { num: "06", nombre: "MANIFIESTO & EQUIPO GUARDIÁN", url: "/nosotros", dot: "#E80000" },
@@ -13,12 +13,12 @@ export function BrutalistTriptych() {
 
   const techSpecs = [
     { label: "FORMATOS FÍSICOS", valor: "33 & 45 RPM", dot: "#E80000" },
-    { label: "CALIBRACIÓN DJ", valor: "PITCH ±3% / ±5%", dot: "#2EF0E8" },
-    { label: "AFINACIÓN DE SESIÓN", valor: "440 HZ STANDARD", dot: "#2EF0E8" },
-    { label: "SISTEMA ARMÓNICO", valor: "RUEDA CAMELOT", dot: "#2EF0E8" },
-    { label: "SELLOS CATALOGADOS", valor: "258 SELLOS", dot: "#E80000" },
-    { label: "MASTERIZACIÓN", valor: "MONO & ESTÉREO", dot: "#F1730C" },
-    { label: "MOTOR DE DATOS", valor: "SUPABASE POSTGRES", dot: "#2EF0E8" },
+    { label: "CALIBRACIÓN DJ", valor: "PITCH ±3% / ±5%", dot: "#E80000" },
+    { label: "AFINACIÓN DE SESIÓN", valor: "440 HZ STANDARD", dot: "#F1730C" },
+    { label: "SISTEMA ARMÓNICO", valor: "RUEDA CAMELOT", dot: "#E80000" },
+    { label: "SELLOS CATALOGADOS", valor: "258 SELLOS", dot: "#F1730C" },
+    { label: "MASTERIZACIÓN", valor: "MONO & ESTÉREO", dot: "#E80000" },
+    { label: "MOTOR DE DATOS", valor: "SUPABASE POSTGRES", dot: "#E80000" },
   ];
 
   return (
@@ -74,7 +74,7 @@ export function BrutalistTriptych() {
               </p>
               <p className="pt-2 text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2">
                 <span>SIN MODAS EFÍMERAS.</span>
-                <span className="w-2 h-2 rounded-full bg-[#2EF0E8]" />
+                <span className="w-2 h-2 rounded-full bg-[#E80000]" />
               </p>
             </div>
           </div>
@@ -96,11 +96,11 @@ export function BrutalistTriptych() {
           />
         </div>
 
-        {/* COLUMNA 3: ESPECIFICACIONES TÉCNICAS (TECH STACK) CON LEDS ROJO / CYAN */}
+        {/* COLUMNA 3: ESPECIFICACIONES TÉCNICAS (TECH STACK) CON LEDS ROJO / ÁMBAR */}
         <div className="lg:col-span-4 p-6 sm:p-10 space-y-6 bg-[#EDE0D0]">
           <div className="flex items-center justify-between font-anton text-2xl tracking-wide uppercase text-[#1F1305]">
             <span>REGISTRO TÉCNICO —</span>
-            <span className="font-mono text-[10px] tracking-normal font-normal text-[#2EF0E8] bg-[#1F1305] px-2 py-0.5 border border-[#1F1305]">
+            <span className="font-mono text-[10px] tracking-normal font-normal text-[#E80000] bg-[#1F1305] px-2 py-0.5 border border-[#1F1305]">
               VU • L/R
             </span>
           </div>

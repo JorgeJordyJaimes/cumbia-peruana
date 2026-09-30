@@ -68,43 +68,43 @@ export function BrutalistSelectedWork() {
             </div>
           </Link>
 
-          {/* TARJETA 02: CONSOLA MATCH BPM (Acento Cyan Estroboscópico DJ) */}
+          {/* TARJETA 02: CONSOLA MATCH BPM (Acento Rojo de Cabina DJ) */}
           <Link
             href="/match-bpm"
-            className="group relative p-6 sm:p-8 flex flex-col justify-between hover:bg-[#152327] transition-colors"
+            className="group relative p-6 sm:p-8 flex flex-col justify-between hover:bg-[#2A1C0E] transition-colors"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between font-mono text-xs">
-                <span className="text-[#2EF0E8] font-bold text-sm sm:text-base">02/</span>
+                <span className="text-[#E80000] font-bold text-sm sm:text-base">02/</span>
                 <span className="text-[#8E8478] uppercase tracking-widest text-[10px]">
                   UTILIDAD DJ
                 </span>
               </div>
 
               {/* Preview Gráfica */}
-              <div className="aspect-[16/9] w-full border border-[#3E2C1B] bg-[#0E1A1D] p-4 flex flex-col justify-between relative overflow-hidden group-hover:border-[#2EF0E8] transition-colors">
+              <div className="aspect-[16/9] w-full border border-[#3E2C1B] bg-[#180E04] p-4 flex flex-col justify-between relative overflow-hidden group-hover:border-[#E80000] transition-colors">
                 <div className="flex items-center justify-between">
-                  <Music2 className="h-6 w-6 text-[#2EF0E8]" />
-                  <span className="font-mono text-[9px] text-[#2EF0E8] bg-[#091417] px-2 py-0.5 border border-[#2EF0E8]/50 shadow-[0_0_8px_rgba(46,240,232,0.2)]">
+                  <Music2 className="h-6 w-6 text-[#E80000]" />
+                  <span className="font-mono text-[9px] text-[#E80000] bg-[#1F1305]/80 px-2 py-0.5 border border-[#E80000]/40">
                     RUEDA CAMELOT
                   </span>
                 </div>
                 <div>
-                  <h4 className="font-anton text-2xl tracking-wide uppercase text-white group-hover:text-[#2EF0E8] transition-colors">
+                  <h4 className="font-anton text-2xl tracking-wide uppercase text-white group-hover:text-[#E80000] transition-colors">
                     MATCH BPM CONSOLE
                   </h4>
-                  <p className="font-mono text-[10px] text-[#86CDCA]">
+                  <p className="font-mono text-[10px] text-[#B8AFA6]">
                     PITCH ±3% / ±5% • 440 HZ EXACTO
                   </p>
                 </div>
-                {/* Cuadrito cyan decorativo en la esquina inferior */}
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#2EF0E8] flex items-center justify-center">
-                  <ArrowUpRight className="h-3.5 w-3.5 text-[#1F1305]" />
+                {/* Cuadrito rojo decorativo en la esquina inferior */}
+                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-[#E80000] flex items-center justify-center">
+                  <ArrowUpRight className="h-3.5 w-3.5 text-white" />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <h3 className="font-serif text-lg font-bold text-white group-hover:text-[#2EF0E8] transition-colors">
+                <h3 className="font-serif text-lg font-bold text-white group-hover:text-[#E80000] transition-colors">
                   Consola de Mezcla Armónica
                 </h3>
                 <p className="font-mono text-xs text-[#B8AFA6] line-clamp-2">
@@ -113,7 +113,7 @@ export function BrutalistSelectedWork() {
               </div>
             </div>
 
-            <div className="pt-6 flex items-center justify-between font-mono text-xs text-[#2EF0E8]">
+            <div className="pt-6 flex items-center justify-between font-mono text-xs text-[#E80000]">
               <span className="group-hover:underline">ABRIR CONSOLA DJ</span>
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </div>

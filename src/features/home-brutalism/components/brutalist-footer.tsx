@@ -21,8 +21,8 @@ export function BrutalistFooter() {
             
             {/* COLUMNA 1: TITULAR DE COLABORACIÓN */}
             <div className="lg:col-span-6 space-y-4">
-              <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#2EF0E8] uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#2EF0E8] animate-pulse" />
+              <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#E80000] uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E80000] animate-pulse" />
                 <span>COMUNIDAD & RESCATE DE VINILOS</span>
               </div>
 
@@ -39,7 +39,7 @@ export function BrutalistFooter() {
               <div className="pt-2">
                 <a
                   href="mailto:soundkumbia@gmail.com?subject=Aporte%20al%20Archivo%20Kumbia%20Sound"
-                  className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-6 py-3 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#2EF0E8] hover:bg-[#2EF0E8] hover:text-[#1F1305] hover:border-[#1F1305] hover:shadow-[4px_4px_0px_#E80000] transition-all active:translate-x-0.5 active:translate-y-0.5"
+                  className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-6 py-3 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] hover:border-[#1F1305] hover:shadow-[4px_4px_0px_#E80000] transition-all active:translate-x-0.5 active:translate-y-0.5"
                 >
                   <Mail className="h-4 w-4" />
                   <span>ESCRIBIR AL ARCHIVO</span>
@@ -59,7 +59,7 @@ export function BrutalistFooter() {
                 <div>
                   <a
                     href="mailto:soundkumbia@gmail.com"
-                    className="hover:text-[#2EF0E8] transition-colors flex items-center gap-2"
+                    className="hover:text-[#E80000] transition-colors flex items-center gap-2"
                   >
                     <span>✉ soundkumbia@gmail.com</span>
                   </a>
@@ -73,7 +73,7 @@ export function BrutalistFooter() {
                     className="hover:text-white transition-colors flex items-center justify-between"
                   >
                     <span>SPOTIFY // PLAYLISTS</span>
-                    <ArrowUpRight className="h-3 w-3 text-[#2EF0E8]" />
+                    <ArrowUpRight className="h-3 w-3 text-[#E80000]" />
                   </a>
                 </div>
 
@@ -104,7 +104,7 @@ export function BrutalistFooter() {
                 <div className="pt-2 border-t border-[#3E2C1B]">
                   <Link
                     href="/admin"
-                    className="text-[#2EF0E8] font-bold hover:underline flex items-center gap-1.5"
+                    className="text-[#E80000] font-bold hover:underline flex items-center gap-1.5"
                   >
                     <span>PANEL DE ADMINISTRACIÓN</span>
                     <ArrowUpRight className="h-3 w-3" />
@@ -137,12 +137,12 @@ export function BrutalistFooter() {
 
                 {/* LOGO KS CON EL ISOTIPO OFICIAL TRANSPARENTE */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center shadow-[2px_2px_0px_#2EF0E8] p-1.5 overflow-hidden group">
+                  <div className="w-14 h-14 rounded-full border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center shadow-[2px_2px_0px_#E80000] p-1.5 overflow-hidden group">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/kumbia-sound-logo-cropped.png"
                       alt="Logo Kumbia Sound"
-                      className="w-full h-full object-contain filter drop-shadow-[0_0_3px_#2EF0E8]"
+                      className="w-full h-full object-contain filter drop-shadow-[0_0_3px_#E80000]"
                     />
                   </div>
                 </div>
@@ -168,7 +168,7 @@ export function BrutalistFooter() {
                 Manifiesto
               </Link>
               <span>•</span>
-              <Link href="/blog" className="hover:text-[#2EF0E8] transition-colors">
+              <Link href="/blog" className="hover:text-[#E80000] transition-colors">
                 Crónicas
               </Link>
               <span>•</span>

@@ -9,14 +9,14 @@ export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: Bruta
   return (
     <div className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] font-mono text-[11px] sm:text-xs">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-2 flex flex-col sm:flex-row items-center justify-between gap-2 tracking-wider">
-        {/* Columna Izquierda: Identificador de archivo con micro-acento Cyan */}
+        {/* Columna Izquierda: Identificador de archivo con acento Rojo de marca */}
         <div className="flex items-center gap-2">
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#2EF0E8] shadow-[0_0_6px_#2EF0E8]" />
+          <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#E80000] shadow-[0_0_6px_#E80000]" />
           <span className="font-bold uppercase tracking-widest text-[#1F1305]">
             ARCHIVO VIVO // CUMBIA PERUANA
           </span>
-          <span className="hidden xl:inline-block border border-[#2EF0E8] bg-[#2EF0E8]/20 px-1.5 py-0.2 text-[9px] font-black text-[#136B66] uppercase">
-            CHICHA & PSICODELIA
+          <span className="hidden xl:inline-block border border-[#E80000] bg-[#E80000]/10 px-1.5 py-0.2 text-[9px] font-black text-[#E80000] uppercase">
+            CHICHA & GUITARRAS
           </span>
         </div>
 
@@ -39,7 +39,7 @@ export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: Bruta
           <span className="hidden lg:inline text-[#746B5C]/60">|</span>
           <Link
             href="/admin"
-            className="hidden lg:inline-block hover:text-[#F1730C] text-[#1F1305] underline underline-offset-2 transition-colors font-semibold"
+            className="hidden lg:inline-block hover:text-[#E80000] text-[#1F1305] underline underline-offset-2 transition-colors font-semibold"
           >
             PANEL
           </Link>

@@ -21,12 +21,12 @@ export function BrutalistHero({
           
           {/* COLUMNA IZQUIERDA: Titular Monolítico & Manifiesto */}
           <div className="lg:col-span-7 space-y-8 z-10">
-            {/* Meta etiqueta superior con guión y micro-acento Cyan */}
+            {/* Meta etiqueta superior con guión y micro-acento Rojo */}
             <div className="flex flex-wrap items-center gap-2 font-mono text-xs font-bold tracking-widest text-[#746B5C]">
               <span className="inline-block w-4 h-1 bg-[#E80000]" />
               <span>SISTEMA DE ARCHIVO HISTÓRICO • VOL. 01</span>
-              <span className="inline-flex items-center gap-1 border border-[#2EF0E8] bg-[#2EF0E8]/15 px-2 py-0.5 text-[9px] text-[#116964] font-black uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#2EF0E8] animate-pulse" />
+              <span className="inline-flex items-center gap-1 border border-[#E80000] bg-[#E80000]/10 px-2 py-0.5 text-[9px] text-[#E80000] font-black uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E80000] animate-pulse" />
                 HI-FI PERÚ
               </span>
             </div>
@@ -69,7 +69,7 @@ export function BrutalistHero({
                 <div className="flex items-center gap-2.5 border-2 border-[#1F1305] bg-white px-3.5 py-2 font-mono text-xs shadow-[3px_3px_0px_#1F1305]">
                   <div className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-[#E80000] shadow-[0_0_4px_#E80000]" title="Canal L (REC)" />
-                    <span className="w-2 h-2 rounded-full bg-[#2EF0E8] shadow-[0_0_4px_#2EF0E8]" title="Canal R (AUDIO)" />
+                    <span className="w-2 h-2 rounded-full bg-[#F1730C] shadow-[0_0_4px_#F1730C]" title="Canal R (AUDIO)" />
                   </div>
                   <span className="font-bold text-[#1F1305]">
                     CONSULTA ABIERTA • {totalAlbumes}+ PRENSAJES • {totalPersonas}+ MÚSICOS
@@ -90,10 +90,10 @@ export function BrutalistHero({
 
               <Link
                 href="/match-bpm"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#2EF0E8] hover:shadow-[4px_4px_0px_#2EF0E8] transition-all active:translate-x-0.5 active:translate-y-0.5"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#E80000] hover:text-white hover:shadow-[4px_4px_0px_#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
                 <span>CONSOLA MATCH BPM DJ</span>
-                <span className="text-[#2EF0E8] text-[10px]">●</span>
+                <span className="text-white text-[10px]">●</span>
               </Link>
 
               <Link
@@ -128,20 +128,20 @@ export function BrutalistHero({
                   className="w-full h-auto object-cover block filter contrast-105 brightness-95"
                 />
 
-                {/* ETIQUETA INFORMATIVA CON ESTRELLA ROJA Y CYAN */}
-                <div className="absolute bottom-4 right-4 z-20 border-2 border-[#1F1305] bg-[#1F1305] p-3 text-right font-mono text-[10px] sm:text-xs shadow-[3px_3px_0px_#2EF0E8]">
+                {/* ETIQUETA INFORMATIVA CON ESTRELLA ROJA */}
+                <div className="absolute bottom-4 right-4 z-20 border-2 border-[#1F1305] bg-[#1F1305] p-3 text-right font-mono text-[10px] sm:text-xs shadow-[3px_3px_0px_#E80000]">
                   <p className="font-bold text-white tracking-widest uppercase flex items-center justify-end gap-1.5">
                     <span className="text-[#E80000] font-black">★</span>
                     <span>KUMBIA SOUND</span>
                   </p>
-                  <p className="text-[#2EF0E8] font-black tracking-wider text-[9px] uppercase">
+                  <p className="text-[#E80000] font-black tracking-wider text-[9px] uppercase">
                     ARCHIVO VIVO 1968–2005
                   </p>
                 </div>
 
-                {/* Sello de coordenadas con indicador Cyan */}
+                {/* Sello de coordenadas con indicador Rojo */}
                 <div className="absolute top-4 left-3 z-20 font-mono text-[9px] uppercase tracking-widest text-[#1F1305] bg-white/90 px-2 py-0.5 border border-[#1F1305] flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#2EF0E8]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#E80000]" />
                   REF • 45 RPM • LP
                 </div>
               </div>
