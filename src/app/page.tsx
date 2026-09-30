@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   BrutalistCoordinator,
   BrutalistHero,
+  BrutalistRadarSection,
   BrutalistSelectedWork,
   BrutalistTriptych,
   BrutalistCatalogSection,
@@ -183,6 +184,9 @@ export default async function Home() {
             totalSellos={totalSellos}
             totalPersonas={totalPersonas}
           />
+
+          {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
+          <BrutalistRadarSection />
 
           {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
           <BrutalistSelectedWork />
