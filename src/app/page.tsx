@@ -186,7 +186,7 @@ export default async function Home() {
           />
 
           {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
-          <BrutalistRadarSection />
+          <BrutalistRadarSection albums={albums} />
 
           {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
           <BrutalistSelectedWork />

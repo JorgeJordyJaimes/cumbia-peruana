@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Disc, ArrowUpRight, X, Music, ExternalLink, Sparkles } from "lucide-react";
+import type { AlbumItem } from "@/features/albumes";
 
 interface JoyaVinilo {
   id: string;
+  idAlbum?: number;
   categoria: string;
   ano: number;
   sello: string;
@@ -18,6 +20,7 @@ interface JoyaVinilo {
   esDestacado?: boolean;
   colorGalleta: string;
   colorBordeGalleta: string;
+  coverUrl?: string | null;
   descripcion: string;
   temasClave: string[];
   mediaType: "youtube" | "spotify";
@@ -27,6 +30,7 @@ interface JoyaVinilo {
 const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
   {
     id: "clase-aparte-1971",
+    idAlbum: 6,
     categoria: "VIRTUOSISMO & GUITARRA DE ORO",
     ano: 1971,
     sello: "Odeón",
@@ -38,6 +42,8 @@ const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
     tonalidad: "Am",
     colorGalleta: "#1A2535",
     colorBordeGalleta: "#E80000",
+    coverUrl:
+      "https://zinwvwulzdcmuhxrpnol.supabase.co/storage/v1/object/public/media/albumes/6-portada-1789959564303.webp",
     descripcion:
       "Una de las obras más depuradas de Enrique Delgado. Grabado con técnica impecable en los estudios de Odeón / IEMPSA, este LP destaca por punteos de guitarra ágiles, virtuosismo instrumental y una refinada mezcla de tradición criolla costeña con rock psicodélico.",
     temasClave: ["Para Elena", "El Pacífico", "La Fatídica", "El Eléctrico", "¿Tú Dónde Estás?"],
@@ -46,6 +52,7 @@ const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
   },
   {
     id: "mundial-1970",
+    idAlbum: 4,
     categoria: "EL FENÓMENO CONTINENTAL DE ELSA",
     ano: 1970,
     sello: "Odeón",
@@ -58,6 +65,8 @@ const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
     esDestacado: true,
     colorGalleta: "#F1730C",
     colorBordeGalleta: "#E80000",
+    coverUrl:
+      "https://zinwvwulzdcmuhxrpnol.supabase.co/storage/v1/object/public/media/albumes/4-portada-1789959558645.webp",
     descripcion:
       "El álbum definitivo que inmortalizó el tema 'Elsa', consagrando a Los Destellos en el pináculo de la música latinoamericana en pleno año del Mundial México 70. Arreglos magistrales de timbal, güiro y la inconfundible guitarra solista de Enrique Delgado.",
     temasClave: ["Elsa", "Ronda Tropical", "El Baile de la Coja", "Luchita", "Muchachita Celosa"],
@@ -66,6 +75,7 @@ const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
   },
   {
     id: "en-orbita-1969",
+    idAlbum: 2,
     categoria: "PSICODELIA & CUMBIA ESPACIAL",
     ano: 1969,
     sello: "Odeón",
@@ -77,6 +87,8 @@ const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
     tonalidad: "Dm",
     colorGalleta: "#851A1A",
     colorBordeGalleta: "#F1730C",
+    coverUrl:
+      "https://zinwvwulzdcmuhxrpnol.supabase.co/storage/v1/object/public/media/albumes/2-portada-1789959550187.webp",
     descripcion:
       "Lanzado en plena era de la llegada a la Luna, 'En Órbita' expandió los límites de la música tropical incorporando distorsión, efectos espaciales de cinta magnética y la célebre relectura tropical de la pieza clásica 'Para Elisa' de Beethoven.",
     temasClave: ["Para Elisa", "Descarga Destellos", "El Pollito", "Cumbia del Desierto", "Boogaloo de Los Destellos"],
@@ -85,8 +97,26 @@ const JOYAS_FUNDACIONALES: JoyaVinilo[] = [
   },
 ];
 
-export function BrutalistRadarSection() {
+interface BrutalistRadarSectionProps {
+  albums?: AlbumItem[];
+}
+
+export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProps) {
   const [selectedAlbum, setSelectedAlbum] = useState<JoyaVinilo | null>(null);
+
+  // Mapear con portadas en vivo desde Supabase
+  const displayedAlbums: JoyaVinilo[] = JOYAS_FUNDACIONALES.map((joya) => {
+    const live = albums.find(
+      (a) =>
+        (joya.idAlbum && a.id === joya.idAlbum) ||
+        (joya.catalogo && a.catalogNumber === joya.catalogo) ||
+        a.title.toLowerCase().trim() === joya.titulo.toLowerCase().trim()
+    );
+    return {
+      ...joya,
+      coverUrl: live?.coverUrl || joya.coverUrl,
+    };
+  });
 
   return (
     <section id="radar-joyas" className="w-full border-b-2 border-[#1F1305] bg-[#160E06] text-white py-14 sm:py-20 scroll-mt-20 relative overflow-hidden">
@@ -115,7 +145,7 @@ export function BrutalistRadarSection() {
 
         {/* CUADRÍCULA DE LAS 3 JOYAS (CENTRAL ELEVADA & DESTACADA) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-end pt-4">
-          {JOYAS_FUNDACIONALES.map((album) => {
+          {displayedAlbums.map((album) => {
             const isCenter = album.esDestacado;
 
             return (
@@ -152,47 +182,81 @@ export function BrutalistRadarSection() {
                     </span>
                   </div>
 
-                  {/* CAJA DE VINILO CON SURCOS CONCÉNTRICOS Y GALLETA CENTRAL */}
-                  <div className="relative aspect-square w-full rounded-2xl bg-[#090602] border-2 border-[#1F1305] overflow-hidden flex flex-col justify-between p-4 shadow-inner group-hover:border-[#F1730C]/60 transition-colors">
+                  {/* CARÁTULA DEL LP CON FOTO REAL DE SUPABASE + DISCO DE VINILO QUE ASOMA */}
+                  <div className="relative aspect-square w-full select-none flex items-center justify-start overflow-hidden sm:overflow-visible">
                     
-                    {/* Surcos de vinilo concéntricos simulados */}
+                    {/* Disco de vinilo físico que asoma por detrás de la funda */}
                     <div
-                      className="absolute inset-4 rounded-full border border-neutral-800 opacity-60 pointer-events-none"
-                      style={{
-                        background:
-                          "repeating-radial-gradient(circle at center, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 2px, transparent 3px, transparent 6px)",
-                      }}
-                    />
-
-                    {/* Efecto de brillo de vinilo en diagonal */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent pointer-events-none" />
-
-                    {/* Disco central giratorio con la galleta del sello */}
-                    <div className="relative w-full h-full flex items-center justify-center">
+                      aria-hidden="true"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 w-[82%] aspect-square rounded-full bg-[#0E0E10] shadow-[0_10px_25px_rgba(0,0,0,0.9)] border border-neutral-700/60 flex items-center justify-center transition-transform duration-500 ease-out translate-x-2 sm:translate-x-4 group-hover:translate-x-6 sm:group-hover:translate-x-9 z-0 overflow-hidden"
+                    >
+                      {/* Surcos concéntricos del vinilo */}
                       <div
-                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 flex flex-col items-center justify-center shadow-2xl transition-transform duration-700 group-hover:rotate-180"
+                        className="absolute inset-2 rounded-full border border-neutral-800 opacity-60 pointer-events-none"
+                        style={{
+                          background:
+                            "repeating-radial-gradient(circle at center, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 2px, transparent 3px, transparent 6px)",
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+                      
+                      {/* Galleta central del vinilo */}
+                      <div
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 flex flex-col items-center justify-center shadow-lg transition-transform duration-700 group-hover:rotate-180"
                         style={{
                           backgroundColor: album.colorGalleta,
                           borderColor: album.colorBordeGalleta,
                         }}
                       >
-                        {/* Agujero central del vinilo */}
-                        <div className="w-6 h-6 rounded-full border-2 border-black bg-[#EDE0D0] flex items-center justify-center shadow-inner">
-                          <div className="w-2 h-2 rounded-full bg-black" />
+                        <div className="w-4 h-4 rounded-full border border-black bg-[#EDE0D0] flex items-center justify-center shadow-inner">
+                          <div className="w-1.5 h-1.5 rounded-full bg-black" />
                         </div>
-
-                        {/* Texto de la galleta */}
-                        <span className="font-mono text-[8px] font-black uppercase text-white mt-1 tracking-tighter">
+                        <span className="font-mono text-[7px] font-black uppercase text-white mt-1 tracking-tighter">
                           {album.sello}
                         </span>
                       </div>
                     </div>
 
-                    {/* Metadatos inferiores dentro de la carátula: Sello y Catálogo */}
-                    <div className="relative z-10 flex items-center justify-between font-mono text-[11px] text-[#B8AFA6] border-t border-white/5 pt-2">
-                      <span className="font-semibold text-white/90">{album.sello}</span>
-                      <span className="text-[#F1730C] font-mono tracking-wider">{album.catalogo}</span>
+                    {/* Funda física del LP con la foto de Supabase */}
+                    <div className="relative z-10 w-[84%] aspect-square rounded-lg border-2 border-[#1F1305] bg-[#0A0704] overflow-hidden shadow-2xl flex flex-col justify-between group-hover:border-[#F1730C] transition-colors">
+                      {album.coverUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={album.coverUrl}
+                          alt={`Carátula de ${album.titulo} - Los Destellos`}
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-[#1A1108] flex items-center justify-center">
+                          <Disc className="w-12 h-12 text-white/20 animate-spin" />
+                        </div>
+                      )}
+
+                      {/* Gradiente sutil para legibilidad de badges */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
+
+                      {/* Badges superiores sobre la portada */}
+                      <div className="relative z-10 flex items-start justify-between p-2.5">
+                        <span className="font-mono text-[9px] font-black uppercase tracking-wider text-white bg-black/75 px-2 py-0.5 border border-white/20 backdrop-blur-sm shadow">
+                          {album.sello}
+                        </span>
+                        <span className="font-mono text-[9px] font-bold tracking-wider text-[#F1730C] bg-black/75 px-2 py-0.5 border border-white/20 backdrop-blur-sm shadow">
+                          {album.catalogo}
+                        </span>
+                      </div>
+
+                      {/* Pie de carátula */}
+                      <div className="relative z-10 p-2 flex items-center justify-between border-t border-white/10 bg-black/60 backdrop-blur-sm">
+                        <span className="font-mono text-[9px] font-semibold text-white/90">
+                          LP 33 RPM • ESTÉREO
+                        </span>
+                        <span className="font-mono text-[9px] font-bold text-[#F1730C]">
+                          {album.ano}
+                        </span>
+                      </div>
                     </div>
+
                   </div>
 
                   {/* TÍTULO Y ARTISTA */}
@@ -253,7 +317,7 @@ export function BrutalistRadarSection() {
           onClick={() => setSelectedAlbum(null)}
         >
           <div
-            className="relative w-full max-w-xl border-2 border-[#1F1305] bg-[#1F1305] text-white p-6 sm:p-8 shadow-[8px_8px_0px_#E80000] space-y-6"
+            className="relative w-full max-w-2xl border-2 border-[#1F1305] bg-[#1F1305] text-white p-6 sm:p-8 shadow-[8px_8px_0px_#E80000] space-y-6"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Cabecera del Modal */}
@@ -280,14 +344,49 @@ export function BrutalistRadarSection() {
               </button>
             </div>
 
-            {/* Reseña musicológica */}
-            <div className="space-y-2 font-mono text-xs text-[#EDE0D0] leading-relaxed">
-              <p className="font-bold text-[#F1730C] uppercase tracking-wider text-[11px]">
-                RESEÑA HISTÓRICA & ANÁLISIS DE PRENSAJE:
-              </p>
-              <p className="text-[#B8AFA6] leading-relaxed">
-                {selectedAlbum.descripcion}
-              </p>
+            {/* CUERPO DEL MODAL CON CARÁTULA REAL Y FICHA */}
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-start">
+              {/* Carátula ampliada */}
+              {selectedAlbum.coverUrl && (
+                <div className="sm:col-span-5 relative aspect-square rounded-lg border-2 border-[#3E2C1B] overflow-hidden bg-black shadow-2xl">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={selectedAlbum.coverUrl}
+                    alt={selectedAlbum.titulo}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[10px] font-mono text-white/90 bg-black/60 px-2 py-0.5 border border-white/10 backdrop-blur-sm">
+                    <span>{selectedAlbum.sello}</span>
+                    <span className="text-[#F1730C] font-bold">{selectedAlbum.catalogo}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Reseña y Especificaciones */}
+              <div className={`${selectedAlbum.coverUrl ? "sm:col-span-7" : "sm:col-span-12"} space-y-4`}>
+                {/* Reseña musicológica */}
+                <div className="space-y-1.5 font-mono text-xs leading-relaxed">
+                  <p className="font-bold text-[#F1730C] uppercase tracking-wider text-[11px]">
+                    RESEÑA HISTÓRICA:
+                  </p>
+                  <p className="text-[#B8AFA6] leading-relaxed text-[11px]">
+                    {selectedAlbum.descripcion}
+                  </p>
+                </div>
+
+                {/* Especificaciones DJ */}
+                <div className="border border-[#3E2C1B] bg-[#0E0803] p-2.5 flex items-center justify-between font-mono text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <Music className="h-3.5 w-3.5 text-[#F1730C]" />
+                    <span className="text-white font-bold text-xs">{selectedAlbum.bpm} BPM</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-[11px]">
+                    <span className="text-neutral-500">CAMELOT:</span>
+                    <span className="text-[#E80000] font-bold">{selectedAlbum.camelot} ({selectedAlbum.tonalidad})</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Pistas emblemáticas */}
@@ -305,21 +404,6 @@ export function BrutalistRadarSection() {
                     <span>{t}</span>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Especificaciones DJ */}
-            <div className="border border-[#3E2C1B] bg-[#0E0803] p-3 flex items-center justify-between font-mono text-xs">
-              <div className="flex items-center gap-2">
-                <Music className="h-4 w-4 text-[#F1730C]" />
-                <span className="text-white font-bold">{selectedAlbum.bpm} BPM</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-neutral-500">RUEDA CAMELOT:</span>
-                <span className="text-[#E80000] font-bold">{selectedAlbum.camelot} ({selectedAlbum.tonalidad})</span>
-              </div>
-              <div className="text-[10px] text-neutral-400">
-                PITCH ±3% / ±5%
               </div>
             </div>
 
