@@ -16,10 +16,10 @@
   --color-cumbia-red: #dc2626;
   --color-chicha-green: #10b981;
   --color-chicha-cyan: #06b6d4;
-  --color-brutalist-cream: #eae6df;
-  --color-brutalist-orange: #f04e23;
-  --color-brutalist-black: #111111;
-  --color-brutalist-dark: #161616;
+  --color-brutalist-cream: #ede0d0;
+  --color-brutalist-orange: #f1730c;
+  --color-brutalist-black: #1f1305;
+  --color-brutalist-dark: #1f1305;
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -149,21 +149,21 @@
 }
 
 .brutalist-border {
-  border: 2px solid #111111;
+  border: 2px solid #1f1305;
 }
 
 .brutalist-border-t {
-  border-top: 2px solid #111111;
+  border-top: 2px solid #1f1305;
 }
 
 .brutalist-border-b {
-  border-bottom: 2px solid #111111;
+  border-bottom: 2px solid #1f1305;
 }
 
 .brutalist-border-l {
-  border-left: 2px solid #111111;
+  border-left: 2px solid #1f1305;
 }
 
 .brutalist-border-r {
-  border-right: 2px solid #111111;
+  border-right: 2px solid #1f1305;
 }

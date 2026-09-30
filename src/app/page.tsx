@@ -165,10 +165,10 @@ export default async function Home() {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#EAE6DF] text-black selection:bg-[#F04E23] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       {/* Cintillo Superior Brutalista */}
       {homeConfig.cintillo_activo && homeConfig.cintillo_texto && (
-        <div className="border-b-2 border-black bg-[#F04E23] px-4 py-1.5 text-center font-mono text-[11px] font-bold text-white tracking-widest uppercase">
+        <div className="border-b-2 border-[#1F1305] bg-[#F1730C] px-4 py-1.5 text-center font-mono text-[11px] font-bold text-white tracking-widest uppercase">
           <span>{homeConfig.cintillo_texto}</span>
         </div>
       )}
