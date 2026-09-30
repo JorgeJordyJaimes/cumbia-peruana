@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Globe, Disc, Crosshair } from "lucide-react";
+import { ArrowUpRight, Disc, Crosshair } from "lucide-react";
 
 interface BrutalistHeroProps {
   totalAlbumes?: number | null;
@@ -21,10 +21,14 @@ export function BrutalistHero({
           
           {/* COLUMNA IZQUIERDA: Titular Monolítico & Manifiesto */}
           <div className="lg:col-span-7 space-y-8 z-10">
-            {/* Meta etiqueta superior con guión */}
-            <div className="flex items-center gap-2 font-mono text-xs font-bold tracking-widest text-[#746B5C]">
-              <span className="inline-block w-4 h-1 bg-[#F1730C]" />
+            {/* Meta etiqueta superior con guión y micro-acento Cyan */}
+            <div className="flex flex-wrap items-center gap-2 font-mono text-xs font-bold tracking-widest text-[#746B5C]">
+              <span className="inline-block w-4 h-1 bg-[#E80000]" />
               <span>SISTEMA DE ARCHIVO HISTÓRICO • VOL. 01</span>
+              <span className="inline-flex items-center gap-1 border border-[#2EF0E8] bg-[#2EF0E8]/15 px-2 py-0.5 text-[9px] text-[#116964] font-black uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2EF0E8] animate-pulse" />
+                HI-FI PERÚ
+              </span>
             </div>
 
             {/* TITULAR POSTER GIGANTE EN ANTON */}
@@ -37,7 +41,9 @@ export function BrutalistHero({
               </div>
               <div className="text-[#F1730C] flex items-baseline">
                 <span>PODER</span>
-                <span className="inline-block w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-[#1F1305] ml-2 sm:ml-4 align-baseline" />
+                <span className="inline-block w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-[#1F1305] ml-2 sm:ml-4 align-baseline relative">
+                  <span className="absolute inset-1 bg-[#E80000]" />
+                </span>
               </div>
             </div>
 
@@ -58,10 +64,13 @@ export function BrutalistHero({
                 <p>— Acceso abierto y preservación analógica sin fines de lucro.</p>
               </div>
 
-              {/* GLOBO & BADGE DE DISPONIBILIDAD GLOBAL */}
+              {/* VU-METER LED & BADGE DE DISPONIBILIDAD */}
               <div className="pt-3 flex flex-wrap items-center gap-4">
                 <div className="flex items-center gap-2.5 border-2 border-[#1F1305] bg-white px-3.5 py-2 font-mono text-xs shadow-[3px_3px_0px_#1F1305]">
-                  <Globe className="h-4 w-4 text-[#F1730C]" />
+                  <div className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#E80000] shadow-[0_0_4px_#E80000]" title="Canal L (REC)" />
+                    <span className="w-2 h-2 rounded-full bg-[#2EF0E8] shadow-[0_0_4px_#2EF0E8]" title="Canal R (AUDIO)" />
+                  </div>
                   <span className="font-bold text-[#1F1305]">
                     CONSULTA ABIERTA • {totalAlbumes}+ PRENSAJES • {totalPersonas}+ MÚSICOS
                   </span>
@@ -73,7 +82,7 @@ export function BrutalistHero({
             <div className="pt-4 flex flex-wrap items-center gap-3 font-mono text-xs font-bold">
               <Link
                 href="/genealogia"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-6 py-3.5 text-white shadow-[4px_4px_0px_#F1730C] hover:bg-[#F1730C] hover:text-white hover:border-[#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-6 py-3.5 text-white shadow-[4px_4px_0px_#E80000] hover:bg-[#E80000] hover:text-white hover:border-[#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
                 <span>EXPLORAR ÁRBOL GENEALÓGICO</span>
                 <ArrowUpRight className="h-4 w-4" />
@@ -81,10 +90,10 @@ export function BrutalistHero({
 
               <Link
                 href="/match-bpm"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-white hover:text-[#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#2EF0E8] hover:shadow-[4px_4px_0px_#2EF0E8] transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
                 <span>CONSOLA MATCH BPM DJ</span>
-                <ArrowUpRight className="h-4 w-4" />
+                <span className="text-[#2EF0E8] text-[10px]">●</span>
               </Link>
 
               <Link
@@ -97,15 +106,16 @@ export function BrutalistHero({
             </div>
           </div>
 
-          {/* COLUMNA DERECHA: Fotografía Icónica con Bloque Naranja y Crosshair */}
+          {/* COLUMNA DERECHA: Fotografía Icónica con Bloque Naranja y Crosshair Láser */}
           <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[420px] sm:max-w-[480px]">
               
-              {/* Símbolo Crosshair / Diana decorativa en la esquina superior */}
-              <div className="absolute top-2 right-4 z-20 pointer-events-none opacity-80">
+              {/* Símbolo Crosshair / Diana con punto láser rojo central */}
+              <div className="absolute top-2 right-4 z-20 pointer-events-none opacity-90">
                 <div className="relative flex items-center justify-center h-12 w-12 text-[#1F1305]">
                   <Crosshair className="h-10 w-10 text-[#1F1305] stroke-1 animate-spin duration-1000" style={{ animationDuration: "25s" }} />
                   <div className="absolute h-6 w-6 rounded-full border border-[#1F1305]" />
+                  <div className="absolute h-2 w-2 rounded-full bg-[#E80000] shadow-[0_0_6px_#E80000]" />
                 </div>
               </div>
 
@@ -118,18 +128,20 @@ export function BrutalistHero({
                   className="w-full h-auto object-cover block filter contrast-105 brightness-95"
                 />
 
-                {/* ETIQUETA INFORMATIVA SUPERPUESTA AL ESTILO DE LA IMAGEN */}
-                <div className="absolute bottom-4 right-4 z-20 border-2 border-[#1F1305] bg-[#1F1305] p-3 text-right font-mono text-[10px] sm:text-xs shadow-[3px_3px_0px_#F1730C]">
-                  <p className="font-bold text-white tracking-widest uppercase">
-                    KUMBIA SOUND
+                {/* ETIQUETA INFORMATIVA CON ESTRELLA ROJA Y CYAN */}
+                <div className="absolute bottom-4 right-4 z-20 border-2 border-[#1F1305] bg-[#1F1305] p-3 text-right font-mono text-[10px] sm:text-xs shadow-[3px_3px_0px_#2EF0E8]">
+                  <p className="font-bold text-white tracking-widest uppercase flex items-center justify-end gap-1.5">
+                    <span className="text-[#E80000] font-black">★</span>
+                    <span>KUMBIA SOUND</span>
                   </p>
-                  <p className="text-[#F1730C] font-black tracking-wider text-[9px] uppercase">
+                  <p className="text-[#2EF0E8] font-black tracking-wider text-[9px] uppercase">
                     ARCHIVO VIVO 1968–2005
                   </p>
                 </div>
 
-                {/* Sello de coordenadas en el borde izquierdo */}
-                <div className="absolute top-4 left-3 z-20 font-mono text-[9px] uppercase tracking-widest text-[#1F1305] bg-white/85 px-2 py-0.5 border border-[#1F1305]">
+                {/* Sello de coordenadas con indicador Cyan */}
+                <div className="absolute top-4 left-3 z-20 font-mono text-[9px] uppercase tracking-widest text-[#1F1305] bg-white/90 px-2 py-0.5 border border-[#1F1305] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2EF0E8]" />
                   REF • 45 RPM • LP
                 </div>
               </div>
@@ -171,7 +183,7 @@ export function BrutalistHero({
           </div>
 
           <div className="border border-[#1F1305] bg-white p-3 shadow-[2px_2px_0px_#1F1305]">
-            <span className="block text-2xl sm:text-3xl font-black font-anton text-[#F1730C]">
+            <span className="block text-2xl sm:text-3xl font-black font-anton text-[#E80000]">
               {totalSellos}
             </span>
             <span className="text-[10px] uppercase font-bold text-[#746B5C]">

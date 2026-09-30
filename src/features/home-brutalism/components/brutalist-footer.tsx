@@ -9,7 +9,7 @@ export function BrutalistFooter() {
         {/* BANNER VERTICAL LATERAL (como en el afiche: LET'S BUILD SOMETHING BOLD) */}
         <div className="lg:w-16 bg-[#2A1C0E] border-b-2 lg:border-b-0 lg:border-r-2 border-[#3E2C1B] flex items-center justify-center py-4 lg:py-8 shrink-0">
           <div className="flex items-center gap-3 lg:rotate-180 lg:[writing-mode:vertical-rl] font-mono font-bold text-[#F1730C] tracking-widest text-xs uppercase select-none">
-            <span className="inline-block w-2.5 h-2.5 bg-[#F1730C]" />
+            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#E80000] shadow-[0_0_6px_#E80000]" />
             <span>PRESERVACIÓN COLECTIVA</span>
           </div>
         </div>
@@ -21,6 +21,11 @@ export function BrutalistFooter() {
             
             {/* COLUMNA 1: TITULAR DE COLABORACIÓN */}
             <div className="lg:col-span-6 space-y-4">
+              <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#2EF0E8] uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2EF0E8] animate-pulse" />
+                <span>COMUNIDAD & RESCATE DE VINILOS</span>
+              </div>
+
               <h3 className="font-anton text-3xl sm:text-5xl lg:text-6xl text-[#F1730C] tracking-tight uppercase leading-[0.95]">
                 ¿TIENES DATOS INÉDITOS O UN VINILO RARO?
               </h3>
@@ -34,7 +39,7 @@ export function BrutalistFooter() {
               <div className="pt-2">
                 <a
                   href="mailto:soundkumbia@gmail.com?subject=Aporte%20al%20Archivo%20Kumbia%20Sound"
-                  className="inline-flex items-center gap-2 border-2 border-[#F1730C] bg-[#F1730C] px-6 py-3 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] hover:border-white transition-all active:translate-x-0.5 active:translate-y-0.5"
+                  className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-6 py-3 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#2EF0E8] hover:bg-[#2EF0E8] hover:text-[#1F1305] hover:border-[#1F1305] hover:shadow-[4px_4px_0px_#E80000] transition-all active:translate-x-0.5 active:translate-y-0.5"
                 >
                   <Mail className="h-4 w-4" />
                   <span>ESCRIBIR AL ARCHIVO</span>
@@ -45,15 +50,16 @@ export function BrutalistFooter() {
 
             {/* COLUMNA 2: ENLACES & REDES SOCIALES */}
             <div className="lg:col-span-3 space-y-4 font-mono text-xs">
-              <div className="font-bold tracking-widest text-white uppercase border-b border-[#3E2C1B] pb-2">
-                CONTACTO & REDES —
+              <div className="font-bold tracking-widest text-white uppercase border-b border-[#3E2C1B] pb-2 flex items-center justify-between">
+                <span>CONTACTO & REDES —</span>
+                <span className="text-[#E80000]">★</span>
               </div>
 
               <div className="space-y-2.5 text-[#B8AFA6]">
                 <div>
                   <a
                     href="mailto:soundkumbia@gmail.com"
-                    className="hover:text-[#F1730C] transition-colors flex items-center gap-2"
+                    className="hover:text-[#2EF0E8] transition-colors flex items-center gap-2"
                   >
                     <span>✉ soundkumbia@gmail.com</span>
                   </a>
@@ -67,7 +73,7 @@ export function BrutalistFooter() {
                     className="hover:text-white transition-colors flex items-center justify-between"
                   >
                     <span>SPOTIFY // PLAYLISTS</span>
-                    <ArrowUpRight className="h-3 w-3" />
+                    <ArrowUpRight className="h-3 w-3 text-[#2EF0E8]" />
                   </a>
                 </div>
 
@@ -79,7 +85,7 @@ export function BrutalistFooter() {
                     className="hover:text-white transition-colors flex items-center justify-between"
                   >
                     <span>YOUTUBE // ARCHIVO</span>
-                    <ArrowUpRight className="h-3 w-3" />
+                    <ArrowUpRight className="h-3 w-3 text-[#E80000]" />
                   </a>
                 </div>
 
@@ -91,14 +97,14 @@ export function BrutalistFooter() {
                     className="hover:text-white transition-colors flex items-center justify-between"
                   >
                     <span>INSTAGRAM // DISCOS</span>
-                    <ArrowUpRight className="h-3 w-3" />
+                    <ArrowUpRight className="h-3 w-3 text-[#F1730C]" />
                   </a>
                 </div>
 
                 <div className="pt-2 border-t border-[#3E2C1B]">
                   <Link
                     href="/admin"
-                    className="text-[#F1730C] font-bold hover:underline flex items-center gap-1.5"
+                    className="text-[#2EF0E8] font-bold hover:underline flex items-center gap-1.5"
                   >
                     <span>PANEL DE ADMINISTRACIÓN</span>
                     <ArrowUpRight className="h-3 w-3" />
@@ -107,7 +113,7 @@ export function BrutalistFooter() {
               </div>
             </div>
 
-            {/* COLUMNA 3: SELLO CIRCULAR & CÓDIGO DE BARRAS BRUTALISTA */}
+            {/* COLUMNA 3: SELLO CIRCULAR CON ISOTIPO KUMBIA SOUND */}
             <div className="lg:col-span-3 flex flex-col items-center lg:items-end justify-between space-y-6">
               
               {/* SELLO CIRCULAR ESTILO POSTER */}
@@ -124,15 +130,20 @@ export function BrutalistFooter() {
                   />
                   <text className="font-mono text-[8.5px] uppercase font-bold tracking-[2px] fill-[#8E8478]">
                     <textPath href="#circlePath">
-                      • KUMBIA SOUND • ARCHIVO VIVO • PERÚ • 1968-2005
+                      • KUMBIA SOUND ★ ARCHIVO VIVO ★ PERÚ • 1968-2005
                     </textPath>
                   </text>
                 </svg>
 
-                {/* LOGO KS CENTRAL EN COOPER BLACK */}
+                {/* LOGO KS CON EL ISOTIPO OFICIAL TRANSPARENTE */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full border-2 border-[#F1730C] bg-[#F1730C] flex items-center justify-center text-[#1F1305] font-cooper text-2xl font-black shadow-[2px_2px_0px_#EDE0D0]">
-                    KS
+                  <div className="w-14 h-14 rounded-full border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center shadow-[2px_2px_0px_#2EF0E8] p-1.5 overflow-hidden group">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/kumbia-sound-logo-cropped.png"
+                      alt="Logo Kumbia Sound"
+                      className="w-full h-full object-contain filter drop-shadow-[0_0_3px_#2EF0E8]"
+                    />
                   </div>
                 </div>
               </div>
@@ -153,11 +164,11 @@ export function BrutalistFooter() {
           <div className="pt-6 border-t border-[#3E2C1B] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[#8E8478]">
             <p>© 2026 Kumbia Sound. Hecho con pasión por el vinilo analógico y la cumbia peruana.</p>
             <div className="flex items-center gap-4">
-              <Link href="/nosotros" className="hover:text-[#F1730C] transition-colors">
+              <Link href="/nosotros" className="hover:text-[#E80000] transition-colors">
                 Manifiesto
               </Link>
               <span>•</span>
-              <Link href="/blog" className="hover:text-[#F1730C] transition-colors">
+              <Link href="/blog" className="hover:text-[#2EF0E8] transition-colors">
                 Crónicas
               </Link>
               <span>•</span>
