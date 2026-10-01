@@ -8,3 +8,4 @@ export * from "./components/brutalist-footer";
 export * from "./components/brutalist-coordinator";
 export * from "./components/brutalist-stories";
 export * from "./components/brutalist-radar-section";
+export * from "./components/brutalist-genres-section";

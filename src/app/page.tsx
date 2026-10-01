@@ -3,6 +3,7 @@ import {
   BrutalistCoordinator,
   BrutalistHero,
   BrutalistRadarSection,
+  BrutalistGenresSection,
   BrutalistSelectedWork,
   BrutalistTriptych,
   BrutalistCatalogSection,
@@ -187,6 +188,9 @@ export default async function Home() {
 
           {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
           <BrutalistRadarSection albums={albums} />
+
+          {/* BIBLIOTECA DE GÉNEROS & VERTIENTES (6 SUBGÉNEROS DE LA CUMBIA PERUANA) */}
+          <BrutalistGenresSection />
 
           {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
           <BrutalistSelectedWork />
