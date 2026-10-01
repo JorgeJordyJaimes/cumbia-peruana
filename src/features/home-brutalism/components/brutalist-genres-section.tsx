@@ -20,7 +20,6 @@ export interface GeneroVertiente {
   nombre: string;
   region: string;
   titulos: string;
-  colorBorde: string;
   colorAura: string;
   colorIcono: string;
   instrumentos: string;
@@ -36,8 +35,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     nombre: "Cumbia Costeña",
     region: "LIMA & COSTA CENTRAL",
     titulos: "240+ títulos",
-    colorBorde: "border-[#F1730C]/40 hover:border-[#F1730C]",
-    colorAura: "from-[#F1730C]/15 via-transparent to-transparent",
+    colorAura: "from-[#F1730C]/10 via-transparent to-transparent",
     colorIcono: "text-[#F1730C]",
     instrumentos:
       "Fender Stratocaster con distorsión y reverberación de cinta, bajo eléctrico sincopado y timbales latinos.",
@@ -53,8 +51,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     nombre: "Cumbia Amazónica",
     region: "IQUITOS, PUCALLPA & TARAPOTO",
     titulos: "185+ títulos",
-    colorBorde: "border-emerald-600/40 hover:border-emerald-500",
-    colorAura: "from-emerald-500/15 via-transparent to-transparent",
+    colorAura: "from-emerald-500/10 via-transparent to-transparent",
     colorIcono: "text-emerald-400",
     instrumentos:
       "Órgano Farfisa Compact, eco analógico Roland Space Echo, güiro, cencerro y tumbadoras.",
@@ -70,8 +67,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     nombre: "Cumbia Andina / Chicha",
     region: "CARRETERA CENTRAL & LIMA ESTE",
     titulos: "160+ títulos",
-    colorBorde: "border-[#E80000]/40 hover:border-[#E80000]",
-    colorAura: "from-[#E80000]/15 via-transparent to-transparent",
+    colorAura: "from-[#E80000]/10 via-transparent to-transparent",
     colorIcono: "text-[#E80000]",
     instrumentos:
       "Guitarras con eco de cinta profundo, timbales con campana metálica, sintetizadores y voz testimonial.",
@@ -87,8 +83,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     nombre: "Cumbia Norteña",
     region: "PIURA, LAMBAYEQUE & TRUJILLO",
     titulos: "85+ títulos",
-    colorBorde: "border-amber-500/40 hover:border-amber-400",
-    colorAura: "from-amber-400/15 via-transparent to-transparent",
+    colorAura: "from-amber-400/10 via-transparent to-transparent",
     colorIcono: "text-amber-400",
     instrumentos:
       "Sección completa de metales (trompetas, trombones), bajo melódico prominente y percusión orquestal.",
@@ -104,8 +99,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     nombre: "Cumbia Sureña",
     region: "PUNO, JULIACA & AREQUIPA",
     titulos: "32+ títulos",
-    colorBorde: "border-purple-500/40 hover:border-purple-400",
-    colorAura: "from-purple-500/15 via-transparent to-transparent",
+    colorAura: "from-purple-500/10 via-transparent to-transparent",
     colorIcono: "text-purple-400",
     instrumentos:
       "Sintetizadores Roland D-50, módulos Korg M1, batería electrónica y ritmo acelerado.",
@@ -121,8 +115,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     nombre: "Cumbia Sanjuanera",
     region: "SIERRA NORTE & SELVA ALTA",
     titulos: "17+ títulos",
-    colorBorde: "border-orange-500/40 hover:border-orange-400",
-    colorAura: "from-orange-500/15 via-transparent to-transparent",
+    colorAura: "from-orange-500/10 via-transparent to-transparent",
     colorIcono: "text-orange-400",
     instrumentos:
       "Arpa andina tradicional o electrificada, timbales rápidos, güiro sincopado y voces agudas en contrapunto.",
@@ -140,23 +133,23 @@ export function BrutalistGenresSection() {
   return (
     <section
       id="biblioteca-generos"
-      className="w-full border-b-2 border-[#1F1305] bg-[#0E0803] text-white py-14 sm:py-20 scroll-mt-20 relative overflow-hidden"
+      className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] py-14 sm:py-20 scroll-mt-20 relative overflow-hidden"
     >
-      {/* Resplandor sutil de fondo */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(241,115,12,0.06)_0,transparent_65%)] pointer-events-none" />
+      {/* Textura sutil táctil */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,115,12,0.04)_0,transparent_70%)] pointer-events-none" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-10 relative z-10">
-        {/* CABECERA EDITORIAL (Adaptada de la referencia con la paleta de la web) */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[#3E2C1B]">
+        {/* CABECERA EDITORIAL (Alto contraste en lienzo crema) */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b-2 border-[#1F1305]">
           <div className="space-y-3">
-            {/* Micro-badge */}
-            <div className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/15 px-3 py-1 font-mono text-xs font-bold text-[#E80000] tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
-              <Library className="h-3.5 w-3.5 text-[#E80000]" />
+            {/* Micro-badge brutalista rojo */}
+            <div className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-3 py-1 font-mono text-xs font-bold text-white tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
+              <Library className="h-3.5 w-3.5 text-white" />
               <span>BIBLIOTECA DE GÉNEROS & VERTIENTES</span>
             </div>
 
             {/* Titular en fuente Cooper Black */}
-            <h2 className="font-cooper text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            <h2 className="font-cooper text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1305] tracking-tight leading-tight">
               Nuestra Biblioteca{" "}
               <span className="text-[#F1730C]">Musical Infinita</span>
             </h2>
@@ -164,7 +157,7 @@ export function BrutalistGenresSection() {
 
           {/* Texto explicativo lateral */}
           <div className="max-w-md">
-            <p className="font-mono text-xs sm:text-sm text-[#B8AFA6] leading-relaxed">
+            <p className="font-mono text-xs sm:text-sm text-[#5A5245] leading-relaxed">
               Explora los 6 géneros catalogados que emergieron del encuentro de la
               guitarra eléctrica, las migraciones provincianas y los ritmos de la
               Amazonía.
@@ -172,7 +165,7 @@ export function BrutalistGenresSection() {
           </div>
         </div>
 
-        {/* CUADRÍCULA DE LOS 6 SUBGÉNEROS */}
+        {/* CUADRÍCULA DE LOS 6 SUBGÉNEROS (Tarjetas Marfil con borde negro y sombra retro) */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
           {GENEROS_VERTIENTES.map((genero) => {
             return (
@@ -186,33 +179,33 @@ export function BrutalistGenresSection() {
                     setSelectedGenero(genero);
                   }
                 }}
-                className={`group relative flex flex-col justify-between items-center text-center p-4 sm:p-5 rounded-2xl border-2 border-[#3E2C1B] bg-[#140D04] min-h-[260px] sm:min-h-[290px] transition-all duration-300 hover:-translate-y-2 hover:border-[#F1730C] hover:shadow-[0_8px_25px_rgba(241,115,12,0.18)] cursor-pointer overflow-hidden`}
+                className="group relative flex flex-col justify-between items-center text-center p-4 sm:p-5 rounded-2xl border-2 border-[#1F1305] bg-[#FAF6F0] min-h-[260px] sm:min-h-[290px] shadow-[4px_4px_0px_#1F1305] transition-all duration-300 hover:-translate-y-2 hover:border-[#1F1305] hover:shadow-[6px_6px_0px_#E80000] cursor-pointer overflow-hidden"
               >
-                {/* Gradiente sutil interno específico para cada género */}
+                {/* Aura sutil interna */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-b ${genero.colorAura} pointer-events-none transition-opacity duration-300 group-hover:opacity-100 opacity-60`}
+                  className={`absolute inset-0 bg-gradient-to-b ${genero.colorAura} pointer-events-none transition-opacity duration-300 group-hover:opacity-100 opacity-40`}
                 />
 
                 {/* REGIÓN GEOGRÁFICA EN EL TOPE */}
                 <div className="relative z-10 w-full">
-                  <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#A89F91] group-hover:text-white transition-colors line-clamp-1">
+                  <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#746B5C] group-hover:text-[#1F1305] transition-colors line-clamp-1">
                     {genero.region}
                   </span>
                 </div>
 
-                {/* EMBLEMA CENTRAL (Anillos concéntricos de audio / vinilo) */}
+                {/* EMBLEMA CENTRAL (Disco de vinilo oscuro sobre tarjeta marfil) */}
                 <div className="relative z-10 my-4 flex items-center justify-center">
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-white/10 bg-[#090602] flex items-center justify-center shadow-inner group-hover:border-[#F1730C]/70 transition-all duration-300">
-                    {/* Anillos de radar o surco concéntrico */}
-                    <div className="absolute inset-1.5 rounded-full border border-white/5 pointer-events-none" />
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#1F1305] bg-[#140D04] flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-300">
+                    {/* Anillos concéntricos de audio */}
+                    <div className="absolute inset-1.5 rounded-full border border-white/10 pointer-events-none" />
                     <div className="absolute inset-3.5 rounded-full border border-white/5 pointer-events-none" />
 
                     {/* Ondas expansivas en hover */}
                     <span className="absolute inset-0 rounded-full border border-[#F1730C]/40 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 pointer-events-none" />
 
-                    {/* Icono central de vinilo / audio */}
+                    {/* Icono central de vinilo */}
                     <div
-                      className={`relative z-10 w-8 h-8 rounded-full border border-black/80 bg-[#1F1305] flex items-center justify-center shadow-md ${genero.colorIcono} group-hover:scale-110 group-hover:rotate-45 transition-transform duration-500`}
+                      className={`relative z-10 w-8 h-8 rounded-full border border-black/80 bg-[#1F1305] flex items-center justify-center shadow-inner ${genero.colorIcono} group-hover:rotate-45 transition-transform duration-500`}
                     >
                       <Disc className="h-4 w-4" />
                     </div>
@@ -221,19 +214,19 @@ export function BrutalistGenresSection() {
 
                 {/* PIE DE TARJETA: TÍTULO Y CONTEO */}
                 <div className="relative z-10 w-full space-y-1">
-                  <h3 className="font-cooper text-sm sm:text-base font-black text-white group-hover:text-[#F1730C] transition-colors leading-tight">
+                  <h3 className="font-cooper text-sm sm:text-base font-black text-[#1F1305] group-hover:text-[#E80000] transition-colors leading-tight">
                     {genero.nombre}
                   </h3>
 
-                  <div className="flex items-center justify-center gap-1 font-mono text-[11px] text-[#8E8478] group-hover:text-[#EDE0D0] transition-colors">
-                    <span className="text-[#E80000]">♫</span>
+                  <div className="flex items-center justify-center gap-1 font-mono text-[11px] text-[#746B5C] group-hover:text-[#1F1305] transition-colors">
+                    <span className="text-[#E80000] font-bold">♫</span>
                     <span>{genero.titulos}</span>
                   </div>
                 </div>
 
                 {/* Indicador táctil de 'Ver Ficha' */}
                 <div className="absolute bottom-1 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowUpRight className="h-3 w-3 text-[#F1730C]" />
+                  <ArrowUpRight className="h-3.5 w-3.5 text-[#E80000]" />
                 </div>
               </div>
             );
@@ -241,7 +234,7 @@ export function BrutalistGenresSection() {
         </div>
 
         {/* ACCESO INFERIOR AL ARCHIVO COMPLETO */}
-        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#3E2C1B] font-mono text-xs text-[#8E8478]">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t-2 border-[#1F1305] font-mono text-xs text-[#5A5245]">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-[#F1730C]" />
             <span>Haz clic en cualquier vertiente para consultar su genealogía e instrumentos clave.</span>
@@ -249,7 +242,7 @@ export function BrutalistGenresSection() {
 
           <Link
             href="/radar"
-            className="inline-flex items-center gap-2 text-[#EDE0D0] hover:text-[#F1730C] font-bold transition-colors group"
+            className="inline-flex items-center gap-2 text-[#1F1305] hover:text-[#E80000] font-bold transition-colors group"
           >
             <span>Ver grabaciones catalogadas en El Radar</span>
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
