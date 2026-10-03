@@ -101,6 +101,13 @@ CREATE TABLE IF NOT EXISTS Temas_Grupos (
     PRIMARY KEY (id_tema, id_grupo)
 );
 
+CREATE TABLE IF NOT EXISTS Temas_Generos (
+    id_tema INT NOT NULL REFERENCES Temas(id_tema) ON DELETE CASCADE,
+    id_genero INT NOT NULL REFERENCES Generos(id_genero) ON DELETE CASCADE,
+    es_principal BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (id_tema, id_genero)
+);
+
 CREATE TABLE IF NOT EXISTS Albumes_Temas (
     id_album_tema SERIAL PRIMARY KEY,
     id_album INT NOT NULL REFERENCES Albumes(id_album) ON DELETE CASCADE,
@@ -157,4 +164,6 @@ CREATE INDEX IF NOT EXISTS idx_temas_bpm ON Temas(bpm);
 CREATE INDEX IF NOT EXISTS idx_temas_camelot ON Temas(camelot_code);
 CREATE INDEX IF NOT EXISTS idx_temas_grupos_tema ON Temas_Grupos(id_tema);
 CREATE INDEX IF NOT EXISTS idx_temas_grupos_grupo ON Temas_Grupos(id_grupo);
+CREATE INDEX IF NOT EXISTS idx_temas_generos_tema ON Temas_Generos(id_tema);
+CREATE INDEX IF NOT EXISTS idx_temas_generos_genero ON Temas_Generos(id_genero);
 CREATE INDEX IF NOT EXISTS idx_temas_letra_gin ON Temas USING gin(to_tsvector('spanish', coalesce(letra, '')));

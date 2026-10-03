@@ -264,3 +264,34 @@ LEFT JOIN Temas t ON at_reed.id_tema = t.id_tema
 LEFT JOIN Albumes_Temas at_orig ON orig.id_album = at_orig.id_album AND at_orig.id_tema = t.id_tema
 WHERE reed.id_grupo = 12 AND reed.es_reedicion = TRUE
 ORDER BY reed.año_publicacion ASC, reed.numero_catalogo ASC, at_reed.lado ASC;
+
+
+-- ============================================================
+-- 7. CONSULTAS DE GÉNEROS Y FUSIONES MUSICALES (Temas_Generos)
+-- ============================================================
+
+-- 7.1 Consulta de temas con todos sus géneros asociados (agrupados)
+SELECT
+    t.id_tema,
+    t.titulo_tema,
+    STRING_AGG(
+        CONCAT(g.nombre_genero, CASE WHEN tg.es_principal THEN ' (Principal)' ELSE ' (Fusión/Secundario)' END),
+        ', ' ORDER BY tg.es_principal DESC, g.nombre_genero ASC
+    ) AS generos_asociados
+FROM Temas t
+JOIN Temas_Generos tg ON t.id_tema = tg.id_tema
+JOIN Generos g ON tg.id_genero = g.id_genero
+GROUP BY t.id_tema, t.titulo_tema
+ORDER BY t.id_tema ASC;
+
+-- 7.2 Consulta de temas que son fusiones (más de 1 género asignado)
+SELECT
+    t.titulo_tema,
+    COUNT(tg.id_genero) AS total_generos,
+    STRING_AGG(g.nombre_genero, ' + ' ORDER BY tg.es_principal DESC, g.nombre_genero ASC) AS fusion_estilos
+FROM Temas t
+JOIN Temas_Generos tg ON t.id_tema = tg.id_tema
+JOIN Generos g ON tg.id_genero = g.id_genero
+GROUP BY t.id_tema, t.titulo_tema
+HAVING COUNT(tg.id_genero) > 1
+ORDER BY total_generos DESC, t.titulo_tema ASC;

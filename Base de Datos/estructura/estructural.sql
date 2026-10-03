@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS Tema_Musicos CASCADE;
 DROP TABLE IF EXISTS Albumes_Temas CASCADE;
 DROP TABLE IF EXISTS Temas_Compositores CASCADE;
 DROP TABLE IF EXISTS Temas_Grupos CASCADE;
+DROP TABLE IF EXISTS Temas_Generos CASCADE;
 DROP TABLE IF EXISTS Albumes_Grupos_Lados CASCADE;
 DROP TABLE IF EXISTS Grupos_Musicos CASCADE;
 DROP TABLE IF EXISTS Albumes CASCADE;
@@ -136,6 +137,15 @@ CREATE TABLE Temas_Grupos (
     FOREIGN KEY (id_grupo) REFERENCES Grupos(id_grupo) ON DELETE CASCADE
 );
 
+CREATE TABLE Temas_Generos (
+    id_tema INT NOT NULL,
+    id_genero INT NOT NULL,
+    es_principal BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (id_tema, id_genero),
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
+    FOREIGN KEY (id_genero) REFERENCES Generos(id_genero) ON DELETE CASCADE
+);
+
 CREATE TABLE Albumes_Temas (
     id_album_tema SERIAL PRIMARY KEY,
     id_album INT NOT NULL,
@@ -207,6 +217,8 @@ CREATE INDEX idx_temas_bpm ON Temas(bpm);
 CREATE INDEX idx_temas_camelot ON Temas(camelot_code);
 CREATE INDEX idx_temas_grupos_tema ON Temas_Grupos(id_tema);
 CREATE INDEX idx_temas_grupos_grupo ON Temas_Grupos(id_grupo);
+CREATE INDEX idx_temas_generos_tema ON Temas_Generos(id_tema);
+CREATE INDEX idx_temas_generos_genero ON Temas_Generos(id_genero);
 CREATE INDEX idx_temas_letra_gin ON Temas USING gin(to_tsvector('spanish', letra));
 
 ---
@@ -219,5 +231,6 @@ COMMENT ON TABLE Albumes IS 'Álbumes y sencillos (LPs, 45s, EPs, Casetes, CDs),
 COMMENT ON TABLE Albumes_Grupos_Lados IS 'Splits y recopilatorios donde cada lado pertenece a un grupo diferente';
 COMMENT ON TABLE Temas IS 'Canciones/temas musicales';
 COMMENT ON TABLE Temas_Grupos IS 'Grupos que interpretan un tema (artistas principales, invitados, acompañamiento o colaboraciones)';
+COMMENT ON TABLE Temas_Generos IS 'Géneros musicales asociados a cada tema (permite fusiones y múltiples estilos por canción)';
 COMMENT ON TABLE Versiones IS 'Relación de versiones: un tema puede ser versión de otro tema original';
 COMMENT ON TABLE Grupos_Musicos IS 'Historial de membresía de músicos en grupos';

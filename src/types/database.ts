@@ -374,6 +374,39 @@ export interface Database {
           }
         ]
       }
+      temas_generos: {
+        Row: {
+          id_tema: number
+          id_genero: number
+          es_principal: boolean
+        }
+        Insert: {
+          id_tema: number
+          id_genero: number
+          es_principal?: boolean
+        }
+        Update: {
+          id_tema?: number
+          id_genero?: number
+          es_principal?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "temas_generos_id_tema_fkey"
+            columns: ["id_tema"]
+            isOneToOne: false
+            referencedRelation: "temas"
+            referencedColumns: ["id_tema"]
+          },
+          {
+            foreignKeyName: "temas_generos_id_genero_fkey"
+            columns: ["id_genero"]
+            isOneToOne: false
+            referencedRelation: "generos"
+            referencedColumns: ["id_genero"]
+          }
+        ]
+      }
       grupos_musicos: {
         Row: {
           id_grupo_musico: number
