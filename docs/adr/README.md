@@ -30,6 +30,7 @@ Todo nuevo ADR en este repositorio debe redactarse siguiendo el formato:
 ---
 
 ## Documentación Relacionada
+* [Manual del Proyecto para Agentes y Desarrolladores](../manual-proyecto.md)
 * [Arquitectura Técnica y Datos](../arquitectura-tecnica.md)
 * [Lineamientos de Desarrollo](../lineamientos-desarrollo.md)
 * [Criterios de Catalogación](../criterios-catalogacion.md)

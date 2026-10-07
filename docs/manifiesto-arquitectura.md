@@ -239,6 +239,7 @@ La aplicación web desplegada en **Vercel** (`Next.js App Router + TypeScript + 
 ---
 
 ## 8. 🔗 Documentación Relacionada
+* [Manual del Proyecto para Agentes y Desarrolladores](manual-proyecto.md)
 * [Arquitectura Técnica y Modelo de Datos](arquitectura-tecnica.md)
 * [Lineamientos de Desarrollo y Estándares de Ingeniería](lineamientos-desarrollo.md)
 * [Manual de Criterios de Catalogación e Investigación](criterios-catalogacion.md)

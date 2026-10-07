@@ -20,6 +20,7 @@ La documentación formal del proyecto está organizada en [`docs/`](docs/) bajo 
 
 | Documento | Audiencia Principal | Descripción y Alcance |
 | :--- | :--- | :--- |
+| [🤖 **Manual del Proyecto (Agentes & Devs)**](docs/manual-proyecto.md) | Agentes IA / Nuevos Devs | Secuencia obligatoria de lectura, guía de setup desde cero, reglas inmutables y reorganización estándar. |
 | [📖 **Manifiesto & Alcance Histórico**](docs/manifiesto-arquitectura.md) | Investigadores / General | Fundamentos socioculturales, vertientes (costeña, amazónica, chicha, norteña, tecnocumbia) y propósito patrimonial. |
 | [🏛️ **Arquitectura Técnica & Modelo de Datos**](docs/arquitectura-tecnica.md) | Desarrolladores / Arquitectos | Especificación del modelo relacional, diccionario de campos críticos, procedimientos RPC recursivos y capa frontend. |
 | [📜 **Manual de Criterios de Catalogación**](docs/criterios-catalogacion.md) | Catalogadores / Musicólogos | Protocolo operativo: verificación de entidades, trazabilidad 45 vs LP, enganchados/mosaicos, seudónimos y arte gráfico. |
@@ -61,7 +62,8 @@ cumbia-peruana/
 │   ├── arquitectura-tecnica.md          # Especificación técnica, modelo de datos y RPCs
 │   ├── criterios-catalogacion.md        # Manual operativo para catalogadores e investigadores
 │   ├── lineamientos-desarrollo.md       # Guía de desarrollo, políticas de Supabase y estándares
-│   └── manifiesto-arquitectura.md       # Manifiesto sociocultural, etapas de la cumbia y grafo
+│   ├── manifiesto-arquitectura.md       # Manifiesto sociocultural, etapas de la cumbia y grafo
+│   └── manual-proyecto.md               # Manual de contexto y onboarding para agentes y devs
 ├── public/                              # Activos estáticos públicos
 │   ├── branding/                        # Logotipos e isotipos institucionales (kumbia-sound-logo*.png)
 │   └── images/                          # Fotografías históricas y fondos hero (hero-brutalist.png)

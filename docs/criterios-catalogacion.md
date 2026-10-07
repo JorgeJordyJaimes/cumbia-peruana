@@ -140,6 +140,7 @@ La preservación patrimonial exige que los escaneos y fotografías de carátulas
 ---
 
 ## 8. 🔗 Documentación Relacionada
+* [Manual del Proyecto para Agentes y Desarrolladores](manual-proyecto.md)
 * [Arquitectura Técnica y Datos](arquitectura-tecnica.md)
 * [Lineamientos de Desarrollo y Seguridad](lineamientos-desarrollo.md)
 * [Manifiesto del Proyecto](manifiesto-arquitectura.md)

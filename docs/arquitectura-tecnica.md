@@ -237,6 +237,7 @@ En la página dinámica Server Component [`src/app/album/[id]/page.tsx`](file://
 ---
 
 ## 7. 🔗 Documentación Relacionada
+* [Manual del Proyecto para Agentes y Desarrolladores](manual-proyecto.md)
 * [Lineamientos de Desarrollo y Estándares](lineamientos-desarrollo.md)
 * [Criterios de Catalogación e Investigación](criterios-catalogacion.md)
 * [Manifiesto y Alcance Histórico](manifiesto-arquitectura.md)
