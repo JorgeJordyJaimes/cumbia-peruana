@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import { RetroHomeCoordinator, MatchBpmWidget, RetroFooter } from "@/features/home-retro";
+import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
+import { MatchBpmWidget } from "@/features/home-retro";
 import { CamelotSelector, type TrackDJItem } from "@/features/dj-tools";
-import { AmbientGlow } from "@/components/ui/ambient-glow";
 import Link from "next/link";
 import { ArrowLeft, Sparkles, SlidersHorizontal, Disc3 } from "lucide-react";
 import type { CamelotCode } from "@/types/domain";
@@ -75,42 +75,38 @@ export default async function MatchBpmPage() {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#0D0F12] text-[#F3F4F6] selection:bg-[#E5A93C] selection:text-black">
-      {/* Resplandores Atmosféricos */}
-      <AmbientGlow variant="warm-solar" className="top-0 left-1/4 opacity-15" />
-      <AmbientGlow variant="chicha-psychedelic" className="top-1/2 right-0 opacity-15" />
-
-      <RetroHomeCoordinator>
+    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+      <BrutalistCoordinator>
         <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">
           {/* Breadcrumb / Retorno al Home */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs">
+          <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-[#9CA3AF] hover:text-[#E5A93C] transition-colors"
+              className="inline-flex items-center gap-2 font-bold text-[#1F1305] hover:text-[#E80000] transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>Volver a la Portada Principal</span>
+              <span>← Volver a la Portada Principal</span>
             </Link>
 
-            <div className="flex items-center gap-2 text-[#10B981]">
+            <div className="flex items-center gap-2 border border-[#1F1305] bg-white px-2.5 py-1 text-[#E80000] font-bold shadow-[2px_2px_0px_#1F1305]">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Consola DJ Especializada</span>
+              <span>02 / CONSOLA TÉCNICA DJ</span>
             </div>
           </div>
 
-          {/* Banner de Cabecera */}
-          <div className="rounded-3xl border border-[#10B981]/20 bg-gradient-to-r from-[#16191E] via-[#1E2229] to-[#16191E] p-8 sm:p-10 shadow-2xl relative overflow-hidden">
-            <div className="max-w-3xl space-y-4 relative z-10">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-3.5 py-1 font-mono text-xs text-[#10B981]">
+          {/* Banner Hero Brutalista */}
+          <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-8 sm:p-12 shadow-[6px_6px_0px_#E80000] relative overflow-hidden">
+            <div className="max-w-3xl space-y-5 relative z-10">
+              <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#E80000] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <SlidersHorizontal className="h-3.5 w-3.5" />
-                <span>Herramienta para Tornamesistas & Sesiones en Vivo</span>
+                <span>HERRAMIENTA PARA TORNAMESISTAS & SESIONES EN VIVO</span>
               </div>
 
-              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight">
+              <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
                 Consola Match BPM & Armonía Camelot
               </h1>
 
-              <p className="font-sans text-sm sm:text-base text-[#9CA3AF] leading-relaxed">
+              <p className="font-sans text-sm sm:text-base text-[#EDE0D0]/80 leading-relaxed max-w-2xl">
                 Diseñada específicamente para resolver los saltos de afinación y tempo característicos
                 de los vinilos peruanos de los años 70 y 80. Calcula al instante qué temas empatan sin
                 desafinar en tono ni forzar el pitch de tu tornamesa más de un ±3%.
@@ -118,7 +114,7 @@ export default async function MatchBpmPage() {
             </div>
 
             {/* Sello decorativo de fondo */}
-            <div className="absolute -bottom-10 -right-10 text-white/[0.02] font-serif text-[240px] font-black pointer-events-none select-none">
+            <div className="absolute -bottom-8 -right-6 text-white/[0.04] font-anton text-[220px] font-black pointer-events-none select-none leading-none">
               BPM
             </div>
           </div>
@@ -127,18 +123,18 @@ export default async function MatchBpmPage() {
           <MatchBpmWidget />
 
           {/* SELECTOR EXTENDIDO DE LA RUEDA CAMELOT CON BASE DE DATOS COMPLETA */}
-          <section className="space-y-6 pt-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
+          <section className="space-y-6 pt-6 border-t-2 border-[#1F1305]">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-[#1F1305] pb-5">
               <div>
-                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#E5A93C]">
+                <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-[#F1730C]">
                   <Disc3 className="h-4 w-4" />
                   Base de Datos Completa
                 </div>
-                <h2 className="font-serif text-2xl sm:text-4xl font-bold tracking-tight text-white mt-1">
+                <h2 className="font-cooper text-2xl sm:text-4xl font-bold tracking-tight text-[#1F1305] mt-1">
                   Explorador de Claves Camelot
                 </h2>
               </div>
-              <p className="max-w-md font-mono text-xs text-[#9CA3AF]">
+              <p className="max-w-md font-mono text-xs text-[#5A5245]">
                 Haz clic en cualquier celda de la Rueda Camelot para filtrar todas las pistas grabadas
                 en esa tonalidad armónica.
               </p>
@@ -147,9 +143,9 @@ export default async function MatchBpmPage() {
             <CamelotSelector tracks={djTracks} />
           </section>
         </main>
-      </RetroHomeCoordinator>
+      </BrutalistCoordinator>
 
-      <RetroFooter />
+      <BrutalistFooter />
     </div>
   );
 }

@@ -78,22 +78,22 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
 
   return (
     <div className="space-y-8">
-      {/* Barra de Búsqueda y Filtros con Glassmorphism */}
-      <GlassCard variant="editorial" className="p-4 sm:p-6 space-y-4">
+      {/* Barra de Búsqueda y Filtros Brutalista */}
+      <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-4 sm:p-6 space-y-4 shadow-[4px_4px_0px_#1F1305]">
         {/* Input de Búsqueda Principal */}
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#E80000]" />
           <input
             type="text"
             placeholder="Buscar por título de álbum, agrupación (ej. Los Destellos, Juaneco), catálogo o sello..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/50 py-3.5 pl-12 pr-4 text-sm text-white placeholder-neutral-500 backdrop-blur-md transition-all focus:border-amber-400/80 focus:bg-black/80 focus:outline-none focus:ring-2 focus:ring-amber-400/20"
+            className="w-full border-2 border-[#1F1305] bg-white py-3.5 pl-12 pr-4 text-sm text-[#1F1305] placeholder-[#746B5C] font-mono font-medium shadow-[2px_2px_0px_#1F1305] focus:border-[#E80000] focus:outline-none"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm("")}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-md bg-white/10 px-2 py-0.5 font-mono text-xs text-neutral-400 hover:text-white"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 font-mono text-xs font-bold text-[#1F1305] hover:bg-white"
             >
               Limpiar
             </button>
@@ -104,8 +104,8 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
           {/* Formato Pills */}
           <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
-            <span className="text-neutral-500 mr-1 flex items-center gap-1">
-              <Disc className="h-3.5 w-3.5 text-amber-400" /> Formato:
+            <span className="text-[#1F1305] font-bold mr-1 flex items-center gap-1">
+              <Disc className="h-3.5 w-3.5 text-[#E80000]" /> Formato:
             </span>
             {[
               { id: "ALL", label: "Todos" },
@@ -116,10 +116,10 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               <button
                 key={f.id}
                 onClick={() => setSelectedFormat(f.id)}
-                className={`rounded-lg px-3 py-1 transition-all ${
+                className={`border-2 border-[#1F1305] px-3 py-1 font-bold transition-all ${
                   selectedFormat === f.id
-                    ? "bg-amber-500 text-black font-semibold shadow-md shadow-amber-500/20"
-                    : "border border-white/10 bg-white/5 text-neutral-300 hover:border-white/20 hover:bg-white/10"
+                    ? "bg-[#1F1305] text-[#EDE0D0] shadow-[2px_2px_0px_#E80000]"
+                    : "bg-white text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0]"
                 }`}
               >
                 {f.label}
@@ -135,7 +135,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
                 value={selectedLabel}
                 onChange={(e) => setSelectedLabel(e.target.value)}
                 aria-label="Filtrar por Sello Discográfico"
-                className="appearance-none rounded-lg border border-white/10 bg-black/60 px-3 py-1.5 pr-8 font-mono text-xs text-neutral-300 backdrop-blur-md focus:border-amber-400 focus:outline-none"
+                className="appearance-none border-2 border-[#1F1305] bg-white px-3 py-1.5 pr-8 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] focus:outline-none focus:border-[#E80000]"
               >
                 <option value="ALL">Todos los Sellos ({labels.length})</option>
                 {labels.slice(0, 30).map((l) => (
@@ -144,7 +144,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
                   </option>
                 ))}
               </select>
-              <Filter className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-neutral-500" />
+              <Filter className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-[#1F1305]" />
             </div>
 
             {/* Selector Década */}
@@ -153,7 +153,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
                 aria-label="Filtrar por Época o Década"
-                className="appearance-none rounded-lg border border-white/10 bg-black/60 px-3 py-1.5 pr-8 font-mono text-xs text-neutral-300 backdrop-blur-md focus:border-amber-400 focus:outline-none"
+                className="appearance-none border-2 border-[#1F1305] bg-white px-3 py-1.5 pr-8 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] focus:outline-none focus:border-[#E80000]"
               >
                 {decades.map((d) => (
                   <option key={d.value} value={d.value}>
@@ -161,31 +161,31 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
                   </option>
                 ))}
               </select>
-              <SlidersHorizontal className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-neutral-500" />
+              <SlidersHorizontal className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-[#1F1305]" />
             </div>
           </div>
         </div>
-      </GlassCard>
+      </div>
 
       {/* Resumen de Resultados */}
-      <div className="flex items-center justify-between font-mono text-xs text-neutral-400 px-1">
+      <div className="flex items-center justify-between font-mono text-xs text-[#5A5245] font-bold px-1">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-amber-400" />
+          <Sparkles className="h-4 w-4 text-[#E80000]" />
           <span>
-            Mostrando <strong className="text-white">{filteredAlbums.length}</strong> de{" "}
-            <strong className="text-white">{initialAlbums.length}</strong> producciones físicas
+            Mostrando <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> de{" "}
+            <strong className="text-[#1F1305]">{initialAlbums.length}</strong> producciones físicas
           </span>
         </div>
-        <span className="text-neutral-500 hidden sm:inline">
-          Pasa el cursor sobre la portada para ver el disco
+        <span className="hidden sm:inline">
+          Pasa el cursor sobre la funda para ver asomar el vinilo
         </span>
       </div>
 
       {/* Grid de Álbumes */}
       {filteredAlbums.length === 0 ? (
-        <GlassCard className="py-16 text-center">
-          <Disc className="mx-auto h-12 w-12 text-neutral-600 mb-3" />
-          <p className="font-mono text-base text-neutral-300">
+        <div className="border-2 border-[#1F1305] bg-white py-16 text-center shadow-[6px_6px_0px_#1F1305] p-6">
+          <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3" />
+          <p className="font-cooper text-lg text-[#1F1305]">
             No se encontraron producciones discográficas con esos criterios.
           </p>
           <button
@@ -195,11 +195,11 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               setSelectedLabel("ALL");
               setSelectedYear("ALL");
             }}
-            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2 font-mono text-xs font-bold text-black hover:bg-amber-400 transition-colors"
+            className="mt-4 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-4 py-2 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] transition-colors"
           >
             Restablecer todos los filtros
           </button>
-        </GlassCard>
+        </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {filteredAlbums.slice(0, 48).map((album) => (

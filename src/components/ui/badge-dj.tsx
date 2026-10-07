@@ -26,34 +26,34 @@ export function BadgeDJ({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-tight text-neutral-300 backdrop-blur-md transition-colors hover:border-white/20 hover:bg-white/[0.08]",
+        "inline-flex items-center gap-1.5 border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 font-mono text-[11px] font-medium tracking-tight text-[#1F1305] shadow-[1px_1px_0px_#1F1305]",
         className
       )}
     >
       {showDot && keyInfo && (
         <span
-          className="h-1.5 w-1.5 rounded-full ring-2 ring-white/10"
+          className="h-2 w-2 rounded-full border border-[#1F1305]"
           style={{ backgroundColor: keyInfo.color }}
           aria-hidden="true"
         />
       )}
 
       {bpm && (
-        <span className="text-amber-400 font-semibold">
-          {bpm} <span className="text-[10px] text-neutral-400 font-normal">BPM</span>
+        <span className="text-[#E80000] font-black">
+          {bpm} <span className="text-[10px] text-[#746B5C] font-normal">BPM</span>
         </span>
       )}
 
       {bpm && (validCamelot || displayKey) && (
-        <span className="text-neutral-600 select-none">|</span>
+        <span className="text-[#746B5C]/60 select-none">|</span>
       )}
 
       {validCamelot && (
-        <span className="text-white font-semibold">{validCamelot}</span>
+        <span className="text-[#1F1305] font-black">{validCamelot}</span>
       )}
 
       {displayKey && (
-        <span className="text-neutral-400 text-[10px]">
+        <span className="text-[#5A5245] text-[10px]">
           ({displayKey})
         </span>
       )}

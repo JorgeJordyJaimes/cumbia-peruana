@@ -18,14 +18,13 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
 
   return (
     <Link href={`/blog/${article.slug}`} className="group block h-full">
-      <GlassCard
-        variant="elevated"
-        className={`h-full flex flex-col overflow-hidden transition-all duration-300 hover:border-amber-500/40 hover:-translate-y-1 ${
+      <div
+        className={`h-full flex flex-col border-2 border-[#1F1305] bg-white text-[#1F1305] shadow-[4px_4px_0px_#1F1305] hover:shadow-[4px_4px_0px_#E80000] hover:translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 overflow-hidden ${
           featured ? "sm:col-span-2 lg:col-span-2" : ""
         }`}
       >
         {/* Contenedor de Portada */}
-        <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-900 border-b border-white/10">
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#1F1305] border-b-2 border-[#1F1305]">
           {article.imagen_portada_url ? (
             <Image
               src={article.imagen_portada_url}
@@ -34,15 +33,15 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-950 to-amber-950/20 text-neutral-600">
-              <Disc3 className="h-12 w-12 text-amber-500/30 animate-spin [animation-duration:15s]" />
-              <span className="font-mono text-xs text-neutral-500 mt-2">Crónica de Archivo</span>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#EDE0D0] text-[#1F1305]">
+              <Disc3 className="h-12 w-12 text-[#E80000] animate-spin [animation-duration:15s]" />
+              <span className="font-mono text-xs text-[#1F1305] font-bold mt-2">Crónica de Archivo</span>
             </div>
           )}
 
           {/* Insignia de Categoría Flotante */}
           <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-neutral-950/80 px-2.5 py-0.5 font-mono text-[11px] font-medium text-amber-400 backdrop-blur-md">
+            <span className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-[#F1730C] px-2.5 py-0.5 font-mono text-[11px] font-bold text-white shadow-[2px_2px_0px_#1F1305]">
               <BookOpen className="h-3 w-3" />
               {article.categoria}
             </span>
@@ -53,37 +52,37 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
         <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
           <div className="space-y-2.5">
             {/* Metadatos: Fecha y Tiempo de Lectura */}
-            <div className="flex items-center gap-4 font-mono text-xs text-neutral-400">
+            <div className="flex items-center gap-4 font-mono text-xs text-[#746B5C] font-bold">
               <span className="flex items-center gap-1">
-                <Calendar className="h-3.5 w-3.5 text-neutral-500" />
+                <Calendar className="h-3.5 w-3.5 text-[#F1730C]" />
                 {formattedDate}
               </span>
               <span className="flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5 text-neutral-500" />
+                <Clock className="h-3.5 w-3.5 text-[#E80000]" />
                 {article.tiempo_lectura}
               </span>
             </div>
 
             {/* Título */}
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug group-hover:text-amber-300 transition-colors">
+            <h3 className="font-cooper text-xl sm:text-2xl font-bold text-[#1F1305] tracking-tight leading-snug group-hover:text-[#E80000] transition-colors">
               {article.titulo}
             </h3>
 
             {/* Resumen */}
             {article.resumen && (
-              <p className="font-sans text-xs sm:text-sm text-neutral-400 line-clamp-3 leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-[#5A5245] line-clamp-3 leading-relaxed">
                 {article.resumen}
               </p>
             )}
           </div>
 
           {/* Enlace Leer Crónica */}
-          <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-mono text-amber-400 group-hover:text-amber-300">
+          <div className="pt-3 border-t-2 border-[#1F1305]/10 flex items-center justify-between text-xs font-mono font-bold text-[#E80000] group-hover:text-[#F1730C]">
             <span>Leer Crónica Completa</span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </div>
         </div>
-      </GlassCard>
+      </div>
     </Link>
   );
 }

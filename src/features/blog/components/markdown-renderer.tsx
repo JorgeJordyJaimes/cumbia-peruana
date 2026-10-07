@@ -17,7 +17,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
   const blocks = content.split(/\n\s*\n/);
 
   return (
-    <div className={`space-y-6 text-neutral-300 font-sans text-base sm:text-lg leading-relaxed ${className}`}>
+    <div className={`space-y-6 text-[#1F1305] font-sans text-base sm:text-lg leading-relaxed ${className}`}>
       {blocks.map((block, bIdx) => {
         const trimmed = block.trim();
         if (!trimmed) return null;
@@ -27,7 +27,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <h1
               key={bIdx}
-              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight pt-4 pb-2 border-b border-white/10"
+              className="font-cooper text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1305] tracking-tight pt-4 pb-2 border-b-2 border-[#1F1305]"
             >
               {renderInline(trimmed.slice(2))}
             </h1>
@@ -39,7 +39,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <h2
               key={bIdx}
-              className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight pt-4 pb-1 text-amber-200"
+              className="font-cooper text-2xl sm:text-3xl font-bold text-[#E80000] tracking-tight pt-4 pb-1 border-b border-[#1F1305]/20"
             >
               {renderInline(trimmed.slice(3))}
             </h2>
@@ -51,7 +51,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <h3
               key={bIdx}
-              className="font-sans text-xl sm:text-2xl font-semibold text-neutral-100 tracking-tight pt-2"
+              className="font-cooper text-xl sm:text-2xl font-bold text-[#1F1305] tracking-tight pt-2"
             >
               {renderInline(trimmed.slice(4))}
             </h3>
@@ -68,7 +68,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <blockquote
               key={bIdx}
-              className="my-6 pl-5 border-l-4 border-amber-500 bg-amber-500/5 py-4 px-6 rounded-r-xl italic font-serif text-lg sm:text-xl text-amber-100/90 shadow-sm"
+              className="my-6 border-2 border-l-8 border-[#1F1305] bg-[#EDE0D0] py-4 px-6 italic font-serif text-lg sm:text-xl text-[#1F1305] shadow-[4px_4px_0px_#1F1305]"
             >
               “{renderInline(quoteLines)}”
             </blockquote>
@@ -79,9 +79,9 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
         if (trimmed.split("\n").every((l) => l.trim().startsWith("- ") || l.trim().startsWith("* "))) {
           const items = trimmed.split("\n").map((l) => l.trim().replace(/^[-*]\s+/, ""));
           return (
-            <ul key={bIdx} className="space-y-2 my-4 pl-6 list-disc list-outside text-neutral-300">
+            <ul key={bIdx} className="space-y-2 my-4 pl-6 list-disc list-outside text-[#1F1305]">
               {items.map((item, iIdx) => (
-                <li key={iIdx} className="pl-1">
+                <li key={iIdx} className="pl-1 text-[#5A5245]">
                   {renderInline(item)}
                 </li>
               ))}
@@ -92,7 +92,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
         // Párrafo estándar con soporte para saltos de línea internos
         const lines = trimmed.split("\n");
         return (
-          <p key={bIdx} className="text-neutral-300 font-light leading-relaxed">
+          <p key={bIdx} className="text-[#5A5245] leading-relaxed">
             {lines.map((line, lIdx) => (
               <React.Fragment key={lIdx}>
                 {renderInline(line)}
@@ -119,7 +119,7 @@ function renderInline(text: string): React.ReactNode[] {
     // Negrita **texto**
     if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
       return (
-        <strong key={index} className="font-semibold text-white">
+        <strong key={index} className="font-bold text-[#1F1305]">
           {part.slice(2, -2)}
         </strong>
       );
@@ -128,7 +128,7 @@ function renderInline(text: string): React.ReactNode[] {
     // Cursiva *texto*
     if (part.startsWith("*") && part.endsWith("*") && part.length >= 2) {
       return (
-        <em key={index} className="italic text-neutral-200">
+        <em key={index} className="italic text-[#1F1305]">
           {part.slice(1, -1)}
         </em>
       );
@@ -139,7 +139,7 @@ function renderInline(text: string): React.ReactNode[] {
       return (
         <code
           key={index}
-          className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-xs text-amber-300"
+          className="border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.5 font-mono text-xs font-bold text-[#E80000]"
         >
           {part.slice(1, -1)}
         </code>
@@ -157,7 +157,7 @@ function renderInline(text: string): React.ReactNode[] {
           href={linkUrl}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noopener noreferrer" : undefined}
-          className="text-amber-400 underline decoration-amber-500/50 underline-offset-4 hover:text-amber-300 hover:decoration-amber-300 transition-colors"
+          className="text-[#E80000] font-bold underline decoration-[#E80000]/60 underline-offset-4 hover:text-[#F1730C] transition-colors"
         >
           {linkText}
         </a>

@@ -36,9 +36,9 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
   }
 
   return (
-    <div className={cn("overflow-hidden rounded-xl border border-white/10 bg-black/40 backdrop-blur-md", className)}>
+    <div className={cn("overflow-hidden border-2 border-[#1F1305] bg-white shadow-[3px_3px_0px_#1F1305]", className)}>
       {/* Cabecera Estilo Ficha de Vinilo */}
-      <div className="grid grid-cols-12 gap-3 border-b border-white/10 px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-neutral-400">
+      <div className="grid grid-cols-12 gap-3 border-b-2 border-[#1F1305] bg-[#EDE0D0] px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#1F1305] font-bold">
         <div className="col-span-1 text-center">#</div>
         <div className="col-span-5">Título de la Obra</div>
         <div className="col-span-3">Compositor / Autor</div>
@@ -46,7 +46,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
       </div>
 
       {/* Lista de Pistas */}
-      <div className="divide-y divide-white/5">
+      <div className="divide-y divide-[#1F1305]/15">
         {tracks.map((track, idx) => {
           const trackLabel = track.side
             ? `${track.side}${track.trackNumber || idx + 1}`
@@ -55,40 +55,40 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
           return (
             <div
               key={track.id}
-              className="grid grid-cols-12 items-center gap-3 px-4 py-3 text-xs transition-colors hover:bg-white/[0.04]"
+              className="grid grid-cols-12 items-center gap-3 px-4 py-3 text-xs transition-colors hover:bg-[#EDE0D0]/50"
             >
               {/* Posición / Lado */}
-              <div className="col-span-1 text-center font-mono font-bold text-neutral-400">
+              <div className="col-span-1 text-center font-mono font-bold text-[#746B5C]">
                 {trackLabel}
               </div>
 
               {/* Título & Duración */}
               <div className="col-span-5 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-white truncate text-sm">
+                  <span className="font-bold text-[#1F1305] truncate text-sm">
                     {track.title}
                   </span>
                   {track.durationSeconds && (
-                    <span className="font-mono text-[11px] text-neutral-500">
+                    <span className="font-mono text-[11px] text-[#746B5C]">
                       {formatDuration(track.durationSeconds)}
                     </span>
                   )}
                 </div>
                 {track.genre && (
-                  <span className="text-[10px] text-neutral-400 font-mono">
+                  <span className="text-[10px] text-[#746B5C] font-mono">
                     {track.genre}
                   </span>
                 )}
               </div>
 
               {/* Compositor */}
-              <div className="col-span-3 truncate text-neutral-300">
+              <div className="col-span-3 truncate text-[#5A5245]">
                 {track.composer ? (
-                  <span className="italic text-neutral-300">
+                  <span className="italic text-[#1F1305]">
                     {track.composer}
                   </span>
                 ) : (
-                  <span className="text-neutral-500 font-mono text-[11px]">
+                  <span className="text-[#746B5C] font-mono text-[11px]">
                     D.R. (Derechos Reservados)
                   </span>
                 )}
@@ -103,7 +103,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                     musicalKey={track.musicalKey}
                   />
                 ) : (
-                  <span className="font-mono text-[11px] text-neutral-600">
+                  <span className="font-mono text-[11px] text-[#746B5C]">
                     Pendiente BPM
                   </span>
                 )}
