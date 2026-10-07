@@ -46,7 +46,7 @@ El proyecto está diseñado bajo una arquitectura modular desacoplada:
 ```text
 ├── src/
 │   ├── app/              # Rutas públicas (catálogo, fichas, DJ) y panel de administración
-│   ├── features/         # Módulos de dominio (dj-tools, temas, albumes, grupos, storage)
+│   ├── features/         # Módulos de dominio (dj-tools, temas, albumes, admin, blog, storage, home-brutalism)
 │   ├── components/ui/    # Componentes base reutilizables (shadcn/ui)
 │   ├── lib/supabase/     # Clientes de Supabase para navegador y servidor (SSR)
 │   └── types/            # Tipos de TypeScript (database.ts y domain.ts)

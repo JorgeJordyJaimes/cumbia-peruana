@@ -5,7 +5,6 @@ import { Search, SlidersHorizontal, Disc, Filter, Sparkles } from "lucide-react"
 import { AlbumCard, type AlbumItem } from "@/features/albumes/components/album-card";
 import { AlbumDetailModal } from "@/features/albumes/components/album-detail-modal";
 import type { TrackItem } from "@/features/temas/components/tracklist-table";
-import { GlassCard } from "@/components/ui/glass-card";
 
 interface CatalogExplorerProps {
   initialAlbums: AlbumItem[];

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { GlassCard } from "@/components/ui/glass-card";
 import { BadgeDJ } from "@/components/ui/badge-dj";
 import {
   CAMELOT_WHEEL,

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { GlassCard } from "@/components/ui/glass-card";
 import { BookOpen, Calendar, Clock, ArrowRight, Disc3 } from "lucide-react";
 import type { Articulo } from "@/types/blog";
 
