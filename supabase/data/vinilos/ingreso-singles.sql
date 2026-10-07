@@ -45,11 +45,10 @@
 
 -- DIFA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 11, '009', 1973, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
@@ -59,11 +58,10 @@ VALUES
 
 -- DISCOPE
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 25, '001', 1974, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
@@ -79,11 +77,10 @@ VALUES
 
 -- PRODIC
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 49, '001', 1976, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
@@ -99,11 +96,10 @@ VALUES
 
 -- INFOPESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 1, '171110', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, ''),
@@ -113,22 +109,20 @@ VALUES
 
 -- SONORADIO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 3, '13742', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- EMUCEL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 62, '80-001', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
@@ -140,11 +134,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (12, 2, '1195', 1985, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
@@ -154,11 +147,10 @@ VALUES
 
 -- DISCOPE
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 25, '76-040', 1976, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -166,11 +158,10 @@ VALUES
 
 -- GALEM
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 68, '001', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -180,11 +171,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 2, '1025', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -193,11 +183,10 @@ VALUES
 
 -- DIFA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 11, '90', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -210,22 +199,20 @@ VALUES
 
 -- MUSIC SHOP
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 7, '01-183', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- INFOPESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 1, '171404', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -235,22 +222,20 @@ VALUES
 
 -- WR
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 56, '10', 1986, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- CARAVANA RECORD
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (23, 9, '42', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -260,11 +245,10 @@ VALUES
 
 -- CARACOL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 13, '3', 1975, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -273,11 +257,10 @@ VALUES
 
 -- PRODITA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 84, '78-02', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -286,11 +269,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 2, '1036', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -301,11 +283,10 @@ VALUES
 
 -- SONORADIO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 3, '13805', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -313,11 +294,10 @@ VALUES
 
 -- MIDAS
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 5, '110063', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -330,22 +310,20 @@ VALUES
 
 -- AVISPA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 93, '1002', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- KOZMOZ
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 105, '1002', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -353,11 +331,10 @@ VALUES
 
 -- ROSA RECORD
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (22, 33, '11', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -367,11 +344,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (1, 2, '1190', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -379,22 +355,20 @@ VALUES
 
 -- IEMPSA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (1, 36, '19432775', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- ODEON
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (1, 4, '10237', 1968, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -464,22 +438,20 @@ VALUES
 
 -- CANPARD
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 123, 'CP-003', 1971, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- ECODISCOS
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 205, '81001', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -487,11 +459,10 @@ VALUES
 
 -- FTA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 6, '50601', 1971, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -518,11 +489,10 @@ VALUES
 
 -- CARACOL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 13, '24', 1976, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -538,11 +508,10 @@ VALUES
 
 -- INFOPESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 1, '70959', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -559,11 +528,10 @@ VALUES
 
 -- FONOHIT
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 51, '820003', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -572,11 +540,10 @@ VALUES
 
 -- SONORADIO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 3, '13834', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -584,11 +551,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 2, '1244', 1986, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -596,11 +562,10 @@ VALUES
 
 -- CARAVANA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (4, 9, '45', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -609,22 +574,20 @@ VALUES
 
 -- DINSA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (39, 15, '1159', 1973, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- CARACOL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (39, 13, '37', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -643,11 +606,10 @@ VALUES
 
 -- FONOHIT
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (39, 51, '830009', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -655,22 +617,20 @@ VALUES
 
 -- INFOPESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (39, 1, '171473', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- PRODUCCIONES WALTER LEON
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (39, 206, '005', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -680,22 +640,20 @@ VALUES
 
 -- DIN-DON
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (43, 94, '78-dd-02', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- CARACOL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (43, 13, '19', 1976, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -706,11 +664,10 @@ VALUES
 
 -- PODEROSO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (43, 37, '03', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -720,11 +677,10 @@ VALUES
 
 -- INFOPESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (43, 1, '70944', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -732,11 +688,10 @@ VALUES
 
 -- ODEON
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (43, 4, '01011444', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -749,11 +704,10 @@ VALUES
 
 -- IEMPSA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (43, 36, '50152824', 1988, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -763,11 +717,10 @@ VALUES
 
 -- PODEROSO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (50, 37, '24', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -776,11 +729,10 @@ VALUES
 
 -- ODEON
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (50, 4, '01011478', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -791,11 +743,10 @@ VALUES
 
 -- CARACOL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (50, 13, '68', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -803,11 +754,10 @@ VALUES
 
 -- SONORADIO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (50, 3, '13766', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -815,11 +765,10 @@ VALUES
 
 -- CARAVANA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (50, 9, '6', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -828,22 +777,20 @@ VALUES
 
 -- IMSA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (77, 38, '201', 1974, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- CARACOL
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (77, 13, '2', 1975, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -856,11 +803,10 @@ VALUES
 
 -- PODEROSO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (77, 37, '4', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -870,11 +816,10 @@ VALUES
 -------------------------------------------------------------------------------------------- CHACALÓN Y LA NUEVA CREMA -------------------------------------------------------------------------------------------
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (7, 2, '1002', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -899,33 +844,30 @@ VALUES
 
 -- DIFA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (7, 11, '78', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- PRODISAR
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (7, 8, '161', 1986, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- MARKAHUASI
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (7, 18, '103111', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -935,11 +877,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (31, 2, '1006', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -958,11 +899,10 @@ VALUES
 
 -- INFORESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (31, 1, '171486', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -970,11 +910,10 @@ VALUES
 
 -- HUATISA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (31, 207, '1', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -984,11 +923,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (9, 2, '1067', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1009,11 +947,10 @@ VALUES
 
 -- ARCO IRIS
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (9, 31, '85001', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1029,11 +966,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (28, 2, '1147', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1046,11 +982,10 @@ VALUES
 
 -- PRODISAR
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (28, 8, '163', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -1060,11 +995,10 @@ VALUES
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (27, 2, '1027', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1079,11 +1013,10 @@ VALUES
 
 -- DISGONZA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (27, 14, 'III', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1095,11 +1028,10 @@ VALUES
 
 -- SONATA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (27, 29, '27', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -1108,11 +1040,10 @@ VALUES
 
 -- SONATA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 29, '19', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1120,11 +1051,10 @@ VALUES
 
 -- HUATISA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 207, '2', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
@@ -1132,33 +1062,30 @@ VALUES
 
 -- PENTAFONO
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 72, '3', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- PRODIC
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 49, '8', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
 
 -- DISCOS YOLITA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 76, '1', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1168,11 +1095,10 @@ VALUES
 
 -- DISGONZA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 14, '3', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1190,11 +1116,10 @@ VALUES
 
 -- INFOPESA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 1, '70804', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
@@ -1203,11 +1128,10 @@ VALUES
 
 -- DISCOS CHICHA
 INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, 
-    año_publicacion, id_tipo_album, es_disco_split, 
-    incluido_en_lp, extraido_de_lp, solo_en_45, 
-    lados_en_lp, id_lp_relacionado, es_reedicion, 
-    id_album_original, comentario)
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
 VALUES
 
 (34, 30, '20008', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');

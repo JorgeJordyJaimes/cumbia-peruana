@@ -32,10 +32,10 @@
 -- ODEON
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (1, 4, 'Los Destellos', 'ELD-1735', 1968, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (1, 4, 'En Orbita', 'ELD-1795', 1969, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -57,20 +57,20 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (1, 2, 'El Retorno Triunfal', 'HLP-1054', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIOS ODEÓN
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (1, 4, 'El Millón de Los Destellos', 'ELD-0201170', 1974, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
 (1, 4, 'Carmen Rosa y otros Éxitos', 'ELD-0201411', 1976, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
@@ -81,10 +81,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (7, 2, 'Chacalón y La Nueva Crema', 'HLP-1001', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (7, 2, 'El Soberano de la Cumbia', 'HLP-1009', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -94,20 +94,20 @@ VALUES
 -- PRODISAR
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (7, 8, 'Soy Feliz', 'LP-2055', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- MARKAHUASI
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (7, 18, 'La Voz del Pueblo', 'LP-002', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (7, 18, 'Loco Amor', 'LP-002', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -116,10 +116,10 @@ VALUES
 -- RECOPILATORIOS HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (7, 2, 'Éxitos, Éxitos, Éxitos', 'HLP-1002', 1981, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -128,10 +128,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (27, 2, 'Bailando con Los Ovnis', 'HLP-1005', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (27, 2, 'Los Creadores Del Ritmo Tropical Andino', 'HLP-1035', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -141,10 +141,10 @@ VALUES
 -- DISGONZA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (27, 14, 'Insuperables', 'LPD-002', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (27, 14, 'La Gira de Los Ovnis', 'LPD-003', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -156,10 +156,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (24, 2, 'Yo Claudio', 'HLP-1012', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (24, 2, 'Cumbias Pegaditas Vol. 2', 'HLP-1022', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -177,10 +177,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (31, 2, 'La Rica Mermelada', 'HLP-1004', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (31, 2, 'A Bailar con La Mermelada', 'HLP-1013', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -188,10 +188,10 @@ VALUES
 -- IEMPSA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (31, 4, 'Sientelo...', 'IEMP-9790', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -200,10 +200,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (9, 2, 'Los Auténticos', 'HLP-1006', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (9, 2, 'Los Originales', 'HLP-1014', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -213,10 +213,10 @@ VALUES
 -- ARCO IRIS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (9, 31, 'Del Pueblo para el Pueblo con Amor', 'LP-85001', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (9, 31, 'Dulcemente... ¡Chicha!', 'LP-86001', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -225,10 +225,10 @@ VALUES
 -- COLIBRÍ
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (9, 17, 'Rica Chicha', 'COL-0510006.1', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (9, 17, 'Cinco Estrellas en Chicha', 'COL-0510010.0', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -237,10 +237,10 @@ VALUES
 -- RECOPILATORIOS HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (9, 2, 'Feliz Aniversario', 'HLP-1020', 1984, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
 (9, 2, 'En Vivo', 'HLP-1028', 1984, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
@@ -251,10 +251,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (19, 2, 'Arrollando con Alegría', 'HLP-1016', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (19, 2, 'A Gozar con Alegría', 'HLP-1026', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -266,10 +266,10 @@ VALUES
 -- PRODISAR
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (19, 8, 'Nacido Para Triunfar', 'LP-2090', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -278,10 +278,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (28, 2, 'Yo Soy la Cumbia', 'HLP-1033', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (28, 2, 'Pinceladas Musicales', 'HLP-1043', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -290,10 +290,10 @@ VALUES
 -- PRODISAR
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (28, 8, 'La Fuerza Musical', 'LP-2069', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (28, 8, 'Arrollando', 'LP-2087', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -303,10 +303,10 @@ VALUES
 -- FARO RECORD
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (17, 22, 'Tu Corazón y el Mío', 'LPFR-204003', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (17, 22, 'Al Compás del Halley', 'LPFR-204006', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -314,10 +314,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (17, 2, 'Siempre Arriba', 'HLP-1015', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (17, 2, 'A Sarita Colonia', 'HLP-1031', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -325,20 +325,20 @@ VALUES
 -- COLIBRÍ
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (17, 17, 'Un... Dos... Tres... Maravilla Otra Vez', 'COL-051001.6', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIOS INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (17, 1, 'Disco de Oro', 'INF-208412', 1985, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -347,10 +347,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (36, 2, 'Bailando al Rítmo', 'HLP-1052', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (36, 2, 'Cruel Traición', 'HLP-1068', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -361,20 +361,20 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (41, 1, 'De Cantina en Cantina', 'INF-208243', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (41, 2, 'Tongo el Grande', 'HLP-1011', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -383,10 +383,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (148, 2, 'Homenaje a Los Cantantes', 'HLP-1066', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -395,10 +395,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (45, 2, 'En La Cuspide del Rítmo Tropical Andino', 'HLP-1040', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -407,10 +407,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (83, 2, 'Lluvia Tropical', 'HLP-1025', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -419,20 +419,20 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (126, 2, 'Los Cantaritos de Oro', 'HLP-1058', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (126, 1, 'Ven a Bailar', 'INF-208408', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (126, 1, 'Por Ella', 'INF-208435', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -442,10 +442,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (119, 2, 'Ensueño Tropical', 'HLP-1055', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -454,10 +454,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (125, 2, 'Me Recordarás', 'HLP-1065', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -466,10 +466,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (170, 2, 'A Romper Parlantes', 'HLP-1057', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -478,20 +478,20 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (81, 2, 'Pa Mi Tierra', 'HLP-1059', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- MAG
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (81, 24, 'La Supremacia Musical', 'LPN-2732', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -500,10 +500,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (151, 2, 'A Mi Gente con Cariño', 'HLP-1053', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -512,10 +512,10 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (NULL, 2, 'Festival Tropical', 'HLP-1019', 1983, 2, FALSE, TRUE, FALSE, FALSE, NULL, ''),
 (NULL, 2, 'Festival de Cumbias Vol. 2', 'HLP-1027', 1984, 2, FALSE, TRUE, FALSE, FALSE, NULL, ''),

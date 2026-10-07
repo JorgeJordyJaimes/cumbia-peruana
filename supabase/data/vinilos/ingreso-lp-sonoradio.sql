@@ -32,10 +32,10 @@
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (2, 3, 'Al Rojo Vivo', 'SE-9379', 1971, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (2, 3, 'Paseo Tropical', 'SE-9409', 1972, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -64,10 +64,10 @@ VALUES
 -- CBS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (2, 43, 'Costa, Sierra, Selva', 'SE-8745', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (2, 43, 'Dimensión Bailable Vol. 1', 'SE-8761', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -75,20 +75,20 @@ VALUES
 -- NINSA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (2, 204, 'Dimensión Bailable Vol. 2', '02.049', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIO SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (2, 3, 'Lo Mejor de Lo Mejor', 'SE-9639', 1979, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
 (2, 3, 'Disco de Oro', 'SE-9794', 1983, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
@@ -98,10 +98,10 @@ VALUES
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (5, 3, '¡Rítmos Tropicales!', 'SE-9478', 1974, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (5, 3, 'Bailando con... Los Yungas', 'SE-9535', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -117,10 +117,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (5, 1, 'Vuelven', 'INF-208359', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -129,20 +129,20 @@ VALUES
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (330, 3, 'El Poder Musical', 'SE-9841', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- MIDAS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (330, 5, 'Con Cariño', 'LPG-216049', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (330, 1, 'Pa Todo el Año', 'INF-208375', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -150,10 +150,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (330, 1, 'Cumbias Poderosas', 'INF-208394', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -162,20 +162,20 @@ VALUES
 -- ODEON
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (49, 4, 'Al Rítmo de Los Wembler''s', 'LD-2195', 1972, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- DECIBEL
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (49, 34, 'La Danza del Petrolero', 'LP-2001', 1974, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (49, 34, 'La Amenaza Verde', 'LP-2008', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -185,10 +185,10 @@ VALUES
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (49, 3, 'Fiesta en la Selva', 'SE-9598', 1977, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (49, 3, 'Bailando Hasta el Amanecer', 'SE-9620', 1978, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -201,10 +201,10 @@ VALUES
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (48, 3, 'Con Sabor Tropical', 'SE-9396', 1972, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (48, 3, '¡Tremendo Rítmo!', 'SE-9444', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -212,10 +212,10 @@ VALUES
 -- DIFA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (48, 11, 'Lo Fuerte del Gua Gua', 'DLPS-81011', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -224,10 +224,10 @@ VALUES
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (62, 3, 'El Cumbión del Año', 'SE-9643', 1979, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (62, 3, 'Un Rugido Musical', 'SE-9666', 1979, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -240,19 +240,19 @@ VALUES
 -- SONO RADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (67, 3, 'El Super Sonido', 'SE-9768', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- LESISA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (67, 54, 'El Super Show de Los Tímpanos', '15-020-99', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');

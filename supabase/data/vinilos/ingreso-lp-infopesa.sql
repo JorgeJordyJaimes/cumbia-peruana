@@ -32,10 +32,10 @@
 -- FTA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (4, 6, 'Ven y Goza Esta Cumbia', 'FLPS-142', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (4, 6, 'Peligro... Rítmo Explosivo', 'FLPS-195', 1974, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -46,10 +46,10 @@ VALUES
 -- CARACOL
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (4, 13, 'Rítmo Espectacular', 'LP-001', 1978, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -57,30 +57,30 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (4, 1, 'El Retorno Triunfal', 'INF-208180', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- SONORADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (4, 3, 'Aguita Clara', 'SE-9815', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIOS FTA & INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (4, 6, 'Lo Mejor de Los Ecos', 'FLPS-252', 1976, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
 (4, 1, 'Lo Mejor de Los Ecos', 'INF-208253', 1981, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
@@ -90,20 +90,20 @@ VALUES
 -- DINSA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (46, 15, 'Los Orientales de Paramonga', 'LPS-0066', 1971, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (46, 1, 'Fiesta En Oriente', 'LPS-8058', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -112,20 +112,20 @@ VALUES
 -- IMSA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (6, 38, 'Juaneco Y Su Combo', 'LP-007', 1969, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (6, 1, 'El Gran Cacique', 'LPS-8063', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (6, 1, 'Dale Juaneco', 'LPS-8067', 1974, 2, FALSE, FALSE, FALSE, FALSE, NULL, '1 Ed.'),
@@ -143,20 +143,20 @@ VALUES
 -- UNIVERSAL
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (6, 12, 'No Llores Abuelita', 'LPU-088', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIOS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (6, 1, 'Recordando al Brujo Fachín', 'INF-208115', 1981, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
 (6, 1, 'Grandes Éxitos de Juaneco y su Combo', 'INF-208274', 1982, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
@@ -166,10 +166,10 @@ VALUES
 -- DISCOPE
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (12, 25, 'El Fabuloso Grupo Celeste', 'LPD-1', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (12, 25, 'El Tropiloco Mundo del Grupo Celeste', 'LPD-2', 1976, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -177,10 +177,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (12, 1, 'El Mensaje Tropical del Fabuloso Grupo Celeste', 'INF-208191', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (12, 1, 'Sentimientos', 'INF-208304', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -188,20 +188,20 @@ VALUES
 -- HORÓSCOPO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (12, 2, 'Palomita', 'HLP-1044', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIOS INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (12, 1, 'Reviviendo Lo Máximo', 'INF-208174', 1980, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -210,10 +210,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (3, 1, 'El Sonido Selvático', 'LPS-8043', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (3, 1, 'El Poder Verde', 'LPS-8061', 1974, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -228,40 +228,40 @@ VALUES
 -- PANTEL
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (3, 89, 'Los Mirlos', '15.1014', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- CBS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (3, 43, 'Cumbia Thriller', 'SE-8662', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- IEMPSA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (3, 36, 'El Encanto de Los Mirlos', 'ELD-30.15.1453', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 --RECOPILATORIOS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (3, 1, 'Lo Mejor de Los Mirlos', 'INF-8123', 1978, 2, TRUE, FALSE, FALSE, FALSE, NULL, ''),
 (3, 1, 'Lo Mejor de Los Mirlos Vol. 2', 'INF-208203', 1980, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
@@ -271,10 +271,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (20, 1, 'Sábado y Domingo Con Los Walkers', 'INF-208345', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (20, 1, 'Poco a Poquito', 'INF-208354', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -284,10 +284,10 @@ VALUES
 -- COLIBRÍ
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (20, 17, '¡Que Viva El Amor!', 'COL-05100114', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -296,10 +296,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (135, 1, 'Esta Es Tu Cumbia', 'LPS-8035', 1972, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (135, 1, 'Sueño Amazónico', 'LPS-8060', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -310,10 +310,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (38, 1, 'Los Pakines', 'LPS-8023', 1972, 2, FALSE, FALSE, FALSE, FALSE, NULL, '1 Ed.'),
 (38, 1, 'Pasto Azul', 'LPS-8054', 1973, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -322,10 +322,10 @@ VALUES
 -- SONORADIO
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (38, 3, 'Los Pakines', 'SE-9465', 1974, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (38, 3, 'En Escena', 'SE-9481', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -335,10 +335,10 @@ VALUES
 -- RECOPILATORIO INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (38, 1, 'Lo Mejor De Lo Mejor', 'INF-208158', 1980, 2, TRUE, FALSE, FALSE, FALSE, NULL, 'Compilado');
 
@@ -347,10 +347,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (16, 1, 'Los Dexters de Uchiza', 'LPS-8065', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (16, 1, 'Con El Mismo Son', 'INF-208420', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -358,10 +358,10 @@ VALUES
 -- MUSIC SHOP
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (16, 7, 'Toma Lo Mejorcito', 'LP-0281016', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (16, 7, 'Fiesta En La Jungla', 'LP-0282036', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -376,10 +376,10 @@ VALUES
 -- VOLCÁN
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (15, 10, 'Selva Mía', 'DLPS-211', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (15, 10, 'Naranjitay', 'DLPS-217', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -387,10 +387,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (15, 1, 'La Cumbia del Sharutero', 'INF-208316', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (15, 1, 'Invasión Tropical', 'INF-208367', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -399,10 +399,10 @@ VALUES
 -- RECOPILATORIO INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (15, 1, 'Disco de Oro', 'INF-208314', 1982, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -411,10 +411,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (29, 1, 'Fiesta En La Selva', 'LPS-8094', 1976, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (29, 1, 'Buena Mujer', 'INF-208139', 1979, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -427,10 +427,10 @@ VALUES
 -- VOLCAN
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (21, 10, 'La Danza de Los Tigres', 'DLPS-168', 1979, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (21, 10, 'Mi Selva Majestuosa', 'DLPS-191', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -438,10 +438,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (21, 1, 'Para Ti Cariño', 'INF-208255', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (21, 1, 'El Tunchi Loco', 'INF-208334', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -450,10 +450,10 @@ VALUES
 -- RECOPILATORIO INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (21, 1, 'Los Grandes Éxitos De Los Tigres De Tarapoto', 'INF-208241', 1981, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -462,10 +462,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (555, 1, 'Viajando Por el Amazonas', 'LPS-8073', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (555, 1, 'La Fiesta Comenzó', 'LPS-8106', 1976, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -475,10 +475,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (576, 1, 'Pa Mi Terruño', 'LPS-8075', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (576, 1, 'Mi Pueblo Hermoso', 'LPS-8100', 1976, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -488,10 +488,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (210, 1, 'El Sonido Mágico de la Selva', 'LPS-8102', 1976, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -500,10 +500,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (492, 1, 'Bonita y Caprichosa', 'LPS-8079', 1975, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (492, 1, 'Vuelven Los Trionix', 'LPS-8101', 1976, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -513,10 +513,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (35, 1, 'El Chinchorro', 'INF-208350', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (35, 1, 'Se Quema, Se Quemó', 'INF-208363', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -528,10 +528,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (40, 1, 'Baila Suavecito', 'INF-208393', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (40, 1, 'Sirena del Amor', 'INF-208404', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -542,10 +542,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (47, 1, 'La Cachetoncita', 'INF-8133', 1978, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (47, 1, 'El Negro José', 'INF-208159', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -559,20 +559,20 @@ VALUES
 -- VOLCÁN
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (64, 10, 'Fiesta Amazónica', 'LP-234', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (64, 1, 'Surcando el Huallaga', 'INF-208392', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -581,10 +581,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (108, 1, 'La Garra Musical', 'INF-208425', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -593,10 +593,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (577, 1, 'No Pongas ese Disco', 'INF-208192', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (577, 1, 'Recuérdame', 'INF-208240', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -608,10 +608,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (111, 1, 'Lucerito Madrugador', 'INF-208426', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -620,10 +620,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (141, 1, 'Cumbia del Cajascal', 'INF-208381', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (141, 1, 'La Negra Coqueta', 'INF-208421', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
@@ -633,10 +633,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (578, 1, 'Tropicalísimo', 'INF-208379', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -645,10 +645,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (56, 1, 'Chichas Pegaditas', 'INF-208383', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (56, 1, 'No Te Equivoques', 'INF-208400', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -659,10 +659,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (103, 1, 'Los Magnificos del Grupo Aroma', 'INF-208344', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -671,10 +671,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (152, 1, 'Río Huallaga', 'INF-208431', 1988, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -683,10 +683,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (98, 1, 'Mi Chacrita', 'INF-8146', 1979, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -695,10 +695,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (110, 1, '14 Cumbias de Oro', 'LPCO-207003', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -707,20 +707,20 @@ VALUES
 -- MIDAS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (53, 5, 'A la Feria de Cali', 'LPG-216016', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (53, 1, 'Chofercito', 'INF-208365', 1985, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -729,10 +729,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (579, 1, 'Cumbia con Banjo', 'INF-208248', 1981, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -741,10 +741,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (66, 1, 'Rica Música', 'LPS-8032', 1972, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (66, 1, 'Disco Fiesta', 'INF-208153', 1980, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -757,10 +757,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (172, 1, 'Cumbia Loca', 'INF-208313', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
 (172, 1, 'Cumbia Americana', 'INF-208325', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
@@ -771,10 +771,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (575, 1, 'Grandes Éxitos de Tony Marín', 'INF-208287', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -783,10 +783,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (580, 1, 'Negra Cumbianbera', 'INF-208384', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -795,10 +795,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (524, 1, 'La Farra', 'INF-208382', 1986, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -807,20 +807,20 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (99, 1, 'Sabor a Chicha', 'INF-208402', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
 
 -- RECOPILATORIO MIDAS
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (39, 5, 'Lo Mejor de Los Ilusionistas', 'LPC-212002', 1980, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
 
@@ -829,10 +829,10 @@ VALUES
 -- INFOPESA
 
 INSERT INTO Albumes (
-    id_grupo, id_sello, nombre_album, 
-    numero_catalogo, año_publicacion, id_tipo_album, 
-    es_recopilatorio, es_varios_artistas, es_disco_split, 
-    es_reedicion, id_album_original, comentario)
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
 VALUES
 (581, 1, 'Super Cumbias', 'INF-8151', 1980, 2, FALSE, TRUE, FALSE, FALSE, NULL, ''),
 (581, 1, 'Mano a Mano Tropical', 'INF-208358', 1985, 2, FALSE, TRUE, FALSE, FALSE, NULL, ''),
