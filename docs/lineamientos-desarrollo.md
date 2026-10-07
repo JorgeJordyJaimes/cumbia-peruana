@@ -300,3 +300,13 @@ Para mantener la integridad del historial y el despliegue continuo en Vercel, to
    * `git add <archivos>`
    * `git commit -m "<tipo: descripción en español>"`
    * `git push origin <rama>` de forma inmediata.
+
+---
+
+## 9. 🔗 Documentación Relacionada
+* [Arquitectura Técnica y Modelo de Datos](arquitectura-tecnica.md)
+* [Manual de Criterios de Catalogación e Investigación](criterios-catalogacion.md)
+* [Manifiesto del Proyecto y Alcance Histórico](manifiesto-arquitectura.md)
+* [Registros de Decisiones de Arquitectura (ADRs)](adr/README.md)
+* [Datos Tabulares y Notas de Investigación](datos-investigacion/)
+

@@ -235,3 +235,13 @@ La aplicación web desplegada en **Vercel** (`Next.js App Router + TypeScript + 
 ## 7. 📖 Conclusión
 
 **Kumbia Sound** combina el **rigor relacional de una base de datos normalizada**, la **fidelidad histórica al soporte físico analógico (1968–2005)** y una **arquitectura moderna y eficiente en Next.js y Supabase**, consolidándose como la plataforma definitiva de preservación del patrimonio fonográfico de la cumbia peruana.
+
+---
+
+## 8. 🔗 Documentación Relacionada
+* [Arquitectura Técnica y Modelo de Datos](arquitectura-tecnica.md)
+* [Lineamientos de Desarrollo y Estándares de Ingeniería](lineamientos-desarrollo.md)
+* [Manual de Criterios de Catalogación e Investigación](criterios-catalogacion.md)
+* [Registros de Decisiones de Arquitectura (ADRs)](adr/README.md)
+* [Datos Tabulares y Notas de Investigación](datos-investigacion/)
+
