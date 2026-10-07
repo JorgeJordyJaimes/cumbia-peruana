@@ -123,6 +123,7 @@ CREATE TABLE Temas (
 CREATE TABLE Temas_Compositores (
     id_tema INT,
     id_compositor INT,
+    credito_como VARCHAR(150),
     PRIMARY KEY (id_tema, id_compositor),
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
     FOREIGN KEY (id_compositor) REFERENCES Personas(id_persona) ON DELETE CASCADE
@@ -154,10 +155,24 @@ CREATE TABLE Albumes_Temas (
     lado VARCHAR(10),
     id_album_origen INT,
     es_grabacion_inedita BOOLEAN DEFAULT FALSE,
+    es_mosaico BOOLEAN DEFAULT FALSE,
     UNIQUE (id_album, id_tema),
+    CONSTRAINT chk_albumes_temas_lados_ab CHECK (lado IS NULL OR lado IN ('A', 'B')),
     FOREIGN KEY (id_album) REFERENCES Albumes(id_album) ON DELETE CASCADE,
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
     FOREIGN KEY (id_album_origen) REFERENCES Albumes(id_album) ON DELETE SET NULL
+);
+
+CREATE TABLE Mosaicos_Temas (
+    id_mosaico_tema SERIAL PRIMARY KEY,
+    id_album_tema INT NOT NULL,
+    id_tema INT NOT NULL,
+    orden_segmento SMALLINT NOT NULL,
+    duracion_segmento_segundos INT,
+    UNIQUE (id_album_tema, orden_segmento),
+    CONSTRAINT chk_orden_segmento_pos CHECK (orden_segmento > 0),
+    FOREIGN KEY (id_album_tema) REFERENCES Albumes_Temas(id_album_tema) ON DELETE CASCADE,
+    FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE
 );
 
 CREATE TABLE Grupos_Musicos (
@@ -178,6 +193,7 @@ CREATE TABLE Tema_Musicos (
     id_musico INT NOT NULL,
     instrumento VARCHAR(50),
     id_rol INT NOT NULL,
+    credito_como VARCHAR(150),
     UNIQUE (id_tema, id_musico),
     FOREIGN KEY (id_tema) REFERENCES Temas(id_tema) ON DELETE CASCADE,
     FOREIGN KEY (id_musico) REFERENCES Personas(id_persona) ON DELETE CASCADE,
@@ -220,6 +236,8 @@ CREATE INDEX idx_temas_grupos_grupo ON Temas_Grupos(id_grupo);
 CREATE INDEX idx_temas_generos_tema ON Temas_Generos(id_tema);
 CREATE INDEX idx_temas_generos_genero ON Temas_Generos(id_genero);
 CREATE INDEX idx_temas_letra_gin ON Temas USING gin(to_tsvector('spanish', letra));
+CREATE INDEX idx_mosaicos_temas_album_tema ON Mosaicos_Temas(id_album_tema);
+CREATE INDEX idx_mosaicos_temas_tema ON Mosaicos_Temas(id_tema);
 
 ---
 --- Comentarios
@@ -232,5 +250,6 @@ COMMENT ON TABLE Albumes_Grupos_Lados IS 'Splits y recopilatorios donde cada lad
 COMMENT ON TABLE Temas IS 'Canciones/temas musicales';
 COMMENT ON TABLE Temas_Grupos IS 'Grupos que interpretan un tema (artistas principales, invitados, acompañamiento o colaboraciones)';
 COMMENT ON TABLE Temas_Generos IS 'Géneros musicales asociados a cada tema (permite fusiones y múltiples estilos por canción)';
+COMMENT ON TABLE Mosaicos_Temas IS 'Desglose de temas y compositores incluidos dentro de una pista tipo mosaico o enganchado';
 COMMENT ON TABLE Versiones IS 'Relación de versiones: un tema puede ser versión de otro tema original';
 COMMENT ON TABLE Grupos_Musicos IS 'Historial de membresía de músicos en grupos';

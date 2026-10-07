@@ -279,6 +279,7 @@ export interface Database {
           id_tema: number
           numero_pista: number | null
           lado: string | null
+          es_mosaico: boolean
         }
         Insert: {
           id_album_tema?: number
@@ -286,6 +287,7 @@ export interface Database {
           id_tema: number
           numero_pista?: number | null
           lado?: string | null
+          es_mosaico?: boolean
         }
         Update: {
           id_album_tema?: number
@@ -293,6 +295,7 @@ export interface Database {
           id_tema?: number
           numero_pista?: number | null
           lado?: string | null
+          es_mosaico?: boolean
         }
         Relationships: [
           {
@@ -311,18 +314,60 @@ export interface Database {
           }
         ]
       }
+      mosaicos_temas: {
+        Row: {
+          id_mosaico_tema: number
+          id_album_tema: number
+          id_tema: number
+          orden_segmento: number
+          duracion_segmento_segundos: number | null
+        }
+        Insert: {
+          id_mosaico_tema?: number
+          id_album_tema: number
+          id_tema: number
+          orden_segmento: number
+          duracion_segmento_segundos?: number | null
+        }
+        Update: {
+          id_mosaico_tema?: number
+          id_album_tema?: number
+          id_tema?: number
+          orden_segmento?: number
+          duracion_segmento_segundos?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mosaicos_temas_id_album_tema_fkey"
+            columns: ["id_album_tema"]
+            isOneToOne: false
+            referencedRelation: "albumes_temas"
+            referencedColumns: ["id_album_tema"]
+          },
+          {
+            foreignKeyName: "mosaicos_temas_id_tema_fkey"
+            columns: ["id_tema"]
+            isOneToOne: false
+            referencedRelation: "temas"
+            referencedColumns: ["id_tema"]
+          }
+        ]
+      }
       temas_compositores: {
         Row: {
           id_tema: number
           id_compositor: number
+          credito_como: string | null
         }
         Insert: {
           id_tema: number
           id_compositor: number
+          credito_como?: string | null
         }
         Update: {
           id_tema?: number
           id_compositor?: number
+          credito_como?: string | null
         }
         Relationships: [
           {
@@ -453,6 +498,7 @@ export interface Database {
           id_musico: number
           instrumento: string | null
           id_rol: number
+          credito_como: string | null
         }
         Insert: {
           id_tema_musicos?: number
@@ -460,6 +506,7 @@ export interface Database {
           id_musico: number
           instrumento?: string | null
           id_rol: number
+          credito_como?: string | null
         }
         Update: {
           id_tema_musicos?: number
@@ -467,6 +514,7 @@ export interface Database {
           id_musico?: number
           instrumento?: string | null
           id_rol?: number
+          credito_como?: string | null
         }
         Relationships: [
           {
@@ -620,7 +668,18 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_arbol_genealogico: {
+        Args: {
+          p_persona_id: number
+        }
+        Returns: Json
+      }
+      get_genealogia_versiones: {
+        Args: {
+          p_tema_id: number
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
@@ -630,3 +689,95 @@ export interface Database {
     }
   }
 }
+
+export interface ArbolGenealogicoResult {
+  persona: {
+    id_persona: number
+    nombre: string
+    apodo: string | null
+    fecha_nacimiento: string | null
+    lugar_nacimiento: string | null
+    biografia: string | null
+    url_foto: string | null
+  } | null
+  agrupaciones: Array<{
+    id_grupo: number
+    nombre_grupo: string
+    rol: string
+    region: string | null
+    fecha_formacion: string | null
+    desde: string | null
+    hasta: string | null
+    url_foto: string | null
+  }>
+  grabaciones_sesion: Array<{
+    id_tema: number
+    titulo_tema: string
+    instrumento: string | null
+    rol: string
+    credito_como: string | null
+    grupos: string[]
+    prensajes: Array<{
+      id_album: number
+      nombre_album: string | null
+      año_publicacion: number | null
+      numero_catalogo: string | null
+      sello: string | null
+      lado: string | null
+      pista: number | null
+    }>
+  }>
+  composiciones: Array<{
+    id_tema: number
+    titulo_tema: string
+    credito_como: string | null
+    duracion_segundos: number | null
+    bpm: number | null
+    camelot_code: string | null
+    generos: string[]
+    interpretes: string[]
+    total_versiones: number
+  }>
+}
+
+export interface NodoGenealogiaVersion {
+  id_tema: number
+  id_tema_original: number | null
+  nivel: number
+  es_original_raiz: boolean
+  es_tema_consultado: boolean
+  titulo_tema: string
+  duracion_segundos: number | null
+  bpm: number | null
+  camelot_code: string | null
+  musical_key: string | null
+  grupos: Array<{
+    id_grupo: number
+    nombre_grupo: string
+    rol_participacion: string | null
+  }>
+  compositores: Array<{
+    id_persona: number
+    nombre: string
+    apodo: string | null
+    credito_como: string | null
+  }>
+  prensajes: Array<{
+    id_album: number
+    nombre_album: string | null
+    año_publicacion: number | null
+    numero_catalogo: string | null
+    sello: string | null
+    lado: string | null
+    pista: number | null
+  }>
+}
+
+export interface GenealogiaVersionesResult {
+  tema_consultado_id: number
+  tema_raiz_id: number
+  total_nodos: number
+  total_versiones: number
+  nodos: NodoGenealogiaVersion[]
+}
+

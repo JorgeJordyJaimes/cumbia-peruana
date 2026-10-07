@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { X, Disc, Calendar, Building2, Layers } from "lucide-react";
+import Link from "next/link";
+import { X, Disc, Calendar, Building2, Layers, ExternalLink } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
@@ -118,8 +119,19 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
           <TracklistTable tracks={tracks} />
         </div>
 
+        {/* Enlace Permanente a Ficha Completa (SEO) */}
+        <div className="mt-4 flex justify-end">
+          <Link
+            href={`/album/${album.id}`}
+            className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
+          >
+            <span>Ver Ficha Completa & Enlace Permanente</span>
+            <ExternalLink className="h-3.5 w-3.5 text-[#E80000]" />
+          </Link>
+        </div>
+
         {/* Nota Histórica / Sin Audio */}
-        <div className="mt-6 border-2 border-[#1F1305] bg-white p-3 text-center font-mono text-[11px] font-bold text-[#5A5245] shadow-[2px_2px_0px_#1F1305]">
+        <div className="mt-4 border-2 border-[#1F1305] bg-white p-3 text-center font-mono text-[11px] font-bold text-[#5A5245] shadow-[2px_2px_0px_#1F1305]">
           Esta plataforma preserva metadatos técnicos y musicológicos para investigadores y DJs.
           No contiene archivos ni reproducción de audio.
         </div>

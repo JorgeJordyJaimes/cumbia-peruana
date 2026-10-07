@@ -13,6 +13,7 @@ import {
 import type { AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
 import type { ConfiguracionHome } from "@/types/blog";
+import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 
 export const revalidate = 60; // Regenerar cada 60 segundos
 
@@ -166,8 +167,32 @@ export default async function Home() {
     });
   });
 
+  // Generar datos estructurados Schema.org MusicAlbum para el catálogo fonográfico
+  const catalogJsonLd = albums.slice(0, 15).map((a) =>
+    buildMusicAlbumJsonLd({
+      id: a.id,
+      name: a.title,
+      artistName: a.artist,
+      recordLabel: a.label,
+      catalogNumber: a.catalogNumber,
+      releaseYear: a.year,
+      coverUrl: a.coverUrl,
+      tracks: (tracksMap[a.id] || []).map((tr) => ({
+        id: tr.id,
+        title: tr.title,
+        position: tr.trackNumber,
+        durationSeconds: tr.durationSeconds,
+        composerName: tr.composer,
+        artistName: a.artist,
+      })),
+    })
+  );
+
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+      {/* Schema.org MusicAlbum JSON-LD para motores de búsqueda */}
+      {catalogJsonLd.length > 0 && <JsonLd data={catalogJsonLd} />}
+
       {/* Cintillo Superior Brutalista */}
       {homeConfig.cintillo_activo && homeConfig.cintillo_texto && (
         <div className="border-b-2 border-[#1F1305] bg-[#F1730C] px-4 py-1.5 text-center font-mono text-[11px] font-bold text-white tracking-widest uppercase">
