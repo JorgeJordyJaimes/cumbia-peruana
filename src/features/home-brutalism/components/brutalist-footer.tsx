@@ -140,7 +140,7 @@ export function BrutalistFooter() {
                   <div className="w-14 h-14 rounded-full border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center shadow-[2px_2px_0px_#E80000] p-1.5 overflow-hidden group">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/kumbia-sound-logo-cropped.png"
+                      src="/branding/kumbia-sound-logo-cropped.png"
                       alt="Logo Kumbia Sound"
                       className="w-full h-full object-contain filter drop-shadow-[0_0_3px_#E80000]"
                     />

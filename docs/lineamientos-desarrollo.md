@@ -84,8 +84,9 @@ La aplicación estará disponible localmente en `http://localhost:3000`.
 
 ### Estructura de Archivos de Base de Datos
 * `supabase/migrations/`: Migraciones versionadas en SQL que definen el esquema estructural, políticas RLS, buckets de almacenamiento y permisos.
-* `Base de Datos/datos/`: Catálogo documental histórico con los inserts organizados por vertiente (`base/`, `vinilos/`, `cassete/`, `canciones/`).
-* `Base de Datos/consultas/`: Consultas SQL de trazabilidad (45 RPM vs LP, splits, reediciones, colaboraciones).
+* `supabase/data/`: Catálogo documental histórico con los inserts organizados por vertiente (`base/`, `vinilos/`, `cassete/`, `canciones/`).
+* `supabase/consultas/`: Consultas SQL de trazabilidad (45 RPM vs LP, splits, reediciones, colaboraciones).
+* `docs/sql-referencia/`: Esquemas DDL y arquitecturales de referencia histórica.
 
 ---
 
@@ -121,7 +122,7 @@ Para mantener la integridad y consistencia del historial del proyecto, todo cola
    * `docs:` para cambios en documentación o comentarios explicativos en SQL.
    * `style:` para formateo visual o alineación de consultas sin alterar lógica.
    * `refactor:` para reestructuración de código o esquema sin cambiar comportamiento.
-2. **Ciclo Inmediato de Sincronización:** Cada vez que se modifiquen archivos del proyecto (especialmente en `Base de Datos/`, `supabase/` o `src/`):
+2. **Ciclo Inmediato de Sincronización:** Cada vez que se modifiquen archivos del proyecto (especialmente en `supabase/` o `src/`):
    * Ejecutar `git add <archivos>`.
    * Realizar el `git commit -m "<mensaje en español>"`.
    * Ejecutar inmediatamente `git push` a la rama remota correspondiente.

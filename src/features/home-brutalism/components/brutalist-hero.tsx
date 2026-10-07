@@ -125,7 +125,7 @@ export function BrutalistHero({
                 <div className="relative w-full h-[400px] sm:h-[460px] md:h-[500px] flex items-end justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/claudio-moran.png"
+                    src="/images/claudio-moran.png"
                     alt="Claudio Morán con acordeón - El Rey de las Cumbias Pegaditas"
                     className="max-h-full max-w-full object-contain object-bottom filter contrast-105 drop-shadow-[0_12px_18px_rgba(31,19,5,0.25)] select-none"
                   />

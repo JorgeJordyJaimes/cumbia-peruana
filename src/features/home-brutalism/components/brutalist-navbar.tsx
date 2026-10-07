@@ -19,7 +19,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
           <div className="relative flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center border-2 border-[#1F1305] bg-[#1F1305] shadow-[3px_3px_0px_#E80000] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#E80000] overflow-hidden p-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/kumbia-sound-logo-cropped.png"
+              src="/branding/kumbia-sound-logo-cropped.png"
               alt="Kumbia Sound Logo Oficial"
               className="w-full h-full object-contain filter drop-shadow-[0_0_2px_#E80000] transition-transform duration-500 group-hover:rotate-12"
             />

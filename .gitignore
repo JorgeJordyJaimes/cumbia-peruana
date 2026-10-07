@@ -39,7 +39,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 next-env.d.ts
 
-# supabase cli temporal
+# temporales
+.temp/
 supabase/.temp/

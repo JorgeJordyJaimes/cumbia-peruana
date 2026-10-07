@@ -1,60 +1,58 @@
-# 🪗 Archivo Histórico de la Cumbia Peruana (1968–2005)
+# 🪗 Kumbia Sound: Archivo Histórico de la Cumbia Peruana (1968–2005)
 
 Plataforma digital especializada en la preservación discográfica, genealogía musical y consulta técnica de la cumbia grabada en el Perú durante su era dorada y etapas de evolución (1968–2005).
 
-El proyecto combina el rigor musicológico con herramientas de análisis armónico para coleccionistas, investigadores y DJs, modelando con exactitud la realidad del soporte físico (vinilos de 45 RPM, LPs, casetes, CDs y ediciones split).
+El proyecto combina rigor musicológico con herramientas de análisis armónico para coleccionistas, investigadores y DJs, modelando con exactitud la realidad material del soporte físico (vinilos de 45 RPM, LPs, casetes, CDs y ediciones split de sellos históricos como *Infopesa, Discos Horóscopo, Sono Radio, El Virrey, Odeón / IEMPSA, Difa, Discope*, etc.).
 
 ---
 
-## 🎯 Propósitos del Proyecto
+## 📚 Documentación Centralizada
 
-* **🧠 Preservación Cultural y Genealogía Musical:** Mapear la trazabilidad completa de grabaciones: identificar compositores originales, versiones (*covers*), cronología de temas y el árbol genealógico de músicos que formaron parte de múltiples agrupaciones a lo largo del tiempo.
-* **🎛️ Herramienta Técnica para DJs:** Proporcionar un motor de búsqueda armónica que cataloga métricas de audio precisas por cada grabación: valores exactos de **BPM**, tonalidad musical estándar y codificación en la **Rueda Camelot** (1A a 12B).
-* **🗂️ Fidelidad al Formato Físico:** Documentar lanzamientos respetando la industria discográfica peruana de la época: prensajes en 45 RPM, LPs estándar, splits compartidos por lados (Lado A / Lado B de distintos artistas), reediciones y sellos discográficos emblemáticos (Infopesa, Discos Horóscopo, Sono Radio, El Virrey, etc.).
-* **🔍 Rescate Histórico:** Visibilizar agrupaciones y músicos sesionistas que tuvieron producciones reducidas o efímeras, pero cuyo aporte enriqueció el desarrollo de la cumbia costeña, andina, amazónica y psicodélica.
+Para profundizar en los aspectos históricos, etnomusicológicos y relacionales del archivo, consulta los documentos en [`docs/`](docs/):
 
----
-
-## 📚 Modelo de Datos Relacional
-
-A diferencia de una base de datos plana, el sistema utiliza un esquema altamente normalizado en **PostgreSQL** para resolver consultas relacionales complejas:
-
-* **Personas & Músicos:** Biografías, fotos, lugares de nacimiento y créditos por tema con múltiples roles simultáneos (arreglista, primera guitarra, voz, percusión).
-* **Grupos & Historial de Membresía:** Agrupaciones, directores, regiones de origen y períodos de vigencia por músico (`desde` / `hasta`).
-* **Sellos Discográficos:** Información institucional, país de operación y catálogos asociados.
-* **Álbumes & Formatos Físicos:** Identificación de matriz física (LP, 45 RPM, Cassette, CD), números de catálogo, reediciones, relaciones split por lado y carátulas restauradas.
-* **Temas & Grabaciones:** Pistas con duración, metadatos para DJ (BPM, Camelot, tonalidad), letras indexadas para búsqueda de texto completo y compositores.
-* **Versiones:** Relación directa entre canciones matrices/originales y sus adaptaciones posteriores.
+* [📖 **Manifiesto & Arquitectura del Proyecto**](docs/manifiesto-arquitectura.md): Fundamentos, períodos musicales (1968–2005), diagrama entidad-relación (ER), el grafo fonográfico y módulos web.
+* [🛠️ **Lineamientos de Desarrollo & Seguridad**](docs/lineamientos-desarrollo.md): Normas de contribución, políticas de seguridad sobre credenciales, ruptura de compatibilidad en Supabase Data API y flujo Git.
+* [📊 **Datos & Notas de Investigación**](docs/datos-investigacion/): Registros de control documental (`Control de Datos BD Cumbia Peruana.ods`), resolución de discrepancias y catálogos de sellos.
+* [🗄️ **Esquema DDL de Referencia**](docs/sql-referencia/estructural.sql): Definición de tablas maestras, claves foráneas e índices optimizados.
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-El proyecto está diseñado bajo una arquitectura modular desacoplada:
-
-* **Frontend:** [Next.js](https://nextjs.org/) (App Router, Server Components y TypeScript) con estilado en [Tailwind CSS](https://tailwindcss.com/) y componentes accesibles de [shadcn/ui](https://ui.shadcn.com/).
-* **Diseño UI/UX:** Interfaz *Atmospheric Glassmorphism meets Retro Vinyl Editorial*, inspirada en paneles de catalogación modernos (fondos oscuros, degradados suaves y tipografía display de alta legibilidad).
-* **Base de Datos:** [PostgreSQL](https://www.postgresql.org/) alojado en [Supabase](https://supabase.com/), con índices optimizados B-Tree y GIN para búsqueda de letras y mezclas DJ.
-* **Almacenamiento Multimedia:** Buckets de Supabase Storage para alojar imágenes de portadas, sellos y músicos procesadas localmente en formato **WebP**.
-* **Gestión de Base de Datos e Infraestructura:** Control de versiones mediante migraciones físicas en texto plano (`supabase/migrations/`), garantizando un respaldo auditable dentro del repositorio de GitHub.
-* **Despliegue:** [Vercel](https://vercel.com/) con integración continua desde GitHub.
+* **Frontend:** [Next.js](https://nextjs.org/) (App Router, Server Components y TypeScript) con estilos en [Tailwind CSS](https://tailwindcss.com/) y primitivas de [Radix UI / shadcn/ui](https://ui.shadcn.com/).
+* **Estilado & UI:** Diseño *Atmospheric Glassmorphism meets Retro Vinyl Editorial*, con modo brutalista editorial de alto contraste visual.
+* **Base de Datos:** [PostgreSQL](https://www.postgresql.org/) en [Supabase](https://supabase.com/), con extensiones para búsqueda de texto completo en español (índices GIN), funciones RPC (`SECURITY DEFINER`) y recursión jerárquica (`WITH RECURSIVE`).
+* **Almacenamiento Multimedia:** Buckets de Supabase Storage para alojar imágenes de portadas, sellos y músicos procesadas localmente en formato **WebP** de alta fidelidad vía Canvas API.
+* **SEO & Metadatos:** Datos estructurados [Schema.org (JSON-LD)](https://schema.org/) para `MusicAlbum`, `MusicRecording`, `MusicGroup` y `Person`.
+* **Despliegue & Analíticas:** [Vercel](https://vercel.com/) con integración continua y métricas de privacidad con `@vercel/analytics`.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Estructura del Repositorio (Estándar POSIX)
 
 ```text
-├── src/
-│   ├── app/              # Rutas públicas (catálogo, fichas, DJ) y panel de administración
-│   ├── features/         # Módulos de dominio (dj-tools, temas, albumes, admin, blog, storage, home-brutalism)
-│   ├── components/ui/    # Componentes base reutilizables (shadcn/ui)
-│   ├── lib/supabase/     # Clientes de Supabase para navegador y servidor (SSR)
-│   └── types/            # Tipos de TypeScript (database.ts y domain.ts)
-├── supabase/
-│   ├── migrations/       # Migraciones versionadas en SQL (.sql)
-│   └── seed.sql          # Catálogos base (Roles, Géneros, Tipos de Álbum)
-├── Base de Datos/        # Catálogo histórico documental y esquemas relacionales
-└── README.md
+├── docs/                 # Documentación técnica, manifiesto histórico y notas de investigación
+│   ├── datos-investigacion/ # Control tabular de registros fonográficos y notas de sellos
+│   ├── sql-referencia/   # Esquemas DDL estructurales de referencia histórica
+│   ├── lineamientos-desarrollo.md # Normas para desarrolladores y políticas de Supabase Data API
+│   └── manifiesto-arquitectura.md # Manifiesto, modelo relacional y grafo fonográfico
+├── public/               # Activos estáticos públicos organizados
+│   ├── branding/         # Logotipos oficiales e isotipos del proyecto
+│   └── images/           # Fotografías y arte gráfico de presentación
+├── scripts/              # Scripts de automatización (poblado y sincronización SQL)
+│   └── poblar-db.mjs     # Sincronizador de inserts SQL a Supabase vía CLI
+├── src/                  # Código fuente de la aplicación Next.js
+│   ├── app/              # Rutas App Router (catálogo, /album/[id], /genealogia, /match-bpm, /admin)
+│   ├── components/       # Componentes globales y generadores SEO JSON-LD
+│   ├── features/         # Módulos de dominio (albumes, temas, genealogia, storage, admin, blog)
+│   ├── lib/              # Clientes de Supabase (browser y SSR) y utilidades
+│   └── types/            # Definiciones de TypeScript (database.ts, domain.ts)
+├── supabase/             # Entorno de base de datos relacional
+│   ├── consultas/        # Consultas SQL analíticas (trazabilidad, 45 RPM vs LP, splits)
+│   ├── data/             # Inserts SQL históricos (base, vinilos, casetes, canciones)
+│   ├── migrations/       # Migraciones SQL versionadas y auditables
+│   └── seed.sql          # Catálogos base (roles, tipos de álbum)
+└── README.md             # Guía técnica principal
 ```
 
 ---
@@ -63,39 +61,75 @@ El proyecto está diseñado bajo una arquitectura modular desacoplada:
 
 ### 1. Requisitos Previos
 * [Node.js](https://nodejs.org/) (v20 o superior).
-* Instancia activa en [Supabase](https://supabase.com/).
+* Gestor de paquetes `npm`.
+* [Git](https://git-scm.com/).
+* Instancia vinculada o cuenta activa en [Supabase](https://supabase.com/).
 
-### 2. Configuración de Variables de Entorno
-Copia el archivo de ejemplo y completa tus credenciales:
+### 2. Clonación e Instalación
+```bash
+git clone https://github.com/JorgeJordyJaimes/cumbia-peruana.git
+cd cumbia-peruana
+npm install
+```
+
+### 3. Configuración de Variables de Entorno
+
+> [!CAUTION]
+> **POLÍTICA DE SEGURIDAD ESTRICTA SOBRE CLAVES Y SECRETOS**
+> Por seguridad y cumplimiento normativo, nunca almacenes claves reales ni tokens de Supabase dentro de archivos rastreados por Git.
+> Si acabas de clonar el repositorio para desarrollo colaborativo, **solicita directamente las credenciales autorizadas al mantenedor del proyecto (Jordy Jaimes)**.
+
+Copia la plantilla de ejemplo y completa tus variables locales en `.env.local`:
 ```bash
 cp .env.local.example .env.local
 ```
 
-Configura las variables correspondientes en `.env.local`:
+Configuración requerida en `.env.local`:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anonima
-```
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anonima-publica
 
-### 3. Instalación de Dependencias
-```bash
-npm install
+# (Opcional - solo para scripts administrativos de sincronización SQL con npm run db:poblar)
+# SUPABASE_ACCESS_TOKEN=tu-token-personal-de-supabase
 ```
 
 ### 4. Servidor de Desarrollo
-Inicia el entorno de desarrollo local en `http://localhost:3000`:
 ```bash
 npm run dev
 ```
+La aplicación se levantará en [http://localhost:3000](http://localhost:3000).
 
-### 5. Compilación y Calidad de Código
+### 5. Scripts Disponibles
 ```bash
-# Comprobación de tipos y build de producción
+# Servidor de desarrollo
+npm run dev
+
+# Verificación de compilación de producción y TypeScript
 npm run build
 
-# Verificación de linter
+# Auditoría de linter (ESLint)
 npm run lint
+
+# Sincronización e inserción del catálogo histórico SQL hacia Supabase
+npm run db:poblar
 ```
+
+---
+
+## 🛡️ Políticas Obligatorias del Proyecto
+
+### 1. Supabase Data API (Concesión Explícita de Permisos)
+Al crear o alterar tablas mediante migraciones en `supabase/migrations/`, debes habilitar RLS y otorgar permisos explícitos para los roles de la Data API (`anon`, `authenticated`, `service_role`):
+```sql
+ALTER TABLE <tabla> ENABLE ROW LEVEL SECURITY;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE <tabla> TO anon, authenticated, service_role;
+```
+
+### 2. Soportes Físicos (Exclusividad Lado A y Lado B)
+En la discografía peruana del período 1968–2005 los soportes físicos se limitan a Lado A y Lado B (45 RPM, LPs y Casetes). Está estrictamente prohibido introducir lógica para lados C o D.
+
+### 3. Flujo de Trabajo Git
+Todo commit debe seguir la convención de *Conventional Commits* en **español** (`feat:`, `fix:`, `refactor:`, `docs:`, etc.) y enviarse inmediatamente a la rama remota correspondiente.
 
 ---
 

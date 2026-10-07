@@ -29,15 +29,15 @@ if (!token) {
 
 // Lista ordenada de archivos SQL maestros
 const DEFAULT_FILES = [
-  'Base de Datos/datos/base/personas.sql',
-  'Base de Datos/datos/base/grupos.sql',
-  'Base de Datos/datos/base/sellos.sql',
-  'Base de Datos/datos/vinilos/ingreso-lp-horoscopo.sql',
-  'Base de Datos/datos/vinilos/ingreso-lp-infopesa.sql',
-  'Base de Datos/datos/vinilos/ingreso-lp-sonoradio.sql',
-  'Base de Datos/datos/vinilos/ingreso-singles.sql',
-  'Base de Datos/datos/cassete/ingreso-casetes.sql',
-  'Base de Datos/datos/canciones/ingreso-temas.sql',
+  'supabase/data/base/personas.sql',
+  'supabase/data/base/grupos.sql',
+  'supabase/data/base/sellos.sql',
+  'supabase/data/vinilos/ingreso-lp-horoscopo.sql',
+  'supabase/data/vinilos/ingreso-lp-infopesa.sql',
+  'supabase/data/vinilos/ingreso-lp-sonoradio.sql',
+  'supabase/data/vinilos/ingreso-singles.sql',
+  'supabase/data/cassete/ingreso-casetes.sql',
+  'supabase/data/canciones/ingreso-temas.sql',
 ];
 
 const args = process.argv.slice(2);
