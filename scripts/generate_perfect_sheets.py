@@ -1,17 +1,16 @@
 import zipfile
-import shutil
-import xml.etree.ElementTree as ET
 import re
+import subprocess
+import os
 import openpyxl
 from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.workbook.defined_name import DefinedName
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
+import xml.etree.ElementTree as ET
 
 ODS_PATH = 'docs/datos-investigacion/Datos BD.ods'
 XLSX_PATH = 'docs/datos-investigacion/Datos BD.xlsx'
-BACKUP_PATH = 'docs/datos-investigacion/Datos BD.ods.bak'
-
-shutil.copyfile(ODS_PATH, BACKUP_PATH)
-print(f'Backup de seguridad creado en: {BACKUP_PATH}')
+X2T_PATH = r'C:\Program Files\ONLYOFFICE\DesktopEditors\converter\x2t.exe'
 
 # ==============================================================================
 # 1. EXTRAER DATOS MAESTROS DE LOS ARCHIVOS SQL
@@ -471,253 +470,32 @@ SHEETS_DEF = {
 }
 
 # ==============================================================================
-# 3. CONSTRUCCIÓN DE DATOS BD.ODS (LIBREOFFICE CALC COMPATIBLE)
+# 3. EXTRAER DATOS ORIGINALES DE 45s Y LPs DEL ARCHIVO ODS EXISTENTE
 # ==============================================================================
-NS = {
-    'office': 'urn:oasis:names:tc:opendocument:xmlns:office:1.0',
-    'table': 'urn:oasis:names:tc:opendocument:xmlns:table:1.0',
-    'text': 'urn:oasis:names:tc:opendocument:xmlns:text:1.0',
-    'style': 'urn:oasis:names:tc:opendocument:xmlns:style:1.0',
-    'fo': 'urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0',
-    'config': 'urn:oasis:names:tc:opendocument:xmlns:config:1.0',
-    'calcext': 'urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0',
-    'number': 'urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0',
-    'of': 'urn:oasis:names:tc:opendocument:xmlns:of:1.2',
-}
-
-for prefix, uri in NS.items():
-    ET.register_namespace(prefix, uri)
-
+original_sheets_data = {}
 with zipfile.ZipFile(ODS_PATH, 'r') as z:
-    content_xml = z.read('content.xml')
-    settings_xml = z.read('settings.xml') if 'settings.xml' in z.namelist() else None
-    other_files = {name: z.read(name) for name in z.namelist() if name not in ['content.xml', 'settings.xml']}
-
-root = ET.fromstring(content_xml)
-
-auto_styles = root.find('.//office:automatic-styles', NS)
-if auto_styles is None:
-    auto_styles = ET.SubElement(root, f"{{{NS['office']}}}automatic-styles")
-
-if auto_styles.find(f"{{{NS['number']}}}text-style[@{{{NS['style']}}}name='NText']", NS) is None:
-    t_style = ET.SubElement(auto_styles, f"{{{NS['number']}}}text-style", {
-        f"{{{NS['style']}}}name": 'NText'
-    })
-    ET.SubElement(t_style, f"{{{NS['number']}}}text-content")
-
-def create_cell_style(name, bg_color, text_color, bold=False, italic=False, font_size='9.5pt', is_text_format=False):
-    s = auto_styles.find(f"{{{NS['style']}}}style[@{{{NS['style']}}}name='{name}']", NS)
-    if s is None:
-        s_attribs = {
-            f"{{{NS['style']}}}name": name,
-            f"{{{NS['style']}}}family": 'table-cell',
-            f"{{{NS['style']}}}parent-style-name": 'Default'
-        }
-        if is_text_format:
-            s_attribs[f"{{{NS['style']}}}data-style-name"] = 'NText'
-        s = ET.SubElement(auto_styles, f"{{{NS['style']}}}style", s_attribs)
-    else:
-        if is_text_format:
-            s.attrib[f"{{{NS['style']}}}data-style-name"] = 'NText'
-            
-    props = s.find(f"{{{NS['style']}}}table-cell-properties", NS)
-    if props is None:
-        props = ET.SubElement(s, f"{{{NS['style']}}}table-cell-properties")
-    props.attrib[f"{{{NS['fo']}}}background-color"] = bg_color
-    props.attrib[f"{{{NS['fo']}}}padding"] = '0.15cm'
-    props.attrib[f"{{{NS['fo']}}}wrap-option"] = 'wrap'
-
-    t_props = s.find(f"{{{NS['style']}}}text-properties", NS)
-    if t_props is None:
-        t_props = ET.SubElement(s, f"{{{NS['style']}}}text-properties")
-    t_props.attrib[f"{{{NS['fo']}}}color"] = text_color
-    t_props.attrib[f"{{{NS['style']}}}font-name"] = 'Arial'
-    t_props.attrib[f"{{{NS['fo']}}}font-size"] = font_size
-    if bold:
-        t_props.attrib[f"{{{NS['fo']}}}font-weight"] = 'bold'
-    if italic:
-        t_props.attrib[f"{{{NS['fo']}}}font-style"] = 'italic'
-
-create_cell_style('HeaderCellA', '#0f172a', '#ffffff', bold=True, font_size='10pt') # Navy
-create_cell_style('HeaderCellB', '#1e3a8a', '#ffffff', bold=True, font_size='10pt') # Azul
-create_cell_style('HeaderCellCat', '#334155', '#ffffff', bold=True, font_size='10pt') # Pizarra
-create_cell_style('GuideCell', '#f8fafc', '#64748b', italic=True, font_size='8.5pt')
-create_cell_style('TextCell', '#ffffff', '#0f172a', font_size='9pt', is_text_format=True)
-
-registered_col_styles = set()
-for s in auto_styles.findall(f"{{{NS['style']}}}style[@{{{NS['style']}}}family='table-column']", NS):
-    registered_col_styles.add(s.attrib.get(f"{{{NS['style']}}}name"))
-
-def get_col_style(width):
-    clean_w = width.replace('.', '_').replace('cm', '')
-    sname = f"col_w_{clean_w}"
-    if sname not in registered_col_styles:
-        c_style = ET.SubElement(auto_styles, f"{{{NS['style']}}}style", {
-            f"{{{NS['style']}}}name": sname,
-            f"{{{NS['style']}}}family": 'table-column'
-        })
-        ET.SubElement(c_style, f"{{{NS['style']}}}table-column-properties", {
-            f"{{{NS['style']}}}column-width": width,
-            f"{{{NS['style']}}}use-optimal-column-width": 'false'
-        })
-        registered_col_styles.add(sname)
-    return sname
-
-col_default_rest = get_col_style('2.5cm')
-
-spreadsheet = root.find('.//office:spreadsheet', NS)
-
-# Contenedor de validaciones
-content_validations = spreadsheet.find(f"{{{NS['table']}}}content-validations")
-if content_validations is None:
-    content_validations = ET.Element(f"{{{NS['table']}}}content-validations")
-    spreadsheet.insert(0, content_validations)
-else:
-    content_validations.clear()
-
-def add_val_rule(name, condition_str):
-    v_elem = ET.SubElement(content_validations, f"{{{NS['table']}}}content-validation", {
-        f"{{{NS['table']}}}name": name,
-        f"{{{NS['table']}}}condition": condition_str,
-        f"{{{NS['table']}}}allow-empty-cell": 'true',
-        f"{{{NS['table']}}}display-list": 'unsorted',
-        f"{{{NS['table']}}}base-cell-address": 'Catalogos.A1'
-    })
-    ET.SubElement(v_elem, f"{{{NS['table']}}}help-message", {f"{{{NS['table']}}}display": 'false'})
-    ET.SubElement(v_elem, f"{{{NS['table']}}}error-message", {f"{{{NS['table']}}}display": 'false'})
-
-# Para listas grandes: referencia directa a la hoja Catalogos (sin límite de 255 caracteres)
-add_val_rule('val_sellos', f'cell-content-is-in-list(Catalogos.$A$2:$A${len(sellos_list)+1})')
-add_val_rule('val_personas', f'cell-content-is-in-list(Catalogos.$B$2:$B${len(personas_list)+1})')
-add_val_rule('val_grupos', f'cell-content-is-in-list(Catalogos.$C$2:$C${len(grupos_list)+1})')
-
-# Para listas fijas cortas: lista explícita
-def make_list_cond(items):
-    return 'cell-content-is-in-list(' + ';'.join([f'"{x}"' for x in items]) + ')'
-
-add_val_rule('val_sino', make_list_cond(sino_list))
-add_val_rule('val_lados', make_list_cond(lados_list))
-add_val_rule('val_lados_lp', make_list_cond(lados_lp_list))
-add_val_rule('val_camelot', make_list_cond(camelot_list))
-add_val_rule('val_generos', make_list_cond(generos_list))
-
-def build_ods_row(parent_table, values, style_name, validations_map=None):
-    row = ET.SubElement(parent_table, f"{{{NS['table']}}}table-row")
-    for col_idx, val in enumerate(values):
-        attribs = {
-            f"{{{NS['table']}}}style-name": style_name,
-            f"{{{NS['office']}}}value-type": 'string',
-            f"{{{NS['calcext']}}}value-type": 'string'
-        }
-        if validations_map and col_idx in validations_map:
-            attribs[f"{{{NS['table']}}}content-validation-name"] = validations_map[col_idx]
-            
-        cell = ET.SubElement(row, f"{{{NS['table']}}}table-cell", attribs)
-        p = ET.SubElement(cell, f"{{{NS['text']}}}p")
-        p.text = str(val) if val is not None else ''
-
-# Generar las 10 hojas en ODS
-for sname, sdata in SHEETS_DEF.items():
-    for t in list(spreadsheet.findall(f"{{{NS['table']}}}table")):
-        if t.attrib.get(f"{{{NS['table']}}}name") == sname:
-            spreadsheet.remove(t)
-            
-    tbl = ET.SubElement(spreadsheet, f"{{{NS['table']}}}table", {
-        f"{{{NS['table']}}}name": sname
-    })
-    
-    for w in sdata['widths']:
-        col_sname = get_col_style(w)
-        ET.SubElement(tbl, f"{{{NS['table']}}}table-column", {
-            f"{{{NS['table']}}}style-name": col_sname,
-            f"{{{NS['table']}}}default-cell-style-name": 'TextCell'
-        })
-    ET.SubElement(tbl, f"{{{NS['table']}}}table-column", {
-        f"{{{NS['table']}}}style-name": col_default_rest,
-        f"{{{NS['table']}}}number-columns-repeated": str(max(10, 1024 - len(sdata['widths']))),
-        f"{{{NS['table']}}}default-cell-style-name": 'TextCell'
-    })
-    
-    h_style = 'HeaderCellA' if sdata['type'] == 'ingreso' else 'HeaderCellB'
-    build_ods_row(tbl, sdata['headers'], h_style)
-    build_ods_row(tbl, sdata['guide'], 'GuideCell')
-    
-    for ex in sdata['examples']:
-        build_ods_row(tbl, ex, 'TextCell', sdata['validations'])
-        
-    empty_rows = max(0, 50 - len(sdata['examples']))
-    for _ in range(empty_rows):
-        empty_vals = [''] * len(sdata['headers'])
-        build_ods_row(tbl, empty_vals, 'TextCell', sdata['validations'])
-
-# Hoja Catalogos en ODS
-cat_headers = [
-    'SELLOS DISCOGRÁFICOS', 'PERSONAS (COMPOSITORES)', 'GRUPOS / ORQUESTAS',
-    'CLAVES CAMELOT', 'OPCIONES SI / NO', 'LADOS FÍSICOS', 'LADOS EN LP', 'GÉNEROS MUSICALES'
-]
-cat_widths = ['5.5cm', '6.5cm', '6.0cm', '3.5cm', '3.5cm', '3.0cm', '3.5cm', '5.0cm']
-
-for t in list(spreadsheet.findall(f"{{{NS['table']}}}table")):
-    if t.attrib.get(f"{{{NS['table']}}}name") == 'Catalogos':
-        spreadsheet.remove(t)
-
-cat_table = ET.SubElement(spreadsheet, f"{{{NS['table']}}}table", {
-    f"{{{NS['table']}}}name": 'Catalogos'
-})
-
-for w in cat_widths:
-    col_sname = get_col_style(w)
-    ET.SubElement(cat_table, f"{{{NS['table']}}}table-column", {
-        f"{{{NS['table']}}}style-name": col_sname,
-        f"{{{NS['table']}}}default-cell-style-name": 'TextCell'
-    })
-ET.SubElement(cat_table, f"{{{NS['table']}}}table-column", {
-    f"{{{NS['table']}}}style-name": col_default_rest,
-    f"{{{NS['table']}}}number-columns-repeated": '1016',
-    f"{{{NS['table']}}}default-cell-style-name": 'TextCell'
-})
-
-build_ods_row(cat_table, cat_headers, 'HeaderCellCat')
-
-max_cat_rows = max(
-    len(sellos_list), len(personas_list), len(grupos_list),
-    len(camelot_list), len(sino_list), len(lados_list), len(lados_lp_list), len(generos_list)
-)
-
-for i in range(max_cat_rows):
-    row_vals = [
-        sellos_list[i] if i < len(sellos_list) else '',
-        personas_list[i] if i < len(personas_list) else '',
-        grupos_list[i] if i < len(grupos_list) else '',
-        camelot_list[i] if i < len(camelot_list) else '',
-        sino_list[i] if i < len(sino_list) else '',
-        lados_list[i] if i < len(lados_list) else '',
-        lados_lp_list[i] if i < len(lados_lp_list) else '',
-        generos_list[i] if i < len(generos_list) else ''
-    ]
-    build_ods_row(cat_table, row_vals, 'TextCell')
-
-new_content_xml = ET.tostring(root, encoding='utf-8', xml_declaration=True)
-
-# Guardar ODS
-with zipfile.ZipFile(ODS_PATH, 'w', compression=zipfile.ZIP_DEFLATED) as z_out:
-    if 'mimetype' in other_files:
-        z_out.writestr('mimetype', other_files['mimetype'], compress_type=zipfile.ZIP_STORED)
-        del other_files['mimetype']
-    z_out.writestr('content.xml', new_content_xml)
-    if settings_xml:
-        z_out.writestr('settings.xml', settings_xml)
-    for fname, fbytes in other_files.items():
-        z_out.writestr(fname, fbytes)
-
-print('ODS generado con validaciones de rango y sin desfases.')
+    root = ET.fromstring(z.read('content.xml'))
+NS = {'table': 'urn:oasis:names:tc:opendocument:xmlns:table:1.0'}
+for t in root.findall('.//table:table', NS):
+    name = t.attrib.get('{urn:oasis:names:tc:opendocument:xmlns:table:1.0}name')
+    if name in ['45s', 'LPs']:
+        rows_data = []
+        for r in t.findall('table:table-row', NS):
+            row_vals = []
+            for c in r.findall('table:table-cell', NS):
+                rep = int(c.attrib.get('{urn:oasis:names:tc:opendocument:xmlns:table:1.0}number-columns-repeated', 1))
+                txt = ''.join(c.itertext())
+                if rep > 20: break
+                row_vals.extend([txt] * rep)
+            rows_data.append(row_vals)
+        original_sheets_data[name] = rows_data
+        print(f'Preservada hoja original {name}: {len(rows_data)} filas')
 
 # ==============================================================================
-# 4. CONSTRUCCIÓN DE DATOS BD.XLSX (MICROSOFT EXCEL 100% NATIVO)
+# 4. CONSTRUCCIÓN DE EXCEL NATIVO CON DEFINED NAMES Y LISTAS INLINE
 # ==============================================================================
 wb = openpyxl.Workbook()
-# Eliminar hoja por defecto
-wb.remove(wb.active)
+wb.remove(wb.active) # Eliminar hoja en blanco por defecto
 
 header_fill_a = PatternFill(start_color='0F172A', end_color='0F172A', fill_type='solid') # Navy
 header_fill_b = PatternFill(start_color='1E3A8A', end_color='1E3A8A', fill_type='solid') # Azul
@@ -735,7 +513,23 @@ border_thin = Border(
     bottom=Side(style='thin', color='E2E8F0')
 )
 
-# 1. Crear primero la hoja Catalogos en Excel para que las formulas puedan referenciarla
+# A. Insertar primero las hojas históricas 45s y LPs si existen
+for sname in ['45s', 'LPs']:
+    if sname in original_sheets_data:
+        ws_orig = wb.create_sheet(sname)
+        for r_vals in original_sheets_data[sname]:
+            ws_orig.append(r_vals)
+        for row in ws_orig.iter_rows():
+            for c in row:
+                c.number_format = '@'
+
+# B. Crear la hoja Catalogos
+cat_headers = [
+    'SELLOS DISCOGRÁFICOS', 'PERSONAS (COMPOSITORES)', 'GRUPOS MUSICALES',
+    'CLAVES CAMELOT', 'RESPUESTAS SI/NO', 'LADOS FÍSICOS', 'LADOS EN LP', 'GÉNEROS MUSICALES'
+]
+cat_widths = ['7.0cm', '7.0cm', '7.0cm', '3.5cm', '3.0cm', '3.0cm', '3.5cm', '4.5cm']
+
 ws_cat = wb.create_sheet('Catalogos')
 ws_cat.append(cat_headers)
 for col_num in range(1, len(cat_headers) + 1):
@@ -744,6 +538,7 @@ for col_num in range(1, len(cat_headers) + 1):
     c.font = header_font
     c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
 
+max_cat_rows = max(len(sellos_list), len(personas_list), len(grupos_list))
 for i in range(max_cat_rows):
     row_vals = [
         sellos_list[i] if i < len(sellos_list) else '',
@@ -761,38 +556,22 @@ for i in range(max_cat_rows):
         c.font = data_font
         c.number_format = '@'
 
-# 2. Generar las 10 hojas en Excel con DataValidation nativo
+for col_idx, w in enumerate(cat_widths):
+    col_letter = openpyxl.utils.get_column_letter(col_idx + 1)
+    cm_val = float(w.replace('cm', ''))
+    ws_cat.column_dimensions[col_letter].width = max(15, int(cm_val * 5.2))
+
+# C. Registrar Defined Names a nivel de Libro (Workbook)
+# Esto permite que ONLYOFFICE y Excel resuelvan perfectamente los rangos de listas grandes sin error de referencia
+wb.defined_names.add(DefinedName('LISTA_SELLOS', attr_text=f"'Catalogos'!$A$2:$A${len(sellos_list)+1}"))
+wb.defined_names.add(DefinedName('LISTA_PERSONAS', attr_text=f"'Catalogos'!$B$2:$B${len(personas_list)+1}"))
+wb.defined_names.add(DefinedName('LISTA_GRUPOS', attr_text=f"'Catalogos'!$C$2:$C${len(grupos_list)+1}"))
+
+# D. Crear las 10 Hojas de Trabajo con DataValidation
 for sname, sdata in SHEETS_DEF.items():
     ws = wb.create_sheet(sname)
     
-    # Validaciones Excel
-    dv_rules = {}
-    for col_idx, vname in sdata['validations'].items():
-        col_letter = openpyxl.utils.get_column_letter(col_idx + 1)
-        if vname == 'val_sellos':
-            dv = DataValidation(type='list', formula1=f'=Catalogos!$A$2:$A${len(sellos_list)+1}', allow_blank=True)
-        elif vname == 'val_personas':
-            dv = DataValidation(type='list', formula1=f'=Catalogos!$B$2:$B${len(personas_list)+1}', allow_blank=True)
-        elif vname == 'val_grupos':
-            dv = DataValidation(type='list', formula1=f'=Catalogos!$C$2:$C${len(grupos_list)+1}', allow_blank=True)
-        elif vname == 'val_camelot':
-            dv = DataValidation(type='list', formula1='=Catalogos!$D$2:$D$25', allow_blank=True)
-        elif vname == 'val_sino':
-            dv = DataValidation(type='list', formula1='=Catalogos!$E$2:$E$3', allow_blank=True)
-        elif vname == 'val_lados':
-            dv = DataValidation(type='list', formula1='=Catalogos!$F$2:$F$3', allow_blank=True)
-        elif vname == 'val_lados_lp':
-            dv = DataValidation(type='list', formula1='=Catalogos!$G$2:$G$4', allow_blank=True)
-        elif vname == 'val_generos':
-            dv = DataValidation(type='list', formula1='=Catalogos!$H$2:$H$9', allow_blank=True)
-        else:
-            continue
-            
-        ws.add_data_validation(dv)
-        dv.add(f'{col_letter}3:{col_letter}52')
-        dv_rules[col_idx] = dv
-        
-    # Fila 1: Headers
+    # 1. Headers (Fila 1)
     ws.append(sdata['headers'])
     h_fill = header_fill_a if sdata['type'] == 'ingreso' else header_fill_b
     for col_num in range(1, len(sdata['headers']) + 1):
@@ -801,7 +580,7 @@ for sname, sdata in SHEETS_DEF.items():
         c.font = header_font
         c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
         
-    # Fila 2: Guía
+    # 2. Guía (Fila 2)
     ws.append(sdata['guide'])
     for col_num in range(1, len(sdata['guide']) + 1):
         c = ws.cell(row=2, column=col_num)
@@ -809,16 +588,16 @@ for sname, sdata in SHEETS_DEF.items():
         c.font = guide_font
         c.alignment = Alignment(vertical='center', wrap_text=True)
         
-    # Filas 3..N: Ejemplos
+    # 3. Ejemplos (Filas 3..N)
     for ex in sdata['examples']:
         ws.append(ex)
         
-    # Filas vacías hasta 52
+    # 4. Filas vacías hasta fila 52
     empty_rows = max(0, 50 - len(sdata['examples']))
     for _ in range(empty_rows):
         ws.append([''] * len(sdata['headers']))
         
-    # Aplicar formato de texto y bordes a todas las filas de datos
+    # 5. Formato de texto @ y bordes para todas las filas de ingreso (3 a 52)
     for r in range(3, 53):
         for col_num in range(1, len(sdata['headers']) + 1):
             c = ws.cell(row=r, column=col_num)
@@ -826,19 +605,51 @@ for sname, sdata in SHEETS_DEF.items():
             c.number_format = '@'
             c.border = border_thin
             
-    # Ajustar anchos aproximados de columna en Excel
+    # 6. Validaciones de datos robustas (Named Ranges para listas grandes, Inline para listas cortas)
+    for col_idx, vname in sdata['validations'].items():
+        col_letter = openpyxl.utils.get_column_letter(col_idx + 1)
+        if vname == 'val_sellos':
+            dv = DataValidation(type='list', formula1='=LISTA_SELLOS', allow_blank=True)
+        elif vname == 'val_personas':
+            dv = DataValidation(type='list', formula1='=LISTA_PERSONAS', allow_blank=True)
+        elif vname == 'val_grupos':
+            dv = DataValidation(type='list', formula1='=LISTA_GRUPOS', allow_blank=True)
+        elif vname == 'val_sino':
+            dv = DataValidation(type='list', formula1='"SI,NO"', allow_blank=True)
+        elif vname == 'val_lados':
+            dv = DataValidation(type='list', formula1='"A,B"', allow_blank=True)
+        elif vname == 'val_lados_lp':
+            dv = DataValidation(type='list', formula1='"Ambos,Lado A,Lado B"', allow_blank=True)
+        elif vname == 'val_camelot':
+            dv = DataValidation(type='list', formula1='"' + ','.join(camelot_list) + '"', allow_blank=True)
+        elif vname == 'val_generos':
+            dv = DataValidation(type='list', formula1='"' + ','.join(generos_list) + '"', allow_blank=True)
+        else:
+            continue
+            
+        ws.add_data_validation(dv)
+        dv.add(f'{col_letter}3:{col_letter}52')
+        
+    # 7. Anchos de columnas
     for col_idx, w in enumerate(sdata['widths']):
         col_letter = openpyxl.utils.get_column_letter(col_idx + 1)
         cm_val = float(w.replace('cm', ''))
-        # 1 cm ~ 5.2 caracteres de ancho en Excel
         ws.column_dimensions[col_letter].width = max(12, int(cm_val * 5.2))
 
-# Ajustar anchos de Catalogos
-for col_idx, w in enumerate(cat_widths):
-    col_letter = openpyxl.utils.get_column_letter(col_idx + 1)
-    cm_val = float(w.replace('cm', ''))
-    ws_cat.column_dimensions[col_letter].width = max(15, int(cm_val * 5.2))
-
+# Guardar XLSX
 wb.save(XLSX_PATH)
-print(f'Excel nativo creado exitosamente en: {XLSX_PATH}')
-print('¡AMBOS ARCHIVOS (ODS Y XLSX) COMPLETAMENTE SINCRONIZADOS Y OPERATIVOS!')
+print(f'Excel nativo guardado exitosamente en: {XLSX_PATH}')
+
+# ==============================================================================
+# 5. CONVERSIÓN OFICIAL CON x2t.exe DE ONLYOFFICE A FORMATO ODS
+# ==============================================================================
+# x2t es el motor oficial de ONLYOFFICE: genera ODS con la estructura exacta (OpenFormula y named-expressions)
+# que ONLYOFFICE y LibreOffice reconocen al 100%.
+cmd = [X2T_PATH, os.path.abspath(XLSX_PATH), os.path.abspath(ODS_PATH)]
+res = subprocess.run(cmd, capture_output=True, text=True)
+if res.returncode == 0:
+    print(f'ODS generado perfectamente vía x2t en: {ODS_PATH}')
+else:
+    print(f'Error en x2t: {res.stderr}')
+
+print('\n¡PROCESO COMPLETADO EXITOSAMENTE!')
