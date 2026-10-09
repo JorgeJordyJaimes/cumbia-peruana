@@ -30,7 +30,7 @@ La documentación formal del proyecto está organizada en [`docs/`](docs/) bajo 
 | ↳ [ADR 002: Modelado de Mosaicos y Popurrís](docs/adr/002-modelado-mosaicos-y-enganchados.md) | Modelo Relacional | Desglose en `Mosaicos_Temas` preservando la integridad del surco físico en `Albumes_Temas`. |
 | ↳ [ADR 003: Grafos Genealógicos con RPC](docs/adr/003-resolucion-grafo-genealogico-rpc.md) | Base de Datos / SQL | Resolución de versiones y árboles biográficos en PostgreSQL vía `WITH RECURSIVE`. |
 | ↳ [ADR 004: Conversión WebP en Cliente](docs/adr/004-conversion-cliente-webp.md) | Frontend / Multimedia | Pipeline Canvas API en el navegador para compresión automática y ahorro de ancho de banda. |
-| [📊 **Datos & Notas de Investigación**](docs/datos-investigacion/) | Curaduría Fonográfica | Planillas tabulares de control (`Control de Datos BD Cumbia Peruana.ods`) y notas históricas de sellos. |
+| [📊 **Datos & Notas de Investigación**](docs/datos-investigacion/) | Curaduría Fonográfica | Planillas tabulares de control (`Datos BD.ods`) y notas históricas de sellos. |
 | [🗄️ **Esquema DDL de Referencia**](docs/sql-referencia/estructural.sql) | Administradores de BD | Definición SQL consolidada de tablas maestras, claves foráneas e índices GIN. |
 
 ---
