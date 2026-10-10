@@ -108,7 +108,19 @@ Durante las décadas de 1970 y 1980 en el Perú, los contratos de exclusividad d
 
 ---
 
-## 6. 🖼️ Estándar Multimedia y Carga Gráfica en `/admin`
+## 6. 🔘 Convención de Banderas y Respuestas Booleanas (SI / Vacío = NO)
+
+Para agilizar el flujo de investigación y catalogación en las hojas de trabajo ([`docs/datos-investigacion/Datos BD.ods`](datos-investigacion/Datos%20BD.ods)), evitando la escritura manual repetitiva de "NO":
+
+* **Comportamiento por Defecto en la Base de Datos:** Todas las columnas booleanas en el esquema PostgreSQL (`es_recopilatorio`, `es_varios_artistas`, `es_disco_split`, `incluido_en_lp`, `extraido_de_lp`, `solo_en_45`, `es_reedicion`, `es_grabacion_inedita`, `es_mosaico`) están modeladas con `DEFAULT FALSE`.
+* **Regla Operativa para el Catalogador en Datos BD.ods:**
+  * **Condición Afirmativa:** Escribir explícitamente **`SI`**.
+  * **Condición Negativa:** **Dejar la casilla vacía** (o en blanco). No es necesario escribir "NO".
+* **Regla Mandatoria para Scripts de Ingesta y Agentes AI:** Cualquier celda vacía o nula en estas columnas debe interpretarse e insertarse obligatoriamente como **`NO` / `FALSE`** en las sentencias SQL y la base de datos.
+
+---
+
+## 7. 🖼️ Estándar Multimedia y Carga Gráfica en `/admin`
 
 La preservación patrimonial exige que los escaneos y fotografías de carátulas cumplan con altos estándares visuales:
 
@@ -130,7 +142,7 @@ La preservación patrimonial exige que los escaneos y fotografías de carátulas
 
 ---
 
-## 7. 🛑 Reglas Negativas Estrictas (Prohibiciones)
+## 8. 🛑 Reglas Negativas Estrictas (Prohibiciones)
 
 1. **PROHIBIDO ingresar Lados C o D:** La música de este archivo (1968–2005) existe estrictamente en **Lado A** y **Lado B**.
 2. **PROHIBIDO inventar pistas físicas para popurrís:** Nunca dividas un surco de vinilo en números artificiales de pista (ej. 4.1 o 4b). Usa la tabla relacional `Mosaicos_Temas`.
@@ -139,7 +151,7 @@ La preservación patrimonial exige que los escaneos y fotografías de carátulas
 
 ---
 
-## 8. 🔗 Documentación Relacionada
+## 9. 🔗 Documentación Relacionada
 * [Manual del Proyecto para Agentes y Desarrolladores](manual-proyecto.md)
 * [Arquitectura Técnica y Datos](arquitectura-tecnica.md)
 * [Lineamientos de Desarrollo y Seguridad](lineamientos-desarrollo.md)
