@@ -54,7 +54,7 @@ async function main() {
   if (isReset) {
     console.log('🧹 Vaciando tablas y reiniciando secuencias de ID...');
     try {
-      const truncateSql = 'TRUNCATE Albumes, Grupos, Personas, Sellos_Discograficos RESTART IDENTITY CASCADE;';
+      const truncateSql = 'TRUNCATE Temas, Albumes, Grupos, Personas, Sellos_Discograficos RESTART IDENTITY CASCADE;';
       execSync(`npx supabase db query --linked "${truncateSql}"`, {
         stdio: 'pipe',
         env: { ...process.env, SUPABASE_ACCESS_TOKEN: token },
@@ -108,6 +108,10 @@ async function main() {
       { name: 'Sellos Discográficos', table: 'sellos_discograficos' },
       { name: 'Álbumes / Singles / Casetes', table: 'albumes' },
       { name: 'Temas / Obras Musicales', table: 'temas' },
+      { name: 'Pistas Vinculadas (Albumes_Temas)', table: 'albumes_temas' },
+      { name: 'Créditos Compositores (Temas_Compositores)', table: 'temas_compositores' },
+      { name: 'Grupos por Tema (Temas_Grupos)', table: 'temas_grupos' },
+      { name: 'Géneros por Tema (Temas_Generos)', table: 'temas_generos' },
       { name: 'Tipos de Álbum (Formatos)', table: 'tipos_album' },
       { name: 'Géneros Musicales', table: 'generos' },
       { name: 'Roles de Músicos', table: 'roles' },
