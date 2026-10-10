@@ -22,7 +22,7 @@ export interface TemaDJ {
   artista: string;
   ano: number;
   sello: string;
-  subgenero: "Costeña" | "Amazónica" | "Andina / Chicha" | "Psicodélica";
+  subgenero: string;
   bpm: number;
   camelot: string; // e.g. "8A"
   tonalidad: string; // e.g. "Am"

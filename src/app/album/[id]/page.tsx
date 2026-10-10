@@ -7,7 +7,8 @@ import { BadgeFormat } from "@/components/ui/badge-format";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 import { ArrowLeft, Disc, Calendar, Building2, Layers, Music } from "lucide-react";
 
-export const revalidate = 120; // 2 minutos
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface AlbumPageProps {
   params: Promise<{ id: string }>;

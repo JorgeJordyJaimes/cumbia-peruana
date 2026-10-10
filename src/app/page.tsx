@@ -15,7 +15,8 @@ import type { TrackItem } from "@/features/temas";
 import type { ConfiguracionHome } from "@/types/blog";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 
-export const revalidate = 60; // Regenerar cada 60 segundos
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface RawAlbumRow {
   id_album: number;
@@ -97,7 +98,7 @@ export default async function Home() {
         id_album,
         numero_pista,
         lado,
-        albumes (nombre_album, año_publicacion)
+        albumes:albumes!albumes_temas_id_album_fkey (nombre_album, año_publicacion)
       ),
       temas_grupos (
         grupos (nombre_grupo)

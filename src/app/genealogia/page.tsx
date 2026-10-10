@@ -8,7 +8,8 @@ import { JsonLd, buildPersonJsonLd, buildMusicGroupJsonLd } from "@/components/s
 import Link from "next/link";
 import { ArrowLeft, GitFork, Sparkles, Building2, Users } from "lucide-react";
 
-export const revalidate = 120; // Regenerar cada 2 minutos
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Explorador Genealógico & Músicos de Sesión | Kumbia Sound",

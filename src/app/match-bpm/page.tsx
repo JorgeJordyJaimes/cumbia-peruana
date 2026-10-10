@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
-import { MatchBpmWidget } from "@/features/home-retro";
+import { MatchBpmWidget, type TemaDJ } from "@/features/home-retro";
 import { CamelotSelector, type TrackDJItem } from "@/features/dj-tools";
 import Link from "next/link";
 import { ArrowLeft, Sparkles, SlidersHorizontal, Disc3 } from "lucide-react";
 import type { CamelotCode } from "@/types/domain";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Consola Match BPM & Rueda Camelot | Kumbia Sound",
@@ -20,11 +23,17 @@ interface RawTemaRow {
   bpm: number | null;
   camelot_code: string | null;
   musical_key: string | null;
+  generos: { nombre_genero: string } | null;
   albumes_temas: Array<{
     id_album: number;
     numero_pista: number | null;
     lado: string | null;
-    albumes: { nombre_album: string | null; año_publicacion: number | null } | null;
+    albumes: {
+      nombre_album: string | null;
+      año_publicacion: number | null;
+      url_portada: string | null;
+      sellos_discograficos: { nombre_sello: string } | null;
+    } | null;
   }> | null;
   temas_grupos: Array<{
     grupos: { nombre_grupo: string } | null;
@@ -43,19 +52,27 @@ export default async function MatchBpmPage() {
       bpm,
       camelot_code,
       musical_key,
+      generos:generos!temas_id_genero_fkey (nombre_genero),
       albumes_temas (
         id_album,
         numero_pista,
         lado,
-        albumes (nombre_album, año_publicacion)
+        albumes:albumes!albumes_temas_id_album_fkey (
+          nombre_album,
+          año_publicacion,
+          url_portada,
+          sellos_discograficos (nombre_sello)
+        )
       ),
       temas_grupos (
         grupos (nombre_grupo)
       )
     `)
-    .not("bpm", "is", null);
+    .not("bpm", "is", null)
+    .order("id_tema", { ascending: true });
 
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
+
   const djTracks: TrackDJItem[] = rawTemasList.map((t) => {
     const primaryAlbumTema = t.albumes_temas?.[0];
     const primaryAlbum = primaryAlbumTema?.albumes;
@@ -69,8 +86,34 @@ export default async function MatchBpmPage() {
       year: primaryAlbum?.año_publicacion || undefined,
       bpm: t.bpm || 115,
       camelot: (t.camelot_code as CamelotCode) || "8A",
-      musicalKey: t.musical_key || "Am",
+      musicalKey: t.musical_key || t.camelot_code || "8A",
       format: "Vinilo",
+    };
+  });
+
+  const temasDJ: TemaDJ[] = rawTemasList.map((t) => {
+    const primaryAlbumTema = t.albumes_temas?.[0];
+    const primaryAlbum = primaryAlbumTema?.albumes;
+    const primaryGroup = t.temas_grupos?.[0]?.grupos;
+    const durationSec = t.duracion_segundos;
+    const durationStr = durationSec
+      ? `${Math.floor(durationSec / 60)}:${(durationSec % 60).toString().padStart(2, "0")}`
+      : "S/D";
+
+    return {
+      id: `tema-${t.id_tema}`,
+      titulo: t.titulo_tema,
+      artista: primaryGroup?.nombre_grupo || "Agrupación Histórica",
+      ano: primaryAlbum?.año_publicacion || 1974,
+      sello: primaryAlbum?.sellos_discograficos?.nombre_sello || "Sello Particular",
+      subgenero: t.generos?.nombre_genero || "Cumbia",
+      bpm: t.bpm || 110,
+      camelot: t.camelot_code || "8A",
+      tonalidad: t.musical_key || t.camelot_code || "8A",
+      duracion: durationStr,
+      portadaUrl:
+        primaryAlbum?.url_portada ||
+        "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80",
     };
   });
 
@@ -120,7 +163,7 @@ export default async function MatchBpmPage() {
           </div>
 
           {/* WIDGET INTERACTIVO DE PITCH Y EMPAREJAMIENTO */}
-          <MatchBpmWidget />
+          <MatchBpmWidget tracks={temasDJ} />
 
           {/* SELECTOR EXTENDIDO DE LA RUEDA CAMELOT CON BASE DE DATOS COMPLETA */}
           <section className="space-y-6 pt-6 border-t-2 border-[#1F1305]">

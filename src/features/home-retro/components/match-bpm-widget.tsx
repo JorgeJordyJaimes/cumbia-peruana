@@ -5,24 +5,39 @@ import Link from "next/link";
 import { Music2, SlidersHorizontal, Disc3, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { temasDJMock } from "../data/cumbia-mock";
 
+import type { TemaDJ } from "../types";
+
 interface MatchBpmWidgetProps {
   isHighlight?: boolean;
+  tracks?: TemaDJ[];
 }
 
-export function MatchBpmWidget({ isHighlight = false }: MatchBpmWidgetProps) {
-  const [selectedTemaId, setSelectedTemaId] = useState<string>(temasDJMock[0].id);
+export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetProps) {
+  const dataset = useMemo(() => {
+    return tracks && tracks.length > 0 ? tracks : temasDJMock;
+  }, [tracks]);
 
-  const currentTema =
-    temasDJMock.find((t) => t.id === selectedTemaId) || temasDJMock[0];
+  const [selectedTemaId, setSelectedTemaId] = useState<string>("");
+
+  const currentTema = useMemo(() => {
+    const found = dataset.find((t) => t.id === selectedTemaId);
+    return found || dataset[0] || temasDJMock[0];
+  }, [dataset, selectedTemaId]);
 
   // Helper para verificar compatibilidad armónica en Rueda Camelot
   // Regla Camelot: Mismo número (ej 8A con 8A), adyacente ±1 (7A o 9A), o cambio de modo (8A con 8B)
   const isCamelotCompatible = (key1: string, key2: string) => {
-    if (key1 === key2) return { compatible: true, type: "Mismo Tono (Perfect Match)" };
-    const num1 = parseInt(key1.slice(0, -1), 10);
-    const letter1 = key1.slice(-1);
-    const num2 = parseInt(key2.slice(0, -1), 10);
-    const letter2 = key2.slice(-1);
+    if (!key1 || !key2) return { compatible: false, type: "Desconocido" };
+    const k1 = key1.trim().toUpperCase();
+    const k2 = key2.trim().toUpperCase();
+    if (k1 === k2) return { compatible: true, type: "Mismo Tono (Perfect Match)" };
+
+    const num1 = parseInt(k1.slice(0, -1), 10);
+    const letter1 = k1.slice(-1);
+    const num2 = parseInt(k2.slice(0, -1), 10);
+    const letter2 = k2.slice(-1);
+
+    if (isNaN(num1) || isNaN(num2)) return { compatible: false, type: "Incompatible" };
 
     if (letter1 === letter2) {
       const diff = Math.abs(num1 - num2);
@@ -39,9 +54,10 @@ export function MatchBpmWidget({ isHighlight = false }: MatchBpmWidgetProps) {
     return { compatible: false, type: "Incompatible" };
   };
 
-  // Cálculo de canciones compatibles dentro de ±4% de BPM y Rueda Camelot
+  // Cálculo de canciones compatibles dentro de ±5% de BPM y Rueda Camelot
   const compatibleTracks = useMemo(() => {
-    return temasDJMock
+    if (!currentTema) return [];
+    return dataset
       .filter((t) => t.id !== currentTema.id)
       .map((t) => {
         const bpmDiff = ((t.bpm - currentTema.bpm) / currentTema.bpm) * 100;
@@ -55,8 +71,8 @@ export function MatchBpmWidget({ isHighlight = false }: MatchBpmWidgetProps) {
       })
       .filter((t) => t.absDiff <= 5 && t.harmonic.compatible)
       .sort((a, b) => a.absDiff - b.absDiff)
-      .slice(0, 3);
-  }, [currentTema]);
+      .slice(0, 5);
+  }, [dataset, currentTema]);
 
   return (
     <section id="match-bpm" className="scroll-mt-24 py-12 sm:py-16 border-t-2 border-[#1F1305]">
@@ -107,11 +123,11 @@ export function MatchBpmWidget({ isHighlight = false }: MatchBpmWidgetProps) {
                   Selecciona una grabación clásica:
                 </label>
                 <select
-                  value={selectedTemaId}
+                  value={currentTema.id}
                   onChange={(e) => setSelectedTemaId(e.target.value)}
                   className="w-full border-2 border-[#1F1305] bg-[#EDE0D0] px-3.5 py-2.5 font-serif text-sm text-[#1F1305] shadow-[2px_2px_0px_#1F1305] focus:border-[#E80000] focus:outline-none"
                 >
-                  {temasDJMock.map((t) => (
+                  {dataset.map((t) => (
                     <option key={t.id} value={t.id} className="bg-white text-[#1F1305] font-sans">
                       {t.titulo} — {t.artista} ({t.bpm} BPM / {t.camelot})
                     </option>
@@ -230,7 +246,7 @@ export function MatchBpmWidget({ isHighlight = false }: MatchBpmWidgetProps) {
                   ))
                 ) : (
                   <div className="py-8 text-center font-mono text-xs text-[#746B5C]">
-                    No se encontraron temas en el rango ±3% para este BPM en la muestra. Prueba
+                    No se encontraron temas en el rango ±3% de BPM con compatibilidad armónica en el catálogo cargado. Prueba
                     seleccionando otro tema.
                   </div>
                 )}
