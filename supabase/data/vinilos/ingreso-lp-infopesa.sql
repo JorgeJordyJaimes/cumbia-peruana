@@ -203,7 +203,7 @@ INSERT INTO Albumes (
     id_album_original, comentario)
 
 VALUES
-(12, 1, 'Reviviendo Lo Máximo', 'INF-208174', 1980, 2, TRUE, FALSE, FALSE, FALSE, NULL, '');
+(12, 1, 'Reviviendo lo Máximo del Grupo Celeste', 'INF-208174', 1980, 2, TRUE, FALSE, FALSE, FALSE, NULL, 'Aunque es un disco recopilatorio, contiene versiones regrabadas de dos temas.');
 
 -------------------------------------------------------------- LOS MIRLOS --------------------------------------------------------------
 

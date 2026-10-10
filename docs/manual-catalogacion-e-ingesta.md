@@ -154,6 +154,16 @@ Durante la época de oro de la cumbia peruana (décadas de 1970 y 1980), los con
 
 ---
 
+### 4.7. Principio de Prevalencia de `Datos BD.ods` y Notificación Obligatoria de Discrepancias
+
+* **Fuente de la Verdad:** El archivo tabular [`docs/datos-investigacion/Datos BD.ods`](datos-investigacion/Datos%20BD.ods) representa la investigación humana directa sobre el disco físico (auditoría visual de carátulas, galletas y surcos). Por tanto, **prevalece siempre sobre cualquier dato preexistente en los archivos `.sql`**.
+* **Regla Mandatoria para el Agente:**
+  1. Si un disco, single, LP o tema ya está registrado en un archivo `.sql` pero sus atributos difieren de lo anotado en `Datos BD.ods`, el agente debe actualizar el archivo `.sql` para que coincida exactamente con la hoja de cálculo.
+  2. **Obligación de Notificación:** El agente **DEBE SEÑALAR SIEMPRE Y DE FORMA OBLIGATORIA** al usuario en su reporte final qué discrepancias encontró y cuáles fueron los valores cambiados (especificando claramente el valor anterior en SQL vs. el valor adoptado desde `Datos BD.ods`).
+  3. **Preservación Visual Estricta de la Hoja:** El agente nunca debe alterar la paleta de colores, anchos de columna, altos de fila ni tipografías de las hojas de trabajo configuradas por el usuario.
+
+---
+
 ## 5. 🪗 Protocolo para Popurrís, Mosaicos y Enganchados
 
 Un mosaico musical en vinilo o casete representa **un único surco físico continuo** en el disco, pero agrupa varias composiciones encadenadas.

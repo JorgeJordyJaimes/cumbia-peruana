@@ -57,7 +57,7 @@ cumbia-peruana/
 │   │   ├── 003-resolucion-grafo-genealogico-rpc.md
 │   │   ├── 004-conversion-cliente-webp.md
 │   │   └── README.md                    # Índice maestro de ADRs
-│   ├── datos-investigacion/             # Control tabular (.ods) y notas de investigación de sellos
+│   ├── datos-investigacion/             # Control tabular de investigación fonográfica (Datos BD.ods)
 │   ├── sql-referencia/                  # Esquemas DDL estructurales de referencia histórica
 │   ├── arquitectura-tecnica.md          # Especificación técnica, modelo de datos y RPCs
 │   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes

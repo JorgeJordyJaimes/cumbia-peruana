@@ -23,4 +23,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   3. **Camelot:** Usar única y exclusivamente la notación Camelot (`camelot_code`). La notación clásica del círculo de quintas (`musical_key`) está descartada del proyecto.
   4. **Banderas booleanas:** Toda celda vacía o en blanco se interpreta e inserta estrictamente como `FALSE`. Solo `SI` es `TRUE`.
   5. **Columnas de Temas:** Respetar la separación entre `LETRA DEL TEMA` (va a `letra TEXT`), `NOTA PARA EL AGENTE` (instrucciones internas: mosaicos, covers; no va a la BD) y `COMENTARIOS / NOTAS` (va a la BD).
+  6. **Prevalencia de `Datos BD.ods` y Discrepancias:** Si un dato ya existe en los archivos `.sql` y difiere de lo registrado en `Datos BD.ods`, prevalece estrictamente `Datos BD.ods`. El agente debe actualizar el archivo `.sql` con el valor de la hoja `.ods` y **señalar obligatoriamente al usuario cuál fue esa discrepancia** (valor previo en SQL vs nuevo valor en ODS).
+  7. **Preservación Visual de la Hoja:** No alterar colores de columnas, tamaños de fuente, anchos de columna ni altos de fila definidos por el usuario en `Datos BD.ods`.
+
 

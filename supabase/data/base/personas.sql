@@ -360,4 +360,5 @@ VALUES
 ('Marco Antonio Reátegui Marín', 'Tony'),
 ('Víctor Yaipén Uypán', ''),
 ('Lizardo Paolo', ''),
-('Eusebio Pérez Campojo', '');
+('Eusebio Pérez Campojo', ''),
+('Gustavo Rosas García', '');

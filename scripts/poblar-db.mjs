@@ -32,6 +32,7 @@ const DEFAULT_FILES = [
   'supabase/data/base/personas.sql',
   'supabase/data/base/grupos.sql',
   'supabase/data/base/sellos.sql',
+  'supabase/data/base/generos.sql',
   'supabase/data/vinilos/ingreso-lp-horoscopo.sql',
   'supabase/data/vinilos/ingreso-lp-infopesa.sql',
   'supabase/data/vinilos/ingreso-lp-sonoradio.sql',

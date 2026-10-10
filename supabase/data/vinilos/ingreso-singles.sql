@@ -42,7 +42,6 @@
 
 ---------------------------------------------------------------------------------------------------------------------- GRUPO CELESTE ----------------------------------------------------------------------------------------------------------------------
 
-
 -- DIFA
 INSERT INTO Albumes (
     id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
@@ -50,11 +49,10 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
 (12, 11, '009', 1973, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 11, '141', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, ''),
-(12, 11, '142', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, ''),
-(12, 11, '144', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, '');
+(12, 11, '141', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, 'Reedición de DISCOPE 016 (1975) [Mi lamento / Canción del maestro]'),
+(12, 11, '142', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, 'Reedición de DISCOPE 003 (1974) [Recuerdos / Pescador]'),
+(12, 11, '144', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, 'Reedición de DISCOPE 006 (1974) [Viento / Te perdí]');
 
 -- DISCOPE
 INSERT INTO Albumes (
@@ -63,17 +61,16 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
 (12, 25, '001', 1974, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 25, '003', 1974, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 25, '006', 1974, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 25, '014', 1975, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(12, 25, '015', 1975, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(12, 25, '016', 1975, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(12, 25, '018', 1975, 1, FALSE, TRUE, FALSE, FALSE, 'Lado B', NULL, FALSE, NULL, ''),
+(12, 25, '014', 1975, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP El Fabuloso Grupo Celeste (LPD-1)'),
+(12, 25, '015', 1975, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP El Fabuloso Grupo Celeste (LPD-1)'),
+(12, 25, '016', 1975, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP El Fabuloso Grupo Celeste (LPD-1)'),
+(12, 25, '018', 1975, 1, FALSE, TRUE, FALSE, FALSE, 'Lado B', NULL, FALSE, NULL, 'Lado B incluido en LP El Fabuloso Grupo Celeste (LPD-1)'),
 (12, 25, '019', 1975, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 25, '76-032', 1976, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(12, 25, '76-033', 1976, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, '');
+(12, 25, '76-032', 1976, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP El Tropiloco Mundo del Grupo Celeste (LPD-2)'),
+(12, 25, '76-033', 1976, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP El Tropiloco Mundo del Grupo Celeste (LPD-2)');
 
 -- PRODIC
 INSERT INTO Albumes (
@@ -82,17 +79,16 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
-(12, 49, '001', 1976, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(12, 49, '001', 1977, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 49, '003', 1977, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', NULL, FALSE, NULL, ''),
 (12, 49, '004', 1977, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 49, '006', 1978, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', NULL, FALSE, NULL, ''),
-(12, 49, '009', 1978, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
+(12, 49, '009', 1978, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', NULL, FALSE, NULL, ''),
 (12, 49, '010', 1978, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 49, '011', 1979, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
+(12, 49, '011', 1979, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', NULL, FALSE, NULL, ''),
 (12, 49, '012', 1979, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', NULL, FALSE, NULL, ''),
 (12, 49, '013', 1979, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', NULL, FALSE, NULL, ''),
-(12, 49, '001-80', 1980, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(12, 49, '001-80', 1980, 1, FALSE, TRUE, FALSE, FALSE, 'Lado B', NULL, FALSE, NULL, '');
 
 -- INFOPESA
 INSERT INTO Albumes (
@@ -101,11 +97,10 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
-(12, 1, '171110', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, ''),
-(12, 1, '171143', 1980, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(12, 1, '171168', 1980, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(12, 1, '171336', 1982, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, '');
+(12, 1, '171110', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, 'Reedición de PRODIC 001-80 (1980) [Mujer / Muchachita]'),
+(12, 1, '171143', 1980, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', NULL, FALSE, NULL, ''),
+(12, 1, '171168', 1980, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP El Mensaje Tropical del Fabuloso Grupo Celeste (INF-208191)'),
+(12, 1, '171336', 1982, 1, FALSE, FALSE, TRUE, FALSE, NULL, NULL, FALSE, NULL, 'Extraído del LP Sentimientos (INF-208304)');
 
 -- SONORADIO
 INSERT INTO Albumes (
@@ -114,7 +109,6 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
 (12, 3, '13742', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- EMUCEL
@@ -124,13 +118,12 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
 (12, 62, '80-001', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 62, '81-001', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 62, '81-003', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 62, '83-001', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (12, 62, '83-002', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 62, '84-004', 1984, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(12, 62, '84-004', 1984, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', NULL, FALSE, NULL, 'Incluido en el LP Palomita (HLP-1044)');
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
@@ -139,9 +132,31 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-
 (12, 2, '1195', 1985, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 2, '1229', 1986, 1, FALSE, TRUE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(12, 2, '1229', 1986, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', NULL, FALSE, NULL, 'Incluido en el LP Palomita (HLP-1044)');
+
+-- Trazabilidad de reediciones de Grupo Celeste (id_album_original)
+UPDATE Albumes SET id_album_original = (SELECT a2.id_album FROM Albumes a2 WHERE a2.id_grupo = 12 AND a2.id_sello = 25 AND a2.numero_catalogo = '016') WHERE id_grupo = 12 AND id_sello = 11 AND numero_catalogo = '141';
+UPDATE Albumes SET id_album_original = (SELECT a2.id_album FROM Albumes a2 WHERE a2.id_grupo = 12 AND a2.id_sello = 25 AND a2.numero_catalogo = '003') WHERE id_grupo = 12 AND id_sello = 11 AND numero_catalogo = '142';
+UPDATE Albumes SET id_album_original = (SELECT a2.id_album FROM Albumes a2 WHERE a2.id_grupo = 12 AND a2.id_sello = 25 AND a2.numero_catalogo = '006') WHERE id_grupo = 12 AND id_sello = 11 AND numero_catalogo = '144';
+UPDATE Albumes SET id_album_original = (SELECT a2.id_album FROM Albumes a2 WHERE a2.id_grupo = 12 AND a2.id_sello = 49 AND a2.numero_catalogo = '001-80') WHERE id_grupo = 12 AND id_sello = 1 AND numero_catalogo = '171110';
+
+-- Trazabilidad de singles vinculados a LPs (id_lp_relacionado)
+UPDATE Albumes SET id_lp_relacionado = (SELECT lp.id_album FROM Albumes lp WHERE lp.id_grupo = 12 AND lp.numero_catalogo = 'LPD-1') 
+WHERE id_grupo = 12 AND ((id_sello = 25 AND numero_catalogo IN ('014', '015', '016', '018')) OR (id_sello = 49 AND numero_catalogo IN ('003', '006', '001-80')));
+
+UPDATE Albumes SET id_lp_relacionado = (SELECT lp.id_album FROM Albumes lp WHERE lp.id_grupo = 12 AND lp.numero_catalogo = 'LPD-2') 
+WHERE id_grupo = 12 AND ((id_sello = 25 AND numero_catalogo IN ('76-032', '76-033')) OR (id_sello = 49 AND numero_catalogo IN ('009', '011', '012', '013')));
+
+UPDATE Albumes SET id_lp_relacionado = (SELECT lp.id_album FROM Albumes lp WHERE lp.id_grupo = 12 AND lp.numero_catalogo = 'INF-208191') 
+WHERE id_grupo = 12 AND id_sello = 1 AND numero_catalogo IN ('171143', '171168');
+
+UPDATE Albumes SET id_lp_relacionado = (SELECT lp.id_album FROM Albumes lp WHERE lp.id_grupo = 12 AND lp.numero_catalogo = 'INF-208304') 
+WHERE id_grupo = 12 AND id_sello = 1 AND numero_catalogo = '171336';
+
+UPDATE Albumes SET id_lp_relacionado = (SELECT lp.id_album FROM Albumes lp WHERE lp.id_grupo = 12 AND lp.numero_catalogo = 'HLP-1044') 
+WHERE id_grupo = 12 AND ((id_sello = 62 AND numero_catalogo = '84-004') OR (id_sello = 2 AND numero_catalogo = '1229'));
+
 
 ---------------------------------------------------------------------------------------------------------------------- EL SUPER GRUPO ----------------------------------------------------------------------------------------------------------------------
 
