@@ -59,5 +59,5 @@ Se decidió imponer una restricción estricta tanto a nivel de motor de base de 
 
 ## Documentación Relacionada
 * [Arquitectura Técnica y Datos](../arquitectura-tecnica.md)
-* [Criterios de Catalogación](../criterios-catalogacion.md)
+* [Manual de Catalogación e Ingesta a SQL](../manual-catalogacion-e-ingesta.md)
 * [Manifiesto de Arquitectura](../manifiesto-arquitectura.md)

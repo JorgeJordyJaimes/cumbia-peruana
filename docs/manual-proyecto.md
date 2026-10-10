@@ -43,7 +43,7 @@ flowchart TD
     Doc1["1. README.md (Raíz)\nVisión global, badges, setup rápido y scripts"] --> Doc2["2. docs/manifiesto-arquitectura.md\nHistoria, vertientes 1968-2005 y soporte material"]
     Doc2 --> Doc3["3. docs/arquitectura-tecnica.md\nModelo relacional, campos críticos, RPCs y Next.js"]
     Doc3 --> Doc4["4. docs/lineamientos-desarrollo.md\nEstándares de código, RLS/Grants y flujo Git"]
-    Doc4 --> Doc5["5. docs/criterios-catalogacion.md\nReglas operativas: 45 vs LP, mosaicos, seudónimos"]
+    Doc4 --> Doc5["5. docs/manual-catalogacion-e-ingesta.md\nCatalogación y protocolo de ingesta SQL para agentes"]
     Doc5 --> Doc6["6. docs/adr/README.md y ADRs 001-004\nDecisiones fundamentales de arquitectura"]
 ```
 
@@ -52,7 +52,7 @@ flowchart TD
 2. [`docs/manifiesto-arquitectura.md`](manifiesto-arquitectura.md): Te enseña la dimensión histórica del archivo (cumbia costeña, amazónica, chicha, norteña, tecnocumbia) y la justificación de por qué el modelo refleja el soporte físico y no un streaming digital genérico.
 3. [`docs/arquitectura-tecnica.md`](arquitectura-tecnica.md): Te detalla el esquema DDL, el diccionario de campos críticos (`id_album_origen`, banderas físicas, `es_mosaico`, `credito_como`), el diseño de las funciones RPC recursivas y la arquitectura de Next.js App Router.
 4. [`docs/lineamientos-desarrollo.md`](lineamientos-desarrollo.md): Te indica la política de seguridad estricta para credenciales, la concesión obligatoria de `GRANT` para Supabase Data API, la segregación de clientes de Supabase y el flujo Git de Conventional Commits en español.
-5. [`docs/criterios-catalogacion.md`](criterios-catalogacion.md): Te explica cómo se auditan y registran los discos reales: trazabilidad 45 RPM vs LP, popurrís sin inventar surcos falsos, uso de seudónimos y estándar fotográfico.
+5. [`docs/manual-catalogacion-e-ingesta.md`](manual-catalogacion-e-ingesta.md): Manual para catalogadores y protocolo mandatorio de ingesta SQL para agentes (conversión a segundos, exclusividad Camelot, flags booleanas vacío=NO, separación letra/nota agente/comentarios, trazabilidad 45 vs LP, mosaicos y seudónimos).
 6. [`docs/adr/README.md`](adr/README.md): Te presenta los 4 ADRs del proyecto:
    * [ADR 001](adr/001-soporte-estricto-lados-a-b.md): Exclusividad Lado A y B.
    * [ADR 002](adr/002-modelado-mosaicos-y-enganchados.md): Mosaicos_Temas.
@@ -77,7 +77,7 @@ cumbia-peruana/
 │   ├── datos-investigacion/             # Control tabular (.ods) y notas de sellos (.txt)
 │   ├── sql-referencia/                  # DDL estructural consolidado de referencia
 │   ├── arquitectura-tecnica.md          # Especificación del modelo relacional y RPCs
-│   ├── criterios-catalogacion.md        # Manual operativo para investigadores
+│   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes
 │   ├── lineamientos-desarrollo.md       # Guía de setup, estándares y flujo Git
 │   ├── manifiesto-arquitectura.md       # Manifiesto histórico y grafo fonográfico
 │   └── manual-proyecto.md               # Este manual para agentes y desarrolladores
@@ -162,7 +162,7 @@ Si recibes una copia del repositorio con deuda técnica o estructura desactualiz
 ### Paso 1: Eliminar Duplicados y Consolidar Documentación
 * Audita los archivos `README.md` y `PROYECTO.md` dispersos.
 * Conserva únicamente `README.md` en la raíz.
-* Mueve todo documento analítico o explicativo a `docs/` (`manifiesto-arquitectura.md`, `arquitectura-tecnica.md`, `lineamientos-desarrollo.md`, `criterios-catalogacion.md`).
+* Mueve todo documento analítico o explicativo a `docs/` (`manifiesto-arquitectura.md`, `arquitectura-tecnica.md`, `lineamientos-desarrollo.md`, `manual-catalogacion-e-ingesta.md`).
 
 ### Paso 2: Unificar Base de Datos en `supabase/`
 * Mueve cualquier carpeta antigua `Base de Datos/datos/` a `supabase/data/`.
@@ -202,6 +202,10 @@ Al generar nuevo código, consultas SQL o interfaces, el agente **DEBE RESPETAR 
 | Regla Inmutable | Explicación Técnica y Razón de Ser |
 | :--- | :--- |
 | **Exclusividad de Lados A y B** | No inventar ni admitir Lados C o D en el período 1968–2005. Toda tabla física valida `CHECK (lado IN ('A', 'B'))`. |
+| **Duración Siempre en Segundos** | En SQL y base de datos, toda duración se almacena como número entero de segundos (`duracion_segundos`). El agente convierte siempre `MM:SS` a segundos. Prohibido insertar strings con `:`. |
+| **Camelot Exclusivo** | Solo se admite y utiliza notación Camelot (`camelot_code` tipo `1A` a `12B`). La notación clásica del círculo de quintas (`musical_key`) queda descartada del proyecto. |
+| **Convención Booleana Vacío = NO** | En las hojas de datos (`Datos BD.ods`), celda vacía significa `FALSE` (`DEFAULT FALSE` en Postgres). Solo se escribe `SI` para `TRUE`. |
+| **Separación Letra / Nota Agente / Comentario** | `LETRA DEL TEMA` va a `letra TEXT`, `NOTA PARA EL AGENTE` es solo para instrucciones internas (mosaicos, covers), y `COMENTARIOS / NOTAS` va a la base de datos. |
 | **Data API Grants Obligatorios** | Toda nueva tabla o función RPC debe tener sentencias `GRANT ... TO anon, authenticated, service_role` y RLS habilitado. |
 | **No Mezclar Clientes Supabase** | Nunca importar `@/lib/supabase/server` en archivos con `'use client'`. Usa `genealogia-service.ts` en cliente y `genealogia-service.server.ts` en servidor. |
 | **No Pistas Falsas para Mosaicos** | Nunca fragmentar un surco físico de vinilo en pistas artificiales (ej. 3a, 3b). Usa `Mosaicos_Temas` con `es_mosaico = TRUE`. |

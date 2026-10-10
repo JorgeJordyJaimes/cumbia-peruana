@@ -69,4 +69,4 @@ Se diseñó una solución desacoplada que separa la realidad física del surco e
 ## Documentación Relacionada
 * [ADR 001: Restricción Estricta de Soportes Físicos a Lados A y B](001-soporte-estricto-lados-a-b.md)
 * [Arquitectura Técnica y Datos](../arquitectura-tecnica.md)
-* [Criterios de Catalogación](../criterios-catalogacion.md)
+* [Manual de Catalogación e Ingesta a SQL](../manual-catalogacion-e-ingesta.md)

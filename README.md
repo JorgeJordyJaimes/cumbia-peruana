@@ -23,7 +23,7 @@ La documentación formal del proyecto está organizada en [`docs/`](docs/) bajo 
 | [🤖 **Manual del Proyecto (Agentes & Devs)**](docs/manual-proyecto.md) | Agentes IA / Nuevos Devs | Secuencia obligatoria de lectura, guía de setup desde cero, reglas inmutables y reorganización estándar. |
 | [📖 **Manifiesto & Alcance Histórico**](docs/manifiesto-arquitectura.md) | Investigadores / General | Fundamentos socioculturales, vertientes (costeña, amazónica, chicha, norteña, tecnocumbia) y propósito patrimonial. |
 | [🏛️ **Arquitectura Técnica & Modelo de Datos**](docs/arquitectura-tecnica.md) | Desarrolladores / Arquitectos | Especificación del modelo relacional, diccionario de campos críticos, procedimientos RPC recursivos y capa frontend. |
-| [📜 **Manual de Criterios de Catalogación**](docs/criterios-catalogacion.md) | Catalogadores / Musicólogos | Protocolo operativo: verificación de entidades, trazabilidad 45 vs LP, enganchados/mosaicos, seudónimos y arte gráfico. |
+| [📜 **Manual de Catalogación e Ingesta a SQL**](docs/manual-catalogacion-e-ingesta.md) | Catalogadores / Agentes IA | Protocolo operativo y de ingesta a SQL: verificación de entidades, duraciones en segundos, Camelot exclusivo, trazabilidad 45 vs LP, mosaicos y seudónimos. |
 | [🛠️ **Lineamientos de Desarrollo & Estándares**](docs/lineamientos-desarrollo.md) | Desarrolladores Full-Stack | Guía de setup, política de permisos en Supabase Data API, separación de servicios cliente/servidor y flujo Git. |
 | [📑 **Registros de Decisiones de Arquitectura (ADRs)**](docs/adr/README.md) | Equipo de Ingeniería | Registro histórico y técnico de las decisiones estructurales del proyecto: |
 | ↳ [ADR 001: Lados A y B Estrictos](docs/adr/001-soporte-estricto-lados-a-b.md) | Arquitectura / Datos | Justificación histórica de la restricción exclusiva a Lados A y B (sin lados C o D). |
@@ -60,7 +60,7 @@ cumbia-peruana/
 │   ├── datos-investigacion/             # Control tabular (.ods) y notas de investigación de sellos
 │   ├── sql-referencia/                  # Esquemas DDL estructurales de referencia histórica
 │   ├── arquitectura-tecnica.md          # Especificación técnica, modelo de datos y RPCs
-│   ├── criterios-catalogacion.md        # Manual operativo para catalogadores e investigadores
+│   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes
 │   ├── lineamientos-desarrollo.md       # Guía de desarrollo, políticas de Supabase y estándares
 │   ├── manifiesto-arquitectura.md       # Manifiesto sociocultural, etapas de la cumbia y grafo
 │   └── manual-proyecto.md               # Manual de contexto y onboarding para agentes y devs

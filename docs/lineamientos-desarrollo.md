@@ -306,7 +306,7 @@ Para mantener la integridad del historial y el despliegue continuo en Vercel, to
 ## 9. 🔗 Documentación Relacionada
 * [Manual del Proyecto para Agentes y Desarrolladores](manual-proyecto.md)
 * [Arquitectura Técnica y Modelo de Datos](arquitectura-tecnica.md)
-* [Manual de Criterios de Catalogación e Investigación](criterios-catalogacion.md)
+* [Manual de Catalogación e Ingesta a SQL](manual-catalogacion-e-ingesta.md)
 * [Manifiesto del Proyecto y Alcance Histórico](manifiesto-arquitectura.md)
 * [Registros de Decisiones de Arquitectura (ADRs)](adr/README.md)
 * [Datos Tabulares y Notas de Investigación](datos-investigacion/)

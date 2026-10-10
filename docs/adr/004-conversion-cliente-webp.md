@@ -62,5 +62,5 @@ Implementar un **pipeline de intercepción y compresión automática en el naveg
 
 ## Documentación Relacionada
 * [Arquitectura Técnica y Datos](../arquitectura-tecnica.md)
-* [Criterios de Catalogación](../criterios-catalogacion.md)
+* [Manual de Catalogación e Ingesta a SQL](../manual-catalogacion-e-ingesta.md)
 * [Lineamientos de Desarrollo](../lineamientos-desarrollo.md)
