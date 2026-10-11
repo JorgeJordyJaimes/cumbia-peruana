@@ -25,5 +25,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   5. **Columnas de Temas:** Respetar la separación entre `LETRA DEL TEMA` (va a `letra TEXT`), `NOTA PARA EL AGENTE` (instrucciones internas: mosaicos, covers; no va a la BD) y `COMENTARIOS / NOTAS` (va a la BD).
   6. **Prevalencia de `Datos BD.ods` y Discrepancias:** Si un dato ya existe en los archivos `.sql` y difiere de lo registrado en `Datos BD.ods`, prevalece estrictamente `Datos BD.ods`. El agente debe actualizar el archivo `.sql` con el valor de la hoja `.ods` y **señalar obligatoriamente al usuario cuál fue esa discrepancia** (valor previo en SQL vs nuevo valor en ODS).
   7. **Preservación Visual de la Hoja:** No alterar colores de columnas, tamaños de fuente, anchos de columna ni altos de fila definidos por el usuario en `Datos BD.ods`.
+  8. **Columna VOZ (Cantante / Instrumental):** La columna `VOZ` registra el nombre del cantante (`Personas` / `Tema_Musicos`). Si indica `Instrumental`, el tema se trata como pista puramente instrumental (sin vocalista). Si está vacía, representa un tema vocal con cantante pendiente de identificar.
 
 
