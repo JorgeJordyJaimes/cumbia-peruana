@@ -245,7 +245,7 @@ VALUES
 ('Dionisio Palomino Díaz', ''),
 ('Walter Puente R.', ''),
 ('Leoncio Maldonado', ''),
-('Waldo Chipana', ''),
+('Waldo Chipana Damián', 'Porongo'),
 ('Reyes Salazar', ''),
 ('Eleazar Cárdenas', ''),
 ('George Závaleta', ''),
