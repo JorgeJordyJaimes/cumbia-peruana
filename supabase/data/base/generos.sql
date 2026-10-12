@@ -1,6 +1,7 @@
 -- ======================================================================================================================
 -- GÉNEROS Y VERTIENTES MUSICALES (TABLA: Generos)
 -- Base de Datos: Kumbia Sound - Cumbia Peruana (1968-2005)
+-- Datos reales catalogados desde la discografía física (Docs BD.ods)
 -- ======================================================================================================================
 
 INSERT INTO Generos (id_genero, nombre_genero) 
@@ -25,5 +26,6 @@ VALUES
 (18, 'Merengue'),
 (19, 'Rock'),
 (20, 'Mosaico'),
-(21, 'Cumbia Andina')
+(21, 'Cumbia Andina'),
+(22, 'Chicha')
 ON CONFLICT (id_genero) DO UPDATE SET nombre_genero = EXCLUDED.nombre_genero;

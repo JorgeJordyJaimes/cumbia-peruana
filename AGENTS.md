@@ -26,5 +26,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   6. **Prevalencia de `Datos BD.ods` y Discrepancias:** Si un dato ya existe en los archivos `.sql` y difiere de lo registrado en `Datos BD.ods`, prevalece estrictamente `Datos BD.ods`. El agente debe actualizar el archivo `.sql` con el valor de la hoja `.ods` y **señalar obligatoriamente al usuario cuál fue esa discrepancia** (valor previo en SQL vs nuevo valor en ODS).
   7. **Preservación Visual de la Hoja:** No alterar colores de columnas, tamaños de fuente, anchos de columna ni altos de fila definidos por el usuario en `Datos BD.ods`.
   8. **Columna VOZ (Cantante / Instrumental):** La columna `VOZ` registra el nombre del cantante (`Personas` / `Tema_Musicos`). Si indica `Instrumental`, el tema se trata como pista puramente instrumental (sin vocalista). Si está vacía, representa un tema vocal con cantante pendiente de identificar.
+  9. **Catálogo de Géneros (`generos.sql`):** Cada vez que en `Datos BD.ods` aparezca un nuevo género musical, agregarlo obligatoriamente a `supabase/data/base/generos.sql` con su correspondiente `id_genero` secuencial único y documentar su adición.
+  10. **Catálogo de Roles (`roles.sql`):** Mantener y enriquecer `supabase/data/base/roles.sql` con todos los roles que se van creando por asociación en la discografía y créditos reales (ej. Director Musical / Director de Grupo, Compositor, Voz Principal / Participación Vocal, Primera Guitarra, Bajo Eléctrico, Músico de Planta, etc.).
 
 

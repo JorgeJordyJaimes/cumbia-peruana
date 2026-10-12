@@ -63,6 +63,7 @@ flowchart TD
   * `personas.sql` $\rightarrow$ Tabla `Personas`
   * `generos.sql` $\rightarrow$ Tabla `Generos`
   * `tipo_album.sql` $\rightarrow$ Tabla `Tipo_Album`
+  * `roles.sql` $\rightarrow$ Tabla `Roles`
 * **Lanzamientos y Soportes Físicos (`supabase/data/`):**
   * `vinilos/ingreso-singles.sql` $\rightarrow$ Singles de 45 RPM en `Albumes`
   * `vinilos/ingreso-lp-*.sql` $\rightarrow$ LPs organizados por disquera (`ingreso-lp-horoscopo.sql`, `ingreso-lp-infopesa.sql`, `ingreso-lp-sonoradio.sql`, etc.)
@@ -174,6 +175,22 @@ Todas las hojas de temas (`Temas Singles`, `Temas LP`, `Temas EP`, `Temas Casset
   1. Si un disco, single, LP o tema ya está registrado en un archivo `.sql` pero sus atributos difieren de lo anotado en `Datos BD.ods`, el agente debe actualizar el archivo `.sql` para que coincida exactamente con la hoja de cálculo.
   2. **Obligación de Notificación:** El agente **DEBE SEÑALAR SIEMPRE Y DE FORMA OBLIGATORIA** al usuario en su reporte final qué discrepancias encontró y cuáles fueron los valores cambiados (especificando claramente el valor anterior en SQL vs. el valor adoptado desde `Datos BD.ods`).
   3. **Preservación Visual Estricta de la Hoja:** El agente nunca debe alterar la paleta de colores, anchos de columna, altos de fila ni tipografías de las hojas de trabajo configuradas por el usuario.
+
+---
+
+### 4.8. Gestión Continua de Géneros Musicales (`generos.sql`) y Roles por Asociación (`roles.sql`)
+
+* **Enriquecimiento Dinámico de Géneros (`generos.sql`):**
+  * La base de datos original contenía etiquetas genéricas iniciales. Con el avance de la catalogación fonográfica física, surgen los géneros y ritmos reales documentados en los vinilos (ej. *Cumbia Chey*, *Cumbia Pompo*, *Guaracha*, *Cumbia Fuzz*, *Cumbia Rítmica*, *Cumbia Elegante*, *Chicha Andina*, *Chicha*, *Cumbia Andina*, *Cumbión*, *Balada*, *Bolero*, etc.).
+  * **Regla Mandatoria:** Cada vez que el agente lea `Datos BD.ods` y detecte un género musical nuevo que no esté presente en `supabase/data/base/generos.sql`, debe incorporarlo inmediatamente al archivo con un nuevo `id_genero` secuencial único.
+
+* **Construcción de Roles por Asociación (`roles.sql`):**
+  * En la cumbia peruana, una misma persona suele desempeñar múltiples roles que emergen orgánicamente a través de sus distintas participaciones en la discografía:
+    1. **Director de Grupo / Director Musical:** Asignado cuando la persona dirige la agrupación (vinculado en `Grupos.id_director`, ej. Víctor Casahuamán en *Grupo Celeste*).
+    2. **Compositor:** Asignado cuando la persona figura como autor de una obra (vinculado en `Temas_Compositores`, ej. Víctor Casahuamán, Porongo Chipana, José Hernández).
+    3. **Voz Principal / Participación Vocal:** Asignado cuando la persona interpreta líricamente un tema (registrado en la columna `VOZ` de la hoja y vinculado en `Tema_Musicos` con instrumento `'Voz'`, ej. *Chacalón*, Carlos Yap, "Peret", Waldo Chipana, Óscar Hidalgo, y Víctor Casahuamán en temas como *Cosas de la vida*).
+    4. **Instrumentación y Músicos de Sesión:** Asignado a guitarristas (*Primera Guitarra*, *Segunda Guitarra*), bajistas (*Bajo Eléctrico*), percusionistas (*Timbales*, *Congas*, *Bongó / Campana*, *Güiro*), tecladistas (*Teclados / Sintetizador*), coristas (*Coros*) y animadores (*Animación*).
+  * **Regla Mandatoria:** `supabase/data/base/roles.sql` debe mantenerse como el catálogo canónico de roles de la plataforma, actualizándose cada vez que un nuevo rol de participación musical sea identificado en la investigación fonográfica.
 
 ---
 
