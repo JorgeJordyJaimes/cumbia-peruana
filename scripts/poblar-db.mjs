@@ -91,7 +91,9 @@ async function main() {
     } catch (err) {
       console.log('❌ ERROR');
       console.error('\nDetalles del error:');
-      console.error(err.stderr ? err.stderr.toString() : err.message);
+      if (err.stdout) console.error(err.stdout.toString());
+      if (err.stderr) console.error(err.stderr.toString());
+      if (!err.stdout && !err.stderr) console.error(err.message);
       process.exit(1);
     }
   }

@@ -15,5 +15,15 @@ VALUES
 (8, 'Cumbia Pompo'),
 (9, 'Guaracha'),
 (10, 'Cumbión'),
-(11, 'Instrumental')
+(11, 'Instrumental'),
+(12, 'Cumbia Fuzz'),
+(13, 'Cumbia Rítmica'),
+(14, 'Cumbia Elegante'),
+(15, 'Chicha Andina'),
+(16, 'Balada'),
+(17, 'Bolero'),
+(18, 'Merengue'),
+(19, 'Rock'),
+(20, 'Mosaico'),
+(21, 'Cumbia Andina')
 ON CONFLICT (id_genero) DO UPDATE SET nombre_genero = EXCLUDED.nombre_genero;
