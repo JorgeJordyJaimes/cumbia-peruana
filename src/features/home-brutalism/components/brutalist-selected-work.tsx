@@ -3,7 +3,7 @@ import { ArrowUpRight, GitFork, Music2, Radio } from "lucide-react";
 
 export function BrutalistSelectedWork() {
   return (
-    <section className="relative w-full border-b-2 border-[#1F1305] bg-[#1F1305] text-white select-none font-mono">
+    <section className="relative w-full border-b-2 border-[#1F1305] bg-[#1F1305] brutalist-dots-dark text-white select-none font-mono">
       <div className="flex flex-col lg:flex-row">
         
         {/* BANNER VERTICAL LATERAL DE LEGAJOS */}

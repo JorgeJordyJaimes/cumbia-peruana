@@ -121,7 +121,7 @@ export default async function MatchBpmPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       <BrutalistCoordinator>
         <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">
           {/* Breadcrumb / Retorno al Home */}
@@ -141,7 +141,7 @@ export default async function MatchBpmPage() {
           </div>
 
           {/* Banner Hero Brutalista */}
-          <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-8 sm:p-12 shadow-[6px_6px_0px_#E80000] relative overflow-hidden">
+          <div className="border-2 border-[#1F1305] bg-[#1F1305] brutalist-dots-dark text-[#EDE0D0] p-8 sm:p-12 shadow-[6px_6px_0px_#E80000] relative overflow-hidden">
             <div className="max-w-3xl space-y-5 relative z-10">
               <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#E80000] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <SlidersHorizontal className="h-3.5 w-3.5" />

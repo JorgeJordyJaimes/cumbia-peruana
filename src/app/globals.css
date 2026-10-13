@@ -169,3 +169,19 @@
 .brutalist-border-r {
   border-right: 2px solid #1f1305;
 }
+
+/* Brutalist Engineering Dot Grids con contraste para beige y marrón */
+.brutalist-dots-light {
+  background-image: radial-gradient(#1f1305 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.brutalist-dots-dark {
+  background-image: radial-gradient(rgba(237, 224, 208, 0.22) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.brutalist-dots-orange {
+  background-image: radial-gradient(rgba(31, 19, 5, 0.22) 1px, transparent 1px);
+  background-size: 16px 16px;
+}

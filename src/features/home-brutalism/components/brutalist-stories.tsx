@@ -4,7 +4,7 @@ import { historiasFondoMock } from "@/features/home-retro/data/cumbia-mock";
 
 export function BrutalistStories() {
   return (
-    <section id="cronicas" className="w-full border-b-2 border-[#1F1305] bg-[#140D04] text-white py-12 sm:py-16 scroll-mt-20 select-none font-mono">
+    <section id="cronicas" className="w-full border-b-2 border-[#1F1305] bg-[#140D04] brutalist-dots-dark text-white py-12 sm:py-16 scroll-mt-20 select-none font-mono">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
         
         {/* Cabecera Editorial */}

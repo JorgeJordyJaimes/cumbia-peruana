@@ -3,7 +3,7 @@ import { Mail, ArrowUpRight, ShieldCheck } from "lucide-react";
 
 export function BrutalistFooter() {
   return (
-    <footer className="w-full bg-[#1F1305] text-white border-t-2 border-[#1F1305] select-none font-mono">
+    <footer className="w-full bg-[#1F1305] brutalist-dots-dark text-white border-t-2 border-[#1F1305] select-none font-mono">
       <div className="flex flex-col lg:flex-row">
         
         {/* BANNER VERTICAL LATERAL DE CLAUSURA */}

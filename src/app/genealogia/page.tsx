@@ -65,7 +65,7 @@ export default async function GenealogiaPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       {/* Schema.org JSON-LD para motores de búsqueda */}
       {structuredDataList.length > 0 ? <JsonLd data={structuredDataList} /> : null}
 
@@ -88,7 +88,7 @@ export default async function GenealogiaPage() {
           </div>
 
           {/* Banner Hero Brutalista */}
-          <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-8 sm:p-12 shadow-[6px_6px_0px_#E80000] relative overflow-hidden">
+          <div className="border-2 border-[#1F1305] bg-[#1F1305] brutalist-dots-dark text-[#EDE0D0] p-8 sm:p-12 shadow-[6px_6px_0px_#E80000] relative overflow-hidden">
             <div className="max-w-3xl space-y-5 relative z-10">
               <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#F1730C] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <GitFork className="h-3.5 w-3.5" />

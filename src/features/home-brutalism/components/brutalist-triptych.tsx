@@ -22,7 +22,7 @@ export function BrutalistTriptych() {
   ];
 
   return (
-    <section className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] select-none font-mono">
+    <section className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] select-none font-mono">
       <div className="grid grid-cols-1 lg:grid-cols-12 divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-[#1F1305]">
         
         {/* COLUMNA 1: ÍNDICE DE EXPEDIENTES Y LEGAJOS */}
@@ -56,7 +56,7 @@ export function BrutalistTriptych() {
         </div>
 
         {/* COLUMNA 2: MANIFIESTO DE RESCATE EN NARANJA SÓLIDO */}
-        <div className="lg:col-span-4 bg-[#F1730C] text-[#1F1305] p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
+        <div className="lg:col-span-4 bg-[#F1730C] brutalist-dots-orange text-[#1F1305] p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
           <div className="space-y-6 relative z-10">
             <div className="border-b-2 border-[#1F1305] pb-2 flex items-center justify-between font-anton text-2xl tracking-wide uppercase text-[#1F1305]">
               <span>ACTA PATRIMONIAL —</span>

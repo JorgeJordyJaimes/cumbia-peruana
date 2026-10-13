@@ -97,30 +97,30 @@ export function BrutalistHero({
               </div>
             </div>
 
-            {/* BOTONES DE ACCIÓN TÉCNICOS */}
-            <div className="pt-2 flex flex-wrap items-center gap-3 font-mono text-xs font-bold">
+            {/* ACCIONES DEL EXPEDIENTE (CTAs) */}
+            <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-bold font-mono">
               <Link
                 href="/genealogia"
-                className="inline-flex items-center gap-2 border border-[#1F1305] bg-[#1F1305] px-5 py-3 text-[#EDE0D0] hover:bg-[#E80000] hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-6 py-3.5 text-white shadow-[4px_4px_0px_#E80000] hover:bg-[#E80000] hover:text-white hover:border-[#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
-                <span>[EXEC] ÁRBOL GENEALÓGICO</span>
+                <span>EXP. 01: CONSULTAR LINAJES ↗</span>
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
 
               <Link
                 href="/match-bpm"
-                className="inline-flex items-center gap-2 border border-[#1F1305] bg-[#F1730C] px-5 py-3 text-white hover:bg-[#1F1305] transition-colors"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#E80000] hover:text-white hover:shadow-[4px_4px_0px_#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
-                <span>[CALC] CONSOLA MATCH BPM</span>
+                <span>EXP. 02: CONSOLA MATCH BPM</span>
                 <span className="text-white text-[10px]">●</span>
               </Link>
 
               <Link
                 href="/vinilos"
-                className="inline-flex items-center gap-2 border border-[#1F1305] bg-white px-5 py-3 text-[#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-5 py-3.5 text-[#1F1305] shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
-                <Disc className="h-4 w-4 text-[#E80000]" />
-                <span>[CAT] BÓVEDA DE VINILOS</span>
+                <Disc className="h-4 w-4 text-[#F1730C]" />
+                <span>EXP. 06: BÓVEDA DE EVIDENCIAS</span>
               </Link>
             </div>
           </div>

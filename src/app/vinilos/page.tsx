@@ -231,7 +231,7 @@ export default async function VinilosPage() {
   );
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       {/* Schema.org JSON-LD para motores de búsqueda */}
       {catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
 
@@ -254,7 +254,7 @@ export default async function VinilosPage() {
           </div>
 
           {/* Banner Hero Brutalista: Bóveda de Custodia */}
-          <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-6 sm:p-10 shadow-[6px_6px_0px_#E80000] relative overflow-hidden font-mono">
+          <div className="border-2 border-[#1F1305] bg-[#1F1305] brutalist-dots-dark text-[#EDE0D0] p-6 sm:p-10 shadow-[6px_6px_0px_#E80000] relative overflow-hidden font-mono">
             {/* Registro de archivo superior */}
             <div className="flex items-center justify-between text-[10px] text-[#8E8478] border-b border-[#3E2C1B] pb-2 mb-4 font-bold">
               <span>EXPEDIENTE EXP-VIN-1968/2005</span>

@@ -133,7 +133,7 @@ export function BrutalistGenresSection() {
   return (
     <section
       id="biblioteca-generos"
-      className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] py-12 sm:py-16 scroll-mt-20 relative overflow-hidden select-none font-mono"
+      className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] py-12 sm:py-16 scroll-mt-20 relative overflow-hidden select-none font-mono"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8 relative z-10">
         

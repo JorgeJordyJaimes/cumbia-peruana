@@ -119,7 +119,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
   });
 
   return (
-    <section id="radar-joyas" className="w-full border-b-2 border-[#1F1305] bg-[#160E06] text-white py-14 sm:py-20 scroll-mt-20 relative overflow-hidden select-none font-mono">
+    <section id="radar-joyas" className="w-full border-b-2 border-[#1F1305] bg-[#160E06] brutalist-dots-dark text-white py-14 sm:py-20 scroll-mt-20 relative overflow-hidden select-none font-mono">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-12 relative z-10">
         
         {/* CABECERA EDITORIAL DE EVIDENCIAS CUMBRE */}
