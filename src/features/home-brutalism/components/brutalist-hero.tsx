@@ -90,7 +90,7 @@ export function BrutalistHero({
               </Link>
 
               <Link
-                href="/#catalogo-vinilos"
+                href="/vinilos"
                 className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-5 py-3.5 text-[#1F1305] shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-all active:translate-x-0.5 active:translate-y-0.5"
               >
                 <Disc className="h-4 w-4 text-[#F1730C]" />

@@ -75,7 +75,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
           </Link>
 
           <Link
-            href="/#catalogo-vinilos"
+            href="/vinilos"
             className="hover:text-[#F1730C] transition-colors py-1 border-b-2 border-transparent hover:border-[#F1730C]"
           >
             <span className="text-[#F1730C] mr-1">06/</span>VINILOS
@@ -151,11 +151,11 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
             <span className="text-[#E80000]">05/</span> NOSOTROS & MANIFIESTO
           </Link>
           <Link
-            href="/#catalogo-vinilos"
+            href="/vinilos"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block border border-[#1F1305] bg-white p-2.5 hover:bg-[#F1730C] hover:text-white transition-colors"
           >
-            <span className="text-[#F1730C]">06/</span> CATÁLOGO DE VINILOS
+            <span className="text-[#F1730C]">06/</span> BÓVEDA DE VINILOS
           </Link>
         </div>
       )}

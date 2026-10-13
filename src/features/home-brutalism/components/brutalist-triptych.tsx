@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export function BrutalistTriptych() {
   const servicios = [
-    { num: "01", nombre: "BÓVEDA DE 719+ VINILOS", url: "/#catalogo-vinilos", dot: "#F1730C" },
+    { num: "01", nombre: "BÓVEDA DE 719+ VINILOS", url: "/vinilos", dot: "#F1730C" },
     { num: "02", nombre: "ÁRBOL DE GUITARRISTAS DE SESIÓN", url: "/genealogia", dot: "#E80000" },
     { num: "03", nombre: "SINCRONIZADOR CAMELOT PARA DJS", url: "/match-bpm", dot: "#E80000" },
     { num: "04", nombre: "PRENSAJES RAROS EN 45 RPM", url: "/radar", dot: "#F1730C" },

@@ -156,7 +156,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
               </div>
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                 <Link
-                  href="/#catalogo-vinilos"
+                  href="/vinilos"
                   className="border-2 border-[#EDE0D0] bg-[#E80000] px-6 py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] transition-all"
                 >
                   Ver Catálogo de Vinilos

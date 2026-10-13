@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { CatalogExplorer, type AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
-import { Disc3 } from "lucide-react";
+import { Disc3, ArrowUpRight } from "lucide-react";
 
 interface BrutalistCatalogSectionProps {
   albums: AlbumItem[];
@@ -28,10 +29,19 @@ export function BrutalistCatalogSection({
             </h2>
           </div>
 
-          <p className="max-w-md font-mono text-xs text-[#5A5245] leading-relaxed">
-            Inspecciona 719+ carátulas restauradas, sellos matrices en vinilo de 33 y 45 RPM,
-            y contraportadas interactivas con tracklists y créditos de sesión.
-          </p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <p className="max-w-md font-mono text-xs text-[#5A5245] leading-relaxed">
+              Inspecciona 719+ carátulas restauradas, sellos matrices en vinilo de 33 y 45 RPM,
+              y contraportadas interactivas con tracklists y créditos de sesión.
+            </p>
+            <Link
+              href="/vinilos"
+              className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-4 py-2 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] transition-all shrink-0"
+            >
+              <span>VER SUBPÁGINA DEDICADA</span>
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
 
         {/* EXPLORADOR DE CATÁLOGO */}

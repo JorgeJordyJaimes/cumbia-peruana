@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, SlidersHorizontal, Disc, Filter, Sparkles } from "lucide-react";
 import { AlbumCard, type AlbumItem } from "@/features/albumes/components/album-card";
 import { AlbumDetailModal } from "@/features/albumes/components/album-detail-modal";
@@ -17,6 +17,12 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
   const [selectedLabel, setSelectedLabel] = useState<string>("ALL");
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
   const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(null);
+  const [visibleCount, setVisibleCount] = useState<number>(48);
+
+  // Restablecer paginación visible cuando cambie cualquier filtro
+  useEffect(() => {
+    setVisibleCount(48);
+  }, [searchTerm, selectedFormat, selectedLabel, selectedYear]);
 
   // Extraer sellos únicos
   const labels = useMemo(() => {
@@ -171,8 +177,8 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-[#E80000]" />
           <span>
-            Mostrando <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> de{" "}
-            <strong className="text-[#1F1305]">{initialAlbums.length}</strong> producciones físicas
+            Mostrando <strong className="text-[#1F1305]">{Math.min(visibleCount, filteredAlbums.length)}</strong> de{" "}
+            <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> producciones físicas
           </span>
         </div>
         <span className="hidden sm:inline">
@@ -200,14 +206,32 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {filteredAlbums.slice(0, 48).map((album) => (
-            <AlbumCard
-              key={album.id}
-              album={album}
-              onSelect={(a) => setSelectedAlbum(a)}
-            />
-          ))}
+        <div className="space-y-8">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            {filteredAlbums.slice(0, visibleCount).map((album) => (
+              <AlbumCard
+                key={album.id}
+                album={album}
+                onSelect={(a) => setSelectedAlbum(a)}
+              />
+            ))}
+          </div>
+
+          {filteredAlbums.length > visibleCount && (
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + 48)}
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-6 py-3.5 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[4px_4px_0px_#E80000] transition-all active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
+              >
+                <Disc className="h-4 w-4" />
+                <span>CARGAR MÁS PRODUCCIONES (+48)</span>
+                <span className="bg-white/20 px-2 py-0.5 rounded text-[10px]">
+                  {Math.min(visibleCount, filteredAlbums.length)} / {filteredAlbums.length}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
       )}
 
