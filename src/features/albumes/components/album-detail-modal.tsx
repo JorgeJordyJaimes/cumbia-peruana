@@ -98,27 +98,27 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               </p>
             </div>
 
-            {/* Ficha Técnica Rápida con Duración Total y BPM Promedio */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 pt-2 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
-              <div className="flex items-center gap-1.5">
+            {/* Ficha Técnica Rápida en varias filas para legibilidad total sin cortar texto */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2.5 pt-3 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Calendar className="h-3.5 w-3.5 text-[#F1730C] shrink-0" />
                 <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Building2 className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
-                <span className="truncate">Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
+                <span>Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
                 <span>Pistas: <strong className="text-[#1F1305]">{tracks.length || album.tracksCount || "--"}</strong></span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Clock className="h-3.5 w-3.5 text-[#2563EB] shrink-0" />
                 <span>Duración: <strong className="text-[#1F1305]">{formattedTotalDuration}</strong></span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Activity className="h-3.5 w-3.5 text-[#D97706] shrink-0" />
-                <span>BPM Prom.: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
+                <span>BPM Promedio: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
               </div>
             </div>
           </div>
@@ -138,13 +138,13 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
           <TracklistTable tracks={tracks} />
         </div>
 
-        {/* Enlace Permanente a Ficha Completa (SEO) */}
+        {/* Enlace Permanente a Ficha Completa */}
         <div className="mt-4 flex justify-end">
           <Link
             href={`/album/${album.id}`}
             className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
           >
-            <span>Ver Ficha Completa & Enlace Permanente</span>
+            <span>Ver Ficha Completa</span>
             <ExternalLink className="h-3.5 w-3.5 text-[#E80000]" />
           </Link>
         </div>

@@ -182,9 +182,13 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
 
   const pistas = pistasList.map((p) => {
     const t = p.temas;
-    const compositores = t?.temas_compositores?.map(
-      (tc) => tc.credito_como || tc.personas?.nombre || "D.R."
-    ).join(", ") || null;
+    // Autor real verificado y crédito impreso en galleta/etiqueta
+    const autoresReales = t?.temas_compositores?.map((tc) => tc.personas?.nombre).filter(Boolean) || [];
+    const autorReal = autoresReales.length > 0 ? autoresReales.join(", ") : "D.R.";
+
+    const creditosGalleta = t?.temas_compositores?.map((tc) => tc.credito_como).filter(Boolean) || [];
+    const creditoGalleta = creditosGalleta.length > 0 ? creditosGalleta.join(", ") : null;
+
     const interpretes = t?.temas_grupos?.map((tg) => tg.grupos?.nombre_grupo).join(", ") || null;
 
     // Extraer vocalistas de tema_musicos
@@ -218,7 +222,9 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
       bpm: t?.bpm ?? null,
       camelot: t?.camelot_code ?? null,
       musical_key: t?.musical_key ?? null,
-      compositor: compositores,
+      compositor: autorReal,
+      autorReal,
+      creditoGalleta,
       vocalista: vocalista || null,
       generos,
       artista: interpretes,
@@ -283,7 +289,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           {/* Breadcrumb de Retorno */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link
-              href="/"
+              href="/vinilos"
               className="inline-flex items-center gap-2 font-bold text-[#1F1305] hover:text-[#E80000] transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -414,29 +420,21 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                   <table className="w-full border-2 border-[#1F1305] text-left font-mono text-xs">
                     <thead className="bg-[#1F1305] text-white">
                       <tr>
-                        <th className="p-2.5 w-16">Lado</th>
-                        <th className="p-2.5 w-12 text-center">#</th>
+                        <th className="p-2.5 whitespace-nowrap">Lado</th>
                         <th className="p-2.5">Título / Géneros</th>
-                        <th className="p-2.5">Voz / Vocalista</th>
+                        <th className="p-2.5">Voz</th>
                         <th className="p-2.5">Compositor</th>
-                        <th className="p-2.5 text-center">Especificaciones DJ (BPM / Camelot)</th>
+                        <th className="p-2.5 text-center">BPM / Camelot</th>
                         <th className="p-2.5 text-right w-20">Duración</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#1F1305]/20 bg-white">
                       {pistas.map((pista) => (
                         <tr key={pista.id_album_tema} className="hover:bg-[#EDE0D0]/50 transition-colors">
-                          <td className="p-2.5 font-bold">
-                            {pista.lado ? (
-                              <span className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[11px] shadow-[1px_1px_0px_#1F1305]">
-                                Lado {pista.lado}
-                              </span>
-                            ) : (
-                              "-"
-                            )}
-                          </td>
-                          <td className="p-2.5 text-center font-bold text-[#5A5245]">
-                            {pista.numero_pista ?? "-"}
+                          <td className="p-2.5 font-bold whitespace-nowrap">
+                            <span className="inline-block border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[11px] font-mono shadow-[1px_1px_0px_#1F1305]">
+                              {pista.lado ? `Lado ${pista.lado}${pista.numero_pista ?? ""}` : `Pista ${pista.numero_pista ?? "-"}`}
+                            </span>
                           </td>
                           <td className="p-2.5">
                             <div className="font-bold text-[#1F1305] text-sm flex items-center gap-1.5">
@@ -471,8 +469,15 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                               </span>
                             )}
                           </td>
-                          <td className="p-2.5 text-[#5A5245]">
-                            {pista.compositor || "D.R."}
+                          <td className="p-2.5">
+                            <div className="font-bold text-[#1F1305] text-xs">
+                              {pista.autorReal}
+                            </div>
+                            {pista.creditoGalleta && pista.creditoGalleta.trim().toLowerCase() !== pista.autorReal.trim().toLowerCase() && (
+                              <div className="text-[10px] text-[#746B5C] font-mono italic mt-0.5">
+                                En galleta: &ldquo;{pista.creditoGalleta}&rdquo;
+                              </div>
+                            )}
                           </td>
                           <td className="p-2.5 text-center">
                             {pista.bpm || pista.camelot ? (

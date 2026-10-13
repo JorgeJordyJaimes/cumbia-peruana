@@ -68,8 +68,8 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
             <div className="grid grid-cols-12 gap-3 border-b-2 border-[#1F1305] bg-[#EDE0D0] px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#1F1305] font-bold">
               <div className="col-span-1 text-center">#</div>
               <div className="col-span-4">Título de la Obra</div>
-              <div className="col-span-3">Voz / Vocalista</div>
-              <div className="col-span-2">Compositor / Autor</div>
+              <div className="col-span-3">Voz</div>
+              <div className="col-span-2">Compositor</div>
               <div className="col-span-2 text-right">BPM</div>
             </div>
 

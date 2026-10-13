@@ -144,7 +144,11 @@ export default async function VinilosPage() {
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
   const tracksMap: Record<number, TrackItem[]> = {};
   rawTemasList.forEach((t) => {
-    const composer = t.temas_compositores?.[0]?.credito_como || t.temas_compositores?.[0]?.personas?.nombre || null;
+    // Autor real verificado
+    const realComposers = (t.temas_compositores || [])
+      .map((tc) => tc.personas?.nombre)
+      .filter(Boolean);
+    const composer = realComposers.length > 0 ? realComposers.join(", ") : null;
 
     // Extraer vocalistas de tema_musicos
     const vocalists = (t.tema_musicos || []).filter((tm) => {
