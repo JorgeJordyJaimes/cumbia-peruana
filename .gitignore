@@ -46,6 +46,7 @@ next-env.d.ts
 .~lock.*#
 .temp/
 supabase/.temp/
+documentacio-paso-paso.md
 
 # binaries
 *.exe
