@@ -4,8 +4,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { BadgeFormat } from "@/components/ui/badge-format";
+import { BadgeDJ } from "@/components/ui/badge-dj";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
-import { ArrowLeft, Disc, Calendar, Building2, Layers, Music } from "lucide-react";
+import { ArrowLeft, Disc, Calendar, Building2, Layers, Music, Clock, Activity } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -53,10 +54,19 @@ interface AlbumTemaDetailRow {
     musical_key: string | null;
     temas_compositores: Array<{
       credito_como: string | null;
-      personas: { nombre: string } | null;
+      personas: { nombre: string; apodo: string | null } | null;
     }> | null;
     temas_grupos: Array<{
       grupos: { nombre_grupo: string } | null;
+    }> | null;
+    tema_musicos: Array<{
+      instrumento: string | null;
+      credito_como: string | null;
+      roles: { nombre_rol: string } | null;
+      personas: { nombre: string; apodo: string | null } | null;
+    }> | null;
+    temas_generos: Array<{
+      generos: { id_genero: number; nombre_genero: string } | null;
     }> | null;
   } | null;
 }
@@ -148,10 +158,19 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
         musical_key,
         temas_compositores (
           credito_como,
-          personas (nombre)
+          personas (nombre, apodo)
         ),
         temas_grupos (
           grupos (nombre_grupo)
+        ),
+        tema_musicos (
+          instrumento,
+          credito_como,
+          roles (nombre_rol),
+          personas (nombre, apodo)
+        ),
+        temas_generos (
+          generos (id_genero, nombre_genero)
         )
       )
     `)
@@ -168,6 +187,26 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
     ).join(", ") || null;
     const interpretes = t?.temas_grupos?.map((tg) => tg.grupos?.nombre_grupo).join(", ") || null;
 
+    // Extraer vocalistas de tema_musicos
+    const vocalistas = (t?.tema_musicos || []).filter((tm) => {
+      const rol = tm.roles?.nombre_rol?.toLowerCase() || "";
+      const inst = tm.instrumento?.toLowerCase() || "";
+      return rol.includes("voz") || inst.includes("voz");
+    });
+    let vocalista = vocalistas.map((v) => v.credito_como || v.personas?.nombre).filter(Boolean).join(", ");
+    const hasInstrumental = (t?.temas_generos || []).some(
+      (tg) => tg.generos?.nombre_genero?.toLowerCase() === "instrumental"
+    );
+    if (!vocalista && hasInstrumental) {
+      vocalista = "Instrumental";
+    }
+
+    // Extraer géneros musicales
+    const generosList = (t?.temas_generos || [])
+      .map((tg) => tg.generos?.nombre_genero)
+      .filter((g): g is string => Boolean(g));
+    const generos = generosList.length > 0 ? Array.from(new Set(generosList)).join(" / ") : null;
+
     return {
       id_album_tema: p.id_album_tema,
       id_tema: t?.id_tema ?? 0,
@@ -180,9 +219,36 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
       camelot: t?.camelot_code ?? null,
       musical_key: t?.musical_key ?? null,
       compositor: compositores,
+      vocalista: vocalista || null,
+      generos,
       artista: interpretes,
     };
   });
+
+  // Ordenación estricta de pistas: Lado A (1..N) y luego Lado B (1..N)
+  pistas.sort((a, b) => {
+    const sideA = (a.lado || "").trim().toUpperCase();
+    const sideB = (b.lado || "").trim().toUpperCase();
+    if (sideA !== sideB) {
+      if (!sideA) return 1;
+      if (!sideB) return -1;
+      return sideA.localeCompare(sideB);
+    }
+    const numA = typeof a.numero_pista === "number" ? a.numero_pista : 999;
+    const numB = typeof b.numero_pista === "number" ? b.numero_pista : 999;
+    return numA - numB;
+  });
+
+  // Métricas técnicas del álbum
+  const totalDurationSeconds = pistas.reduce((acc, p) => acc + (p.duracion || 0), 0);
+  const formattedTotalDuration = totalDurationSeconds > 0
+    ? `${Math.floor(totalDurationSeconds / 60)}:${(totalDurationSeconds % 60).toString().padStart(2, "0")}`
+    : "--:--";
+
+  const pistasWithBpm = pistas.filter((p) => typeof p.bpm === "number" && p.bpm > 0);
+  const avgBpm = pistasWithBpm.length > 0
+    ? Math.round(pistasWithBpm.reduce((acc, p) => acc + (p.bpm || 0), 0) / pistasWithBpm.length)
+    : null;
 
   const artistName = album.grupos?.nombre_grupo || (album.es_varios_artistas ? "Varios Artistas" : "Desconocido");
   const albumTitle = album.nombre_album || "Sin título";
@@ -288,7 +354,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                 )}
 
                 {/* Métricas Técnicas */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t-2 border-[#1F1305] font-mono text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-4 border-t-2 border-[#1F1305] font-mono text-xs">
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[10px] font-bold uppercase">Año de Publicación</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
@@ -303,10 +369,24 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                     </span>
                   </div>
 
-                  <div className="col-span-2 sm:col-span-1 border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
+                  <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[10px] font-bold uppercase">Total Pistas</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
                       <Layers className="h-3.5 w-3.5 text-[#10B981]" /> {pistas.length} Pistas
+                    </span>
+                  </div>
+
+                  <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
+                    <span className="text-[#5A5245] block text-[10px] font-bold uppercase">Duración Total</span>
+                    <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5 text-[#2563EB]" /> {formattedTotalDuration}
+                    </span>
+                  </div>
+
+                  <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
+                    <span className="text-[#5A5245] block text-[10px] font-bold uppercase">BPM Promedio</span>
+                    <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
+                      <Activity className="h-3.5 w-3.5 text-[#D97706]" /> {avgBpm ? `${avgBpm} BPM` : "--"}
                     </span>
                   </div>
                 </div>
@@ -336,9 +416,10 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                       <tr>
                         <th className="p-2.5 w-16">Lado</th>
                         <th className="p-2.5 w-12 text-center">#</th>
-                        <th className="p-2.5">Título / Intérprete</th>
+                        <th className="p-2.5">Título / Géneros</th>
+                        <th className="p-2.5">Voz / Vocalista</th>
                         <th className="p-2.5">Compositor</th>
-                        <th className="p-2.5 text-center">BPM / Clave</th>
+                        <th className="p-2.5 text-center">Especificaciones DJ (BPM / Camelot)</th>
                         <th className="p-2.5 text-right w-20">Duración</th>
                       </tr>
                     </thead>
@@ -367,20 +448,41 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                               )}
                             </div>
                             {pista.artista && pista.artista !== artistName && (
-                              <div className="text-[11px] text-[#E80000]">{pista.artista}</div>
+                              <div className="text-[11px] text-[#E80000] font-bold">{pista.artista}</div>
+                            )}
+                            {pista.generos && (
+                              <div className="text-[11px] text-[#746B5C] font-mono mt-0.5">
+                                {pista.generos}
+                              </div>
+                            )}
+                          </td>
+                          <td className="p-2.5">
+                            {pista.vocalista === "Instrumental" ? (
+                              <span className="inline-block font-mono text-[10px] font-bold text-[#746B5C] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]/30">
+                                Instrumental
+                              </span>
+                            ) : pista.vocalista ? (
+                              <span className="font-bold text-[#1F1305] text-xs">
+                                {pista.vocalista}
+                              </span>
+                            ) : (
+                              <span className="text-[#746B5C] font-mono text-[11px]">
+                                Pendiente
+                              </span>
                             )}
                           </td>
                           <td className="p-2.5 text-[#5A5245]">
                             {pista.compositor || "D.R."}
                           </td>
                           <td className="p-2.5 text-center">
-                            {pista.bpm ? (
-                              <span className="inline-flex items-center gap-1 font-bold text-[11px]">
-                                {pista.bpm} BPM
-                                {pista.musical_key && <span className="text-[#5A5245]">({pista.musical_key})</span>}
-                              </span>
+                            {pista.bpm || pista.camelot ? (
+                              <BadgeDJ
+                                bpm={pista.bpm}
+                                camelot={pista.camelot}
+                                musicalKey={pista.musical_key}
+                              />
                             ) : (
-                              "-"
+                              <span className="text-[#746B5C] font-mono text-[11px]">--</span>
                             )}
                           </td>
                           <td className="p-2.5 text-right font-bold text-[#5A5245]">

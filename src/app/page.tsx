@@ -47,7 +47,17 @@ interface RawTemaRow {
     grupos: { nombre_grupo: string } | null;
   }> | null;
   temas_compositores: Array<{
+    credito_como?: string | null;
     personas: { nombre: string; apodo: string | null } | null;
+  }> | null;
+  tema_musicos?: Array<{
+    instrumento: string | null;
+    credito_como: string | null;
+    roles: { nombre_rol: string } | null;
+    personas: { nombre: string; apodo: string | null } | null;
+  }> | null;
+  temas_generos?: Array<{
+    generos: { id_genero: number; nombre_genero: string } | null;
   }> | null;
 }
 
@@ -84,7 +94,7 @@ export default async function Home() {
     .order("año_publicacion", { ascending: true })
     .limit(140);
 
-  // 3. Temas con especificaciones DJ
+  // 3. Temas con especificaciones DJ y vocalistas
   const { data: rawTemas } = await supabase
     .from("temas")
     .select(`
@@ -104,10 +114,20 @@ export default async function Home() {
         grupos (nombre_grupo)
       ),
       temas_compositores (
+        credito_como,
         personas (nombre, apodo)
+      ),
+      tema_musicos (
+        instrumento,
+        credito_como,
+        roles (nombre_rol),
+        personas (nombre, apodo)
+      ),
+      temas_generos (
+        generos (id_genero, nombre_genero)
       )
     `)
-    .not("bpm", "is", null);
+    .limit(2000);
 
   // 4. Configuración del Home
   const { data: rawHomeConfig } = await supabase
@@ -149,7 +169,28 @@ export default async function Home() {
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
   const tracksMap: Record<number, TrackItem[]> = {};
   rawTemasList.forEach((t) => {
-    const composer = t.temas_compositores?.[0]?.personas?.nombre;
+    const composer = t.temas_compositores?.[0]?.credito_como || t.temas_compositores?.[0]?.personas?.nombre || null;
+
+    // Extraer vocalistas de tema_musicos
+    const vocalists = (t.tema_musicos || []).filter((tm) => {
+      const rol = tm.roles?.nombre_rol?.toLowerCase() || "";
+      const inst = tm.instrumento?.toLowerCase() || "";
+      return rol.includes("voz") || inst.includes("voz");
+    });
+    let vocalist = vocalists.map((v) => v.credito_como || v.personas?.nombre).filter(Boolean).join(", ");
+    const isInstrumental = (t.temas_generos || []).some(
+      (tg) => tg.generos?.nombre_genero?.toLowerCase() === "instrumental"
+    );
+    if (!vocalist && isInstrumental) {
+      vocalist = "Instrumental";
+    }
+
+    // Géneros musicales asociados
+    const genresList = (t.temas_generos || [])
+      .map((tg) => tg.generos?.nombre_genero)
+      .filter((g): g is string => Boolean(g));
+    const genre = genresList.length > 0 ? Array.from(new Set(genresList)).join(" / ") : null;
+
     (t.albumes_temas || []).forEach((at) => {
       if (!tracksMap[at.id_album]) {
         tracksMap[at.id_album] = [];
@@ -161,10 +202,29 @@ export default async function Home() {
         title: t.titulo_tema,
         durationSeconds: t.duracion_segundos,
         composer,
+        vocalist: vocalist || null,
         bpm: t.bpm,
         camelot: t.camelot_code,
         musicalKey: t.musical_key,
+        genre,
       });
+    });
+  });
+
+  // Ordenación estricta de pistas por álbum: Lado A (1..N) y luego Lado B (1..N)
+  Object.keys(tracksMap).forEach((albumIdKey) => {
+    const albumId = Number(albumIdKey);
+    tracksMap[albumId].sort((a, b) => {
+      const sideA = (a.side || "").trim().toUpperCase();
+      const sideB = (b.side || "").trim().toUpperCase();
+      if (sideA !== sideB) {
+        if (!sideA) return 1;
+        if (!sideB) return -1;
+        return sideA.localeCompare(sideB);
+      }
+      const numA = typeof a.trackNumber === "number" ? a.trackNumber : 999;
+      const numB = typeof b.trackNumber === "number" ? b.trackNumber : 999;
+      return numA - numB;
     });
   });
 
