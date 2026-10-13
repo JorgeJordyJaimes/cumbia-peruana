@@ -119,21 +119,22 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
   });
 
   return (
-    <section id="radar-joyas" className="w-full border-b-2 border-[#1F1305] bg-[#160E06] text-white py-14 sm:py-20 scroll-mt-20 relative overflow-hidden">
+    <section id="radar-joyas" className="w-full border-b border-[#1F1305] bg-[#160E06] text-white py-12 sm:py-16 scroll-mt-20 relative overflow-hidden select-none">
       
-      {/* Fondo con textura sutil de estudio */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,115,12,0.06)_0,transparent_70%)] pointer-events-none" />
+      {/* Fondo con retícula técnica de estudio */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,115,12,0.04)_0,transparent_70%)] pointer-events-none" />
 
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-12 relative z-10">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-10 relative z-10">
         
-        {/* CABECERA EDITORIAL CENTRADA */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/15 px-3 py-1 font-mono text-xs font-bold text-[#E80000] tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
-            <Sparkles className="h-3.5 w-3.5 text-[#E80000]" />
-            <span>SELECCIÓN HISTÓRICA DEL ARCHIVO // EL RADAR SONORO</span>
+        {/* CABECERA TÉCNICA DE RADAR */}
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/10 px-3 py-1 font-mono text-[11px] font-bold text-[#E80000] tracking-widest uppercase">
+            <span>+</span>
+            <span>[HOJA R-01] AUDITORÍA DE PRENSAJES // EL RADAR SONORO</span>
+            <span>+</span>
           </div>
 
-          <h2 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+          <h2 className="font-cooper text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
             Joyas Fundacionales <br className="hidden sm:inline" />
             <span className="text-[#F1730C]">: Prensajes Imprescindibles</span>
           </h2>
@@ -143,8 +144,8 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
           </p>
         </div>
 
-        {/* CUADRÍCULA DE LAS 3 JOYAS (CENTRAL ELEVADA & DESTACADA) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-end pt-4">
+        {/* CUADRÍCULA DE LAS 3 JOYAS (INSPECCIÓN TÉCNICA) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-6 items-end pt-2">
           {displayedAlbums.map((album) => {
             const isCenter = album.esDestacado;
 
@@ -153,14 +154,14 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                 key={album.id}
                 className={`relative flex flex-col justify-between transition-all duration-300 group ${
                   isCenter
-                    ? "border-2 border-[#F1730C] bg-[#1F1305] p-6 sm:p-7 shadow-[8px_8px_0px_#E80000] lg:-translate-y-4 hover:-translate-y-6"
-                    : "border-2 border-[#3E2C1B] bg-[#140D04] p-5 sm:p-6 shadow-[5px_5px_0px_#1F1305] hover:border-[#F1730C] hover:-translate-y-2"
+                    ? "border border-[#F1730C] bg-[#1F1305] p-5 sm:p-6 lg:-translate-y-2 hover:-translate-y-3"
+                    : "border border-[#3E2C1B] bg-[#140D04] p-5 sm:p-6 hover:border-[#F1730C]"
                 }`}
               >
-                {/* Resalte decorativo superior para el disco cumbre central */}
+                {/* Resalte técnico para el disco central */}
                 {isCenter && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 border border-[#1F1305] bg-[#E80000] text-white px-3 py-0.5 font-mono text-[10px] font-black uppercase tracking-wider shadow-[2px_2px_0px_#1F1305] z-20">
-                    ★ DISCO CUMBRE DE LA DÉCADA ★
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 border border-[#1F1305] bg-[#E80000] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider z-20">
+                    [MATRIZ CUMBRE DE LA DÉCADA]
                   </div>
                 )}
 

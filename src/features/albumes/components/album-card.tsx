@@ -62,10 +62,10 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
           </div>
         </div>
 
-        {/* Funda Externa del Disco (Sleeve) */}
+        {/* Funda Externa del Disco (Sleeve) con encuadre de plano tecnico a 90 grados */}
         <div
           className={cn(
-            "relative z-10 h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/90 shadow-xl backdrop-blur-md transition-all duration-300 group-hover:border-white/25 group-hover:shadow-2xl group-hover:shadow-black/80 flex flex-col justify-between p-4",
+            "relative z-10 h-full w-full overflow-hidden rounded-none border border-[#1F1305] bg-neutral-900/90 transition-all duration-300 group-hover:border-[#E80000] flex flex-col justify-between p-3.5",
             gradient
           )}
         >
@@ -75,7 +75,7 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
               src={album.coverUrl}
               alt={album.title}
               onError={() => setImageError(true)}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-102"
             />
           ) : (
             // Funda Editorial Texturizada Retro
@@ -92,7 +92,7 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
           <div className="relative z-10 flex items-start justify-between gap-2">
             <BadgeFormat formatName={album.format || "LP 33 RPM"} size="sm" />
             {album.year && (
-              <span className="font-mono text-xs font-bold text-white/90 bg-black/50 px-2 py-0.5 rounded-md border border-white/10 backdrop-blur">
+              <span className="font-mono text-[10px] font-bold text-white/90 bg-black/70 px-1.5 py-0.5 rounded-none border border-white/20">
                 {album.year}
               </span>
             )}
