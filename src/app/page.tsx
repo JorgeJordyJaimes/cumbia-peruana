@@ -96,7 +96,7 @@ export default async function Home() {
         tipos_album (nombre_tipo)
       `)
       .order("año_publicacion", { ascending: true })
-      .limit(140),
+      .limit(1000),
     supabase
       .from("temas")
       .select(`
@@ -129,7 +129,7 @@ export default async function Home() {
           generos (id_genero, nombre_genero)
         )
       `)
-      .limit(2000),
+      .limit(2500),
     supabase
       .from("configuracion_home")
       .select("*")
