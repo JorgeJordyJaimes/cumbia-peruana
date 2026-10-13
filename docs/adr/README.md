@@ -14,6 +14,7 @@ Cada registro detalla el contexto histórico-tecnológico, la decisión adoptada
 | [**ADR 002**](002-modelado-mosaicos-y-enganchados.md) | Modelado Relacional de Mosaicos, Popurrís y Enganchados (`Mosaicos_Temas`) | Aceptado | 2026-10-07 | Catalogación / Pistas de Vinilo |
 | [**ADR 003**](003-resolucion-grafo-genealogico-rpc.md) | Resolución de Consultas Genealógicas Complejas mediante Procedimientos en PostgreSQL (RPC) y Recursión | Aceptado | 2026-10-07 | Base de Datos / Rendimiento |
 | [**ADR 004**](004-conversion-cliente-webp.md) | Conversión e Interceptación de Imágenes a WebP en el Cliente mediante Canvas API | Aceptado | 2026-10-07 | Frontend / Supabase Storage |
+| [**ADR 005**](005-optimizacion-rendimiento-vercel-react-best-practices.md) | Adopción de Directrices de Rendimiento Frontend (Vercel React Best Practices) | Aceptado | 2026-10-13 | Rendimiento Frontend / Next.js |
 
 ---
 

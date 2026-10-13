@@ -234,6 +234,13 @@ En la página dinámica Server Component [`src/app/album/[id]/page.tsx`](file://
 * **`MusicAlbum`:** Con `name`, `catalogNumber`, `datePublished`, `recordLabel` y lista de canciones `track`.
 * **`MusicRecording`:** Cada pista incluye `duration` (ISO 8601), `byArtist` ([MusicGroup]), `composer` ([Person]) y número de pista correspondiente al Lado A o B.
 
+### D. Optimización de Rendimiento Frontend y Directrices de Servidor (ADR 005)
+Para soportar catálogos fonográficos densos y minimizar el TTFB y tamaño de los bundles de JavaScript, el frontend adopta las directrices de [ADR 005](adr/005-optimizacion-rendimiento-vercel-react-best-practices.md):
+1. **Paralelización en Server Components (`Promise.all`):** Las rutas principales (`/`, `/vinilos`, `/album/[id]`) ejecutan todas sus consultas independientes hacia Supabase concurrentemente, abatiendo las cascadas de red asíncronas.
+2. **Deduplicación por Petición (`React.cache`):** Las funciones de consulta compartidas entre `generateMetadata` y el Server Component de la página (`getAlbumDetail`, `getBlogPostBySlug`, servicios de servidor de genealogía) se encapsulan con `cache()` de React, garantizando una única ejecución física hacia la base de datos por ciclo de solicitud HTTP.
+3. **Carga Diferida de Modales (`next/dynamic`):** Componentes fuera de la ruta crítica (`CommandPalette`, `AlbumDetailModal`, `VersionesExplorerModal`) se importan bajo demanda sin SSR, aligerando el chunk inicial transferido al navegador.
+4. **Optimización de Paquetes:** Configuración de `experimental.optimizePackageImports: ["lucide-react"]` en `next.config.ts` para resolver iconos sin costo de análisis ni parsing innecesario del barrel file.
+
 ---
 
 ## 7. 🔗 Documentación Relacionada
@@ -241,4 +248,4 @@ En la página dinámica Server Component [`src/app/album/[id]/page.tsx`](file://
 * [Lineamientos de Desarrollo y Estándares](lineamientos-desarrollo.md)
 * [Manual de Catalogación e Ingesta a SQL](manual-catalogacion-e-ingesta.md)
 * [Manifiesto y Alcance Histórico](manifiesto-arquitectura.md)
-* [ADRs del Proyecto](adr/)
+* [Registros de Decisiones de Arquitectura (ADRs)](adr/README.md)

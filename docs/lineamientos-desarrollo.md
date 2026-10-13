@@ -62,6 +62,7 @@ cumbia-peruana/
 │   │   ├── match-bpm/                   # Herramienta interactiva para DJs (Camelot & BPM Match)
 │   │   ├── nosotros/                    # Manifiesto y créditos del equipo investigador
 │   │   ├── radar/                       # Curaduría de prensajes raros y singles en 45 RPM
+│   │   ├── vinilos/                     # Catálogo y filtrado fonográfico integral de vinilos (LPs y singles)
 │   │   ├── layout.tsx                   # Root Layout con fuentes, metadatos y Vercel Analytics
 │   │   ├── page.tsx                     # Portada editorial brutalista
 │   │   └── globals.css                  # Estilos globales y variables de Tailwind CSS
@@ -286,7 +287,62 @@ GRANT EXECUTE ON FUNCTION mi_nueva_funcion_rpc(...) TO anon, authenticated, serv
 
 ---
 
-## 8. 📜 Flujo de Trabajo Git (Obligatorio)
+## 8. ⚡ Estándares de Rendimiento Frontend (Vercel & React Best Practices)
+
+Siguiendo las directrices consolidadas en [ADR 005](adr/005-optimizacion-rendimiento-vercel-react-best-practices.md), el código de frontend debe cumplir con los siguientes estándares mandatorios de ingeniería:
+
+### A. Eliminación de Cascadas Asíncronas (`async-parallel`)
+En Server Components y cargadores de datos, las consultas independientes nunca deben encadenarse de manera secuencial (`await a; await b;`). Deben ejecutarse concurrentemente mediante `Promise.all()`:
+```tsx
+// Correcto: Paralelización sin cascadas
+const [albumesRes, totalRes, generosRes] = await Promise.all([
+  supabase.from('Albumes').select('*').limit(50),
+  supabase.from('Albumes').select('id_album', { count: 'exact', head: true }),
+  supabase.from('Generos').select('*')
+]);
+```
+
+### B. Deduplicación por Petición en Servidor con `React.cache()` (`server-cache-react`)
+Toda función de consulta invocada simultáneamente en `generateMetadata` y en el Server Component de la página debe encapsularse con `cache()` de React para garantizar una sola ejecución física hacia Supabase por ciclo de renderizado:
+```tsx
+import { cache } from 'react';
+
+export const getAlbumDetail = cache(async (albumId: number) => {
+  const supabase = await createClient();
+  return await supabase.from('Albumes').select('*').eq('id_album', albumId).single();
+});
+```
+
+### C. Importaciones Dinámicas para Componentes Fuera de Ruta Crítica (`bundle-dynamic-imports`)
+Modales, paneles de inspección y paletas de comandos (`CommandPalette`, `AlbumDetailModal`, `VersionesExplorerModal`) deben cargarse bajo demanda con `next/dynamic` y `{ ssr: false }`, eliminando dependencias pesadas del chunk inicial:
+```tsx
+const CommandPalette = dynamic(
+  () => import('@/components/ui/command-palette').then((mod) => mod.CommandPalette),
+  { ssr: false }
+);
+```
+
+### D. Optimización de Barrel Imports (`bundle-barrel-imports`)
+Mantener configurado `experimental.optimizePackageImports: ["lucide-react"]` en `next.config.ts` para que el compilador resuelva directamente los submódulos de iconos sin analizar el archivo central.
+
+### E. Renderizado Condicional Explícito (`rendering-conditional-render`)
+Prohibido el uso de `array.length > 0 && <Component />` o booleanos implícitos en JSX. Debe usarse siempre el operador ternario estricto:
+```tsx
+{catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
+```
+
+### F. Hoisting de RegExp y Estructuras Estáticas (`js-hoist-regexp` & `server-hoist-static-io`)
+Las expresiones regulares (en parseadores o utilitarios) y constantes estáticas (gradientes, opciones de filtrado) deben declararse a nivel de módulo, evitando sobrecargar el Garbage Collector en cada renderizado.
+
+### G. Desacoplamiento de Búsqueda con `useDeferredValue` (`rerender-use-deferred-value`)
+En buscadores y filtros de catálogo, usar `useDeferredValue` sobre los términos de búsqueda textual para preservar la respuesta inmediata del cursor de texto mientras el filtrado de listas largas corre en segundo plano.
+
+### H. Memoización Quirúrgica de Elementos de Lista (`rerender-memo`)
+Envolver componentes de lista densa como `AlbumCard` en `React.memo` para evitar re-renderizados innecesarios al manipular filtros globales o paginación.
+
+---
+
+## 9. 📜 Flujo de Trabajo Git (Obligatorio)
 
 Para mantener la integridad del historial y el despliegue continuo en Vercel, todo colaborador debe acatar las siguientes pautas:
 
@@ -303,7 +359,7 @@ Para mantener la integridad del historial y el despliegue continuo en Vercel, to
 
 ---
 
-## 9. 🔗 Documentación Relacionada
+## 10. 🔗 Documentación Relacionada
 * [Manual del Proyecto para Agentes y Desarrolladores](manual-proyecto.md)
 * [Arquitectura Técnica y Modelo de Datos](arquitectura-tecnica.md)
 * [Manual de Catalogación e Ingesta a SQL](manual-catalogacion-e-ingesta.md)

@@ -31,6 +31,8 @@ Cualquier agente que trabaje sobre este repositorio debe tener presente las sigu
    El componente `ImageUploader` intercepta JPG/PNG y los convierte a WebP (0.90) mediante HTML5 Canvas API antes de enviarlos a Supabase Storage.
 8. **SEO Patrimonial (Schema.org / JSON-LD):**
    Inyección de datos estructurados para `MusicAlbum`, `MusicRecording`, `MusicGroup`, `Person` y `RecordLabel` en Server Components ([`src/app/album/[id]/page.tsx`](../src/app/album/[id]/page.tsx)).
+9. **Subpágina `/vinilos` y Optimización Vercel/React Best Practices (ADR 005):**
+   Creación de la subpágina `/vinilos` con catálogo fonográfico completo, orden analógico de temas A1..An / B1..Bn, visualización de voz y filtros interactivos. Refactorización exhaustiva de rendimiento: paralelización de consultas independientes con `Promise.all()`, deduplicación por ciclo de petición en servidor con `React.cache()`, code-splitting de modales con `next/dynamic` (`CommandPalette`, `AlbumDetailModal`, `VersionesExplorerModal`) y optimización de barrel imports para `lucide-react`.
 
 ---
 
@@ -44,20 +46,21 @@ flowchart TD
     Doc2 --> Doc3["3. docs/arquitectura-tecnica.md\nModelo relacional, campos críticos, RPCs y Next.js"]
     Doc3 --> Doc4["4. docs/lineamientos-desarrollo.md\nEstándares de código, RLS/Grants y flujo Git"]
     Doc4 --> Doc5["5. docs/manual-catalogacion-e-ingesta.md\nCatalogación y protocolo de ingesta SQL para agentes"]
-    Doc5 --> Doc6["6. docs/adr/README.md y ADRs 001-004\nDecisiones fundamentales de arquitectura"]
+    Doc5 --> Doc6["6. docs/adr/README.md y ADRs 001-005\nDecisiones fundamentales de arquitectura"]
 ```
 
 ### Detalle de la Secuencia:
 1. [`README.md`](../README.md): Te da la fotografía ejecutiva del stack tecnológico, variables de entorno requeridas y scripts de npm.
 2. [`docs/manifiesto-arquitectura.md`](manifiesto-arquitectura.md): Te enseña la dimensión histórica del archivo (cumbia costeña, amazónica, chicha, norteña, tecnocumbia) y la justificación de por qué el modelo refleja el soporte físico y no un streaming digital genérico.
 3. [`docs/arquitectura-tecnica.md`](arquitectura-tecnica.md): Te detalla el esquema DDL, el diccionario de campos críticos (`id_album_origen`, banderas físicas, `es_mosaico`, `credito_como`), el diseño de las funciones RPC recursivas y la arquitectura de Next.js App Router.
-4. [`docs/lineamientos-desarrollo.md`](lineamientos-desarrollo.md): Te indica la política de seguridad estricta para credenciales, la concesión obligatoria de `GRANT` para Supabase Data API, la segregación de clientes de Supabase y el flujo Git de Conventional Commits en español.
+4. [`docs/lineamientos-desarrollo.md`](lineamientos-desarrollo.md): Te indica la política de seguridad estricta para credenciales, la concesión obligatoria de `GRANT` para Supabase Data API, la segregación de clientes de Supabase, los estándares de rendimiento frontend (Vercel Best Practices) y el flujo Git de Conventional Commits en español.
 5. [`docs/manual-catalogacion-e-ingesta.md`](manual-catalogacion-e-ingesta.md): Manual para catalogadores y protocolo mandatorio de ingesta SQL para agentes (conversión a segundos, exclusividad Camelot, flags booleanas vacío=NO, separación letra/nota agente/comentarios, trazabilidad 45 vs LP, mosaicos y seudónimos).
-6. [`docs/adr/README.md`](adr/README.md): Te presenta los 4 ADRs del proyecto:
+6. [`docs/adr/README.md`](adr/README.md): Te presenta los 5 ADRs del proyecto:
    * [ADR 001](adr/001-soporte-estricto-lados-a-b.md): Exclusividad Lado A y B.
    * [ADR 002](adr/002-modelado-mosaicos-y-enganchados.md): Mosaicos_Temas.
    * [ADR 003](adr/003-resolucion-grafo-genealogico-rpc.md): RPCs recursivas.
    * [ADR 004](adr/004-conversion-cliente-webp.md): Canvas WebP en el navegador.
+   * [ADR 005](adr/005-optimizacion-rendimiento-vercel-react-best-practices.md): Rendimiento frontend y directrices Vercel / Next.js.
 
 ---
 
@@ -73,6 +76,7 @@ cumbia-peruana/
 │   │   ├── 002-modelado-mosaicos-y-enganchados.md
 │   │   ├── 003-resolucion-grafo-genealogico-rpc.md
 │   │   ├── 004-conversion-cliente-webp.md
+│   │   ├── 005-optimizacion-rendimiento-vercel-react-best-practices.md
 │   │   └── README.md
 │   ├── datos-investigacion/             # Control tabular (.ods) y notas de sellos (.txt)
 │   ├── sql-referencia/                  # DDL estructural consolidado de referencia
@@ -87,7 +91,7 @@ cumbia-peruana/
 ├── scripts/                             # Scripts de automatización
 │   └── poblar-db.mjs                    # Sincronización idempotente hacia Supabase Data API
 ├── src/                                 # Código fuente de Next.js App Router
-│   ├── app/                             # Rutas, layouts y páginas (/, /album/[id], /admin, etc.)
+│   ├── app/                             # Rutas, layouts y páginas (/, /album/[id], /vinilos, /admin, etc.)
 │   ├── components/                      # Componentes UI reutilizables y SEO JSON-LD
 │   ├── features/                        # Módulos desacoplados de dominio (Feature-Driven)
 │   │   ├── albumes/                     # Componentes y visualización de álbumes
@@ -211,6 +215,7 @@ Al generar nuevo código, consultas SQL o interfaces, el agente **DEBE RESPETAR 
 | **No Pistas Falsas para Mosaicos** | Nunca fragmentar un surco físico de vinilo en pistas artificiales (ej. 3a, 3b). Usa `Mosaicos_Temas` con `es_mosaico = TRUE`. |
 | **Preservar Identidad en Seudónimos** | Nunca crear una persona ficticia en `Personas` si se conoce la identidad del músico; usa `credito_como` en `Tema_Musicos` o `Temas_Compositores`. |
 | **Solo WebP en Supabase Storage** | Nunca subir JPG o PNG directo al bucket; procesar siempre mediante el pipeline Canvas WebP en el navegador. |
+| **Rendimiento y Cache en Servidor** | En Server Components, paralelizar siempre con `Promise.all()` las consultas independientes y envolver en `React.cache()` las funciones compartidas con `generateMetadata`. Cargar modales mediante `next/dynamic`. |
 | **Commits en Español** | Conventional Commits estrictamente en español (`feat:`, `fix:`, `docs:`, `refactor:`, `style:`). |
 
 ---
