@@ -277,23 +277,23 @@ export default async function Home() {
             totalPersonas={totalPersonas}
           />
 
-          {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
-          <BrutalistRadarSection albums={albums} />
+          {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
+          <BrutalistSelectedWork />
+
+          {/* BÓVEDA DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
+          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
 
           {/* BIBLIOTECA DE GÉNEROS & VERTIENTES (6 SUBGÉNEROS DE LA CUMBIA PERUANA) */}
           <BrutalistGenresSection />
 
-          {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
-          <BrutalistSelectedWork />
+          {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
+          <BrutalistRadarSection albums={albums} />
 
           {/* TRÍPTICO BRUTALISTA: Herramientas (1-6) + Bloque Naranja Manifiesto + Registro Técnico */}
           <BrutalistTriptych />
 
           {/* CRÓNICAS & INVESTIGACIÓN: Historias de Fondo con estética editorial */}
           {homeConfig.seccion_blog_activa ? <BrutalistStories /> : null}
-
-          {/* BÓVEDA DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
-          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
         </main>
       </BrutalistCoordinator>
 
