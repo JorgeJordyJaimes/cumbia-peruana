@@ -43,6 +43,10 @@ tsconfig.tsbuildinfo
 next-env.d.ts
 
 # temporales
+.~lock.*#
 .temp/
 supabase/.temp/
-.~lock.*#
+
+# binaries
+*.exe
+.agents/**/bin/
