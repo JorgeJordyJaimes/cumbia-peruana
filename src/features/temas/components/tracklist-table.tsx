@@ -24,13 +24,6 @@ interface TracklistTableProps {
   className?: string;
 }
 
-function formatDuration(seconds?: number | null): string {
-  if (!seconds) return "--:--";
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-}
-
 export function TracklistTable({ tracks, className }: TracklistTableProps) {
   const [selectedTemaId, setSelectedTemaId] = useState<number | null>(null);
   const [selectedTemaTitulo, setSelectedTemaTitulo] = useState<string>("");
@@ -90,17 +83,12 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                       {trackLabel}
                     </div>
 
-                    {/* Título & Duración */}
+                    {/* Título de la Obra */}
                     <div className="col-span-4 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-[#1F1305] truncate text-sm" title={track.title}>
                           {track.title}
                         </span>
-                        {track.durationSeconds && (
-                          <span className="font-mono text-[11px] text-[#746B5C] shrink-0">
-                            {formatDuration(track.durationSeconds)}
-                          </span>
-                        )}
 
                         {/* Botón Explorar Versiones (WITH RECURSIVE) */}
                         <button

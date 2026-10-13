@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { X, Disc, Calendar, Building2, Layers, ExternalLink, Clock, Activity } from "lucide-react";
+import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
@@ -25,11 +25,6 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
   if (!album) return null;
 
   // Métricas técnicas del disco
-  const totalDurationSeconds = tracks.reduce((acc, t) => acc + (t.durationSeconds || 0), 0);
-  const formattedTotalDuration = totalDurationSeconds > 0
-    ? `${Math.floor(totalDurationSeconds / 60)}:${(totalDurationSeconds % 60).toString().padStart(2, "0")}`
-    : "--:--";
-
   const tracksWithBpm = tracks.filter((t) => typeof t.bpm === "number" && t.bpm > 0);
   const avgBpm = tracksWithBpm.length > 0
     ? Math.round(tracksWithBpm.reduce((acc, t) => acc + (t.bpm || 0), 0) / tracksWithBpm.length)
@@ -98,8 +93,8 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               </p>
             </div>
 
-            {/* Ficha Técnica Rápida en varias filas para legibilidad total sin cortar texto */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2.5 pt-3 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
+            {/* Ficha Técnica Rápida para legibilidad total sin cortar texto */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2.5 pt-3 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Calendar className="h-3.5 w-3.5 text-[#F1730C] shrink-0" />
                 <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
@@ -111,10 +106,6 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
                 <span>Pistas: <strong className="text-[#1F1305]">{tracks.length || album.tracksCount || "--"}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <Clock className="h-3.5 w-3.5 text-[#2563EB] shrink-0" />
-                <span>Duración: <strong className="text-[#1F1305]">{formattedTotalDuration}</strong></span>
               </div>
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Activity className="h-3.5 w-3.5 text-[#D97706] shrink-0" />
