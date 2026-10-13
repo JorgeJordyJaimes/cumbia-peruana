@@ -269,7 +269,7 @@ export default async function Home() {
       {/* Coordinador con TopBar, Navbar y Buscador Command-Palette (⌘K) */}
       <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
         <main>
-          {/* HERO SECTION: Titular Gigante Anton + Foto Recortada con Forma Geométrica y Crosshair */}
+          {/* HERO: Afiche Monumental de Claudio Morán & Los 4 Grandes Números */}
           <BrutalistHero
             totalAlbumes={totalAlbumes}
             totalGrupos={totalGrupos}
@@ -277,23 +277,23 @@ export default async function Home() {
             totalPersonas={totalPersonas}
           />
 
-          {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
-          <BrutalistRadarSection albums={albums} />
-
-          {/* BIBLIOTECA DE GÉNEROS & VERTIENTES (6 SUBGÉNEROS DE LA CUMBIA PERUANA) */}
-          <BrutalistGenresSection />
-
-          {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
+          {/* OBRAS & HERRAMIENTAS SELECCIONADAS (Retícula Suiza de 3 Columnas) */}
           <BrutalistSelectedWork />
 
-          {/* TRÍPTICO BRUTALISTA: Herramientas (1-6) + Bloque Naranja Manifiesto + Registro Técnico */}
+          {/* BIBLIOTECA TIPOGRÁFICA DE VERTIENTES (6 Columnas Editoriales) */}
+          <BrutalistGenresSection />
+
+          {/* BÓVEDA DE PRENSAJES & CATÁLOGO RAZONADO */}
+          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
+
+          {/* TRÍPTICO DE PRENSAJES MATRICES (Clase Aparte, Mundial, En Órbita) */}
+          <BrutalistRadarSection albums={albums} />
+
+          {/* TRÍPTICO EDITORIAL: ÍNDICE DE HERRAMIENTAS, MANIFIESTO Y NORMAS ISO */}
           <BrutalistTriptych />
 
-          {/* CRÓNICAS & INVESTIGACIÓN: Historias de Fondo con estética editorial */}
+          {/* SUPLEMENTO EDITORIAL & CRÓNICAS FONOGRÁFICAS (Blog) */}
           {homeConfig.seccion_blog_activa ? <BrutalistStories /> : null}
-
-          {/* BÓVEDA DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
-          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
         </main>
       </BrutalistCoordinator>
 

@@ -13,15 +13,15 @@ export function BrutalistCatalogSection({
   tracksMap,
 }: BrutalistCatalogSectionProps) {
   return (
-    <section id="catalogo-vinilos" className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] py-12 sm:py-16 scroll-mt-20">
+    <section id="catalogo-vinilos" className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] py-12 sm:py-16 scroll-mt-20 select-none font-mono">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
         
-        {/* CABECERA EDITORIAL BRUTALISTA CON COOPER BLACK */}
+        {/* CABECERA EDITORIAL SUIZA DE CATÁLOGO RAZONADO */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-[#1F1305] pb-6">
           <div className="space-y-2">
-            <div className="flex items-center gap-2 font-mono text-xs font-bold tracking-widest text-[#F1730C] uppercase">
+            <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#E80000] uppercase">
               <Disc3 className="h-4 w-4" />
-              <span>CATÁLOGO FÍSICO • 1968–2005</span>
+              <span>CATÁLOGO RAZONADO // PRENSAJES EN FORMATO FÍSICO 1968–2005</span>
             </div>
 
             <h2 className="font-cooper text-3xl sm:text-5xl font-black tracking-tight text-[#1F1305]">
@@ -30,13 +30,13 @@ export function BrutalistCatalogSection({
           </div>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <p className="max-w-md font-mono text-xs text-[#5A5245] leading-relaxed">
-              Inspecciona 719+ carátulas restauradas, sellos matrices en vinilo de 33 y 45 RPM,
-              y contraportadas interactivas con tracklists y créditos de sesión.
+            <p className="max-w-md text-xs text-[#5A5245] leading-relaxed">
+              Catálogo completo de 719+ títulos con carátulas restauradas, números de catálogo,
+              fichas técnicas, tracklists completos y autorías verificadas.
             </p>
             <Link
               href="/vinilos"
-              className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-4 py-2 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] transition-all shrink-0"
+              className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-4 py-2.5 text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] transition-all shrink-0"
             >
               <span>VER SUBPÁGINA DEDICADA</span>
               <ArrowUpRight className="h-4 w-4" />
@@ -44,7 +44,7 @@ export function BrutalistCatalogSection({
           </div>
         </div>
 
-        {/* EXPLORADOR DE CATÁLOGO */}
+        {/* EXPLORADOR DE CATÁLOGO ENMARCADO EN RETÍCULA BLANCA DE 2PX */}
         <div className="border-2 border-[#1F1305] bg-white p-4 sm:p-6 shadow-[6px_6px_0px_#1F1305]">
           <CatalogExplorer initialAlbums={albums} tracksMap={tracksMap} />
         </div>

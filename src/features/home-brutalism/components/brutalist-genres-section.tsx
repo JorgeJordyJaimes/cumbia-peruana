@@ -9,7 +9,6 @@ import {
   X,
   ExternalLink,
   MapPin,
-  Sparkles,
   Sliders,
   Radio,
 } from "lucide-react";
@@ -52,7 +51,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     region: "IQUITOS, PUCALLPA & TARAPOTO",
     titulos: "185+ títulos",
     colorAura: "from-emerald-500/10 via-transparent to-transparent",
-    colorIcono: "text-emerald-400",
+    colorIcono: "text-emerald-500",
     instrumentos:
       "Órgano Farfisa Compact, eco analógico Roland Space Echo, güiro, cencerro y tumbadoras.",
     gruposPioneros: ["Los Mirlos", "Juaneco y su Combo", "Los Silvers", "Los Continentales"],
@@ -84,7 +83,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     region: "PIURA, LAMBAYEQUE & TRUJILLO",
     titulos: "85+ títulos",
     colorAura: "from-amber-400/10 via-transparent to-transparent",
-    colorIcono: "text-amber-400",
+    colorIcono: "text-amber-500",
     instrumentos:
       "Sección completa de metales (trompetas, trombones), bajo melódico prominente y percusión orquestal.",
     gruposPioneros: ["Armonía 10", "Agua Marina", "Grupo 5", "Cantaritos de Oro"],
@@ -100,7 +99,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     region: "PUNO, JULIACA & AREQUIPA",
     titulos: "32+ títulos",
     colorAura: "from-purple-500/10 via-transparent to-transparent",
-    colorIcono: "text-purple-400",
+    colorIcono: "text-purple-500",
     instrumentos:
       "Sintetizadores Roland D-50, módulos Korg M1, batería electrónica y ritmo acelerado.",
     gruposPioneros: ["Los Ronisch", "Sociedad de Juliaca", "Alaska", "Pintura Roja (etapa sur)"],
@@ -116,7 +115,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     region: "SIERRA NORTE & SELVA ALTA",
     titulos: "17+ títulos",
     colorAura: "from-orange-500/10 via-transparent to-transparent",
-    colorIcono: "text-orange-400",
+    colorIcono: "text-orange-500",
     instrumentos:
       "Arpa andina tradicional o electrificada, timbales rápidos, güiro sincopado y voces agudas en contrapunto.",
     gruposPioneros: ["Corazón Serrano", "Sensual Karicia", "El Encanto de Corazón", "Son de Ríos"],
@@ -133,39 +132,32 @@ export function BrutalistGenresSection() {
   return (
     <section
       id="biblioteca-generos"
-      className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] py-14 sm:py-20 scroll-mt-20 relative overflow-hidden"
+      className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] py-12 sm:py-16 scroll-mt-20 relative overflow-hidden select-none font-mono"
     >
-      {/* Textura sutil táctil */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,115,12,0.04)_0,transparent_70%)] pointer-events-none" />
-
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-10 relative z-10">
-        {/* CABECERA EDITORIAL (Alto contraste en lienzo crema) */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b-2 border-[#1F1305]">
-          <div className="space-y-3">
-            {/* Micro-badge brutalista rojo */}
-            <div className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-3 py-1 font-mono text-xs font-bold text-white tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8 relative z-10">
+        
+        {/* CABECERA EDITORIAL SUIZA */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b-2 border-[#1F1305]">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-3 py-1 text-xs font-bold text-white tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
               <Library className="h-3.5 w-3.5 text-white" />
-              <span>BIBLIOTECA DE GÉNEROS & VERTIENTES</span>
+              <span>PLIEGO TIPOGRÁFICO // 6 VERTIENTES REGIONALES</span>
             </div>
 
-            {/* Titular en fuente Cooper Black */}
             <h2 className="font-cooper text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1305] tracking-tight leading-tight">
-              Nuestra Biblioteca{" "}
-              <span className="text-[#F1730C]">Musical Infinita</span>
+              Biblioteca de Vertientes &amp; Géneros
             </h2>
           </div>
 
-          {/* Texto explicativo lateral */}
-          <div className="max-w-md">
-            <p className="font-mono text-xs sm:text-sm text-[#5A5245] leading-relaxed">
-              Explora los 6 géneros catalogados que emergieron del encuentro de la
-              guitarra eléctrica, las migraciones provincianas y los ritmos de la
-              Amazonía.
+          <div className="max-w-md text-xs text-[#5A5245] leading-relaxed">
+            <p>
+              Cartografía estética y musical de las 6 vertientes que forjaron la identidad
+              de la cumbia peruana: desde las guitarras costeñas hasta los sintetizadores altiplánicos.
             </p>
           </div>
         </div>
 
-        {/* CUADRÍCULA DE LOS 6 SUBGÉNEROS (Tarjetas Marfil con borde negro y sombra retro) */}
+        {/* 6 TARJETAS EN RETÍCULA SUIZA CON ÁNGULOS RECTOS DE 90° */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
           {GENEROS_VERTIENTES.map((genero) => {
             return (
@@ -179,53 +171,42 @@ export function BrutalistGenresSection() {
                     setSelectedGenero(genero);
                   }
                 }}
-                className="group relative flex flex-col justify-between items-center text-center p-4 sm:p-5 rounded-2xl border-2 border-[#1F1305] bg-[#FAF6F0] min-h-[260px] sm:min-h-[290px] shadow-[4px_4px_0px_#1F1305] transition-all duration-300 hover:-translate-y-2 hover:border-[#1F1305] hover:shadow-[6px_6px_0px_#E80000] cursor-pointer overflow-hidden"
+                className="group relative flex flex-col justify-between items-center text-center p-4 sm:p-5 border-2 border-[#1F1305] bg-white min-h-[260px] sm:min-h-[290px] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[6px_6px_0px_#E80000] cursor-pointer overflow-hidden"
               >
-                {/* Aura sutil interna */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-b ${genero.colorAura} pointer-events-none transition-opacity duration-300 group-hover:opacity-100 opacity-40`}
-                />
-
-                {/* REGIÓN GEOGRÁFICA EN EL TOPE */}
-                <div className="relative z-10 w-full">
-                  <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#746B5C] group-hover:text-[#1F1305] transition-colors line-clamp-1">
-                    {genero.region}
+                {/* Número monolítico en la parte superior */}
+                <div className="w-full flex items-center justify-between border-b border-[#1F1305]/20 pb-1.5 text-xs">
+                  <span className="font-anton text-base font-black text-[#E80000]">
+                    0{genero.id}.
+                  </span>
+                  <span className="text-[9px] uppercase font-bold text-[#746B5C] truncate max-w-[80px]">
+                    {genero.region.split("&")[0]}
                   </span>
                 </div>
 
-                {/* EMBLEMA CENTRAL (Disco de vinilo oscuro sobre tarjeta marfil) */}
-                <div className="relative z-10 my-4 flex items-center justify-center">
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#1F1305] bg-[#140D04] flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-300">
-                    {/* Anillos concéntricos de audio */}
-                    <div className="absolute inset-1.5 rounded-full border border-white/10 pointer-events-none" />
-                    <div className="absolute inset-3.5 rounded-full border border-white/5 pointer-events-none" />
-
-                    {/* Ondas expansivas en hover */}
-                    <span className="absolute inset-0 rounded-full border border-[#F1730C]/40 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 pointer-events-none" />
-
-                    {/* Icono central de vinilo */}
-                    <div
-                      className={`relative z-10 w-8 h-8 rounded-full border border-black/80 bg-[#1F1305] flex items-center justify-center shadow-inner ${genero.colorIcono} group-hover:rotate-45 transition-transform duration-500`}
-                    >
-                      <Disc className="h-4 w-4" />
+                {/* Emblema central de disco */}
+                <div className="my-3 flex items-center justify-center">
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 border-2 border-[#1F1305] bg-[#140D04] flex items-center justify-center shadow-md group-hover:scale-105 transition-all">
+                    <div className="absolute inset-1 border border-white/10" />
+                    <div className="relative z-10 w-6 h-6 border border-black bg-[#1F1305] flex items-center justify-center">
+                      <Disc className="h-3.5 w-3.5 text-[#F1730C]" />
                     </div>
                   </div>
                 </div>
 
-                {/* PIE DE TARJETA: TÍTULO Y CONTEO */}
-                <div className="relative z-10 w-full space-y-1">
-                  <h3 className="font-cooper text-sm sm:text-base font-black text-[#1F1305] group-hover:text-[#E80000] transition-colors leading-tight">
+                {/* Pie de tarjeta: Nombre y Conteo */}
+                <div className="w-full space-y-1">
+                  <h3 className="font-cooper text-xs sm:text-sm font-black text-[#1F1305] group-hover:text-[#E80000] transition-colors leading-tight">
                     {genero.nombre}
                   </h3>
 
-                  <div className="flex items-center justify-center gap-1 font-mono text-[11px] text-[#746B5C] group-hover:text-[#1F1305] transition-colors">
-                    <span className="text-[#E80000] font-bold">♫</span>
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-[#746B5C] group-hover:text-[#1F1305] transition-colors font-bold">
+                    <span className="text-[#E80000]">§</span>
                     <span>{genero.titulos}</span>
                   </div>
                 </div>
 
-                {/* Indicador táctil de 'Ver Ficha' */}
-                <div className="absolute bottom-1 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                {/* Flecha indicadora */}
+                <div className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <ArrowUpRight className="h-3.5 w-3.5 text-[#E80000]" />
                 </div>
               </div>
@@ -233,43 +214,44 @@ export function BrutalistGenresSection() {
           })}
         </div>
 
-        {/* ACCESO INFERIOR AL ARCHIVO COMPLETO */}
-        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t-2 border-[#1F1305] font-mono text-xs text-[#5A5245]">
+        {/* PIE DE SECCIÓN */}
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t-2 border-[#1F1305] text-xs text-[#5A5245]">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-[#F1730C]" />
-            <span>Haz clic en cualquier vertiente para consultar su genealogía e instrumentos clave.</span>
+            <span className="text-[#E80000] font-black">●</span>
+            <span>Haz clic en cualquier vertiente para abrir su monografía y ficha de organología.</span>
           </div>
 
           <Link
             href="/radar"
             className="inline-flex items-center gap-2 text-[#1F1305] hover:text-[#E80000] font-bold transition-colors group"
           >
-            <span>Ver grabaciones catalogadas en El Radar</span>
+            <span>Explorar títulos en El Radar 45s</span>
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
+
       </div>
 
-      {/* MODAL DETALLADO DE LA VERTIENTE SELECCIONADA */}
+      {/* MODAL EDITORIAL DE LA VERTIENTE SELECCIONADA */}
       {selectedGenero && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 select-none"
           onClick={() => setSelectedGenero(null)}
         >
           <div
-            className="relative w-full max-w-xl border-2 border-[#1F1305] bg-[#1F1305] text-white p-6 sm:p-8 shadow-[8px_8px_0px_#E80000] space-y-6"
+            className="relative w-full max-w-xl border-2 border-[#1F1305] bg-[#1F1305] text-white p-6 sm:p-8 shadow-[8px_8px_0px_#E80000] space-y-6 font-mono"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Cabecera del Modal */}
-            <div className="flex items-start justify-between border-b border-[#3E2C1B] pb-4">
+            <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4">
               <div className="space-y-1">
-                <span className="font-mono text-[10px] font-bold tracking-widest text-[#E80000] uppercase">
-                  VERTIENTE REGISTRADA // CÓDIGO GEN-{selectedGenero.id}
+                <span className="text-[10px] font-bold tracking-widest text-[#E80000] uppercase">
+                  MONOGRAFÍA NO. 0{selectedGenero.id} // ARCHIVO EDITORIAL
                 </span>
                 <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white">
                   {selectedGenero.nombre}
                 </h3>
-                <div className="flex items-center gap-1.5 font-mono text-xs text-[#F1730C]">
+                <div className="flex items-center gap-1.5 text-xs text-[#F1730C]">
                   <MapPin className="h-3.5 w-3.5 text-[#F1730C]" />
                   <span>{selectedGenero.region}</span>
                 </div>
@@ -278,38 +260,38 @@ export function BrutalistGenresSection() {
               <button
                 type="button"
                 onClick={() => setSelectedGenero(null)}
-                className="border border-[#3E2C1B] bg-white/10 p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors"
+                className="border-2 border-[#3E2C1B] bg-white/10 p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors"
                 title="Cerrar ventana"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* Reseña Histórica y Sonora */}
-            <div className="space-y-2 font-mono text-xs text-[#EDE0D0] leading-relaxed">
+            {/* Reseña Histórica */}
+            <div className="space-y-2 text-xs text-[#EDE0D0] leading-relaxed">
               <p className="font-bold text-[#F1730C] uppercase tracking-wider text-[11px]">
-                ORIGEN & EVOLUCIÓN HISTÓRICA:
+                ORIGEN &amp; DESARROLLO HISTÓRICO:
               </p>
               <p className="text-[#B8AFA6] leading-relaxed">
                 {selectedGenero.descripcionLarga}
               </p>
             </div>
 
-            {/* Instrumentación e Identidad Sonora */}
-            <div className="border border-[#3E2C1B] bg-[#140D04] p-3.5 space-y-1.5 font-mono text-xs">
+            {/* Organología e Instrumentos */}
+            <div className="border-2 border-[#3E2C1B] bg-[#140D04] p-3.5 space-y-1.5 text-xs">
               <div className="flex items-center gap-2 text-white font-bold text-[11px] uppercase">
-                <Sliders className="h-3.5 w-3.5 text-[#F1730C]" />
-                <span>SONORIDAD & INSTRUMENTACIÓN MATRIZ:</span>
+                <Sliders className="h-3.5 w-3.5 text-[#E80000]" />
+                <span>ORGANOLOGÍA &amp; INSTRUMENTACIÓN MATRIZ:</span>
               </div>
               <p className="text-[#B8AFA6] text-[11px] leading-relaxed">
                 {selectedGenero.instrumentos}
               </p>
             </div>
 
-            {/* Grupos y Agrupaciones Pioneras */}
-            <div className="space-y-2 border-t border-[#3E2C1B] pt-4 font-mono text-xs">
+            {/* Agrupaciones Pioneras */}
+            <div className="space-y-2 border-t-2 border-[#3E2C1B] pt-4 text-xs">
               <span className="text-[11px] font-bold text-white uppercase tracking-wider">
-                CONJUNTOS & ORQUESTAS INSIGNIA:
+                CONJUNTOS &amp; ORQUESTAS FUNDACIONALES:
               </span>
               <div className="flex flex-wrap gap-2 pt-1">
                 {selectedGenero.gruposPioneros.map((grupo, i) => (
@@ -317,18 +299,18 @@ export function BrutalistGenresSection() {
                     key={i}
                     className="border border-[#3E2C1B] bg-[#0E0803] px-2.5 py-1 text-[11px] font-semibold text-[#EDE0D0] flex items-center gap-1.5"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E80000]" />
+                    <span className="w-1.5 h-1.5 bg-[#E80000]" />
                     <span>{grupo}</span>
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Acciones del Modal */}
+            {/* Acciones */}
             <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
               <Link
                 href="/radar"
-                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#1F1305] bg-[#E80000] py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] transition-all"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#1F1305] bg-[#E80000] py-2.5 text-xs font-bold text-white shadow-[3px_3px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] transition-all"
               >
                 <Radio className="h-4 w-4" />
                 <span>EXPLORAR EN EL RADAR</span>
@@ -336,7 +318,7 @@ export function BrutalistGenresSection() {
               </Link>
               <Link
                 href="/genealogia"
-                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#3E2C1B] bg-white/5 py-2.5 font-mono text-xs font-bold text-white hover:bg-[#F1730C] hover:text-white transition-all"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#3E2C1B] bg-white/5 py-2.5 text-xs font-bold text-white hover:bg-[#F1730C] hover:text-white transition-all"
               >
                 <span>VER ÁRBOL GENEALÓGICO</span>
                 <ExternalLink className="h-4 w-4" />
@@ -345,6 +327,7 @@ export function BrutalistGenresSection() {
           </div>
         </div>
       )}
+
     </section>
   );
 }
