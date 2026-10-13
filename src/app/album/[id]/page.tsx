@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { BadgeFormat } from "@/components/ui/badge-format";
@@ -71,25 +72,38 @@ interface AlbumTemaDetailRow {
   } | null;
 }
 
+// Carga con cache() de React para deduplicar petición entre generateMetadata y AlbumPage (server-cache-react)
+const getAlbumDetail = cache(async (albumId: number) => {
+  const supabase = await createClient();
+  return supabase
+    .from("albumes")
+    .select(`
+      id_album,
+      nombre_album,
+      numero_catalogo,
+      año_publicacion,
+      url_portada,
+      url_contraportada,
+      url_etiqueta,
+      es_recopilatorio,
+      es_varios_artistas,
+      es_disco_split,
+      comentario,
+      grupos (id_grupo, nombre_grupo),
+      sellos_discograficos (nombre_sello, pais),
+      tipos_album (nombre_tipo)
+    `)
+    .eq("id_album", albumId)
+    .single();
+});
+
 export async function generateMetadata({ params }: AlbumPageProps): Promise<Metadata> {
   const { id } = await params;
   const albumId = parseInt(id, 10);
   if (isNaN(albumId)) return { title: "Álbum no encontrado | Kumbia Sound" };
 
-  const supabase = await createClient();
-  const { data: rawAlbum } = await supabase
-    .from("albumes")
-    .select(`
-      nombre_album,
-      año_publicacion,
-      numero_catalogo,
-      grupos (nombre_grupo),
-      sellos_discograficos (nombre_sello)
-    `)
-    .eq("id_album", albumId)
-    .single();
-
-  const album = rawAlbum as unknown as AlbumMetadataRow | null;
+  const { data: rawAlbum } = await getAlbumDetail(albumId);
+  const album = rawAlbum as unknown as AlbumDetailRow | null;
 
   if (!album) {
     return { title: "Álbum no encontrado | Kumbia Sound" };
@@ -113,70 +127,54 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
 
   const supabase = await createClient();
 
-  // 1. Consultar álbum maestro con relaciones
-  const { data: rawAlbum, error: albumError } = await supabase
-    .from("albumes")
-    .select(`
-      id_album,
-      nombre_album,
-      numero_catalogo,
-      año_publicacion,
-      url_portada,
-      url_contraportada,
-      url_etiqueta,
-      es_recopilatorio,
-      es_varios_artistas,
-      es_disco_split,
-      comentario,
-      grupos (id_grupo, nombre_grupo),
-      sellos_discograficos (nombre_sello, pais),
-      tipos_album (nombre_tipo)
-    `)
-    .eq("id_album", albumId)
-    .single();
+  // Consulta paralela de datos de álbum y pistas físicas (elimina waterfalls)
+  const [
+    { data: rawAlbum, error: albumError },
+    { data: rawPistas },
+  ] = await Promise.all([
+    getAlbumDetail(albumId),
+    supabase
+      .from("albumes_temas")
+      .select(`
+        id_album_tema,
+        numero_pista,
+        lado,
+        es_mosaico,
+        temas (
+          id_tema,
+          titulo_tema,
+          duracion_segundos,
+          bpm,
+          camelot_code,
+          musical_key,
+          temas_compositores (
+            credito_como,
+            personas (nombre, apodo)
+          ),
+          temas_grupos (
+            grupos (nombre_grupo)
+          ),
+          tema_musicos (
+            instrumento,
+            credito_como,
+            roles (nombre_rol),
+            personas (nombre, apodo)
+          ),
+          temas_generos (
+            generos (id_genero, nombre_genero)
+          )
+        )
+      `)
+      .eq("id_album", albumId)
+      .order("lado", { ascending: true })
+      .order("numero_pista", { ascending: true }),
+  ]);
 
   const album = rawAlbum as unknown as AlbumDetailRow | null;
 
   if (albumError || !album) {
     notFound();
   }
-
-  // 2. Consultar pistas físicas (Lado A / Lado B) vinculadas a este álbum
-  const { data: rawPistas } = await supabase
-    .from("albumes_temas")
-    .select(`
-      id_album_tema,
-      numero_pista,
-      lado,
-      es_mosaico,
-      temas (
-        id_tema,
-        titulo_tema,
-        duracion_segundos,
-        bpm,
-        camelot_code,
-        musical_key,
-        temas_compositores (
-          credito_como,
-          personas (nombre, apodo)
-        ),
-        temas_grupos (
-          grupos (nombre_grupo)
-        ),
-        tema_musicos (
-          instrumento,
-          credito_como,
-          roles (nombre_rol),
-          personas (nombre, apodo)
-        ),
-        temas_generos (
-          generos (id_genero, nombre_genero)
-        )
-      )
-    `)
-    .eq("id_album", albumId)
-    .order("lado", { ascending: true })
-    .order("numero_pista", { ascending: true });
 
   const pistasList = (rawPistas as unknown as AlbumTemaDetailRow[]) || [];
 

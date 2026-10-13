@@ -46,7 +46,7 @@ export function BadgeFormat({
         className
       )}
     >
-      {showIcon && <Icon className={cn(size === "sm" ? "h-3 w-3" : "h-3.5 w-3.5", "text-[#E80000]")} />}
+      {showIcon ? <Icon className={cn(size === "sm" ? "h-3 w-3" : "h-3.5 w-3.5", "text-[#E80000]")} /> : null}
       <span>{label}</span>
     </span>
   );

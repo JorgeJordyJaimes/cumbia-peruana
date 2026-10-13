@@ -1,5 +1,12 @@
 import React from "react";
 
+// Expresiones regulares hoisted a nivel de módulo para evitar instanciaciones repetitivas (js-hoist-regexp)
+const BLOCKS_SPLIT_REGEX = /\n\s*\n/;
+const QUOTE_PREFIX_REGEX = /^>\s?/;
+const LIST_ITEM_PREFIX_REGEX = /^[-*]\s+/;
+const INLINE_TOKENS_REGEX = /(\*\*.*?\*\*|\*.*?\*|`.*?`|\[.*?\]\(.*?\))/g;
+const LINK_PARSE_REGEX = /^\[(.*?)\]\((.*?)\)$/;
+
 interface MarkdownRendererProps {
   content: string;
   className?: string;
@@ -14,7 +21,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
   if (!content) return null;
 
   // Dividir por bloques de párrafos (doble salto de línea)
-  const blocks = content.split(/\n\s*\n/);
+  const blocks = content.split(BLOCKS_SPLIT_REGEX);
 
   return (
     <div className={`space-y-6 text-[#1F1305] font-sans text-base sm:text-lg leading-relaxed ${className}`}>
@@ -62,7 +69,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
         if (trimmed.startsWith("> ")) {
           const quoteLines = trimmed
             .split("\n")
-            .map((line) => line.replace(/^>\s?/, ""))
+            .map((line) => line.replace(QUOTE_PREFIX_REGEX, ""))
             .join(" ");
 
           return (
@@ -77,7 +84,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
 
         // Lista con viñetas (- Item o * Item)
         if (trimmed.split("\n").every((l) => l.trim().startsWith("- ") || l.trim().startsWith("* "))) {
-          const items = trimmed.split("\n").map((l) => l.trim().replace(/^[-*]\s+/, ""));
+          const items = trimmed.split("\n").map((l) => l.trim().replace(LIST_ITEM_PREFIX_REGEX, ""));
           return (
             <ul key={bIdx} className="space-y-2 my-4 pl-6 list-disc list-outside text-[#1F1305]">
               {items.map((item, iIdx) => (
@@ -110,8 +117,8 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
  * Función para parsear negritas (**bold**), cursivas (*italic*), código (`code`) y enlaces ([text](url))
  */
 function renderInline(text: string): React.ReactNode[] {
-  // Regex para emparejar enlaces, negritas, cursivas y codigo
-  const tokens = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`|\[.*?\]\(.*?\))/g);
+  // Regex para emparejar enlaces, negritas, cursivas y codigo (hoisted)
+  const tokens = text.split(INLINE_TOKENS_REGEX);
 
   return tokens.map((part, index) => {
     if (!part) return null;
@@ -147,7 +154,7 @@ function renderInline(text: string): React.ReactNode[] {
     }
 
     // Enlace [texto](url)
-    const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+    const linkMatch = part.match(LINK_PARSE_REGEX);
     if (linkMatch) {
       const [, linkText, linkUrl] = linkMatch;
       const isExternal = linkUrl.startsWith("http");

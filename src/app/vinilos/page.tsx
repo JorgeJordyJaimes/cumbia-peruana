@@ -58,66 +58,68 @@ interface RawTemaRow {
 export default async function VinilosPage() {
   const supabase = await createClient();
 
-  // 1. Estadísticas de soporte físico en tiempo real
+  // Carga paralela sin cascadas (elimina waterfalls) según vercel-react-best-practices
   const [
-    { count: totalAlbumes },
-    { count: totalSellos },
-    { count: totalLPs },
-    { count: totalSingles },
+    [
+      { count: totalAlbumes },
+      { count: totalSellos },
+      { count: totalLPs },
+      { count: totalSingles },
+    ],
+    { data: rawAlbumes },
+    { data: rawTemas },
   ] = await Promise.all([
-    supabase.from("albumes").select("*", { count: "exact", head: true }),
-    supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
-    supabase.from("albumes").select("*", { count: "exact", head: true }).eq("id_tipo_album", 2),
-    supabase.from("albumes").select("*", { count: "exact", head: true }).eq("id_tipo_album", 1),
-  ]);
-
-  // 2. Consulta exhaustiva de álbumes y singles
-  const { data: rawAlbumes } = await supabase
-    .from("albumes")
-    .select(`
-      id_album,
-      nombre_album,
-      numero_catalogo,
-      año_publicacion,
-      url_portada,
-      es_recopilatorio,
-      grupos (nombre_grupo),
-      sellos_discograficos (nombre_sello),
-      tipos_album (nombre_tipo)
-    `)
-    .order("año_publicacion", { ascending: true })
-    .limit(1000);
-
-  // 3. Temas y metadatos para contraportadas / tracklists interactivos
-  const { data: rawTemas } = await supabase
-    .from("temas")
-    .select(`
-      id_tema,
-      titulo_tema,
-      duracion_segundos,
-      bpm,
-      camelot_code,
-      musical_key,
-      albumes_temas (
+    Promise.all([
+      supabase.from("albumes").select("*", { count: "exact", head: true }),
+      supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
+      supabase.from("albumes").select("*", { count: "exact", head: true }).eq("id_tipo_album", 2),
+      supabase.from("albumes").select("*", { count: "exact", head: true }).eq("id_tipo_album", 1),
+    ]),
+    supabase
+      .from("albumes")
+      .select(`
         id_album,
-        numero_pista,
-        lado
-      ),
-      temas_compositores (
-        credito_como,
-        personas (nombre, apodo)
-      ),
-      tema_musicos (
-        instrumento,
-        credito_como,
-        roles (nombre_rol),
-        personas (nombre, apodo)
-      ),
-      temas_generos (
-        generos (id_genero, nombre_genero)
-      )
-    `)
-    .limit(2000);
+        nombre_album,
+        numero_catalogo,
+        año_publicacion,
+        url_portada,
+        es_recopilatorio,
+        grupos (nombre_grupo),
+        sellos_discograficos (nombre_sello),
+        tipos_album (nombre_tipo)
+      `)
+      .order("año_publicacion", { ascending: true })
+      .limit(1000),
+    supabase
+      .from("temas")
+      .select(`
+        id_tema,
+        titulo_tema,
+        duracion_segundos,
+        bpm,
+        camelot_code,
+        musical_key,
+        albumes_temas (
+          id_album,
+          numero_pista,
+          lado
+        ),
+        temas_compositores (
+          credito_como,
+          personas (nombre, apodo)
+        ),
+        tema_musicos (
+          instrumento,
+          credito_como,
+          roles (nombre_rol),
+          personas (nombre, apodo)
+        ),
+        temas_generos (
+          generos (id_genero, nombre_genero)
+        )
+      `)
+      .limit(2000),
+  ]);
 
   // Mapear Álbumes
   const rawAlbumsList = (rawAlbumes as unknown as RawAlbumRow[]) || [];
@@ -231,7 +233,7 @@ export default async function VinilosPage() {
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       {/* Schema.org JSON-LD para motores de búsqueda */}
-      {catalogJsonLd.length > 0 && <JsonLd data={catalogJsonLd} />}
+      {catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
 
       <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
         <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-10">

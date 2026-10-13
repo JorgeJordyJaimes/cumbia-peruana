@@ -39,8 +39,11 @@ export const CAMELOT_WHEEL: Record<CamelotCode, { standardKey: string; mode: 'Me
   '12B': { standardKey: 'E', mode: 'Mayor', color: '#ca8a04' },
 }
 
+// RegExp hoisted a nivel de módulo (js-hoist-regexp)
+const CAMELOT_PARSE_REGEX = /^([1-9]|1[0-2])([AB])$/;
+
 export function parseCamelot(code: string): { number: CamelotNumber; letter: CamelotLetter } | null {
-  const match = code.toUpperCase().match(/^([1-9]|1[0-2])([AB])$/)
+  const match = code.toUpperCase().match(CAMELOT_PARSE_REGEX);
   if (!match) return null
   return {
     number: parseInt(match[1], 10) as CamelotNumber,

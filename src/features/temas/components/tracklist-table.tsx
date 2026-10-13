@@ -1,9 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 import { GitFork } from "lucide-react";
-import { VersionesExplorerModal } from "@/features/genealogia";
+
+// Lazy-load dinámico del modal de versiones (bundle-dynamic-imports)
+const VersionesExplorerModal = dynamic(
+  () => import("@/features/genealogia").then((m) => m.VersionesExplorerModal),
+  { ssr: false }
+);
 
 export interface TrackItem {
   id: number;
@@ -157,12 +163,14 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
         </div>
       </div>
 
-      {/* Modal Árbol Genealógico de Versiones */}
-      <VersionesExplorerModal
-        temaId={selectedTemaId}
-        tituloTema={selectedTemaTitulo}
-        onClose={() => setSelectedTemaId(null)}
-      />
+      {/* Modal Árbol Genealógico de Versiones (renderizado bajo demanda) */}
+      {selectedTemaId ? (
+        <VersionesExplorerModal
+          temaId={selectedTemaId}
+          tituloTema={selectedTemaTitulo}
+          onClose={() => setSelectedTemaId(null)}
+        />
+      ) : null}
     </>
   );
 }

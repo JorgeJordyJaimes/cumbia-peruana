@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { MarkdownRenderer } from "@/features/blog";
@@ -14,15 +15,19 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const { slug } = await params;
+// Deduplicación per-request con React.cache() (server-cache-react)
+const getArticleBySlug = cache(async (slug: string) => {
   const supabase = await createClient();
-
-  const { data: articulo } = await supabase
+  return supabase
     .from("articulos")
-    .select("titulo, resumen")
+    .select("*")
     .eq("slug", slug)
     .single();
+});
+
+export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const { data: articulo } = await getArticleBySlug(slug);
 
   if (!articulo) {
     return {
@@ -38,13 +43,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const supabase = await createClient();
-
-  const { data: rawArticle } = await supabase
-    .from("articulos")
-    .select("*")
-    .eq("slug", slug)
-    .single();
+  const { data: rawArticle } = await getArticleBySlug(slug);
 
   if (!rawArticle) {
     notFound();

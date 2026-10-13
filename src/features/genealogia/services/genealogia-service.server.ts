@@ -1,13 +1,15 @@
+import { cache } from "react";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import type { ArbolGenealogicoResult, GenealogiaVersionesResult } from "@/types/database";
 
 /**
  * Obtiene el árbol genealógico completo de un músico (Músico → Bandas → Temas → Prensajes)
  * desde el servidor usando la función RPC en PostgreSQL `get_arbol_genealogico`.
+ * Deduplicado por petición mediante React cache() (server-cache-react).
  */
-export async function getArbolGenealogicoServer(
+export const getArbolGenealogicoServer = cache(async (
   personaId: number
-): Promise<ArbolGenealogicoResult | null> {
+): Promise<ArbolGenealogicoResult | null> => {
   try {
     const supabase = await createServerClient();
     const { data, error } = await supabase.rpc("get_arbol_genealogico", {
@@ -24,15 +26,16 @@ export async function getArbolGenealogicoServer(
     console.error("Excepción en getArbolGenealogicoServer:", err);
     return null;
   }
-}
+});
 
 /**
  * Resuelve la jerarquía completa de versiones/covers de una canción con WITH RECURSIVE
  * desde el servidor usando la función RPC en PostgreSQL `get_genealogia_versiones`.
+ * Deduplicado por petición mediante React cache() (server-cache-react).
  */
-export async function getGenealogiaVersionesServer(
+export const getGenealogiaVersionesServer = cache(async (
   temaId: number
-): Promise<GenealogiaVersionesResult | null> {
+): Promise<GenealogiaVersionesResult | null> => {
   try {
     const supabase = await createServerClient();
     const { data, error } = await supabase.rpc("get_genealogia_versiones", {
@@ -49,4 +52,4 @@ export async function getGenealogiaVersionesServer(
     console.error("Excepción en getGenealogiaVersionesServer:", err);
     return null;
   }
-}
+});

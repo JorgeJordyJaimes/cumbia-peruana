@@ -73,49 +73,52 @@ export default async function MatchBpmPage() {
 
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
 
-  const djTracks: TrackDJItem[] = rawTemasList.map((t) => {
+  // Combinar iteraciones de mapeo en un solo ciclo (js-combine-iterations)
+  const djTracks: TrackDJItem[] = [];
+  const temasDJ: TemaDJ[] = [];
+
+  for (const t of rawTemasList) {
     const primaryAlbumTema = t.albumes_temas?.[0];
     const primaryAlbum = primaryAlbumTema?.albumes;
     const primaryGroup = t.temas_grupos?.[0]?.grupos;
+    const artist = primaryGroup?.nombre_grupo || "Agrupación Histórica";
+    const bpm = t.bpm || 115;
+    const camelot = (t.camelot_code as CamelotCode) || "8A";
+    const key = t.musical_key || t.camelot_code || "8A";
 
-    return {
+    djTracks.push({
       id: t.id_tema,
       title: t.titulo_tema,
-      artist: primaryGroup?.nombre_grupo || "Agrupación Histórica",
+      artist,
       album: primaryAlbum?.nombre_album || undefined,
       year: primaryAlbum?.año_publicacion || undefined,
-      bpm: t.bpm || 115,
-      camelot: (t.camelot_code as CamelotCode) || "8A",
-      musicalKey: t.musical_key || t.camelot_code || "8A",
+      bpm,
+      camelot,
+      musicalKey: key,
       format: "Vinilo",
-    };
-  });
+    });
 
-  const temasDJ: TemaDJ[] = rawTemasList.map((t) => {
-    const primaryAlbumTema = t.albumes_temas?.[0];
-    const primaryAlbum = primaryAlbumTema?.albumes;
-    const primaryGroup = t.temas_grupos?.[0]?.grupos;
     const durationSec = t.duracion_segundos;
     const durationStr = durationSec
       ? `${Math.floor(durationSec / 60)}:${(durationSec % 60).toString().padStart(2, "0")}`
       : "S/D";
 
-    return {
+    temasDJ.push({
       id: `tema-${t.id_tema}`,
       titulo: t.titulo_tema,
-      artista: primaryGroup?.nombre_grupo || "Agrupación Histórica",
+      artista: artist,
       ano: primaryAlbum?.año_publicacion || 1974,
       sello: primaryAlbum?.sellos_discograficos?.nombre_sello || "Sello Particular",
       subgenero: t.generos?.nombre_genero || "Cumbia",
-      bpm: t.bpm || 110,
+      bpm,
       camelot: t.camelot_code || "8A",
-      tonalidad: t.musical_key || t.camelot_code || "8A",
+      tonalidad: key,
       duracion: durationStr,
       portadaUrl:
         primaryAlbum?.url_portada ||
         "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80",
-    };
-  });
+    });
+  }
 
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">

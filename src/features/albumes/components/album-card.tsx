@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { cn } from "@/lib/utils";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { Disc3 } from "lucide-react";
@@ -24,18 +24,18 @@ interface AlbumCardProps {
   onSelect?: (album: AlbumItem) => void;
 }
 
-export function AlbumCard({ album, className, onSelect }: AlbumCardProps) {
-  const [imageError, setImageError] = useState(false);
+// Hoist de gradientes fuera del componente para evitar asignaciones por render (server-hoist-static-io)
+const GRADIENTS = [
+  "from-amber-900/60 via-stone-900 to-black",
+  "from-red-950/60 via-zinc-900 to-black",
+  "from-emerald-950/60 via-stone-900 to-black",
+  "from-orange-950/60 via-neutral-900 to-black",
+  "from-teal-950/60 via-zinc-900 to-black",
+] as const;
 
-  // Generar gradiente editorial temático basado en el ID
-  const gradients = [
-    "from-amber-900/60 via-stone-900 to-black",
-    "from-red-950/60 via-zinc-900 to-black",
-    "from-emerald-950/60 via-stone-900 to-black",
-    "from-orange-950/60 via-neutral-900 to-black",
-    "from-teal-950/60 via-zinc-900 to-black",
-  ];
-  const gradient = gradients[album.id % gradients.length];
+function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
+  const [imageError, setImageError] = useState(false);
+  const gradient = GRADIENTS[album.id % GRADIENTS.length];
 
   return (
     <div
@@ -123,3 +123,5 @@ export function AlbumCard({ album, className, onSelect }: AlbumCardProps) {
     </div>
   );
 }
+
+export const AlbumCard = memo(AlbumCardComponent);

@@ -1,9 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { BrutalistTopBar } from "./brutalist-top-bar";
 import { BrutalistNavbar } from "./brutalist-navbar";
-import { CommandPalette } from "@/features/home-retro/components/command-palette";
+
+// Lazy-load dinámico del CommandPalette (bundle-dynamic-imports)
+const CommandPalette = dynamic(
+  () => import("@/features/home-retro/components/command-palette").then((mod) => mod.CommandPalette),
+  { ssr: false }
+);
 
 interface BrutalistCoordinatorProps {
   children: React.ReactNode;
@@ -23,10 +29,12 @@ export function BrutalistCoordinator({
       <BrutalistTopBar totalAlbumes={totalAlbumes} totalSellos={totalSellos} />
       <BrutalistNavbar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
       {children}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-      />
+      {isCommandPaletteOpen ? (
+        <CommandPalette
+          isOpen={isCommandPaletteOpen}
+          onClose={() => setIsCommandPaletteOpen(false)}
+        />
+      ) : null}
     </>
   );
 }

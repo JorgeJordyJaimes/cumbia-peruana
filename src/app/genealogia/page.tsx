@@ -67,7 +67,7 @@ export default async function GenealogiaPage() {
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       {/* Schema.org JSON-LD para motores de búsqueda */}
-      {structuredDataList.length > 0 && <JsonLd data={structuredDataList} />}
+      {structuredDataList.length > 0 ? <JsonLd data={structuredDataList} /> : null}
 
       <BrutalistCoordinator>
         <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useDeferredValue } from "react";
 import { useRouter } from "next/navigation";
 import { Search, X, Disc3, Music2, Users, BookOpen, ArrowRight } from "lucide-react";
 import { musicosGenealogia, temasDJMock, historiasFondoMock } from "../data/cumbia-mock";
@@ -14,6 +14,7 @@ interface CommandPaletteProps {
 export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
 
   // Atajo de teclado global ⌘K o Ctrl+K
   useEffect(() => {
@@ -34,18 +35,21 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Bloquear scroll al abrir
+  // Bloquear scroll al abrir y limpiar apropiadamente al desmontar (client-event-listeners)
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   const searchResults = useMemo(() => {
-    if (!query.trim()) return null;
-    const q = query.toLowerCase();
+    if (!deferredQuery.trim()) return null;
+    const q = deferredQuery.toLowerCase();
 
     const musicos = musicosGenealogia.filter(
       (m) =>

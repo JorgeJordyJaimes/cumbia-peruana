@@ -64,77 +64,78 @@ interface RawTemaRow {
 export default async function Home() {
   const supabase = await createClient();
 
-  // 1. Estadísticas en vivo desde Supabase
+  // Carga paralela sin cascadas (elimina waterfalls) según vercel-react-best-practices
   const [
-    { count: totalAlbumes },
-    { count: totalGrupos },
-    { count: totalPersonas },
-    { count: totalSellos },
+    [
+      { count: totalAlbumes },
+      { count: totalGrupos },
+      { count: totalPersonas },
+      { count: totalSellos },
+    ],
+    { data: rawAlbumes },
+    { data: rawTemas },
+    { data: rawHomeConfig },
   ] = await Promise.all([
-    supabase.from("albumes").select("*", { count: "exact", head: true }),
-    supabase.from("grupos").select("*", { count: "exact", head: true }),
-    supabase.from("personas").select("*", { count: "exact", head: true }),
-    supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
-  ]);
-
-  // 2. Álbumes del catálogo físico
-  const { data: rawAlbumes } = await supabase
-    .from("albumes")
-    .select(`
-      id_album,
-      nombre_album,
-      numero_catalogo,
-      año_publicacion,
-      url_portada,
-      es_recopilatorio,
-      grupos (nombre_grupo),
-      sellos_discograficos (nombre_sello),
-      tipos_album (nombre_tipo)
-    `)
-    .order("año_publicacion", { ascending: true })
-    .limit(140);
-
-  // 3. Temas con especificaciones DJ y vocalistas
-  const { data: rawTemas } = await supabase
-    .from("temas")
-    .select(`
-      id_tema,
-      titulo_tema,
-      duracion_segundos,
-      bpm,
-      camelot_code,
-      musical_key,
-      albumes_temas (
+    Promise.all([
+      supabase.from("albumes").select("*", { count: "exact", head: true }),
+      supabase.from("grupos").select("*", { count: "exact", head: true }),
+      supabase.from("personas").select("*", { count: "exact", head: true }),
+      supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
+    ]),
+    supabase
+      .from("albumes")
+      .select(`
         id_album,
-        numero_pista,
-        lado,
-        albumes:albumes!albumes_temas_id_album_fkey (nombre_album, año_publicacion)
-      ),
-      temas_grupos (
-        grupos (nombre_grupo)
-      ),
-      temas_compositores (
-        credito_como,
-        personas (nombre, apodo)
-      ),
-      tema_musicos (
-        instrumento,
-        credito_como,
-        roles (nombre_rol),
-        personas (nombre, apodo)
-      ),
-      temas_generos (
-        generos (id_genero, nombre_genero)
-      )
-    `)
-    .limit(2000);
-
-  // 4. Configuración del Home
-  const { data: rawHomeConfig } = await supabase
-    .from("configuracion_home")
-    .select("*")
-    .eq("id", 1)
-    .single();
+        nombre_album,
+        numero_catalogo,
+        año_publicacion,
+        url_portada,
+        es_recopilatorio,
+        grupos (nombre_grupo),
+        sellos_discograficos (nombre_sello),
+        tipos_album (nombre_tipo)
+      `)
+      .order("año_publicacion", { ascending: true })
+      .limit(140),
+    supabase
+      .from("temas")
+      .select(`
+        id_tema,
+        titulo_tema,
+        duracion_segundos,
+        bpm,
+        camelot_code,
+        musical_key,
+        albumes_temas (
+          id_album,
+          numero_pista,
+          lado,
+          albumes:albumes!albumes_temas_id_album_fkey (nombre_album, año_publicacion)
+        ),
+        temas_grupos (
+          grupos (nombre_grupo)
+        ),
+        temas_compositores (
+          credito_como,
+          personas (nombre, apodo)
+        ),
+        tema_musicos (
+          instrumento,
+          credito_como,
+          roles (nombre_rol),
+          personas (nombre, apodo)
+        ),
+        temas_generos (
+          generos (id_genero, nombre_genero)
+        )
+      `)
+      .limit(2000),
+    supabase
+      .from("configuracion_home")
+      .select("*")
+      .eq("id", 1)
+      .single(),
+  ]);
 
   const homeConfig: ConfiguracionHome = (rawHomeConfig as unknown as ConfiguracionHome) || {
     id: 1,
@@ -256,14 +257,14 @@ export default async function Home() {
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
       {/* Schema.org MusicAlbum JSON-LD para motores de búsqueda */}
-      {catalogJsonLd.length > 0 && <JsonLd data={catalogJsonLd} />}
+      {catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
 
       {/* Cintillo Superior Brutalista */}
-      {homeConfig.cintillo_activo && homeConfig.cintillo_texto && (
+      {homeConfig.cintillo_activo && homeConfig.cintillo_texto ? (
         <div className="border-b-2 border-[#1F1305] bg-[#F1730C] px-4 py-1.5 text-center font-mono text-[11px] font-bold text-white tracking-widest uppercase">
           <span>{homeConfig.cintillo_texto}</span>
         </div>
-      )}
+      ) : null}
 
       {/* Coordinador con TopBar, Navbar y Buscador Command-Palette (⌘K) */}
       <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
@@ -289,7 +290,7 @@ export default async function Home() {
           <BrutalistTriptych />
 
           {/* CRÓNICAS & INVESTIGACIÓN: Historias de Fondo con estética editorial */}
-          {homeConfig.seccion_blog_activa && <BrutalistStories />}
+          {homeConfig.seccion_blog_activa ? <BrutalistStories /> : null}
 
           {/* BÓVEDA DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
           <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />

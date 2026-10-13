@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { BadgeDJ } from "@/components/ui/badge-dj";
 import {
@@ -40,24 +40,26 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
   const [maxBpm, setMaxBpm] = useState<number>(125);
   const [filterMode, setFilterMode] = useState<"compatible" | "exact" | "all">("compatible");
 
-  const transitions = getHarmonicTransitions(selectedKey);
-  const compatibleCodes = transitions.map((t) => t.code);
+  const transitions = useMemo(() => getHarmonicTransitions(selectedKey), [selectedKey]);
+  const compatibleCodesSet = useMemo(() => new Set(transitions.map((t) => t.code)), [transitions]);
   const selectedInfo = CAMELOT_WHEEL[selectedKey];
 
-  // Filtrar tracks
-  const filteredTracks = tracks.filter((t) => {
-    // BPM filter
-    if (t.bpm < minBpm || t.bpm > maxBpm) return false;
+  // Filtrar tracks memoizado con Set O(1) (rerender-memo / js-set-map-lookups)
+  const filteredTracks = useMemo(() => {
+    return tracks.filter((t) => {
+      // BPM filter
+      if (t.bpm < minBpm || t.bpm > maxBpm) return false;
 
-    // Harmonic filter
-    if (filterMode === "exact") {
-      return t.camelot === selectedKey;
-    }
-    if (filterMode === "compatible") {
-      return compatibleCodes.includes(t.camelot);
-    }
-    return true;
-  });
+      // Harmonic filter
+      if (filterMode === "exact") {
+        return t.camelot === selectedKey;
+      }
+      if (filterMode === "compatible") {
+        return compatibleCodesSet.has(t.camelot);
+      }
+      return true;
+    });
+  }, [tracks, minBpm, maxBpm, filterMode, selectedKey, compatibleCodesSet]);
 
   return (
     <div className={cn("space-y-6", className)}>
@@ -115,7 +117,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
             <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6 lg:grid-cols-12">
               {MINOR_KEYS.map((code) => {
                 const isSelected = selectedKey === code;
-                const isCompatible = compatibleCodes.includes(code);
+                const isCompatible = compatibleCodesSet.has(code);
                 const info = CAMELOT_WHEEL[code];
 
                 return (
@@ -159,7 +161,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
             <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6 lg:grid-cols-12">
               {MAJOR_KEYS.map((code) => {
                 const isSelected = selectedKey === code;
-                const isCompatible = compatibleCodes.includes(code);
+                const isCompatible = compatibleCodesSet.has(code);
                 const info = CAMELOT_WHEEL[code];
 
                 return (
@@ -288,7 +290,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                     : "text-[#1F1305] hover:bg-[#EDE0D0]"
                 )}
               >
-                Compatibles ({compatibleCodes.length})
+                Compatibles ({compatibleCodesSet.size})
               </button>
               <button
                 type="button"

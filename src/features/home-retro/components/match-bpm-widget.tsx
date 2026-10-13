@@ -12,6 +12,35 @@ interface MatchBpmWidgetProps {
   tracks?: TemaDJ[];
 }
 
+// Helper hoisted para verificar compatibilidad armónica en Rueda Camelot (server-hoist-static-io / rerender-no-inline-components)
+function isCamelotCompatible(key1: string, key2: string) {
+  if (!key1 || !key2) return { compatible: false, type: "Desconocido" };
+  const k1 = key1.trim().toUpperCase();
+  const k2 = key2.trim().toUpperCase();
+  if (k1 === k2) return { compatible: true, type: "Mismo Tono (Perfect Match)" };
+
+  const num1 = parseInt(k1.slice(0, -1), 10);
+  const letter1 = k1.slice(-1);
+  const num2 = parseInt(k2.slice(0, -1), 10);
+  const letter2 = k2.slice(-1);
+
+  if (isNaN(num1) || isNaN(num2)) return { compatible: false, type: "Incompatible" };
+
+  if (letter1 === letter2) {
+    const diff = Math.abs(num1 - num2);
+    if (diff === 1 || diff === 11) {
+      return {
+        compatible: true,
+        type: num2 > num1 ? "Subida de Energía (+1)" : "Bajada de Tensión (-1)",
+      };
+    }
+  } else if (num1 === num2) {
+    return { compatible: true, type: "Cambio de Modo (Menor / Mayor)" };
+  }
+
+  return { compatible: false, type: "Incompatible" };
+}
+
 export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetProps) {
   const dataset = useMemo(() => {
     return tracks && tracks.length > 0 ? tracks : temasDJMock;
@@ -24,54 +53,26 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
     return found || dataset[0] || temasDJMock[0];
   }, [dataset, selectedTemaId]);
 
-  // Helper para verificar compatibilidad armónica en Rueda Camelot
-  // Regla Camelot: Mismo número (ej 8A con 8A), adyacente ±1 (7A o 9A), o cambio de modo (8A con 8B)
-  const isCamelotCompatible = (key1: string, key2: string) => {
-    if (!key1 || !key2) return { compatible: false, type: "Desconocido" };
-    const k1 = key1.trim().toUpperCase();
-    const k2 = key2.trim().toUpperCase();
-    if (k1 === k2) return { compatible: true, type: "Mismo Tono (Perfect Match)" };
-
-    const num1 = parseInt(k1.slice(0, -1), 10);
-    const letter1 = k1.slice(-1);
-    const num2 = parseInt(k2.slice(0, -1), 10);
-    const letter2 = k2.slice(-1);
-
-    if (isNaN(num1) || isNaN(num2)) return { compatible: false, type: "Incompatible" };
-
-    if (letter1 === letter2) {
-      const diff = Math.abs(num1 - num2);
-      if (diff === 1 || diff === 11) {
-        return {
-          compatible: true,
-          type: num2 > num1 ? "Subida de Energía (+1)" : "Bajada de Tensión (-1)",
-        };
-      }
-    } else if (num1 === num2) {
-      return { compatible: true, type: "Cambio de Modo (Menor / Mayor)" };
-    }
-
-    return { compatible: false, type: "Incompatible" };
-  };
-
-  // Cálculo de canciones compatibles dentro de ±5% de BPM y Rueda Camelot
+  // Cálculo optimizado en un solo paso de canciones compatibles dentro de ±5% BPM (js-combine-iterations)
   const compatibleTracks = useMemo(() => {
     if (!currentTema) return [];
-    return dataset
-      .filter((t) => t.id !== currentTema.id)
-      .map((t) => {
-        const bpmDiff = ((t.bpm - currentTema.bpm) / currentTema.bpm) * 100;
-        const harmonic = isCamelotCompatible(currentTema.camelot, t.camelot);
-        return {
-          ...t,
-          bpmDiff: bpmDiff,
-          absDiff: Math.abs(bpmDiff),
-          harmonic,
-        };
-      })
-      .filter((t) => t.absDiff <= 5 && t.harmonic.compatible)
-      .sort((a, b) => a.absDiff - b.absDiff)
-      .slice(0, 5);
+    const results = [];
+    for (const t of dataset) {
+      if (t.id === currentTema.id) continue;
+      const bpmDiff = ((t.bpm - currentTema.bpm) / currentTema.bpm) * 100;
+      const absDiff = Math.abs(bpmDiff);
+      if (absDiff > 5) continue;
+      const harmonic = isCamelotCompatible(currentTema.camelot, t.camelot);
+      if (!harmonic.compatible) continue;
+
+      results.push({
+        ...t,
+        bpmDiff,
+        absDiff,
+        harmonic,
+      });
+    }
+    return results.sort((a, b) => a.absDiff - b.absDiff).slice(0, 5);
   }, [dataset, currentTema]);
 
   return (

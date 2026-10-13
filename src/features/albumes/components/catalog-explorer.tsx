@@ -1,10 +1,25 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useDeferredValue } from "react";
+import dynamic from "next/dynamic";
 import { Search, SlidersHorizontal, Disc, Filter, Sparkles } from "lucide-react";
 import { AlbumCard, type AlbumItem } from "@/features/albumes/components/album-card";
-import { AlbumDetailModal } from "@/features/albumes/components/album-detail-modal";
 import type { TrackItem } from "@/features/temas/components/tracklist-table";
+
+// Lazy-load del modal de detalle fonográfico (bundle-dynamic-imports)
+const AlbumDetailModal = dynamic(
+  () => import("@/features/albumes/components/album-detail-modal").then((m) => m.AlbumDetailModal),
+  { ssr: false }
+);
+
+// Hoist de constantes estáticas fuera del componente (server-hoist-static-io)
+const DECADES = [
+  { label: "Todas las Décadas", value: "ALL" },
+  { label: "1960s (Inicios Psicodélicos)", value: "1960" },
+  { label: "1970s (Época de Oro / Chicha)", value: "1970" },
+  { label: "1980s (Auge Masivo & Casetes)", value: "1980" },
+  { label: "1990s - 2000s (Tecnocumbia)", value: "1990" },
+] as const;
 
 interface CatalogExplorerProps {
   initialAlbums: AlbumItem[];
@@ -13,6 +28,7 @@ interface CatalogExplorerProps {
 
 export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplorerProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const deferredSearchTerm = useDeferredValue(searchTerm);
   const [selectedFormat, setSelectedFormat] = useState<string>("ALL");
   const [selectedLabel, setSelectedLabel] = useState<string>("ALL");
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
@@ -22,7 +38,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
   // Restablecer paginación visible cuando cambie cualquier filtro
   useEffect(() => {
     setVisibleCount(48);
-  }, [searchTerm, selectedFormat, selectedLabel, selectedYear]);
+  }, [deferredSearchTerm, selectedFormat, selectedLabel, selectedYear]);
 
   // Extraer sellos únicos
   const labels = useMemo(() => {
@@ -33,21 +49,33 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
     return Array.from(set).sort();
   }, [initialAlbums]);
 
-  // Extraer décadas
-  const decades = [
-    { label: "Todas las Décadas", value: "ALL" },
-    { label: "1960s (Inicios Psicodélicos)", value: "1960" },
-    { label: "1970s (Época de Oro / Chicha)", value: "1970" },
-    { label: "1980s (Auge Masivo & Casetes)", value: "1980" },
-    { label: "1990s - 2000s (Tecnocumbia)", value: "1990" },
-  ];
-
-  // Filtrar álbumes
+  // Filtrar álbumes (comprobación rápida de condiciones escalares antes de búsquedas por texto)
   const filteredAlbums = useMemo(() => {
+    const query = deferredSearchTerm.trim().toLowerCase();
+
     return initialAlbums.filter((album) => {
-      // Texto de búsqueda
-      if (searchTerm.trim()) {
-        const query = searchTerm.toLowerCase();
+      // 1. Filtro rápido de formato
+      if (selectedFormat !== "ALL") {
+        if (selectedFormat === "LP" && !album.format?.toLowerCase().includes("lp")) return false;
+        if (selectedFormat === "45" && !album.format?.toLowerCase().includes("45")) return false;
+        if (selectedFormat === "CASETE" && !album.format?.toLowerCase().includes("caset")) return false;
+      }
+
+      // 2. Filtro rápido de sello
+      if (selectedLabel !== "ALL" && album.label !== selectedLabel) {
+        return false;
+      }
+
+      // 3. Filtro rápido de década
+      if (selectedYear !== "ALL") {
+        const start = parseInt(selectedYear, 10);
+        if (!album.year || album.year < start || album.year > start + 9) {
+          return false;
+        }
+      }
+
+      // 4. Búsqueda de texto (solo evaluada si pasa los filtros previos)
+      if (query) {
         const matchTitle = album.title.toLowerCase().includes(query);
         const matchArtist = album.artist.toLowerCase().includes(query);
         const matchCat = album.catalogNumber?.toLowerCase().includes(query);
@@ -57,29 +85,9 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         }
       }
 
-      // Formato
-      if (selectedFormat !== "ALL") {
-        if (selectedFormat === "LP" && !album.format?.toLowerCase().includes("lp")) return false;
-        if (selectedFormat === "45" && !album.format?.toLowerCase().includes("45")) return false;
-        if (selectedFormat === "CASETE" && !album.format?.toLowerCase().includes("caset")) return false;
-      }
-
-      // Sello
-      if (selectedLabel !== "ALL" && album.label !== selectedLabel) {
-        return false;
-      }
-
-      // Década
-      if (selectedYear !== "ALL") {
-        const start = parseInt(selectedYear, 10);
-        if (!album.year || album.year < start || album.year > start + 9) {
-          return false;
-        }
-      }
-
       return true;
     });
-  }, [initialAlbums, searchTerm, selectedFormat, selectedLabel, selectedYear]);
+  }, [initialAlbums, deferredSearchTerm, selectedFormat, selectedLabel, selectedYear]);
 
   return (
     <div className="space-y-8">
@@ -160,7 +168,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
                 aria-label="Filtrar por Época o Década"
                 className="appearance-none border-2 border-[#1F1305] bg-white px-3 py-1.5 pr-8 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] focus:outline-none focus:border-[#E80000]"
               >
-                {decades.map((d) => (
+                {DECADES.map((d) => (
                   <option key={d.value} value={d.value}>
                     {d.label}
                   </option>
@@ -235,14 +243,14 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         </div>
       )}
 
-      {/* Modal con Ficha Técnica y Tracklist */}
-      {selectedAlbum && (
+      {/* Modal con Ficha Técnica y Tracklist (renderizado condicional explícito) */}
+      {selectedAlbum ? (
         <AlbumDetailModal
           album={selectedAlbum}
           tracks={tracksMap[selectedAlbum.id] || []}
           onClose={() => setSelectedAlbum(null)}
         />
-      )}
+      ) : null}
     </div>
   );
 }
