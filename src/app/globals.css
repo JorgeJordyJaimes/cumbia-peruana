@@ -169,3 +169,59 @@
 .brutalist-border-r {
   border-right: 2px solid #1f1305;
 }
+
+/* Tactical Telemetry & Audio Console Animations */
+@keyframes vuFluctuateL {
+  0%, 100% { height: 42%; }
+  15% { height: 88%; }
+  30% { height: 55%; }
+  45% { height: 96%; }
+  60% { height: 68%; }
+  75% { height: 92%; }
+  90% { height: 50%; }
+}
+
+@keyframes vuFluctuateR {
+  0%, 100% { height: 50%; }
+  20% { height: 92%; }
+  35% { height: 62%; }
+  50% { height: 98%; }
+  65% { height: 45%; }
+  80% { height: 85%; }
+  95% { height: 70%; }
+}
+
+@keyframes needleOscillate {
+  0%, 100% { transform: rotate(-18deg); }
+  25% { transform: rotate(12deg); }
+  50% { transform: rotate(-5deg); }
+  75% { transform: rotate(24deg); }
+}
+
+@keyframes crtScanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+.animate-vu-l {
+  animation: vuFluctuateL 1.6s ease-in-out infinite;
+}
+
+.animate-vu-r {
+  animation: vuFluctuateR 1.4s ease-in-out infinite;
+}
+
+.animate-vu-needle {
+  transform-origin: bottom center;
+  animation: needleOscillate 1.8s ease-in-out infinite;
+}
+
+.scanline-overlay {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(31, 19, 5, 0.04) 0px,
+    rgba(31, 19, 5, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}

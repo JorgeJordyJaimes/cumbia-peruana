@@ -269,7 +269,7 @@ export default async function Home() {
       {/* Coordinador con TopBar, Navbar y Buscador Command-Palette (⌘K) */}
       <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
         <main>
-          {/* HERO SECTION: Titular Gigante Anton + Foto Recortada con Forma Geométrica y Crosshair */}
+          {/* HERO: Cabina de Monitoreo Maestro & Pecera Acústica de Claudio Morán */}
           <BrutalistHero
             totalAlbumes={totalAlbumes}
             totalGrupos={totalGrupos}
@@ -277,23 +277,23 @@ export default async function Home() {
             totalPersonas={totalPersonas}
           />
 
-          {/* EL RADAR SONORO: JOYAS FUNDACIONALES EN VINILO (FORMATO 3 PRENSAJES) */}
-          <BrutalistRadarSection albums={albums} />
-
-          {/* BIBLIOTECA DE GÉNEROS & VERTIENTES (6 SUBGÉNEROS DE LA CUMBIA PERUANA) */}
-          <BrutalistGenresSection />
-
-          {/* APARTADOS DESTACADOS: Banda Horizontal Oscura con Tarjetas a Genealogía, Match BPM y Radar */}
+          {/* RACKS DE PROCESAMIENTO ANALÓGICO: Módulos MOD-01 (Genealogía), MOD-02 (Match BPM), MOD-03 (Radar 45s) */}
           <BrutalistSelectedWork />
 
-          {/* TRÍPTICO BRUTALISTA: Herramientas (1-6) + Bloque Naranja Manifiesto + Registro Técnico */}
+          {/* BÓVEDA DE PRENSAJES & BANCO DE MATRICES: Explorador de Vinilos 33/45 RPM */}
+          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
+
+          {/* ANALIZADOR DE ESPECTRO & 6 BANDAS DE FRECUENCIA: Vertientes de la Cumbia Peruana */}
+          <BrutalistGenresSection />
+
+          {/* EL RADAR SONORO: Sonda Analógica y Prensajes Cumbre en Vinilo */}
+          <BrutalistRadarSection albums={albums} />
+
+          {/* PATCHBAY DE RUTEO DE SERVICIOS, MANIFIESTO Y PARÁMETROS TÉCNICOS RIAA/NAB */}
           <BrutalistTriptych />
 
-          {/* CRÓNICAS & INVESTIGACIÓN: Historias de Fondo con estética editorial */}
+          {/* BITÁCORAS DE SALA DE GRABACIÓN & CAJAS DE CINTA MASTER: Crónicas fonográficas */}
           {homeConfig.seccion_blog_activa ? <BrutalistStories /> : null}
-
-          {/* BÓVEDA DISCOGRÁFICA COMPLETA DE SOPORTE FÍSICO */}
-          <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
         </main>
       </BrutalistCoordinator>
 

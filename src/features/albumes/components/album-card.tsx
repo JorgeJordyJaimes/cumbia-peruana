@@ -24,100 +24,117 @@ interface AlbumCardProps {
   onSelect?: (album: AlbumItem) => void;
 }
 
-// Hoist de gradientes fuera del componente para evitar asignaciones por render (server-hoist-static-io)
-const GRADIENTS = [
-  "from-amber-900/60 via-stone-900 to-black",
-  "from-red-950/60 via-zinc-900 to-black",
-  "from-emerald-950/60 via-stone-900 to-black",
-  "from-orange-950/60 via-neutral-900 to-black",
-  "from-teal-950/60 via-zinc-900 to-black",
-] as const;
-
 function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
   const [imageError, setImageError] = useState(false);
-  const gradient = GRADIENTS[album.id % GRADIENTS.length];
 
   return (
     <div
       onClick={() => onSelect?.(album)}
       className={cn(
-        "group relative flex flex-col cursor-pointer transition-all duration-300",
+        "group relative flex flex-col cursor-pointer transition-all duration-200 select-none",
         className
       )}
     >
-      {/* Contenedor del Vinilo y Funda (Vinyl Sleeve Effect) */}
-      <div className="relative aspect-square w-full select-none">
-        {/* Disco de Vinilo que asoma en hover */}
+      {/* Contenedor del Chasis de Rack y Funda */}
+      <div className="relative aspect-square w-full">
+        {/* Disco de Vinilo que asoma en hover (Bisel Recto y Matriz Central) */}
         <div
           aria-hidden="true"
-          className="absolute inset-y-2 right-2 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out group-hover:translate-x-7 sm:group-hover:translate-x-9 z-0 overflow-hidden flex items-center justify-center border border-white/10"
+          className="absolute inset-y-2 right-2 aspect-square bg-[#111114] border-2 border-[#1F1305] shadow-[4px_4px_0px_#1F1305] transition-transform duration-500 ease-out group-hover:translate-x-7 sm:group-hover:translate-x-9 z-0 overflow-hidden flex items-center justify-center"
         >
-          {/* Surcos concéntricos del vinilo */}
-          <div className="absolute inset-2 rounded-full border border-white/5 vinyl-grooves opacity-60" />
-          <div className="absolute inset-6 rounded-full border border-white/10" />
-          <div className="absolute inset-10 rounded-full border border-white/5" />
-          {/* Etiqueta central del vinilo */}
-          <div className="relative h-12 w-12 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center shadow-inner border border-white/30">
-            <div className="h-2.5 w-2.5 rounded-full bg-black" />
+          {/* Surcos mecánicos concéntricos */}
+          <div className="absolute inset-2 border border-white/10" />
+          <div className="absolute inset-5 border border-white/5" />
+          <div className="absolute inset-9 border border-white/10" />
+          <div className="absolute inset-14 border border-white/5" />
+
+          {/* Galleta Central del Vinilo con código de matriz */}
+          <div className="relative h-14 w-14 bg-[#F1730C] border-2 border-[#1F1305] flex flex-col items-center justify-center text-center p-0.5">
+            <span className="text-[7px] font-mono font-black text-[#1F1305] leading-none">
+              {album.catalogNumber ? album.catalogNumber.slice(0, 7) : "KS-33"}
+            </span>
+            <div className="h-2 w-2 bg-[#1F1305] my-0.5" />
+            <span className="text-[6px] font-mono font-bold text-white uppercase leading-none">
+              33 RPM
+            </span>
           </div>
         </div>
 
-        {/* Funda Externa del Disco (Sleeve) */}
-        <div
-          className={cn(
-            "relative z-10 h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/90 shadow-xl backdrop-blur-md transition-all duration-300 group-hover:border-white/25 group-hover:shadow-2xl group-hover:shadow-black/80 flex flex-col justify-between p-4",
-            gradient
-          )}
-        >
+        {/* Funda Externa / Unidad de Rack (90° Rígido, 2px border) */}
+        <div className="relative z-10 h-full w-full overflow-hidden border-2 border-[#1F1305] bg-[#1F1305] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 group-hover:shadow-[6px_6px_0px_#E80000] group-hover:-translate-y-0.5 flex flex-col justify-between p-3">
+          
+          {/* Barra Superior del Chasis con Tornillos de Montaje (·) */}
+          <div className="absolute top-0 left-0 right-0 h-4 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 font-mono text-[8px] text-[#1F1305] font-bold z-20">
+            <span>(·) MOD-{String(album.id).padStart(3, "0")}</span>
+            <span className="text-[#E80000]">{album.year || "MASTER"}</span>
+            <span>(·)</span>
+          </div>
+
+          {/* Imagen de Portada con Filtro de Alto Contraste */}
           {album.coverUrl && !imageError ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={album.coverUrl}
               alt={album.title}
               onError={() => setImageError(true)}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover pt-4 transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
-            // Funda Editorial Texturizada Retro
-            <div className="absolute inset-0 flex flex-col justify-between p-5 bg-gradient-to-b from-white/[0.04] to-transparent">
-              {/* Marca de agua vinilo */}
-              <Disc3 className="absolute -right-6 -bottom-6 h-36 w-36 text-white/[0.03] rotate-12" />
+            // Funda Alternativa de Almacén Técnico
+            <div className="absolute inset-0 pt-4 flex flex-col justify-between p-4 bg-[#EDE0D0]">
+              <div className="font-mono text-[9px] text-[#746B5C] font-bold">
+                MATRIZ ANALÓGICA
+              </div>
+              <Disc3 className="h-20 w-20 text-[#1F1305]/10 self-center" />
+              <div className="font-mono text-[8px] text-[#1F1305]">
+                {album.label || "ARCHIVO PARTICULAR"}
+              </div>
             </div>
           )}
 
-          {/* Overlay Oscuro para Legibilidad */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/20" />
+          {/* Degradado para Garantizar Legibilidad de Telemetría */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
-          {/* Cabecera de la Funda: Formato y Año */}
-          <div className="relative z-10 flex items-start justify-between gap-2">
+          {/* Metadata Flotante Superior: Formato y Año */}
+          <div className="relative z-10 pt-3 flex items-start justify-between gap-1.5 font-mono">
             <BadgeFormat formatName={album.format || "LP 33 RPM"} size="sm" />
             {album.year && (
-              <span className="font-mono text-xs font-bold text-white/90 bg-black/50 px-2 py-0.5 rounded-md border border-white/10 backdrop-blur">
+              <span className="border border-[#1F1305] bg-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold text-white shadow-[1px_1px_0px_#E80000]">
                 {album.year}
               </span>
             )}
           </div>
 
-          {/* Pie de la Funda: Tipografía Editorial y Metadata */}
-          <div className="relative z-10 space-y-1">
-            <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-amber-400 uppercase">
-              <span>{album.label || "ARCHIVO NACIONAL"}</span>
+          {/* Pie del Chasis: Placa de Datos y Medición */}
+          <div className="relative z-10 space-y-1 font-mono">
+            <div className="flex items-center justify-between text-[9px] text-[#F8C800] uppercase font-bold tracking-wider">
+              <span className="truncate max-w-[120px]">{album.label || "IEMPSA / ODEON"}</span>
               {album.catalogNumber && (
-                <>
-                  <span className="text-neutral-600">•</span>
-                  <span>{album.catalogNumber}</span>
-                </>
+                <span className="text-white bg-black/60 px-1 border border-white/20">
+                  {album.catalogNumber}
+                </span>
               )}
             </div>
 
-            <h4 className="font-bold text-white tracking-tight text-base leading-snug line-clamp-1 group-hover:text-amber-300 transition-colors">
+            <h4 className="font-bold text-white tracking-tight text-sm sm:text-base leading-tight line-clamp-1 group-hover:text-[#F8C800] transition-colors">
               {album.title}
             </h4>
 
-            <p className="text-xs text-neutral-300 font-medium line-clamp-1">
+            <p className="text-xs text-[#EDE0D0] font-medium line-clamp-1">
               {album.artist}
             </p>
+
+            {/* Micro VU-Meter Decorativo de Nivel de Grabación */}
+            <div className="pt-1 flex items-center gap-1">
+              <span className="text-[7px] text-[#746B5C] font-mono leading-none">VU</span>
+              <div className="h-1 flex-1 bg-[#1F1305] border border-white/10 flex overflow-hidden">
+                <div className="bg-[#F8C800] w-[65%]" />
+                <div className="bg-[#F1730C] w-[20%]" />
+                <div className="bg-[#E80000] w-[15%]" />
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

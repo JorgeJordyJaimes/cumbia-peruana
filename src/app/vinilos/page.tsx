@@ -244,53 +244,60 @@ export default async function VinilosPage() {
               className="inline-flex items-center gap-2 font-bold text-[#1F1305] hover:text-[#E80000] transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>← Volver a la Portada Principal</span>
+              <span>← RETORNO A CONSOLA PRINCIPAL</span>
             </Link>
 
-            <div className="flex items-center gap-2 border border-[#1F1305] bg-white px-2.5 py-1 text-[#F1730C] font-bold shadow-[2px_2px_0px_#1F1305]">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>06 / BÓVEDA FONOGRÁFICA DE VINILOS</span>
+            <div className="flex items-center gap-2 border-2 border-[#1F1305] bg-white px-2.5 py-1 text-[#F1730C] font-bold shadow-[2px_2px_0px_#1F1305]">
+              <Sparkles className="h-3.5 w-3.5 text-[#E80000]" />
+              <span>(·) BUS 06 // BÓVEDA FONOGRÁFICA DE MATRICES & PRENSAJES</span>
             </div>
           </div>
 
-          {/* Banner Hero Brutalista */}
-          <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-8 sm:p-12 shadow-[6px_6px_0px_#F1730C] relative overflow-hidden">
-            <div className="max-w-3xl space-y-5 relative z-10">
-              <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#F1730C] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
+          {/* Banner Hero Brutalista: Chasis de Rack 19" */}
+          <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-6 sm:p-10 shadow-[6px_6px_0px_#E80000] relative overflow-hidden font-mono">
+            {/* Barra superior de rack */}
+            <div className="flex items-center justify-between text-[9px] text-[#8E8478] border-b border-[#3E2C1B] pb-2 mb-4 font-bold">
+              <span className="text-[#E80000]">(·) RACK-UNIT 06 // 19&quot; VAULT</span>
+              <span>CALIBRACIÓN 15 IPS • RIAA CUT</span>
+              <span className="text-[#E80000]">(·)</span>
+            </div>
+
+            <div className="max-w-3xl space-y-4 relative z-10">
+              <div className="inline-flex items-center gap-2 border border-[#EDE0D0] bg-[#F1730C] px-3 py-0.5 text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <Disc className="h-3.5 w-3.5" />
-                <span>ARCHIVO FÍSICO ANALÓGICO • 1968–2005</span>
+                <span>ARCHIVO FÍSICO ANALÓGICO // 1968–2005</span>
               </div>
 
               <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
                 La Bóveda de Vinilos
               </h1>
 
-              <p className="font-sans text-sm sm:text-base text-[#EDE0D0]/80 leading-relaxed max-w-2xl">
+              <p className="text-xs sm:text-sm text-[#EDE0D0]/80 leading-relaxed max-w-2xl">
                 Catálogo fonográfico y preservación documental de las grabaciones de la cumbia
                 peruana en soporte físico: Long Plays (33 RPM), discos singles (45 RPM) y rarezas.
                 Inspecciona carátulas restauradas, sellos matrices, fechas de prensaje y créditos de sesión.
               </p>
 
               {/* Chips de Métricas en Vivo */}
-              <div className="pt-2 flex flex-wrap gap-3 font-mono text-xs">
-                <span className="flex items-center gap-2 border border-[#EDE0D0]/30 bg-white/10 px-3 py-1 font-bold text-[#F8C800]">
+              <div className="pt-2 flex flex-wrap gap-2.5 text-xs">
+                <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-[#F8C800]">
                   <Disc className="h-4 w-4 text-[#F8C800]" /> {totalAlbumes ?? albums.length}+ Obras Catalogadas
                 </span>
-                <span className="flex items-center gap-2 border border-[#EDE0D0]/30 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Layers className="h-4 w-4 text-[#10B981]" /> {totalLPs ?? "300+"} LPs (33 RPM)
+                <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-white">
+                  <Layers className="h-4 w-4 text-[#F1730C]" /> {totalLPs ?? "300+"} LPs (33 RPM)
                 </span>
-                <span className="flex items-center gap-2 border border-[#EDE0D0]/30 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Radio className="h-4 w-4 text-[#F1730C]" /> {totalSingles ?? "370+"} Singles (45 RPM)
+                <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-white">
+                  <Radio className="h-4 w-4 text-[#E80000]" /> {totalSingles ?? "370+"} Singles (45 RPM)
                 </span>
-                <span className="flex items-center gap-2 border border-[#EDE0D0]/30 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Building2 className="h-4 w-4 text-[#E80000]" /> {totalSellos ?? "25+"} Sellos Matrices
+                <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-white">
+                  <Building2 className="h-4 w-4 text-[#EDE0D0]" /> {totalSellos ?? "25+"} Sellos Matrices
                 </span>
               </div>
             </div>
 
             {/* Sello de fondo en marca de agua */}
-            <div className="absolute -bottom-8 -right-6 text-white/[0.04] font-anton text-[220px] font-black pointer-events-none select-none leading-none">
-              VIN
+            <div className="absolute -bottom-8 -right-6 text-white/[0.03] font-anton text-[220px] font-black pointer-events-none select-none leading-none">
+              VAULT
             </div>
           </div>
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Disc, ArrowUpRight, X, Music, ExternalLink, Sparkles } from "lucide-react";
+import { Disc, ArrowUpRight, X, Music, ExternalLink, Sparkles, Radio } from "lucide-react";
 import type { AlbumItem } from "@/features/albumes";
 
 interface JoyaVinilo {
@@ -119,106 +119,98 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
   });
 
   return (
-    <section id="radar-joyas" className="w-full border-b-2 border-[#1F1305] bg-[#160E06] text-white py-14 sm:py-20 scroll-mt-20 relative overflow-hidden">
+    <section id="radar-joyas" className="w-full border-b-2 border-[#1F1305] bg-[#160E06] text-white py-12 sm:py-16 scroll-mt-20 relative overflow-hidden select-none">
       
-      {/* Fondo con textura sutil de estudio */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,115,12,0.06)_0,transparent_70%)] pointer-events-none" />
-
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-12 relative z-10">
+      <div className="container mx-auto max-w-7xl px-3 sm:px-6 space-y-10 relative z-10">
         
-        {/* CABECERA EDITORIAL CENTRADA */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/15 px-3 py-1 font-mono text-xs font-bold text-[#E80000] tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
-            <Sparkles className="h-3.5 w-3.5 text-[#E80000]" />
-            <span>SELECCIÓN HISTÓRICA DEL ARCHIVO // EL RADAR SONORO</span>
+        {/* CABECERA TELEMÉTRICA DEL RADAR */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-[#3E2C1B] pb-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 border-2 border-[#E80000] bg-[#E80000]/15 px-3 py-1 font-mono text-[10px] sm:text-xs font-bold text-[#E80000] tracking-widest uppercase shadow-[2px_2px_0px_#1F1305]">
+              <Radio className="h-3.5 w-3.5 text-[#E80000] animate-pulse" />
+              <span>RADAR SONORO // SONDA DE CORTE EN DISCO MATRIZ</span>
+            </div>
+
+            <h2 className="font-cooper text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+              Joyas Fundacionales <span className="text-[#F1730C]">: Prensajes Cumbre</span>
+            </h2>
           </div>
 
-          <h2 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-            Joyas Fundacionales <br className="hidden sm:inline" />
-            <span className="text-[#F1730C]">: Prensajes Imprescindibles</span>
-          </h2>
-
-          <p className="font-mono text-xs sm:text-sm text-[#B8AFA6] leading-relaxed max-w-2xl mx-auto">
-            Tres prensajes legendarios en vinilo de Los Destellos bajo el sello Odeón que inmortalizaron el punteo eléctrico de Enrique Delgado y cambiaron para siempre el rumbo de la música tropical.
-          </p>
+          <div className="max-w-md font-mono text-xs text-[#B8AFA6] leading-relaxed">
+            <p>
+              Tres registros de prensado directo en Odeón / IEMPSA con aguja de zafiro.
+              Guitarras solistas de Enrique Delgado con afinación precisa a 440 Hz.
+            </p>
+          </div>
         </div>
 
-        {/* CUADRÍCULA DE LAS 3 JOYAS (CENTRAL ELEVADA & DESTACADA) */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-end pt-4">
+        {/* CUADRÍCULA DE LAS 3 JOYAS (CHASSIS RACK DE 19 PULGADAS CON 90° PUROS) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-end pt-2">
           {displayedAlbums.map((album) => {
             const isCenter = album.esDestacado;
 
             return (
               <div
                 key={album.id}
-                className={`relative flex flex-col justify-between transition-all duration-300 group ${
+                className={`relative flex flex-col justify-between transition-all duration-200 group font-mono ${
                   isCenter
-                    ? "border-2 border-[#F1730C] bg-[#1F1305] p-6 sm:p-7 shadow-[8px_8px_0px_#E80000] lg:-translate-y-4 hover:-translate-y-6"
-                    : "border-2 border-[#3E2C1B] bg-[#140D04] p-5 sm:p-6 shadow-[5px_5px_0px_#1F1305] hover:border-[#F1730C] hover:-translate-y-2"
+                    ? "border-2 border-[#F1730C] bg-[#1F1305] p-5 sm:p-6 shadow-[8px_8px_0px_#E80000] lg:-translate-y-3"
+                    : "border-2 border-[#3E2C1B] bg-[#120B04] p-4 sm:p-5 shadow-[5px_5px_0px_#1F1305] hover:border-[#F1730C]"
                 }`}
               >
-                {/* Resalte decorativo superior para el disco cumbre central */}
+                {/* Tornillos de montaje en rack (·) en la barra superior */}
+                <div className="flex items-center justify-between text-[9px] text-[#8E8478] pb-3 border-b border-[#3E2C1B]">
+                  <span className="font-bold text-[#E80000]">(·) RACK-{album.catalogo}</span>
+                  <span className="text-white font-bold">{album.ano} MASTER CUT</span>
+                  <span className="font-bold text-[#E80000]">(·)</span>
+                </div>
+
+                {/* Resalte para el disco central */}
                 {isCenter && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 border border-[#1F1305] bg-[#E80000] text-white px-3 py-0.5 font-mono text-[10px] font-black uppercase tracking-wider shadow-[2px_2px_0px_#1F1305] z-20">
-                    ★ DISCO CUMBRE DE LA DÉCADA ★
+                  <div className="my-2 border border-[#E80000] bg-[#E80000] text-white text-center py-0.5 text-[9px] font-black uppercase tracking-wider">
+                    ★ DISCO CUMBRE DEL CATÁLOGO ★
                   </div>
                 )}
 
-                <div className="space-y-5">
-                  {/* Fila superior: Categoría y Año */}
-                  <div className="flex items-center justify-between font-mono text-xs">
-                    <span
-                      className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${
-                        isCenter
-                          ? "border-[#F1730C] bg-[#F1730C]/15 text-[#F1730C]"
-                          : "border-[#3E2C1B] bg-white/5 text-[#B8AFA6]"
-                      }`}
-                    >
+                <div className="space-y-4 pt-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#F1730C]">
                       {album.categoria}
                     </span>
-
-                    <span className="font-mono text-xs font-bold text-white bg-black/60 px-2 py-0.5 border border-[#3E2C1B]">
-                      {album.ano}
+                    <span className="text-[10px] text-white bg-black/60 px-1.5 py-0.2 border border-[#3E2C1B]">
+                      {album.sello}
                     </span>
                   </div>
 
-                  {/* CARÁTULA DEL LP CON FOTO REAL DE SUPABASE + DISCO DE VINILO QUE ASOMA */}
-                  <div className="relative aspect-square w-full select-none flex items-center justify-start overflow-hidden sm:overflow-visible">
+                  {/* CARÁTULA DEL LP CON DISCO DESLIZANTE MECÁNICO */}
+                  <div className="relative aspect-square w-full select-none flex items-center justify-start overflow-hidden">
                     
-                    {/* Disco de vinilo físico que asoma por detrás de la funda */}
+                    {/* Disco de vinilo que asoma */}
                     <div
                       aria-hidden="true"
-                      className="absolute right-0 top-1/2 -translate-y-1/2 w-[82%] aspect-square rounded-full bg-[#0E0E10] shadow-[0_10px_25px_rgba(0,0,0,0.9)] border border-neutral-700/60 flex items-center justify-center transition-transform duration-500 ease-out translate-x-2 sm:translate-x-4 group-hover:translate-x-6 sm:group-hover:translate-x-9 z-0 overflow-hidden"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 w-[84%] aspect-square bg-[#0E0E10] border-2 border-[#1F1305] shadow-2xl flex items-center justify-center transition-transform duration-500 ease-out translate-x-2 group-hover:translate-x-8 z-0 overflow-hidden"
                     >
-                      {/* Surcos concéntricos del vinilo */}
-                      <div
-                        className="absolute inset-2 rounded-full border border-neutral-800 opacity-60 pointer-events-none"
-                        style={{
-                          background:
-                            "repeating-radial-gradient(circle at center, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 2px, transparent 3px, transparent 6px)",
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none" />
+                      <div className="absolute inset-2 border border-white/10" />
+                      <div className="absolute inset-6 border border-white/5" />
+                      <div className="absolute inset-10 border border-white/10" />
                       
-                      {/* Galleta central del vinilo */}
+                      {/* Galleta central */}
                       <div
-                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 flex flex-col items-center justify-center shadow-lg transition-transform duration-700 group-hover:rotate-180"
+                        className="w-16 h-16 border-2 flex flex-col items-center justify-center text-center p-1"
                         style={{
                           backgroundColor: album.colorGalleta,
                           borderColor: album.colorBordeGalleta,
                         }}
                       >
-                        <div className="w-4 h-4 rounded-full border border-black bg-[#EDE0D0] flex items-center justify-center shadow-inner">
-                          <div className="w-1.5 h-1.5 rounded-full bg-black" />
-                        </div>
-                        <span className="font-mono text-[7px] font-black uppercase text-white mt-1 tracking-tighter">
+                        <div className="w-3 h-3 border border-black bg-white" />
+                        <span className="text-[7px] font-mono font-black uppercase text-white mt-1">
                           {album.sello}
                         </span>
                       </div>
                     </div>
 
-                    {/* Funda física del LP con la foto de Supabase */}
-                    <div className="relative z-10 w-[84%] aspect-square rounded-lg border-2 border-[#1F1305] bg-[#0A0704] overflow-hidden shadow-2xl flex flex-col justify-between group-hover:border-[#F1730C] transition-colors">
+                    {/* Funda del LP con esquinas de 90° */}
+                    <div className="relative z-10 w-[84%] aspect-square border-2 border-[#1F1305] bg-[#0A0704] overflow-hidden shadow-xl flex flex-col justify-between group-hover:border-[#F1730C] transition-colors">
                       {album.coverUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -233,25 +225,24 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                         </div>
                       )}
 
-                      {/* Gradiente sutil para legibilidad de badges */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
 
                       {/* Badges superiores sobre la portada */}
-                      <div className="relative z-10 flex items-start justify-between p-2.5">
-                        <span className="font-mono text-[9px] font-black uppercase tracking-wider text-white bg-black/75 px-2 py-0.5 border border-white/20 backdrop-blur-sm shadow">
+                      <div className="relative z-10 flex items-start justify-between p-2">
+                        <span className="text-[9px] font-black uppercase text-white bg-black/80 px-1.5 py-0.5 border border-white/20">
                           {album.sello}
                         </span>
-                        <span className="font-mono text-[9px] font-bold tracking-wider text-[#F1730C] bg-black/75 px-2 py-0.5 border border-white/20 backdrop-blur-sm shadow">
+                        <span className="text-[9px] font-bold text-[#F1730C] bg-black/80 px-1.5 py-0.5 border border-white/20">
                           {album.catalogo}
                         </span>
                       </div>
 
                       {/* Pie de carátula */}
-                      <div className="relative z-10 p-2 flex items-center justify-between border-t border-white/10 bg-black/60 backdrop-blur-sm">
-                        <span className="font-mono text-[9px] font-semibold text-white/90">
+                      <div className="relative z-10 p-2 flex items-center justify-between border-t border-white/10 bg-black/70">
+                        <span className="text-[9px] font-bold text-white">
                           LP 33 RPM • ESTÉREO
                         </span>
-                        <span className="font-mono text-[9px] font-bold text-[#F1730C]">
+                        <span className="text-[9px] font-bold text-[#F1730C]">
                           {album.ano}
                         </span>
                       </div>
@@ -260,27 +251,25 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                   </div>
 
                   {/* TÍTULO Y ARTISTA */}
-                  <div className="space-y-1">
-                    <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white group-hover:text-[#F1730C] transition-colors leading-tight">
+                  <div className="space-y-0.5 pt-1">
+                    <h3 className="font-cooper text-xl sm:text-2xl font-black text-white group-hover:text-[#F1730C] transition-colors leading-tight">
                       {album.titulo}
                     </h3>
-                    <p className="font-mono text-xs text-[#B8AFA6] font-semibold">
+                    <p className="text-xs text-[#B8AFA6] font-semibold">
                       {album.artista}
                     </p>
                   </div>
                 </div>
 
-                {/* BARRA INFERIOR: BPM, TONALIDAD CAMELOT Y VER FICHA */}
-                <div className="pt-6 mt-6 border-t border-[#3E2C1B] flex items-center justify-between font-mono text-xs">
-                  {/* Badge técnico DJ */}
-                  <div className="flex items-center gap-1.5 border border-[#3E2C1B] bg-black/60 px-2.5 py-1 text-[11px] text-[#EDE0D0]">
-                    <span className="w-2 h-2 rounded-full bg-[#E80000] animate-pulse" />
+                {/* BARRA INFERIOR: BPM, CAMELOT Y VER FICHA */}
+                <div className="pt-4 mt-4 border-t border-[#3E2C1B] flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1.5 border border-[#3E2C1B] bg-black/70 px-2 py-0.5 text-[10px] text-[#EDE0D0]">
+                    <span className="w-1.5 h-1.5 bg-[#E80000] animate-pulse" />
                     <span className="font-bold text-[#F1730C]">{album.bpm} BPM</span>
                     <span className="text-neutral-500">|</span>
                     <span className="font-bold text-white">{album.camelot} ({album.tonalidad})</span>
                   </div>
 
-                  {/* Botón Ver Ficha */}
                   <button
                     type="button"
                     onClick={() => setSelectedAlbum(album)}
@@ -297,7 +286,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
         </div>
 
         {/* BOTÓN AL RADAR COMPLETO */}
-        <div className="pt-4 flex justify-center">
+        <div className="pt-2 flex justify-center">
           <Link
             href="/radar"
             className="inline-flex items-center gap-2.5 border-2 border-[#1F1305] bg-[#F1730C] px-8 py-3.5 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#E80000] hover:bg-white hover:text-[#1F1305] hover:border-[#1F1305] hover:shadow-[4px_4px_0px_#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
@@ -313,7 +302,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
       {/* MODAL EDITORIAL: FICHA TÉCNICA DEL VINILO SELECCIONADO */}
       {selectedAlbum && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 select-none font-mono"
           onClick={() => setSelectedAlbum(null)}
         >
           <div
@@ -321,15 +310,17 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
             onClick={(e) => e.stopPropagation()}
           >
             {/* Cabecera del Modal */}
-            <div className="flex items-start justify-between border-b border-[#3E2C1B] pb-4">
+            <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4">
               <div className="space-y-1">
-                <span className="font-mono text-[10px] font-bold tracking-widest text-[#E80000] uppercase">
-                  {selectedAlbum.categoria} • PRENSAJE MATRIZ {selectedAlbum.ano}
-                </span>
+                <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#E80000] uppercase">
+                  <span>(·) FICHA MATRIZ {selectedAlbum.ano}</span>
+                  <span>•</span>
+                  <span>{selectedAlbum.categoria}</span>
+                </div>
                 <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white">
                   {selectedAlbum.titulo}
                 </h3>
-                <p className="font-mono text-xs text-[#F1730C]">
+                <p className="text-xs text-[#F1730C]">
                   {selectedAlbum.artista} {"//"} {selectedAlbum.sello} ({selectedAlbum.catalogo})
                 </p>
               </div>
@@ -337,18 +328,17 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
               <button
                 type="button"
                 onClick={() => setSelectedAlbum(null)}
-                className="border border-[#3E2C1B] bg-white/10 p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors"
+                className="border-2 border-[#3E2C1B] bg-white/10 p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors"
                 title="Cerrar ficha"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* CUERPO DEL MODAL CON CARÁTULA REAL Y FICHA */}
+            {/* CUERPO DEL MODAL */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-start">
-              {/* Carátula ampliada */}
               {selectedAlbum.coverUrl && (
-                <div className="sm:col-span-5 relative aspect-square rounded-lg border-2 border-[#3E2C1B] overflow-hidden bg-black shadow-2xl">
+                <div className="sm:col-span-5 relative aspect-square border-2 border-[#3E2C1B] overflow-hidden bg-black shadow-xl">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={selectedAlbum.coverUrl}
@@ -356,17 +346,15 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[10px] font-mono text-white/90 bg-black/60 px-2 py-0.5 border border-white/10 backdrop-blur-sm">
+                  <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[10px] text-white/90 bg-black/70 px-2 py-0.5 border border-white/10">
                     <span>{selectedAlbum.sello}</span>
                     <span className="text-[#F1730C] font-bold">{selectedAlbum.catalogo}</span>
                   </div>
                 </div>
               )}
 
-              {/* Reseña y Especificaciones */}
               <div className={`${selectedAlbum.coverUrl ? "sm:col-span-7" : "sm:col-span-12"} space-y-4`}>
-                {/* Reseña musicológica */}
-                <div className="space-y-1.5 font-mono text-xs leading-relaxed">
+                <div className="space-y-1 text-xs leading-relaxed">
                   <p className="font-bold text-[#F1730C] uppercase tracking-wider text-[11px]">
                     RESEÑA HISTÓRICA:
                   </p>
@@ -375,8 +363,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                   </p>
                 </div>
 
-                {/* Especificaciones DJ */}
-                <div className="border border-[#3E2C1B] bg-[#0E0803] p-2.5 flex items-center justify-between font-mono text-xs">
+                <div className="border-2 border-[#3E2C1B] bg-[#0E0803] p-2.5 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-1.5">
                     <Music className="h-3.5 w-3.5 text-[#F1730C]" />
                     <span className="text-white font-bold text-xs">{selectedAlbum.bpm} BPM</span>
@@ -390,7 +377,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
             </div>
 
             {/* Pistas emblemáticas */}
-            <div className="space-y-2 border-t border-[#3E2C1B] pt-4 font-mono text-xs">
+            <div className="space-y-2 border-t-2 border-[#3E2C1B] pt-4 text-xs">
               <span className="text-[11px] font-bold text-white uppercase tracking-wider">
                 CORTES Y TEMAS EMBLEMÁTICOS:
               </span>
@@ -411,14 +398,14 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
             <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
               <Link
                 href="/radar"
-                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#1F1305] bg-[#E80000] py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] transition-all"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#1F1305] bg-[#E80000] py-2.5 text-xs font-bold text-white shadow-[3px_3px_0px_#EDE0D0] hover:bg-white hover:text-[#1F1305] transition-all"
               >
                 <span>VER EN EL RADAR COMPLETO</span>
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/match-bpm"
-                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#3E2C1B] bg-white/5 py-2.5 font-mono text-xs font-bold text-white hover:bg-[#F1730C] hover:text-white transition-all"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 border-2 border-[#3E2C1B] bg-white/5 py-2.5 text-xs font-bold text-white hover:bg-[#F1730C] hover:text-white transition-all"
               >
                 <span>CALCULAR MATCH DJ</span>
                 <ExternalLink className="h-4 w-4" />
