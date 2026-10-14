@@ -119,12 +119,14 @@ cumbia-peruana/
 
 Si te encuentras ante un entorno vacío o debes clonar y levantar el proyecto desde cero:
 
-### Paso 1: Clonar y Dependencias
+### Paso 1: Clonar, Dependencias y Skills de Agentes
 ```bash
 git clone https://github.com/JorgeJordyJaimes/cumbia-peruana.git
 cd cumbia-peruana
 npm install
+npm run skills:install # Restaura e instala el catálogo completo de 28 skills desde skills-lock.json
 ```
+*(Para más detalles de las herramientas disponibles, consulta el [Catálogo de Skills](catalogo-skills.md)).*
 
 ### Paso 2: Variables de Entorno Seguras
 Copia la plantilla y configura tus variables:

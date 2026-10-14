@@ -100,7 +100,50 @@ Instaladas desde `Leonxlnx/taste-skill` para garantizar que la interfaz de usuar
 
 ---
 
-## 7. 🛠️ Protocolo para Instalar o Actualizar Skills
+## 7. 🛠️ Comandos de Instalación, Restauración y Gestión de Skills
+
+### 🚀 ¿Cómo instalar TODAS las skills en cualquier clon o entorno nuevo?
+
+Si acabas de clonar el repositorio en una nueva máquina o entorno, puedes restaurar e instalar el catálogo completo de 28 skills con un único comando:
+
+```bash
+npm run skills:install
+```
+
+*Alternativa directa mediante el CLI de skills:*
+```bash
+npx skills experimental_install
+```
+> **¿Qué hace este comando?** Lee el archivo de bloqueo `skills-lock.json`, clona los repositorios oficiales de las fuentes (`heygen-com/hyperframes`, `Leonxlnx/taste-skill`, `obra/superpowers`, `vercel-labs/agent-skills`) y enlaza todas las directivas y recursos en la carpeta `.agents/skills/` para todos los agentes compatibles (Antigravity, Cursor, Gemini CLI, Claude Code, GitHub Copilot).
+
+---
+
+### 📋 ¿Cómo listar y verificar las skills activas?
+
+Para inspeccionar qué skills están instaladas y qué agentes las tienen habilitadas:
+
+```bash
+npm run skills:list
+# o también:
+npx skills list
+```
+
+---
+
+### ➕ ¿Cómo instalar los paquetes fuente completos desde cero?
+
+Si en algún momento se desea reinstalar desde los repositorios de GitHub sin depender del archivo de bloqueo local:
+
+```bash
+npx skills add obra/superpowers --all
+npx skills add Leonxlnx/taste-skill --all
+npx skills add heygen-com/hyperframes --all
+npx skills add vercel-labs/agent-skills --all
+```
+
+---
+
+### 🔄 Protocolo para Añadir una Nueva Skill Individual
 
 Cuando se requiera añadir una nueva skill al proyecto:
 
@@ -115,7 +158,7 @@ Cuando se requiera añadir una nueva skill al proyecto:
 4. **Flujo Git Obligatorio:**  
    Hacer commit en español y push inmediato a `main`:
    ```bash
-   git add skills-lock.json .agents/skills/ docs/catalogo-skills.md
+   git add skills-lock.json .agents/skills/ docs/catalogo-skills.md package.json
    git commit -m "feat: instalar skill <nombre-de-skill> y registrar en catalogo"
    git push origin main
    ```

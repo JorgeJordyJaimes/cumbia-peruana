@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:poblar": "node scripts/poblar-db.mjs"
+    "db:poblar": "node scripts/poblar-db.mjs",
+    "skills:install": "skills experimental_install",
+    "skills:list": "skills list"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

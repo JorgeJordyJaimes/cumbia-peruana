@@ -109,6 +109,7 @@ cumbia-peruana/
 git clone https://github.com/JorgeJordyJaimes/cumbia-peruana.git
 cd cumbia-peruana
 npm install
+npm run skills:install # Restaura las 28 skills para agentes IA desde skills-lock.json (ver docs/catalogo-skills.md)
 ```
 
 ### 3. Configuración de Variables de Entorno
