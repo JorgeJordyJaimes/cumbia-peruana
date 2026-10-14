@@ -32,6 +32,7 @@ La documentación formal del proyecto está organizada en [`docs/`](docs/) bajo 
 | ↳ [ADR 004: Conversión WebP en Cliente](docs/adr/004-conversion-cliente-webp.md) | Frontend / Multimedia | Pipeline Canvas API en el navegador para compresión automática y ahorro de ancho de banda. |
 | [📊 **Datos & Notas de Investigación**](docs/datos-investigacion/) | Curaduría Fonográfica | Planillas tabulares de control (`Datos BD.ods`) y notas históricas de sellos. |
 | [🗄️ **Esquema DDL de Referencia**](docs/sql-referencia/estructural.sql) | Administradores de BD | Definición SQL consolidada de tablas maestras, claves foráneas e índices GIN. |
+| [🧰 **Catálogo de Skills de Agentes**](docs/catalogo-skills.md) | Agentes IA / Desarrolladores | Registro de las 28 skills instaladas (HyperFrames, Taste UI, Superpowers y Vercel Best Practices). |
 
 ---
 
@@ -60,6 +61,7 @@ cumbia-peruana/
 │   ├── datos-investigacion/             # Control tabular de investigación fonográfica (Datos BD.ods)
 │   ├── sql-referencia/                  # Esquemas DDL estructurales de referencia histórica
 │   ├── arquitectura-tecnica.md          # Especificación técnica, modelo de datos y RPCs
+│   ├── catalogo-skills.md               # Catálogo e inventario de skills para agentes y desarrolladores
 │   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes
 │   ├── lineamientos-desarrollo.md       # Guía de desarrollo, políticas de Supabase y estándares
 │   ├── manifiesto-arquitectura.md       # Manifiesto sociocultural, etapas de la cumbia y grafo

@@ -81,6 +81,7 @@ cumbia-peruana/
 │   ├── datos-investigacion/             # Control tabular (.ods) y notas de sellos (.txt)
 │   ├── sql-referencia/                  # DDL estructural consolidado de referencia
 │   ├── arquitectura-tecnica.md          # Especificación del modelo relacional y RPCs
+│   ├── catalogo-skills.md               # Catálogo e inventario de skills para agentes y desarrolladores
 │   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes
 │   ├── lineamientos-desarrollo.md       # Guía de setup, estándares y flujo Git
 │   ├── manifiesto-arquitectura.md       # Manifiesto histórico y grafo fonográfico
