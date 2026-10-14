@@ -256,3 +256,25 @@ INSERT INTO Albumes (
 
 VALUES
 (67, 54, 'El Super Show de Los Tímpanos', '15-020-99', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
+
+--------------------------------------------------------------------------------------- CIELO GRIS ---------------------------------------------------------------------------------------
+
+-- MIDAS
+INSERT INTO Albumes (
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
+VALUES
+(22, 5, 'Sensación Tropical', 'LPG-216028', 1982, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
+(22, 5, 'A Mis Amigos', 'LPG-216042', 1983, 2, FALSE, FALSE, FALSE, FALSE, NULL, ''),
+(22, 5, 'Dos Corazones', 'LPM-216064', 1987, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');
+
+-- SONO RADIO
+INSERT INTO Albumes (
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
+VALUES
+(22, 3, 'Con Mucho Amor', 'SE-9823', 1984, 2, FALSE, FALSE, FALSE, FALSE, NULL, '');

@@ -118,12 +118,12 @@ INSERT INTO Albumes (
     id_lp_relacionado, es_reedicion, id_album_original, comentario)
 
 VALUES
-(12, 62, '80-001', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 62, '81-001', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 62, '81-003', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 62, '83-001', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 62, '83-002', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(12, 62, '84-004', 1984, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', NULL, FALSE, NULL, 'Incluido en el LP Palomita (HLP-1044)');
+(12, 62, '001-80', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(12, 62, '001-81', 1981, 1, FALSE, TRUE, FALSE, FALSE, 'Lado B', (SELECT id_album FROM Albumes WHERE id_grupo = 12 AND numero_catalogo = 'INF-208304' LIMIT 1), FALSE, NULL, ''),
+(12, 62, '003-81', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(12, 62, '001-83', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(12, 62, '002-83', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(12, 62, '004-84', 1984, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', (SELECT id_album FROM Albumes WHERE id_grupo = 12 AND numero_catalogo = 'HLP-1044' LIMIT 1), FALSE, NULL, 'Incluido en el LP Palomita (HLP-1044)');
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
@@ -266,9 +266,12 @@ INSERT INTO Albumes (
 
 VALUES
 
-(22, 13, '3', 1975, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 13, '13', 1975, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 13, '18', 1976, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(22, 13, '03', 1975, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 13, '003', 1978, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 13 AND numero_catalogo = '03' LIMIT 1), 'Reedición de Caracol 03, se sabe que es una reedición porque el número de catálogo empieza esta vez con doble cero.'),
+(22, 13, '013', 1975, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 13, '0013', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 13 AND numero_catalogo = '013' LIMIT 1), 'Reedición de Caracol 013, se sabe que es una reedición porque el número de catálogo empieza esta vez con doble cero.'),
+(22, 13, '018', 1976, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 13, '0018', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 13 AND numero_catalogo = '018' LIMIT 1), 'Reedición de Caracol 018, se sabe que es una reedición porque el número de catálogo empieza esta vez con doble cero.');
 
 -- PRODITA
 INSERT INTO Albumes (
@@ -278,50 +281,9 @@ INSERT INTO Albumes (
 
 VALUES
 
-(22, 84, '78-02', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 84, '79-03', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 84, '80-03', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
-
--- HORÓSCOPO
-INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
-    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
-    id_lp_relacionado, es_reedicion, id_album_original, comentario)
-
-VALUES
-
-(22, 2, '1036', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 2, '1047', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 2, '1059', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 2, '1069', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 2, '1211', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
-
--- SONORADIO
-INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
-    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
-    id_lp_relacionado, es_reedicion, id_album_original, comentario)
-
-VALUES
-
-(22, 3, '13805', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 3, '13812', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
-
--- MIDAS
-INSERT INTO Albumes (
-    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
-    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
-    id_lp_relacionado, es_reedicion, id_album_original, comentario)
-
-VALUES
-
-(22, 5, '110063', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 5, '110071', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 5, '110091', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 5, '110100', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 5, '110189', 1986, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 5, '110190', 1986, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(22, 5, '110195', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(22, 84, '7802', 1978, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 84, '7903', 1979, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 84, '4', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- AVISPA
 INSERT INTO Albumes (
@@ -331,7 +293,37 @@ INSERT INTO Albumes (
 
 VALUES
 
-(22, 93, '1002', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(22, 93, '1002', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 84 AND numero_catalogo = '7802' LIMIT 1), 'Reedición de Prodita 78 - 02');
+
+-- HORÓSCOPO
+INSERT INTO Albumes (
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
+VALUES
+
+(22, 2, '1036', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 2, '1047', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 2, '1059', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 84 AND numero_catalogo = '4' LIMIT 1), 'Reedición de Prodita 4, se cambió el nombre del tema de Toma mi amor a Muñequita, pero es el mismo tema con los mismos arreglos y letra, solo cambió el nombre a uno más comercial'),
+(22, 2, '1069', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(22, 2, '1211', 1985, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
+
+-- MIDAS
+INSERT INTO Albumes (
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
+VALUES
+
+(22, 5, '110063', 1982, 1, FALSE, FALSE, TRUE, FALSE, NULL, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPG-216028' LIMIT 1), FALSE, NULL, ''),
+(22, 5, '110071', 1982, 1, FALSE, FALSE, TRUE, FALSE, NULL, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPG-216028' LIMIT 1), FALSE, NULL, ''),
+(22, 5, '110091', 1982, 1, FALSE, FALSE, TRUE, FALSE, NULL, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPG-216028' LIMIT 1), FALSE, NULL, ''),
+(22, 5, '110100', 1983, 1, FALSE, FALSE, TRUE, FALSE, NULL, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPG-216042' LIMIT 1), FALSE, NULL, ''),
+(22, 5, '110189', 1986, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPM-216064' LIMIT 1), FALSE, NULL, 'Aunque parece reedición del 45 grabado en Horóscopo 1211, son re grabaciones nuevas para el sello MIDAS, no cambio letra ni nada, pero sí un poco el estilo'),
+(22, 5, '110190', 1986, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPM-216064' LIMIT 1), FALSE, NULL, ''),
+(22, 5, '110195', 1987, 1, FALSE, FALSE, TRUE, FALSE, 'Lado A', (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPM-216064' LIMIT 1), FALSE, NULL, 'Aunque el Lado A se extrajo del LP, el tema del Lado B se extrajo de la versión de cassete que traía más temas, y el lado B pertenece a la versión de cassete, aunque curiosamente salió en single de 45');
 
 -- KOZMOZ
 INSERT INTO Albumes (
@@ -341,8 +333,7 @@ INSERT INTO Albumes (
 
 VALUES
 
-(22, 105, '1002', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
-
+(22, 105, '1', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- ROSA RECORD
 INSERT INTO Albumes (
@@ -352,8 +343,18 @@ INSERT INTO Albumes (
 
 VALUES
 
-(22, 33, '11', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(22, 33, '11', 1984, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
+-- SONORADIO
+INSERT INTO Albumes (
+    id_grupo, id_sello, numero_catalogo, año_publicacion, id_tipo_album, 
+    es_disco_split, incluido_en_lp, extraido_de_lp, solo_en_45, lados_en_lp, 
+    id_lp_relacionado, es_reedicion, id_album_original, comentario)
+
+VALUES
+
+(22, 3, '13805', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 105 AND numero_catalogo = '1' LIMIT 1), 'Reedición del single de Kozmoz 1'),
+(22, 3, '13812', 1984, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 ---------------------------------------------------------------------------------------- LOS DESTELLOS ----------------------------------------------------------------------------------------
 

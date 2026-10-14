@@ -39,7 +39,9 @@ const DEFAULT_FILES = [
   'supabase/data/vinilos/ingreso-lp-infopesa.sql',
   'supabase/data/vinilos/ingreso-lp-sonoradio.sql',
   'supabase/data/vinilos/ingreso-singles.sql',
+  'supabase/data/vinilos/ingreso-EP.sql',
   'supabase/data/cassete/ingreso-casetes.sql',
+  'supabase/data/cd/ingreso-cd.sql',
   'supabase/data/canciones/ingreso-temas.sql',
 ];
 

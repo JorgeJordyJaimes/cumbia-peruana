@@ -27,5 +27,8 @@ VALUES
 (19, 'Rock'),
 (20, 'Mosaico'),
 (21, 'Cumbia Andina'),
-(22, 'Chicha')
+(22, 'Chicha'),
+(23, 'Beat Soul'),
+(24, 'Cumbia Carretera'),
+(25, 'Cumbión Amazónico')
 ON CONFLICT (id_genero) DO UPDATE SET nombre_genero = EXCLUDED.nombre_genero;

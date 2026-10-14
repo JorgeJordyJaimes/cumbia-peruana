@@ -81,6 +81,16 @@ VALUES
 (7, 18, 'Siempre Contigo', 'Vol-6', 1992, 4), 
 (7, 18, 'No Es Fácil Perdonar', 'K-SET-172', 1991, 4);
 
+
+-- HORÓSCOPO
+INSERT INTO Albumes (
+    id_grupo, id_sello, nombre_album, numero_catalogo, año_publicacion, 
+    id_tipo_album, es_recopilatorio, es_varios_artistas, es_disco_split, es_reedicion, 
+    id_album_original, comentario)
+
+VALUES 
+(7, 2, 'Éxitos de Oro en Casete', 'HK-1050', 1986, 4, TRUE, FALSE, FALSE, FALSE, NULL, 'Recopilación oficial exclusiva de catálogo en cinta');
+
 --------------------------------------------------------------------------------------- GRUPO HALLEY ---------------------------------------------------------------------------------------
 
 -- HORÓSCOPO
