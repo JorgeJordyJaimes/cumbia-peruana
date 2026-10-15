@@ -304,7 +304,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-10 shadow-[8px_8px_0px_#1F1305] space-y-8">
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* Visor Deslizable de Portada y Contraportada / Cara A y B */}
-              <div className="w-full sm:w-64 md:w-72 shrink-0">
+              <div className="w-full sm:w-64 md:w-72 lg:w-80 shrink-0">
                 <AlbumCoverSlider
                   coverUrl={album.url_portada}
                   backCoverUrl={album.url_contraportada}

@@ -44,20 +44,20 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
       />
 
       {/* Modal Container Brutalista */}
-      <div className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto border-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] p-6 sm:p-8 shadow-[8px_8px_0px_#1F1305]">
+      <div className="relative z-10 max-h-[92vh] w-full max-w-4xl lg:max-w-5xl overflow-y-auto overflow-x-hidden border-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] p-6 sm:p-8 md:p-10 shadow-[10px_10px_0px_#1F1305]">
         {/* Botón Cerrar */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#E80000] hover:text-white transition-colors"
+          className="absolute right-4 top-4 border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
         >
           <X className="h-5 w-5" />
           <span className="sr-only">Cerrar ficha</span>
         </button>
 
         {/* Cabecera Editorial */}
-        <div className="flex flex-col sm:flex-row gap-6 items-start">
-          <div className="w-36 sm:w-48 shrink-0">
+        <div className="flex flex-col sm:flex-row gap-6 md:gap-8 items-start">
+          <div className="w-full max-w-[280px] sm:max-w-none sm:w-64 md:w-72 lg:w-80 shrink-0 mx-auto sm:mx-0">
             <AlbumCoverSlider
               coverUrl={album.coverUrl}
               backCoverUrl={album.backCoverUrl}
@@ -69,7 +69,7 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
             />
           </div>
 
-          <div className="flex-1 space-y-3">
+          <div className="flex-1 space-y-3.5 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <BadgeFormat formatName={album.format || "LP 33 RPM"} />
               {album.catalogNumber && (
@@ -80,23 +80,23 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
             </div>
 
             <div>
-              <h2 className="text-2xl sm:text-3xl font-cooper font-black tracking-tight text-[#1F1305]">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-cooper font-black tracking-tight text-[#1F1305] leading-tight">
                 {album.title}
               </h2>
-              <p className="text-base text-[#5A5245] font-bold">
+              <p className="text-base sm:text-lg text-[#5A5245] font-bold mt-0.5">
                 {album.artist}
               </p>
             </div>
 
             {/* Ficha Técnica Rápida para legibilidad total sin cortar texto */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2.5 pt-3 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2.5 pt-3.5 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Calendar className="h-3.5 w-3.5 text-[#F1730C] shrink-0" />
                 <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 min-w-0">
                 <Building2 className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
-                <span>Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
+                <span className="truncate">Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
               </div>
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
@@ -104,7 +104,7 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               </div>
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Activity className="h-3.5 w-3.5 text-[#D97706] shrink-0" />
-                <span>BPM Promedio: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
+                <span>BPM: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
               </div>
             </div>
           </div>

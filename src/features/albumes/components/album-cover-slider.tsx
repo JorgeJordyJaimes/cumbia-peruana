@@ -116,33 +116,35 @@ export function AlbumCoverSlider({
     <div className={cn("relative flex flex-col gap-2 select-none", className)}>
       {/* Selector de Pestañas Brutalista (Solo si existen ambas fotos o si se solicita mostrar labels) */}
       {showSideLabels && hasBoth && (
-        <div className="flex items-center justify-between gap-1 border-2 border-[#1F1305] bg-white p-1 font-mono text-[11px] font-bold shadow-[2px_2px_0px_#1F1305]">
+        <div className="flex items-center justify-between gap-1 border-2 border-[#1F1305] bg-white p-1 font-mono text-[10px] sm:text-[11px] font-bold shadow-[2px_2px_0px_#1F1305]">
           <button
             type="button"
             onClick={() => switchSide("front")}
             className={cn(
-              "flex-1 py-1 px-2.5 text-center transition-all cursor-pointer flex items-center justify-center gap-1.5",
+              "flex-1 min-w-0 py-1 px-1.5 sm:px-2.5 text-center transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap",
               activeSide === "front"
                 ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
                 : "text-[#5A5245] hover:text-[#1F1305] hover:bg-[#EDE0D0]/50"
             )}
+            title={frontLabel}
           >
-            <span className={cn("w-1.5 h-1.5 rounded-full", activeSide === "front" ? "bg-[#E80000]" : "bg-neutral-400")} />
-            <span>{frontLabel.toUpperCase()}</span>
+            <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", activeSide === "front" ? "bg-[#E80000]" : "bg-neutral-400")} />
+            <span className="truncate uppercase">{frontLabel}</span>
           </button>
 
           <button
             type="button"
             onClick={() => switchSide("back")}
             className={cn(
-              "flex-1 py-1 px-2.5 text-center transition-all cursor-pointer flex items-center justify-center gap-1.5",
+              "flex-1 min-w-0 py-1 px-1.5 sm:px-2.5 text-center transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap",
               activeSide === "back"
                 ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
                 : "text-[#5A5245] hover:text-[#1F1305] hover:bg-[#EDE0D0]/50"
             )}
+            title={backLabel}
           >
-            <span className={cn("w-1.5 h-1.5 rounded-full", activeSide === "back" ? "bg-[#F1730C]" : "bg-neutral-400")} />
-            <span>{backLabel.toUpperCase()}</span>
+            <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", activeSide === "back" ? "bg-[#F1730C]" : "bg-neutral-400")} />
+            <span className="truncate uppercase">{backLabel}</span>
           </button>
         </div>
       )}
