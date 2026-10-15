@@ -19,14 +19,16 @@ El archivo principal de investigación se encuentra en [`docs/datos-investigacio
 
 * **Hoja Histórica de Referencia:**
   * `45s`: Catálogo maestro histórico preliminar de singles de 45 RPM.
-* **Hojas de Registro de Lanzamientos / Álbumes (Fichas Físicas):**
-  * `Ingreso Singles` (Discos de 45 RPM / 7'')
+* **Hoja Unificada Recomendada para Singles de 45 RPM:**
+  * `Singles`: **Plantilla unificada recomendada para 45 RPM.** Combina en una sola hoja la información de lanzamiento (álbum/single) y la información técnica musical por cara (Lado A y Lado B en filas separadas), eliminando la duplicidad de tener que llenar primero `Ingreso Singles` y luego `Temas Singles`.
+* **Hojas de Registro de Lanzamientos / Álbumes (Fichas Físicas Tradicionales):**
+  * `Ingreso Singles` (Discos de 45 RPM / 7'' - formato legacy por álbum)
   * `Ingreso LP` (Long Plays de 33 RPM / 12'')
   * `Ingreso EP` (Extended Plays de 7'' / 4 cortes)
   * `Ingreso Cassete` (Casetes de cinta magnética)
   * `Ingreso CD` (Discos compactos)
 * **Hojas de Registro de Pistas y Contenido Musical:**
-  * `Temas Singles`
+  * `Temas Singles` (Pistas de 45 RPM - formato legacy)
   * `Temas LP`
   * `Temas EP`
   * `Temas Cassete`
@@ -207,10 +209,14 @@ Un mosaico musical en vinilo o casete representa **un único surco físico conti
      es_mosaico = TRUE
      ```
 2. **Interpretación de la Columna `NOTA PARA EL AGENTE`:**
-   * El catalogador escribe en esta columna la lista de canciones contenidas en el mosaico, por ejemplo:
-     > *"1. Colegiala (Walter León) / 2. Cariñito (Ángel Rosado) / 3. El Aguajal (Los Shapis)"*
-   * El agente debe buscar los IDs de cada uno de esos temas en la tabla `Temas` (o generar sus inserciones si no existen).
-3. **Inserción de Segmentos en `Mosaicos_Temas`:**
+   * El catalogador escribe en esta columna la lista de canciones contenidas en el mosaico con sus duraciones medidas en el audio y autores, por ejemplo:
+     > *"1. Colegiala (01:15 - Walter León) / 2. Cariñito (00:55 - Ángel Rosado) / 3. El Aguajal (01:20 - Los Shapis)"*
+   * **¿Aporta valor contar los segundos con el audio?**
+     **Sí, es de altísimo valor musicológico y técnico.** Al cronometrar la duración de cada fragmento, se alimenta directamente la columna `Mosaicos_Temas.duracion_segmento_segundos`. Esto permite calcular los tiempos exactos de inicio (cueing para reproductores y herramientas de DJ) y mostrar barras de progreso visuales con los cortes reales de cada tema dentro del mosaico.
+3. **Manejo de Temas Originales aún no ingresados a la Base de Datos:**
+   * **Si el tema original aún no existe:** Se registra el segmento en `Mosaicos_Temas` conservando el título y autor indicados. No se inventan valores ficticios de BPM, duración completa ni tonalidad para la obra matriz.
+   * **Cuando se inserte el tema original en el futuro:** Al catalogarse posteriormente el single o LP donde la canción salió en su versión completa autónoma de estudio, el sistema vinculará la referencia (`id_tema_original`) con esa ficha canónica en `Temas`. Los atributos del tema matriz (su BPM original de estudio, su tonalidad y su duración completa) quedarán en su registro propio, conviviendo armoniosamente con la duración reducida del fragmento registrada en `Mosaicos_Temas`.
+4. **Inserción de Segmentos en `Mosaicos_Temas`:**
    * Por cada canción detectada en la nota, genera una fila en `Mosaicos_Temas`:
      ```sql
      INSERT INTO Mosaicos_Temas (id_album_tema, id_tema, orden_segmento, duracion_segmento_segundos)

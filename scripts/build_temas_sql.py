@@ -162,25 +162,49 @@ cg_single_tracks = {} # (cat, lado) -> id_tema
 cg_master_tracks = {} # tit.lower() -> id_tema
 
 # -------------------------------------------------------------
-# 3. Process Temas Singles (Cielo Gris: rows 69 to 120)
+# 3. Process Singles (Support unified 'Singles' or legacy 'Temas Singles')
 # -------------------------------------------------------------
-ts_rows = sheets.get('Temas Singles', [])[2:]
+is_unified_singles = 'Singles' in sheets and len(sheets['Singles']) > 2
+if is_unified_singles:
+    ts_rows = sheets['Singles'][2:]
+else:
+    ts_rows = sheets.get('Temas Singles', [])[2:]
+
 for idx, r in enumerate(ts_rows[68:], start=69):
-    cat = get_col(r, 0)
-    lado = get_col(r, 1)
-    pista = int(get_col(r, 2)) if get_col(r, 2) else 1
-    tit = get_col(r, 3)
-    voz = get_col(r, 4)
-    comp = get_col(r, 5)
-    alias = get_col(r, 6)
-    grp = get_col(r, 7) or 'Cielo Gris'
-    gen_str = get_col(r, 8)
-    dur = parse_duration(get_col(r, 9))
-    bpm = parse_bpm(get_col(r, 10))
-    cam = parse_camelot(get_col(r, 11))
-    mos = parse_bool(get_col(r, 12))
-    let = get_col(r, 13) or None
-    nota = get_col(r, 14)
+    if is_unified_singles:
+        cat = get_col(r, 0)
+        sello = get_col(r, 1)
+        ano = get_col(r, 2)
+        lado = get_col(r, 3)
+        pista = int(get_col(r, 4)) if get_col(r, 4) else 1
+        tit = get_col(r, 5)
+        grp = get_col(r, 6) or 'Cielo Gris'
+        voz = get_col(r, 7)
+        comp = get_col(r, 8)
+        alias = get_col(r, 9)
+        gen_str = get_col(r, 10)
+        dur = parse_duration(get_col(r, 11))
+        bpm = parse_bpm(get_col(r, 12))
+        cam = parse_camelot(get_col(r, 13))
+        mos = parse_bool(get_col(r, 14))
+        let = get_col(r, 21) or None
+        nota = get_col(r, 22)
+    else:
+        cat = get_col(r, 0)
+        lado = get_col(r, 1)
+        pista = int(get_col(r, 2)) if get_col(r, 2) else 1
+        tit = get_col(r, 3)
+        voz = get_col(r, 4)
+        comp = get_col(r, 5)
+        alias = get_col(r, 6)
+        grp = get_col(r, 7) or 'Cielo Gris'
+        gen_str = get_col(r, 8)
+        dur = parse_duration(get_col(r, 9))
+        bpm = parse_bpm(get_col(r, 10))
+        cam = parse_camelot(get_col(r, 11))
+        mos = parse_bool(get_col(r, 12))
+        let = get_col(r, 13) or None
+        nota = get_col(r, 14)
     
     genres = resolve_genres(gen_str)
     primary_gen = genres[0] if genres else None
