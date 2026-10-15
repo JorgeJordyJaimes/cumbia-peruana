@@ -8,7 +8,7 @@ import { BadgeFormat } from "@/components/ui/badge-format";
 import { BadgeDJ } from "@/components/ui/badge-dj";
 import { AlbumCoverSlider } from "@/features/albumes";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
-import { ArrowLeft, Disc, Calendar, Building2, Layers, Music, Clock, Activity } from "lucide-react";
+import { ArrowLeft, Disc, Calendar, Building2, Layers, Music, Clock, Activity, UserCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -37,7 +37,11 @@ interface AlbumDetailRow {
   es_varios_artistas: boolean;
   es_disco_split: boolean;
   comentario: string | null;
-  grupos: { id_grupo: number; nombre_grupo: string } | null;
+  grupos: {
+    id_grupo: number;
+    nombre_grupo: string;
+    personas: { nombre: string; apodo: string | null } | null;
+  } | null;
   sellos_discograficos: { nombre_sello: string; pais: string | null } | null;
   tipos_album: { nombre_tipo: string } | null;
 }
@@ -90,7 +94,11 @@ const getAlbumDetail = cache(async (albumId: number) => {
       es_varios_artistas,
       es_disco_split,
       comentario,
-      grupos (id_grupo, nombre_grupo),
+      grupos (
+        id_grupo,
+        nombre_grupo,
+        personas (nombre, apodo)
+      ),
       sellos_discograficos (nombre_sello, pais),
       tipos_album (nombre_tipo)
     `)
@@ -280,6 +288,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
   const albumTopGenre = mostCommonGenre || fallbackGenre || "Cumbia Peruana";
 
   const artistName = album.grupos?.nombre_grupo || (album.es_varios_artistas ? "Varios Artistas" : "Desconocido");
+  const directorName = album.grupos?.personas?.nombre || null;
   const albumTitle = album.nombre_album || "Sin título";
 
   // 3. Generar objeto Schema.org MusicAlbum con trackList
@@ -368,6 +377,12 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                   <p className="text-xl sm:text-2xl text-[#E80000] font-cooper font-bold mt-1">
                     {artistName}
                   </p>
+                  {directorName && (
+                    <p className="font-mono text-sm sm:text-base font-bold text-[#5A5245] mt-2 flex items-center gap-2">
+                      <UserCheck className="h-4 w-4 text-[#E80000] shrink-0" />
+                      <span>Director del Grupo: <strong className="text-[#1F1305]">{directorName}</strong></span>
+                    </p>
+                  )}
                 </div>
 
                 {album.comentario && (

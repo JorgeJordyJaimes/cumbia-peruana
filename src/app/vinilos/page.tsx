@@ -24,7 +24,10 @@ interface RawAlbumRow {
   url_portada: string | null;
   url_contraportada: string | null;
   es_recopilatorio: boolean | null;
-  grupos: { nombre_grupo: string } | null;
+  grupos: {
+    nombre_grupo: string;
+    personas: { nombre: string; apodo: string | null } | null;
+  } | null;
   sellos_discograficos: { nombre_sello: string } | null;
   tipos_album: { nombre_tipo: string } | null;
 }
@@ -86,7 +89,10 @@ export default async function VinilosPage() {
         url_portada,
         url_contraportada,
         es_recopilatorio,
-        grupos (nombre_grupo),
+        grupos (
+          nombre_grupo,
+          personas (nombre, apodo)
+        ),
         sellos_discograficos (nombre_sello),
         tipos_album (nombre_tipo)
       `)
@@ -135,6 +141,7 @@ export default async function VinilosPage() {
           ? `Single 45 RPM [Cat: ${a.numero_catalogo || a.id_album}]`
           : "Sin Título Registrado"),
       artist: a.grupos?.nombre_grupo || "Varios Artistas",
+      directorName: a.grupos?.personas?.nombre || null,
       year: a.año_publicacion,
       catalogNumber: a.numero_catalogo,
       label: a.sellos_discograficos?.nombre_sello || "Sello Particular",

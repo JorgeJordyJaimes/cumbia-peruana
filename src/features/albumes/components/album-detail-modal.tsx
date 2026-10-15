@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
-import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music } from "lucide-react";
+import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
@@ -131,6 +131,12 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               <p className="text-base sm:text-lg text-[#5A5245] font-bold mt-0.5">
                 {album.artist}
               </p>
+              {album.directorName && (
+                <p className="font-mono text-xs sm:text-sm font-bold text-[#746B5C] mt-1.5 flex items-center gap-1.5">
+                  <UserCheck className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
+                  <span>Director del Grupo: <strong className="text-[#1F1305]">{album.directorName}</strong></span>
+                </p>
+              )}
             </div>
 
             {/* Ficha Técnica Rápida: 2 filas de 3 ítems */}

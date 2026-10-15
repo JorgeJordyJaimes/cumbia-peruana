@@ -9,6 +9,7 @@ export interface AlbumItem {
   id: number;
   title: string;
   artist: string;
+  directorName?: string | null;
   year?: number | null;
   catalogNumber?: string | null;
   label?: string | null;
