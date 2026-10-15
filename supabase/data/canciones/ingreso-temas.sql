@@ -194,12 +194,6 @@ INSERT INTO Temas (id_tema, titulo_tema, duracion_segundos, id_genero, bpm, came
 (183, 'Quisiera olvidarte', 213, 15, 111, '9B', NULL, NULL),
 (184, 'Linda mañana', 236, 24, 110, '9B', NULL, NULL),
 (185, 'Busco un amor', 162, 15, 112, '9B', NULL, NULL),
-(186, 'El Milagro Verde', 165, 2, 130, '8A', NULL, NULL),
-(187, 'Lamento en la Selva', 170, 2, 128, '8A', NULL, NULL),
-(188, 'Llora Corazón', 190, 1, 126, '7A', NULL, NULL),
-(189, 'Mosaico Chicha en Vivo', 375, 22, 115, '9A', NULL, NULL),
-(190, 'El Cervecero', 225, 4, 105, '8A', NULL, NULL),
-(191, 'Pagarás', 210, 4, 108, '9A', NULL, NULL),
 (192, 'Una miradita', NULL, 13, 105, '8A', NULL, NULL),
 (193, 'Noche de invierno', NULL, 13, 105, '8A', NULL, NULL),
 (194, 'Quiero emborracharme', NULL, 13, 105, '8A', NULL, NULL),
@@ -466,13 +460,7 @@ INSERT INTO Albumes_Temas (id_album, id_tema, numero_pista, lado, id_album_orige
 ((SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = 'LPM-216064' OR numero_catalogo = 'LPM-216064')), 142, 3, 'B', (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = '110195' OR numero_catalogo = '110195')), FALSE, TRUE) /* LP LPM-216064 Lado B Pista 3 (Recordando mis éxitos) [Proveniente de 45 RPM] */,
 ((SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = 'LPM-216064' OR numero_catalogo = 'LPM-216064')), 184, 4, 'B', NULL, TRUE, FALSE) /* LP LPM-216064 Lado B Pista 4 (Linda mañana) */,
 ((SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = 'LPM-216064' OR numero_catalogo = 'LPM-216064')), 140, 5, 'B', (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = '110190' OR numero_catalogo = '110190')), FALSE, FALSE) /* LP LPM-216064 Lado B Pista 5 (Poquito a poquito) [Proveniente de 45 RPM] */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = 'LPM-216064' OR numero_catalogo = 'LPM-216064')), 185, 6, 'B', NULL, TRUE, FALSE) /* LP LPM-216064 Lado B Pista 6 (Busco un amor) */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 3 AND (numero_catalogo = 'EP-015' OR numero_catalogo = 'EP-015')), 186, 1, 'A', NULL, TRUE, FALSE) /* EP EP-015 Lado A Pista 1 (El Milagro Verde) */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 3 AND (numero_catalogo = 'EP-015' OR numero_catalogo = 'EP-015')), 187, 2, 'A', NULL, TRUE, FALSE) /* EP EP-015 Lado A Pista 2 (Lamento en la Selva) */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 1 AND (numero_catalogo = 'HK-1077' OR numero_catalogo = 'HK-1077')), 188, 1, 'A', NULL, TRUE, FALSE) /* Casete HK-1077 Lado A Pista 1 (Llora Corazón) */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 1 AND (numero_catalogo = 'HK-1077' OR numero_catalogo = 'HK-1077')), 189, 2, 'A', NULL, TRUE, TRUE) /* Casete HK-1077 Lado A Pista 2 (Mosaico Chicha en Vivo) */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 35 AND (numero_catalogo = 'CD-9012' OR numero_catalogo = 'CD-9012')), 190, 1, NULL, NULL, TRUE, FALSE) /* CD CD-9012 Pista 1 (El Cervecero) */,
-((SELECT id_album FROM Albumes WHERE id_grupo = 35 AND (numero_catalogo = 'CD-9012' OR numero_catalogo = 'CD-9012')), 191, 2, NULL, NULL, TRUE, FALSE) /* CD CD-9012 Pista 2 (Pagarás) */
+((SELECT id_album FROM Albumes WHERE id_grupo = 22 AND (numero_catalogo = 'LPM-216064' OR numero_catalogo = 'LPM-216064')), 185, 6, 'B', NULL, TRUE, FALSE) /* LP LPM-216064 Lado B Pista 6 (Busco un amor) */
 ON CONFLICT (id_album, id_tema) DO UPDATE SET
   numero_pista = EXCLUDED.numero_pista,
   lado = EXCLUDED.lado,
@@ -669,12 +657,6 @@ INSERT INTO Temas_Grupos (id_tema, id_grupo, rol_participacion) VALUES
 (183, 22, 'Principal'),
 (184, 22, 'Principal'),
 (185, 22, 'Principal'),
-(186, 3, 'Principal'),
-(187, 3, 'Principal'),
-(188, 1, 'Principal'),
-(189, 1, 'Principal'),
-(190, 35, 'Principal'),
-(191, 35, 'Principal'),
 (192, 5, 'Principal'),
 (193, 36, 'Principal'),
 (194, 25, 'Principal'),
@@ -891,12 +873,7 @@ INSERT INTO Temas_Compositores (id_tema, id_compositor, credito_como) VALUES
 (182, (SELECT id_persona FROM Personas WHERE nombre = 'Abraham Sánchez Pumacayo'), 'A. Sánchez'),
 (183, (SELECT id_persona FROM Personas WHERE nombre = 'Carlos Marvin Alvarado Maguiña'), 'M. Alvarado'),
 (184, (SELECT id_persona FROM Personas WHERE nombre = 'Abraham Sánchez Pumacayo'), 'T. Arellano'),
-(185, (SELECT id_persona FROM Personas WHERE nombre = 'Isidoro Sósimo Sacramento Nolasco'), 'Zósimo Sacramento'),
-(186, (SELECT id_persona FROM Personas WHERE nombre = 'Jorge Rodríguez Grández'), 'J. Rodríguez'),
-(187, (SELECT id_persona FROM Personas WHERE nombre = 'Gilberto Reátegui'), 'G. Reátegui'),
-(188, (SELECT id_persona FROM Personas WHERE nombre = 'Enrique Delgado Montes'), 'E. Delgado'),
-(190, (SELECT id_persona FROM Personas WHERE nombre = 'Hernán Neira'), 'H. Neira'),
-(191, (SELECT id_persona FROM Personas WHERE nombre = 'Alberto Hinostroza'), 'A. Hinostroza')
+(185, (SELECT id_persona FROM Personas WHERE nombre = 'Isidoro Sósimo Sacramento Nolasco'), 'Zósimo Sacramento')
 ON CONFLICT (id_tema, id_compositor) DO UPDATE SET
   credito_como = EXCLUDED.credito_como;
 
@@ -1372,12 +1349,6 @@ INSERT INTO Temas_Generos (id_tema, id_genero, es_principal) VALUES
 (184, 24, TRUE),
 (184, 15, FALSE),
 (185, 15, TRUE),
-(186, 2, TRUE),
-(187, 2, TRUE),
-(188, 1, TRUE),
-(189, 22, TRUE),
-(190, 4, TRUE),
-(191, 4, TRUE),
 (192, 13, TRUE),
 (193, 13, TRUE),
 (194, 13, TRUE),

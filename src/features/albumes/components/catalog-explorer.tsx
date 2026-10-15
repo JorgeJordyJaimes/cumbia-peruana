@@ -210,10 +210,21 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
 
       {/* Grid de Álbumes */}
       {filteredAlbums.length === 0 ? (
-        <div className="border-2 border-[#1F1305] bg-white py-16 text-center shadow-[6px_6px_0px_#1F1305] p-6">
-          <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3" />
-          <p className="font-cooper text-lg text-[#1F1305]">
-            No se encontraron producciones discográficas con esos criterios.
+        <div className="border-2 border-[#1F1305] bg-white py-16 text-center shadow-[6px_6px_0px_#1F1305] p-6 max-w-2xl mx-auto">
+          <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3 opacity-80" />
+          <h3 className="font-cooper text-xl text-[#1F1305]">
+            {selectedFormat === "EP"
+              ? "No hay producciones en formato EP catalogadas aún"
+              : selectedFormat === "CASETE"
+              ? "No hay producciones en formato Cassete catalogadas aún"
+              : selectedFormat === "CD"
+              ? "No hay producciones en formato CD catalogadas aún"
+              : "No se encontraron producciones discográficas"}
+          </h3>
+          <p className="font-mono text-xs text-[#5A5245] mt-2 max-w-md mx-auto leading-relaxed">
+            {selectedFormat === "EP" || selectedFormat === "CASETE" || selectedFormat === "CD"
+              ? "Este formato se encuentra en etapa de investigación e ingreso patrimonial desde los archivos físicos oficiales. Solo se despliega información real y verificada."
+              : "No existen registros en el archivo histórico que coincidan exactamente con los criterios de búsqueda o filtros aplicados."}
           </p>
           <button
             onClick={() => {
@@ -222,7 +233,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               setSelectedLabel("ALL");
               setSelectedYear("ALL");
             }}
-            className="mt-4 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-4 py-2 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] transition-colors"
+            className="mt-6 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-5 py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:shadow-[3px_3px_0px_#E80000] transition-all cursor-pointer"
           >
             Restablecer todos los filtros
           </button>
