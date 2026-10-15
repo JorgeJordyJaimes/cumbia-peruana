@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Link from "next/link";
-import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity } from "lucide-react";
+import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
@@ -23,13 +23,58 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  if (!album) return null;
-
   // Métricas técnicas del disco
-  const tracksWithBpm = tracks.filter((t) => typeof t.bpm === "number" && t.bpm > 0);
-  const avgBpm = tracksWithBpm.length > 0
-    ? Math.round(tracksWithBpm.reduce((acc, t) => acc + (t.bpm || 0), 0) / tracksWithBpm.length)
-    : null;
+  const totalDurationSeconds = useMemo(() => {
+    return tracks.reduce((acc, t) => acc + (t.durationSeconds || 0), 0);
+  }, [tracks]);
+
+  const formattedTotalDuration = useMemo(() => {
+    if (!totalDurationSeconds || totalDurationSeconds <= 0) return "--:--";
+    const mins = Math.floor(totalDurationSeconds / 60);
+    const secs = totalDurationSeconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")} min`;
+  }, [totalDurationSeconds]);
+
+  const avgBpm = useMemo(() => {
+    const tracksWithBpm = tracks.filter((t) => typeof t.bpm === "number" && t.bpm > 0);
+    return tracksWithBpm.length > 0
+      ? Math.round(tracksWithBpm.reduce((acc, t) => acc + (t.bpm || 0), 0) / tracksWithBpm.length)
+      : null;
+  }, [tracks]);
+
+  // Género más común / repetido entre las pistas
+  const mostCommonGenre = useMemo(() => {
+    const genreCounts = new Map<string, number>();
+    let fallbackGenre: string | null = null;
+
+    tracks.forEach((t) => {
+      if (!t.genre) return;
+      const parts = t.genre
+        .split(/[/,]/)
+        .map((g) => g.trim())
+        .filter(Boolean);
+      parts.forEach((g) => {
+        if (g.toLowerCase() === "instrumental") {
+          fallbackGenre = "Instrumental";
+        } else {
+          genreCounts.set(g, (genreCounts.get(g) || 0) + 1);
+        }
+      });
+    });
+
+    let topGenre: string | null = null;
+    let maxCount = 0;
+    genreCounts.forEach((count, g) => {
+      if (count > maxCount) {
+        maxCount = count;
+        topGenre = g;
+      }
+    });
+
+    return topGenre || fallbackGenre || "Cumbia Peruana";
+  }, [tracks]);
+
+  if (!album) return null;
 
   return (
     <div
@@ -88,8 +133,9 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               </p>
             </div>
 
-            {/* Ficha Técnica Rápida para legibilidad total sin cortar texto */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2.5 pt-3.5 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
+            {/* Ficha Técnica Rápida: 2 filas de 3 ítems */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3 pt-3.5 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
+              {/* Fila 1 */}
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Calendar className="h-3.5 w-3.5 text-[#F1730C] shrink-0" />
                 <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
@@ -102,9 +148,21 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
                 <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
                 <span>Pistas: <strong className="text-[#1F1305]">{tracks.length || album.tracksCount || "--"}</strong></span>
               </div>
+
+              {/* Fila 2 */}
+              <div className="flex items-center gap-1.5 whitespace-nowrap">
+                <Clock className="h-3.5 w-3.5 text-[#2563EB] shrink-0" />
+                <span>Duración: <strong className="text-[#1F1305]">{formattedTotalDuration}</strong></span>
+              </div>
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <Activity className="h-3.5 w-3.5 text-[#D97706] shrink-0" />
-                <span>BPM: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
+                <span>BPM Promedio: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5 min-w-0">
+                <Music className="h-3.5 w-3.5 text-[#7C3AED] shrink-0" />
+                <span className="truncate" title={mostCommonGenre}>
+                  Género: <strong className="text-[#1F1305]">{mostCommonGenre}</strong>
+                </span>
               </div>
             </div>
           </div>

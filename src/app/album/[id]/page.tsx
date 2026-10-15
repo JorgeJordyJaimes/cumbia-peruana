@@ -255,6 +255,30 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
     ? Math.round(pistasWithBpm.reduce((acc, p) => acc + (p.bpm || 0), 0) / pistasWithBpm.length)
     : null;
 
+  // Género más común / predominante entre las pistas
+  const genreCounts = new Map<string, number>();
+  let fallbackGenre: string | null = null;
+  pistas.forEach((p) => {
+    if (!p.generos) return;
+    const parts = p.generos.split(/[/,]/).map((g) => g.trim()).filter(Boolean);
+    parts.forEach((g) => {
+      if (g.toLowerCase() === "instrumental") {
+        fallbackGenre = "Instrumental";
+      } else {
+        genreCounts.set(g, (genreCounts.get(g) || 0) + 1);
+      }
+    });
+  });
+  let mostCommonGenre: string | null = null;
+  let maxCount = 0;
+  genreCounts.forEach((count, g) => {
+    if (count > maxCount) {
+      maxCount = count;
+      mostCommonGenre = g;
+    }
+  });
+  const albumTopGenre = mostCommonGenre || fallbackGenre || "Cumbia Peruana";
+
   const artistName = album.grupos?.nombre_grupo || (album.es_varios_artistas ? "Varios Artistas" : "Desconocido");
   const albumTitle = album.nombre_album || "Sin título";
 
@@ -353,7 +377,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                 )}
 
                 {/* Métricas Técnicas */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-4 border-t-2 border-[#1F1305] font-mono text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-4 border-t-2 border-[#1F1305] font-mono text-xs">
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[10px] font-bold uppercase">Año de Publicación</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
@@ -386,6 +410,13 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                     <span className="text-[#5A5245] block text-[10px] font-bold uppercase">BPM Promedio</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
                       <Activity className="h-3.5 w-3.5 text-[#D97706]" /> {avgBpm ? `${avgBpm} BPM` : "--"}
+                    </span>
+                  </div>
+
+                  <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
+                    <span className="text-[#5A5245] block text-[10px] font-bold uppercase">Género Principal</span>
+                    <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1 truncate" title={albumTopGenre}>
+                      <Music className="h-3.5 w-3.5 text-[#7C3AED]" /> {albumTopGenre}
                     </span>
                   </div>
                 </div>
