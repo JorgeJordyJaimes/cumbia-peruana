@@ -22,7 +22,6 @@ interface RawTemaRow {
   duracion_segundos: number | null;
   bpm: number | null;
   camelot_code: string | null;
-  musical_key: string | null;
   generos: { nombre_genero: string } | null;
   albumes_temas: Array<{
     id_album: number;
@@ -51,7 +50,6 @@ export default async function MatchBpmPage() {
       duracion_segundos,
       bpm,
       camelot_code,
-      musical_key,
       generos:generos!temas_id_genero_fkey (nombre_genero),
       albumes_temas (
         id_album,
@@ -84,7 +82,6 @@ export default async function MatchBpmPage() {
     const artist = primaryGroup?.nombre_grupo || "Agrupación Histórica";
     const bpm = t.bpm || 115;
     const camelot = (t.camelot_code as CamelotCode) || "8A";
-    const key = t.musical_key || t.camelot_code || "8A";
 
     djTracks.push({
       id: t.id_tema,
@@ -94,7 +91,6 @@ export default async function MatchBpmPage() {
       year: primaryAlbum?.año_publicacion || undefined,
       bpm,
       camelot,
-      musicalKey: key,
       format: "Vinilo",
     });
 
@@ -112,7 +108,7 @@ export default async function MatchBpmPage() {
       subgenero: t.generos?.nombre_genero || "Cumbia",
       bpm,
       camelot: t.camelot_code || "8A",
-      tonalidad: key,
+      tonalidad: camelot,
       duracion: durationStr,
       portadaUrl:
         primaryAlbum?.url_portada ||

@@ -40,7 +40,6 @@ interface RawTemaRow {
   duracion_segundos: number | null;
   bpm: number | null;
   camelot_code: string | null;
-  musical_key: string | null;
   albumes_temas: Array<{
     id_album: number;
     numero_pista: number | null;
@@ -113,7 +112,6 @@ export default async function Home() {
         duracion_segundos,
         bpm,
         camelot_code,
-        musical_key,
         albumes_temas (
           id_album,
           numero_pista,
@@ -220,7 +218,6 @@ export default async function Home() {
         vocalist: vocalist || null,
         bpm: t.bpm,
         camelot: t.camelot_code,
-        musicalKey: t.musical_key,
         genre,
       });
     });

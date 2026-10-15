@@ -174,8 +174,7 @@ export function VersionesExplorerModal({
 
                           <div className="flex items-center gap-2 font-bold text-[#5A5245]">
                             {nodo.bpm && <span>{nodo.bpm} BPM</span>}
-                            {nodo.musical_key && <span>• {nodo.musical_key}</span>}
-                            {nodo.camelot_code && <span>({nodo.camelot_code})</span>}
+                            {nodo.camelot_code && <span>• {nodo.camelot_code}</span>}
                           </div>
                         </div>
 

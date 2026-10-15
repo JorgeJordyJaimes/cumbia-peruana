@@ -240,7 +240,6 @@ export interface Database {
           id_genero: number | null
           bpm: number | null
           camelot_code: string | null
-          musical_key: string | null
         }
         Insert: {
           id_tema?: number
@@ -250,7 +249,6 @@ export interface Database {
           id_genero?: number | null
           bpm?: number | null
           camelot_code?: string | null
-          musical_key?: string | null
         }
         Update: {
           id_tema?: number
@@ -260,7 +258,6 @@ export interface Database {
           id_genero?: number | null
           bpm?: number | null
           camelot_code?: string | null
-          musical_key?: string | null
         }
         Relationships: [
           {
@@ -750,7 +747,6 @@ export interface NodoGenealogiaVersion {
   duracion_segundos: number | null
   bpm: number | null
   camelot_code: string | null
-  musical_key: string | null
   grupos: Array<{
     id_grupo: number
     nombre_grupo: string

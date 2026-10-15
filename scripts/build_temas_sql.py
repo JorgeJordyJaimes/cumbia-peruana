@@ -98,7 +98,7 @@ with open('supabase/data/canciones/ingreso-temas.sql', 'r', encoding='utf-8') as
 
 # Load existing Temas 1 to 109
 temas_part = orig_temas_sql.split('INSERT INTO Albumes_Temas')[0]
-raw_temas = re.findall(r"\((\d+),\s*'([^']*)',\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^)]*)\)", temas_part)
+raw_temas = re.findall(r"\((\d+),\s*'([^']*)',\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^)]*)\)", temas_part)
 all_temas = []
 for m in raw_temas:
     tid = int(m[0])
@@ -107,7 +107,7 @@ for m in raw_temas:
     gen = int(m[3]) if m[3].strip() != 'NULL' else None
     bpm = int(m[4]) if m[4].strip() != 'NULL' else None
     cam = m[5].strip().strip("'") if m[5].strip() != 'NULL' else None
-    let = m[7].strip() if m[7].strip() != 'NULL' else None
+    let = m[6].strip() if m[6].strip() != 'NULL' else None
     all_temas.append({
         'id_tema': tid, 'titulo': tit, 'dur': dur, 'id_genero': gen,
         'bpm': bpm, 'camelot': cam, 'letra': let
@@ -622,7 +622,7 @@ out.append("""-- ===============================================================
 -- 1. OBRAS MUSICALES Y METADATOS DJ (TABLA: Temas)
 -- ======================================================================================================================""")
 
-out.append("INSERT INTO Temas (id_tema, titulo_tema, duracion_segundos, id_genero, bpm, camelot_code, musical_key, letra) VALUES")
+out.append("INSERT INTO Temas (id_tema, titulo_tema, duracion_segundos, id_genero, bpm, camelot_code, letra) VALUES")
 tema_value_lines = []
 for t in all_temas:
     tid = t['id_tema']
@@ -632,7 +632,7 @@ for t in all_temas:
     bpm = t['bpm'] if t['bpm'] is not None else 'NULL'
     cam = esc(t['camelot']) if t['camelot'] is not None else 'NULL'
     let = t['letra'] if t['letra'] and t['letra'] != 'NULL' else 'NULL'
-    tema_value_lines.append(f"({tid}, {tit}, {dur}, {gen}, {bpm}, {cam}, NULL, {let})")
+    tema_value_lines.append(f"({tid}, {tit}, {dur}, {gen}, {bpm}, {cam}, {let})")
 
 out.append(",\n".join(tema_value_lines))
 out.append("""ON CONFLICT (id_tema) DO UPDATE SET
@@ -641,7 +641,6 @@ out.append("""ON CONFLICT (id_tema) DO UPDATE SET
   id_genero = EXCLUDED.id_genero,
   bpm = EXCLUDED.bpm,
   camelot_code = EXCLUDED.camelot_code,
-  musical_key = EXCLUDED.musical_key,
   letra = EXCLUDED.letra;
 
 -- ======================================================================================================================

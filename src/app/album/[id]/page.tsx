@@ -57,7 +57,6 @@ interface AlbumTemaDetailRow {
     duracion_segundos: number | null;
     bpm: number | null;
     camelot_code: string | null;
-    musical_key: string | null;
     temas_compositores: Array<{
       credito_como: string | null;
       personas: { nombre: string; apodo: string | null } | null;
@@ -155,7 +154,6 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           duracion_segundos,
           bpm,
           camelot_code,
-          musical_key,
           temas_compositores (
             credito_como,
             personas (nombre, apodo)
@@ -228,7 +226,6 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
       duracion: t?.duracion_segundos ?? null,
       bpm: t?.bpm ?? null,
       camelot: t?.camelot_code ?? null,
-      musical_key: t?.musical_key ?? null,
       compositor: autorReal,
       autorReal,
       creditoGalleta,
@@ -523,7 +520,6 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                               <BadgeDJ
                                 bpm={pista.bpm}
                                 camelot={pista.camelot}
-                                musicalKey={pista.musical_key}
                               />
                             ) : (
                               <span className="text-[#746B5C] font-mono text-[11px]">--</span>

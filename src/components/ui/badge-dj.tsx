@@ -5,7 +5,6 @@ import type { CamelotCode } from "@/types/domain";
 interface BadgeDJProps {
   bpm?: number | null;
   camelot?: string | null;
-  musicalKey?: string | null;
   className?: string;
   showDot?: boolean;
 }
@@ -13,15 +12,13 @@ interface BadgeDJProps {
 export function BadgeDJ({
   bpm,
   camelot,
-  musicalKey,
   className,
   showDot = true,
 }: BadgeDJProps) {
-  if (!bpm && !camelot && !musicalKey) return null;
+  if (!bpm && !camelot) return null;
 
   const validCamelot = (camelot && camelot in CAMELOT_WHEEL) ? (camelot as CamelotCode) : null;
   const keyInfo = validCamelot ? CAMELOT_WHEEL[validCamelot] : null;
-  const displayKey = musicalKey || (keyInfo ? keyInfo.standardKey : null);
 
   return (
     <div
@@ -44,18 +41,12 @@ export function BadgeDJ({
         </span>
       )}
 
-      {bpm && (validCamelot || displayKey) && (
+      {bpm && validCamelot && (
         <span className="text-[#746B5C]/60 select-none">|</span>
       )}
 
       {validCamelot && (
         <span className="text-[#1F1305] font-black">{validCamelot}</span>
-      )}
-
-      {displayKey && (
-        <span className="text-[#5A5245] text-[10px]">
-          ({displayKey})
-        </span>
       )}
     </div>
   );

@@ -21,7 +21,6 @@ export interface TrackItem {
   vocalist?: string | null;
   bpm?: number | null;
   camelot?: string | null;
-  musicalKey?: string | null;
   genre?: string | null;
 }
 

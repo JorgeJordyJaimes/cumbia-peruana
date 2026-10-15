@@ -17,7 +17,6 @@ export interface TemaDJ {
   duracion_segundos: number | null
   bpm: number | null
   camelot_code: CamelotCode | null
-  musical_key: string | null
   genero?: string
 }
 

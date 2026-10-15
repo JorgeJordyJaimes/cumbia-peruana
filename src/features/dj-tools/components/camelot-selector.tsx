@@ -25,7 +25,6 @@ export interface TrackDJItem {
   year?: number;
   bpm: number;
   camelot: CamelotCode;
-  musicalKey: string;
   format?: string;
 }
 
@@ -377,7 +376,6 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                     <BadgeDJ
                       bpm={track.bpm}
                       camelot={track.camelot}
-                      musicalKey={track.musicalKey}
                     />
                     {isExact ? (
                       <span className="text-[10px] font-mono text-[#E80000] font-black uppercase">
