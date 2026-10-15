@@ -277,6 +277,7 @@ export interface Database {
           numero_pista: number | null
           lado: string | null
           es_mosaico: boolean
+          credito_galleta: string | null
         }
         Insert: {
           id_album_tema?: number
@@ -285,6 +286,7 @@ export interface Database {
           numero_pista?: number | null
           lado?: string | null
           es_mosaico?: boolean
+          credito_galleta?: string | null
         }
         Update: {
           id_album_tema?: number
@@ -293,6 +295,7 @@ export interface Database {
           numero_pista?: number | null
           lado?: string | null
           es_mosaico?: boolean
+          credito_galleta?: string | null
         }
         Relationships: [
           {

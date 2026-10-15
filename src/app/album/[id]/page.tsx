@@ -7,6 +7,7 @@ import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { BadgeDJ } from "@/components/ui/badge-dj";
 import { AlbumCoverSlider } from "@/features/albumes";
+import { AlbumTracklistTable } from "@/features/temas";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 import { ArrowLeft, Disc, Calendar, Building2, Layers, Music, Clock, Activity, UserCheck } from "lucide-react";
 
@@ -46,11 +47,25 @@ interface AlbumDetailRow {
   tipos_album: { nombre_tipo: string } | null;
 }
 
+interface MosaicoTemaSubRow {
+  id_mosaico_tema: number;
+  orden_segmento: number;
+  duracion_segmento_segundos: number | null;
+  temas: {
+    id_tema: number;
+    titulo_tema: string;
+    temas_compositores: Array<{
+      personas: { nombre: string } | null;
+    }> | null;
+  } | null;
+}
+
 interface AlbumTemaDetailRow {
   id_album_tema: number;
   numero_pista: number | null;
   lado: string | null;
   es_mosaico: boolean;
+  credito_galleta: string | null;
   temas: {
     id_tema: number;
     titulo_tema: string;
@@ -74,6 +89,7 @@ interface AlbumTemaDetailRow {
       generos: { id_genero: number; nombre_genero: string } | null;
     }> | null;
   } | null;
+  mosaicos_temas: MosaicoTemaSubRow[] | null;
 }
 
 // Carga con cache() de React para deduplicar petición entre generateMetadata y AlbumPage (server-cache-react)
@@ -148,6 +164,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
         numero_pista,
         lado,
         es_mosaico,
+        credito_galleta,
         temas (
           id_tema,
           titulo_tema,
@@ -170,6 +187,18 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           temas_generos (
             generos (id_genero, nombre_genero)
           )
+        ),
+        mosaicos_temas (
+          id_mosaico_tema,
+          orden_segmento,
+          duracion_segmento_segundos,
+          temas (
+            id_tema,
+            titulo_tema,
+            temas_compositores (
+              personas (nombre)
+            )
+          )
         )
       `)
       .eq("id_album", albumId)
@@ -191,8 +220,34 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
     const autoresReales = t?.temas_compositores?.map((tc) => tc.personas?.nombre).filter(Boolean) || [];
     const autorReal = autoresReales.length > 0 ? autoresReales.join(", ") : "D.R.";
 
-    const creditosGalleta = t?.temas_compositores?.map((tc) => tc.credito_como).filter(Boolean) || [];
-    const creditoGalleta = creditosGalleta.length > 0 ? creditosGalleta.join(", ") : null;
+    // Crédito en galleta: prevalece estrictamente el de Albumes_Temas (específico para este soporte/formato físico)
+    let creditoGalleta: string | null = p.credito_galleta?.trim() || null;
+    if (!creditoGalleta) {
+      const rawCreditos = (t?.temas_compositores || [])
+        .map((tc) => tc.credito_como?.trim())
+        .filter((c): c is string => Boolean(c));
+      const deduped = Array.from(new Set(rawCreditos.flatMap((c) => c.split(";").map((s) => s.trim()).filter(Boolean))));
+      if (deduped.length > 0) {
+        creditoGalleta = deduped.join("; ");
+      }
+    } else {
+      const deduped = Array.from(new Set(creditoGalleta.split(";").map((s) => s.trim()).filter(Boolean)));
+      creditoGalleta = deduped.join("; ");
+    }
+
+    // Desglose de piezas de mosaico si aplica
+    const mosaicoSegmentos = (p.mosaicos_temas || [])
+      .map((mt) => {
+        const autores = mt.temas?.temas_compositores?.map((c) => c.personas?.nombre).filter(Boolean) || [];
+        return {
+          id_mosaico_tema: mt.id_mosaico_tema,
+          orden_segmento: mt.orden_segmento,
+          duracion_segmento_segundos: mt.duracion_segmento_segundos,
+          titulo_tema: mt.temas?.titulo_tema || "Sin título",
+          compositor: autores.length > 0 ? autores.join(", ") : null,
+        };
+      })
+      .sort((a, b) => a.orden_segmento - b.orden_segmento);
 
     const interpretes = t?.temas_grupos?.map((tg) => tg.grupos?.nombre_grupo).join(", ") || null;
 
@@ -232,6 +287,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
       vocalista: vocalista || null,
       generos,
       artista: interpretes,
+      mosaicoSegmentos,
     };
   });
 
@@ -314,7 +370,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
       <JsonLd data={jsonLdData} />
 
       <BrutalistCoordinator>
-        <main className="container mx-auto max-w-5xl px-4 sm:px-6 pt-6 pb-20 space-y-10">
+        <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-10">
           {/* Breadcrumb de Retorno */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link
@@ -447,95 +503,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                 </span>
               </div>
 
-              {pistas.length === 0 ? (
-                <p className="font-sans text-xs text-[#5A5245] italic py-4">
-                  No hay pistas registradas para este álbum en el catálogo.
-                </p>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full border-2 border-[#1F1305] text-left font-mono text-xs">
-                    <thead className="bg-[#1F1305] text-white">
-                      <tr>
-                        <th className="p-2.5 whitespace-nowrap">Lado</th>
-                        <th className="p-2.5">Título / Géneros</th>
-                        <th className="p-2.5">Voz</th>
-                        <th className="p-2.5">Compositor</th>
-                        <th className="p-2.5 text-center">BPM / Camelot</th>
-                        <th className="p-2.5 text-right w-20">Duración</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#1F1305]/20 bg-white">
-                      {pistas.map((pista) => (
-                        <tr key={pista.id_album_tema} className="hover:bg-[#EDE0D0]/50 transition-colors">
-                          <td className="p-2.5 font-bold whitespace-nowrap">
-                            <span className="inline-block border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[11px] font-mono shadow-[1px_1px_0px_#1F1305]">
-                              {pista.lado ? `Lado ${pista.lado}${pista.numero_pista ?? ""}` : `Pista ${pista.numero_pista ?? "-"}`}
-                            </span>
-                          </td>
-                          <td className="p-2.5">
-                            <div className="font-bold text-[#1F1305] text-sm flex items-center gap-1.5">
-                              <span>{pista.titulo}</span>
-                              {pista.es_mosaico && (
-                                <span className="border border-[#1F1305] bg-[#F8C800] px-1.5 py-0.2 text-[9px] font-bold text-[#1F1305]">
-                                  MOSAICO
-                                </span>
-                              )}
-                            </div>
-                            {pista.artista && pista.artista !== artistName && (
-                              <div className="text-[11px] text-[#E80000] font-bold">{pista.artista}</div>
-                            )}
-                            {pista.generos && (
-                              <div className="text-[11px] text-[#746B5C] font-mono mt-0.5">
-                                {pista.generos}
-                              </div>
-                            )}
-                          </td>
-                          <td className="p-2.5">
-                            {pista.vocalista === "Instrumental" ? (
-                              <span className="inline-block font-mono text-[10px] font-bold text-[#746B5C] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]/30">
-                                Instrumental
-                              </span>
-                            ) : pista.vocalista ? (
-                              <span className="font-bold text-[#1F1305] text-xs">
-                                {pista.vocalista}
-                              </span>
-                            ) : (
-                              <span className="text-[#746B5C] font-mono text-[11px]">
-                                Pendiente
-                              </span>
-                            )}
-                          </td>
-                          <td className="p-2.5">
-                            <div className="font-bold text-[#1F1305] text-xs">
-                              {pista.autorReal}
-                            </div>
-                            {pista.creditoGalleta && pista.creditoGalleta.trim().toLowerCase() !== pista.autorReal.trim().toLowerCase() && (
-                              <div className="text-[10px] text-[#746B5C] font-mono italic mt-0.5">
-                                En galleta: &ldquo;{pista.creditoGalleta}&rdquo;
-                              </div>
-                            )}
-                          </td>
-                          <td className="p-2.5 text-center">
-                            {pista.bpm || pista.camelot ? (
-                              <BadgeDJ
-                                bpm={pista.bpm}
-                                camelot={pista.camelot}
-                              />
-                            ) : (
-                              <span className="text-[#746B5C] font-mono text-[11px]">--</span>
-                            )}
-                          </td>
-                          <td className="p-2.5 text-right font-bold text-[#5A5245]">
-                            {pista.duracion
-                              ? `${Math.floor(pista.duracion / 60)}:${(pista.duracion % 60).toString().padStart(2, "0")}`
-                              : "-"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              <AlbumTracklistTable pistas={pistas} artistName={artistName} />
             </div>
           </div>
         </main>
