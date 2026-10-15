@@ -89,9 +89,19 @@ export function BrutalistFooter() {
                   </a>
                 </div>
 
-                <div className="pt-2 text-[10px] text-[#746B5C] border-t border-[#3E2C1B]">
+                <div className="pt-3 border-t border-[#3E2C1B]">
+                  <Link
+                    href="/admin"
+                    className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/10 hover:bg-[#E80000] text-[#E80000] hover:text-white px-3 py-1.5 font-mono text-xs font-bold transition-all shadow-[2px_2px_0px_#1F1305]"
+                  >
+                    <span>PANEL DE ADMINISTRACIÓN</span>
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+
+                <div className="pt-2 text-[10px] text-[#746B5C]">
                   NIVEL: ACCESO GENERAL DESCLASIFICADO<br />
-                  JURISDICCIÓN: LIMA, PERÚ
+                  ORIGEN &amp; ARCHIVO: BUCARAMANGA, COLOMBIA
                 </div>
               </div>
             </div>
@@ -176,11 +186,19 @@ export function BrutalistFooter() {
             </div>
 
             <div className="flex items-center gap-4 text-[11px]">
+              <Link
+                href="/admin"
+                className="text-[#E80000] hover:text-white font-bold transition-colors flex items-center gap-1 hover:underline"
+              >
+                <span>[PANEL ADMIN]</span>
+                <ArrowUpRight className="h-3 w-3" />
+              </Link>
+              <span>•</span>
               <span className="text-[#F8C800] font-bold">
                 POSTGRES SUPABASE REGISTRY
               </span>
               <span>•</span>
-              <span>LIMA, PERÚ</span>
+              <span>BUCARAMANGA, COLOMBIA</span>
             </div>
           </div>
 

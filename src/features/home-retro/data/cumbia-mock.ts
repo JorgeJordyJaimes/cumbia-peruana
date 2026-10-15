@@ -403,7 +403,7 @@ export const equipoKumbiaSound: MiembroEquipo[] = [
     nombre: "Jordy Jaimes",
     rol: "Director de Archivo & Curaduría Discográfica",
     fotoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-    bio: "Coleccionista de prensajes en 45 RPM e investigador de los estudios de grabación de la Lima de los años 70.",
+    bio: "Coleccionista de prensajes en 45 RPM e investigador fonográfico desde Bucaramanga, Colombia, dedicado a la preservación del patrimonio en vinilo de la cumbia peruana (1968–2005).",
     redes: [
       { tipo: "instagram", url: "https://instagram.com" },
       { tipo: "spotify", url: "https://spotify.com" },

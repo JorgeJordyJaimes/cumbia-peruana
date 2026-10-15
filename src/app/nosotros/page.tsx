@@ -44,7 +44,8 @@ export default function NosotrosPage() {
               </h1>
 
               <p className="font-sans text-sm sm:text-base text-[#EDE0D0]/80 leading-relaxed max-w-2xl">
-                Kumbia Sound nace como una iniciativa independiente dedicada a catalogar, verificar
+                Kumbia Sound nace en Bucaramanga, Colombia, como una iniciativa independiente
+                impulsada por coleccionistas e investigadores apasionados por catalogar, verificar
                 y rendir homenaje a los compositores, guitarristas, percusionistas y técnicos de grabación
                 que forjaron la identidad musical del Perú en discos de vinilo de 33 y 45 RPM.
               </p>
