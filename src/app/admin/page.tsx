@@ -24,8 +24,10 @@ interface RawAdminAlbum {
   url_portada: string | null;
   url_contraportada: string | null;
   url_etiqueta: string | null;
+  id_tipo_album: number | null;
   grupos: { nombre_grupo: string } | null;
   sellos_discograficos: { nombre_sello: string } | null;
+  tipos_album: { nombre_tipo: string } | null;
 }
 
 interface RawAdminGroup {
@@ -81,8 +83,10 @@ export default async function AdminPage() {
         url_portada,
         url_contraportada,
         url_etiqueta,
+        id_tipo_album,
         grupos (nombre_grupo),
-        sellos_discograficos (nombre_sello)
+        sellos_discograficos (nombre_sello),
+        tipos_album (nombre_tipo)
       `)
       .order("id_album", { ascending: true }),
 
@@ -156,6 +160,8 @@ export default async function AdminPage() {
     coverUrl: a.url_portada,
     backCoverUrl: a.url_contraportada,
     vinylLabelUrl: a.url_etiqueta,
+    format: a.tipos_album?.nombre_tipo || null,
+    idTipoAlbum: a.id_tipo_album,
   }));
 
   // Mapear Grupos

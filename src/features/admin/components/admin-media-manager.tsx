@@ -15,6 +15,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AlbumCoverSlider } from "@/features/albumes";
 
 export interface AdminAlbumItem {
   id: number;
@@ -26,6 +27,8 @@ export interface AdminAlbumItem {
   coverUrl?: string | null;
   backCoverUrl?: string | null;
   vinylLabelUrl?: string | null;
+  format?: string | null;
+  idTipoAlbum?: number | null;
 }
 
 export interface AdminGroupItem {
@@ -67,7 +70,7 @@ export function AdminMediaManager({
 }: AdminMediaManagerProps) {
   const [activeTab, setActiveTab] = useState<TabType>("albumes");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterImageStatus, setFilterImageStatus] = useState<"all" | "with-image" | "without-image">("all");
+  const [filterImageStatus, setFilterImageStatus] = useState<"all" | "with-image" | "without-image" | "both-sides">("all");
 
   // Estados locales para reflejar cambios en tiempo real
   const [albums, setAlbums] = useState<AdminAlbumItem[]>(initialAlbums);
@@ -82,8 +85,12 @@ export function AdminMediaManager({
     setTimeout(() => setNotification(null), 4000);
   };
 
-  // 1. Actualizar Álbum
-  const handleUpdateAlbumCover = async (id: number, url: string, field: "url_portada" | "url_contraportada" | "url_etiqueta") => {
+  // 1. Actualizar Álbum (Portada o Contraportada)
+  const handleUpdateAlbumCover = async (
+    id: number,
+    url: string,
+    field: "url_portada" | "url_contraportada" | "url_etiqueta"
+  ) => {
     const supabase = createClient();
     const payload =
       field === "url_portada"
@@ -102,17 +109,52 @@ export function AdminMediaManager({
     }
 
     setAlbums((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, coverUrl: field === "url_portada" ? url : a.coverUrl } : a))
+      prev.map((a) =>
+        a.id === id
+          ? {
+              ...a,
+              coverUrl: field === "url_portada" ? url : a.coverUrl,
+              backCoverUrl: field === "url_contraportada" ? url : a.backCoverUrl,
+              vinylLabelUrl: field === "url_etiqueta" ? url : a.vinylLabelUrl,
+            }
+          : a
+      )
     );
-    showSuccess(`Imagen de álbum #${id} actualizada exitosamente.`);
+    const sideName =
+      field === "url_portada"
+        ? "Portada / Cara A"
+        : field === "url_contraportada"
+        ? "Contraportada / Cara B"
+        : "Galleta Central";
+    showSuccess(`${sideName} del álbum #${id} actualizada exitosamente.`);
   };
 
-  const handleClearAlbumCover = async (id: number) => {
-    if (!confirm("¿Deseas desvincular la portada de este álbum?")) return;
+  const handleClearAlbumImage = async (
+    id: number,
+    field: "url_portada" | "url_contraportada",
+    sideLabel: string
+  ) => {
+    if (!confirm(`¿Deseas desvincular ${sideLabel} de este álbum?`)) return;
     const supabase = createClient();
-    await supabase.from("albumes").update({ url_portada: null }).eq("id_album", id);
-    setAlbums((prev) => prev.map((a) => (a.id === id ? { ...a, coverUrl: null } : a)));
-    showSuccess(`Portada de álbum #${id} eliminada.`);
+    const updatePayload =
+      field === "url_portada" ? { url_portada: null } : { url_contraportada: null };
+    const { error } = await supabase.from("albumes").update(updatePayload).eq("id_album", id);
+    if (error) {
+      alert(`Error al desvincular: ${error.message}`);
+      return;
+    }
+    setAlbums((prev) =>
+      prev.map((a) =>
+        a.id === id
+          ? {
+              ...a,
+              coverUrl: field === "url_portada" ? null : a.coverUrl,
+              backCoverUrl: field === "url_contraportada" ? null : a.backCoverUrl,
+            }
+          : a
+      )
+    );
+    showSuccess(`${sideLabel} de álbum #${id} eliminada.`);
   };
 
   // 2. Actualizar Grupo
@@ -169,15 +211,19 @@ export function AdminMediaManager({
   // Filtrado de elementos
   const filteredAlbums = useMemo(() => {
     return albums.filter((a) => {
-      if (filterImageStatus === "with-image" && !a.coverUrl) return false;
-      if (filterImageStatus === "without-image" && a.coverUrl) return false;
+      const hasAny = Boolean(a.coverUrl || a.backCoverUrl);
+      const hasBoth = Boolean(a.coverUrl && a.backCoverUrl);
+      if (filterImageStatus === "with-image" && !hasAny) return false;
+      if (filterImageStatus === "without-image" && hasAny) return false;
+      if (filterImageStatus === "both-sides" && !hasBoth) return false;
       if (!searchTerm.trim()) return true;
       const q = searchTerm.toLowerCase();
       return (
         a.title.toLowerCase().includes(q) ||
         a.artist.toLowerCase().includes(q) ||
         a.catalogNumber?.toLowerCase().includes(q) ||
-        a.label?.toLowerCase().includes(q)
+        a.label?.toLowerCase().includes(q) ||
+        (a.format && a.format.toLowerCase().includes(q))
       );
     });
   }, [albums, searchTerm, filterImageStatus]);
@@ -271,6 +317,7 @@ export function AdminMediaManager({
           {[
             { id: "all" as const, label: "Todos" },
             { id: "with-image" as const, label: "Con Imagen" },
+            { id: "both-sides" as const, label: "Ambas Caras" },
             { id: "without-image" as const, label: "Sin Imagen" },
           ].map((f) => (
             <button
@@ -297,56 +344,166 @@ export function AdminMediaManager({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {filteredAlbums.slice(0, 40).map((album) => (
-              <GlassCard key={album.id} className="p-5 flex flex-col justify-between gap-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 font-mono text-[11px] text-amber-400">
-                      <span>#{album.id}</span>
-                      <span>•</span>
-                      <span>{album.label || "Sin Sello"}</span>
-                      {album.catalogNumber && <span>({album.catalogNumber})</span>}
+            {filteredAlbums.slice(0, 40).map((album) => {
+              const isSingle = Boolean(
+                album.idTipoAlbum === 1 ||
+                album.format?.toLowerCase().includes("single") ||
+                album.format?.toLowerCase().includes("45")
+              );
+              const frontLabel = isSingle ? "Cara A (Lado A)" : "Portada Frontal";
+              const backLabel = isSingle ? "Cara B (Lado B)" : "Contraportada / Reverso";
+              const hasBoth = Boolean(album.coverUrl && album.backCoverUrl);
+              const hasAny = Boolean(album.coverUrl || album.backCoverUrl);
+
+              return (
+                <GlassCard key={album.id} className="p-5 flex flex-col justify-between gap-4 border border-white/10 bg-black/40">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                        <span className="text-amber-400 font-bold">#{album.id}</span>
+                        <span className="text-neutral-500">•</span>
+                        <span className="text-neutral-300 font-semibold">{album.label || "Sin Sello"}</span>
+                        {album.catalogNumber && (
+                          <span className="text-neutral-400">({album.catalogNumber})</span>
+                        )}
+                        <span className="border border-white/15 bg-white/5 px-2 py-0.2 rounded text-[10px] text-amber-300 font-mono">
+                          {album.format || (isSingle ? "Single 45 RPM" : "LP 33 RPM")}
+                        </span>
+                      </div>
+                      <h4 className="text-base font-bold text-white tracking-tight">
+                        {album.title}
+                      </h4>
+                      <p className="text-xs text-neutral-300 font-medium">
+                        {album.artist} {album.year ? `(${album.year})` : ""}
+                      </p>
                     </div>
-                    <h4 className="text-base font-bold text-white tracking-tight mt-0.5">
-                      {album.title}
-                    </h4>
-                    <p className="text-xs text-neutral-300 font-medium">
-                      {album.artist} {album.year ? `(${album.year})` : ""}
-                    </p>
+
+                    {/* Badge de estado de fotos */}
+                    <div className="shrink-0 text-right">
+                      {hasBoth ? (
+                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                          <CheckCircle2 className="h-3 w-3" /> 2/2 Caras
+                        </span>
+                      ) : hasAny ? (
+                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                          1/2 Caras
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-neutral-400 border border-white/10 bg-white/5 px-2 py-0.5 rounded-full">
+                          Sin fotos
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {album.coverUrl && (
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={album.coverUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-lg border border-white/10 bg-white/5 p-1.5 text-neutral-400 hover:text-amber-400 transition-colors"
-                        title="Abrir imagen original"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                      <button
-                        onClick={() => handleClearAlbumCover(album.id)}
-                        className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
-                        title="Desvincular portada"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                  {/* Zonas de Carga Dual (Cara A / Portada + Cara B / Contraportada) */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-3 border-t border-white/10">
+                    {/* Cara A / Portada */}
+                    <div className="space-y-2 p-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                      <div className="flex items-center justify-between text-xs font-mono font-bold">
+                        <span className="text-white flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-[#E80000]" />
+                          {frontLabel}
+                        </span>
+                        {album.coverUrl && (
+                          <div className="flex items-center gap-1.5">
+                            <a
+                              href={album.coverUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="rounded border border-white/10 bg-white/5 p-1 text-neutral-400 hover:text-amber-400 transition-colors"
+                              title={`Abrir ${frontLabel}`}
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => handleClearAlbumImage(album.id, "url_portada", frontLabel)}
+                              className="rounded border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                              title={`Eliminar ${frontLabel}`}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      <ImageUploader
+                        folderPath="albumes"
+                        fileId={album.id}
+                        suffix="portada"
+                        currentUrl={album.coverUrl}
+                        label={`Subir ${frontLabel}`}
+                        onUploaded={(url) => handleUpdateAlbumCover(album.id, url, "url_portada")}
+                      />
+                    </div>
+
+                    {/* Cara B / Contraportada */}
+                    <div className="space-y-2 p-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                      <div className="flex items-center justify-between text-xs font-mono font-bold">
+                        <span className="text-white flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-[#F1730C]" />
+                          {backLabel}
+                        </span>
+                        {album.backCoverUrl && (
+                          <div className="flex items-center gap-1.5">
+                            <a
+                              href={album.backCoverUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="rounded border border-white/10 bg-white/5 p-1 text-neutral-400 hover:text-amber-400 transition-colors"
+                              title={`Abrir ${backLabel}`}
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => handleClearAlbumImage(album.id, "url_contraportada", backLabel)}
+                              className="rounded border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                              title={`Eliminar ${backLabel}`}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      <ImageUploader
+                        folderPath="albumes"
+                        fileId={album.id}
+                        suffix="contraportada"
+                        currentUrl={album.backCoverUrl}
+                        label={`Subir ${backLabel}`}
+                        onUploaded={(url) => handleUpdateAlbumCover(album.id, url, "url_contraportada")}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Vista Previa Interactiva Deslizable si hay fotos */}
+                  {hasBoth && (
+                    <div className="pt-2 border-t border-white/10">
+                      <details className="group/preview">
+                        <summary className="font-mono text-[11px] text-amber-400 hover:text-amber-300 cursor-pointer list-none flex items-center justify-between py-1">
+                          <span>🔍 Probar Visor Deslizable ({frontLabel} ↔ {backLabel})</span>
+                          <span className="text-neutral-500 group-open/preview:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <div className="pt-3 max-w-xs mx-auto">
+                          <AlbumCoverSlider
+                            coverUrl={album.coverUrl}
+                            backCoverUrl={album.backCoverUrl}
+                            title={album.title}
+                            artist={album.artist}
+                            format={album.format}
+                            label={album.label}
+                            showSideLabels={true}
+                          />
+                        </div>
+                      </details>
                     </div>
                   )}
-                </div>
-
-                <ImageUploader
-                  folderPath="albumes"
-                  fileId={album.id}
-                  suffix="portada"
-                  currentUrl={album.coverUrl}
-                  label="Portada Frontal del Álbum / Single"
-                  onUploaded={(url) => handleUpdateAlbumCover(album.id, url, "url_portada")}
-                />
-              </GlassCard>
-            ))}
+                </GlassCard>
+              );
+            })}
           </div>
         </div>
       )}

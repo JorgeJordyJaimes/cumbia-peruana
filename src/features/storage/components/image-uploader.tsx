@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Upload, Check, Loader2, Image as ImageIcon, AlertCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -110,6 +110,10 @@ export function ImageUploader({
   const [stats, setStats] = useState<CompressionStats | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentUrl || null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPreviewUrl(currentUrl || null);
+  }, [currentUrl]);
 
   const isBusy = phase === "converting" || phase === "uploading";
 

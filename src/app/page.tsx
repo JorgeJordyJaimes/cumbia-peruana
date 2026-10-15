@@ -24,6 +24,7 @@ interface RawAlbumRow {
   numero_catalogo: string | null;
   año_publicacion: number | null;
   url_portada: string | null;
+  url_contraportada: string | null;
   es_recopilatorio: boolean;
   grupos: { nombre_grupo: string } | null;
   sellos_discograficos: { nombre_sello: string } | null;
@@ -90,6 +91,7 @@ export default async function Home() {
         numero_catalogo,
         año_publicacion,
         url_portada,
+        url_contraportada,
         es_recopilatorio,
         grupos (nombre_grupo),
         sellos_discograficos (nombre_sello),
@@ -163,6 +165,7 @@ export default async function Home() {
     label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
     format: a.tipos_album?.nombre_tipo || "LP 33 RPM",
     coverUrl: a.url_portada,
+    backCoverUrl: a.url_contraportada,
     isCompilation: a.es_recopilatorio,
   }));
 

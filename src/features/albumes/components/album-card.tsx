@@ -14,6 +14,7 @@ export interface AlbumItem {
   label?: string | null;
   format?: string | null;
   coverUrl?: string | null;
+  backCoverUrl?: string | null;
   tracksCount?: number;
   isCompilation?: boolean;
 }

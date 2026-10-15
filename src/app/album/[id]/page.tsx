@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { BadgeDJ } from "@/components/ui/badge-dj";
+import { AlbumCoverSlider } from "@/features/albumes";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 import { ArrowLeft, Disc, Calendar, Building2, Layers, Music, Clock, Activity } from "lucide-react";
 
@@ -302,23 +303,17 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           {/* Ficha Principal Brutalista */}
           <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-10 shadow-[8px_8px_0px_#1F1305] space-y-8">
             <div className="flex flex-col md:flex-row gap-8 items-start">
-              {/* Portada Física */}
-              <div className="relative aspect-square w-full sm:w-64 md:w-72 border-2 border-[#1F1305] bg-[#EDE0D0] shrink-0 shadow-[4px_4px_0px_#1F1305] flex items-center justify-center overflow-hidden">
-                {album.url_portada ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={album.url_portada}
-                    alt={albumTitle}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center p-6 text-center">
-                    <Disc className="h-16 w-16 text-[#E80000] mb-2" />
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#1F1305]">
-                      {album.sellos_discograficos?.nombre_sello || "KUMBIA SOUND"}
-                    </span>
-                  </div>
-                )}
+              {/* Visor Deslizable de Portada y Contraportada / Cara A y B */}
+              <div className="w-full sm:w-64 md:w-72 shrink-0">
+                <AlbumCoverSlider
+                  coverUrl={album.url_portada}
+                  backCoverUrl={album.url_contraportada}
+                  title={albumTitle}
+                  artist={artistName}
+                  format={album.tipos_album?.nombre_tipo}
+                  label={album.sellos_discograficos?.nombre_sello}
+                  showSideLabels={true}
+                />
               </div>
 
               {/* Datos Editoriales */}

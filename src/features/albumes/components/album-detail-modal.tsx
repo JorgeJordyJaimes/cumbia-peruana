@@ -6,6 +6,7 @@ import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity } from "lu
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
+import { AlbumCoverSlider } from "./album-cover-slider";
 
 interface AlbumDetailModalProps {
   album: AlbumItem | null;
@@ -56,22 +57,16 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
 
         {/* Cabecera Editorial */}
         <div className="flex flex-col sm:flex-row gap-6 items-start">
-          <div className="relative aspect-square w-32 sm:w-44 border-2 border-[#1F1305] bg-white shrink-0 shadow-[4px_4px_0px_#1F1305] flex items-center justify-center overflow-hidden">
-            {album.coverUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={album.coverUrl}
-                alt={album.title}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="h-full w-full flex flex-col items-center justify-center bg-[#EDE0D0] p-3 text-center">
-                <Disc className="h-12 w-12 text-[#E80000] mb-2" />
-                <span className="font-mono text-[10px] text-[#1F1305] font-bold uppercase tracking-widest">
-                  {album.label || "KUMBIA SOUND"}
-                </span>
-              </div>
-            )}
+          <div className="w-36 sm:w-48 shrink-0">
+            <AlbumCoverSlider
+              coverUrl={album.coverUrl}
+              backCoverUrl={album.backCoverUrl}
+              title={album.title}
+              artist={album.artist}
+              format={album.format}
+              label={album.label}
+              showSideLabels={true}
+            />
           </div>
 
           <div className="flex-1 space-y-3">
