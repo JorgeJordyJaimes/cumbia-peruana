@@ -100,7 +100,7 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
 
           {/* Cabecera de la Funda: Formato y Año con Sello Rojo */}
           <div className="relative z-10 pt-3 flex items-start justify-between gap-1.5">
-            <BadgeFormat formatName={album.format || "LP 33 RPM"} size="sm" />
+            <BadgeFormat formatName={album.format || "LP"} size="sm" />
             {album.year && (
               <span className="border border-[#1F1305] bg-[#1F1305] px-2 py-0.5 text-[11px] font-black text-white shadow-[2px_2px_0px_#E80000]">
                 {album.year}

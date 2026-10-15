@@ -138,14 +138,14 @@ export default async function VinilosPage() {
       title:
         a.nombre_album ||
         (isSingle
-          ? `Single 45 RPM [Cat: ${a.numero_catalogo || a.id_album}]`
+          ? `Single [Cat: ${a.numero_catalogo || a.id_album}]`
           : "Sin Título Registrado"),
       artist: a.grupos?.nombre_grupo || "Varios Artistas",
       directorName: a.grupos?.personas?.nombre || null,
       year: a.año_publicacion,
       catalogNumber: a.numero_catalogo,
       label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
-      format: isSingle ? "45 RPM Single" : a.tipos_album?.nombre_tipo || "LP 33 RPM",
+      format: isSingle ? "Single" : a.tipos_album?.nombre_tipo || "LP",
       coverUrl: a.url_portada,
       backCoverUrl: a.url_contraportada,
       isCompilation: a.es_recopilatorio ?? false,

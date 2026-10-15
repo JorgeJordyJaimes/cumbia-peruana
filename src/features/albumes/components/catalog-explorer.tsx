@@ -57,8 +57,20 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
       // 1. Filtro rápido de formato
       if (selectedFormat !== "ALL") {
         if (selectedFormat === "LP" && !album.format?.toLowerCase().includes("lp")) return false;
-        if (selectedFormat === "45" && !album.format?.toLowerCase().includes("45")) return false;
-        if (selectedFormat === "CASETE" && !album.format?.toLowerCase().includes("caset")) return false;
+        if (
+          selectedFormat === "45" &&
+          !album.format?.toLowerCase().includes("45") &&
+          !album.format?.toLowerCase().includes("single")
+        )
+          return false;
+        if (selectedFormat === "EP" && !album.format?.toLowerCase().includes("ep")) return false;
+        if (
+          selectedFormat === "CASETE" &&
+          !album.format?.toLowerCase().includes("caset") &&
+          !album.format?.toLowerCase().includes("cassette")
+        )
+          return false;
+        if (selectedFormat === "CD" && !album.format?.toLowerCase().includes("cd")) return false;
       }
 
       // 2. Filtro rápido de sello
@@ -122,9 +134,11 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
             </span>
             {[
               { id: "ALL", label: "Todos" },
-              { id: "LP", label: "LP 33 RPM" },
-              { id: "45", label: "45 RPM Single" },
-              { id: "CASETE", label: "Casete" },
+              { id: "LP", label: "LP" },
+              { id: "45", label: "Single" },
+              { id: "EP", label: "EP" },
+              { id: "CASETE", label: "Cassete" },
+              { id: "CD", label: "CD" },
             ].map((f) => (
               <button
                 key={f.id}

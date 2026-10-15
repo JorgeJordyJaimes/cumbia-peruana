@@ -352,7 +352,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
               {/* Datos Editoriales */}
               <div className="flex-1 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <BadgeFormat formatName={album.tipos_album?.nombre_tipo || "LP 33 RPM"} />
+                  <BadgeFormat formatName={album.tipos_album?.nombre_tipo || "LP"} />
                   {album.numero_catalogo && (
                     <span className="font-mono text-xs font-bold text-[#1F1305] border border-[#1F1305] px-2.5 py-0.5 bg-white shadow-[1px_1px_0px_#1F1305]">
                       CAT: {album.numero_catalogo}

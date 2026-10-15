@@ -170,7 +170,7 @@ export default async function Home() {
     year: a.año_publicacion,
     catalogNumber: a.numero_catalogo,
     label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
-    format: a.tipos_album?.nombre_tipo || "LP 33 RPM",
+    format: a.tipos_album?.nombre_tipo === "45" ? "Single" : a.tipos_album?.nombre_tipo || "LP",
     coverUrl: a.url_portada,
     backCoverUrl: a.url_contraportada,
     isCompilation: a.es_recopilatorio,

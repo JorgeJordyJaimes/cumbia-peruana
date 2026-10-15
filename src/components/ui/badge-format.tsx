@@ -23,19 +23,22 @@ export function BadgeFormat({
 
   if (normalized.includes("45") || normalized.includes("single")) {
     Icon = Disc;
-    label = "45 RPM Single";
+    label = "Single";
+  } else if (normalized === "ep" || normalized.includes("ep")) {
+    Icon = Disc3;
+    label = "EP";
   } else if (normalized.includes("lp") || normalized.includes("vinilo") || normalized.includes("album")) {
     Icon = Disc3;
-    label = "LP 33 RPM";
-  } else if (normalized.includes("casete") || normalized.includes("cassette")) {
+    label = "LP";
+  } else if (normalized.includes("caset") || normalized.includes("cassette")) {
     Icon = CassetteTape;
-    label = "Casete";
-  } else if (normalized.includes("split")) {
-    Icon = Layers;
-    label = "Split Lado A/B";
+    label = "Cassete";
   } else if (normalized.includes("cd") || normalized.includes("compact")) {
     Icon = Disc3;
     label = "CD";
+  } else if (normalized.includes("split")) {
+    Icon = Layers;
+    label = "Split";
   }
 
   return (
