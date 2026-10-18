@@ -357,38 +357,40 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                 <div
                   key={track.id}
                   className={cn(
-                    "border-2 border-[#1F1305] bg-white p-3.5 transition-all flex items-center justify-between gap-3 shadow-[3px_3px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000]",
+                    "border-2 border-[#1F1305] bg-white p-3 sm:p-3.5 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-[3px_3px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000]",
                     isExact && "bg-[#EDE0D0]/40 border-[#E80000]"
                   )}
                 >
-                  <TrackCoverImage
-                    src={track.coverUrl}
-                    title={track.title}
-                    artist={track.artist}
-                    format={track.format}
-                    side={track.side}
-                    size="md"
-                    showSideBadge={true}
-                  />
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <TrackCoverImage
+                      src={track.coverUrl}
+                      title={track.title}
+                      artist={track.artist}
+                      format={track.format}
+                      side={track.side}
+                      size="md"
+                      showSideBadge={true}
+                    />
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <h5 className="font-cooper font-bold text-[#1F1305] truncate text-base">
-                        {track.title}
-                      </h5>
-                      {track.year && (
-                        <span className="text-[11px] font-mono text-[#746B5C] font-bold">
-                          ({track.year})
-                        </span>
-                      )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <h5 className="font-cooper font-bold text-[#1F1305] truncate text-sm sm:text-base">
+                          {track.title}
+                        </h5>
+                        {track.year && (
+                          <span className="text-[11px] font-mono text-[#746B5C] font-bold">
+                            ({track.year})
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs font-sans text-[#5A5245] truncate font-medium">
+                        {track.artist}
+                        {track.album && ` • ${track.album}`}
+                      </p>
                     </div>
-                    <p className="text-xs font-sans text-[#5A5245] truncate font-medium">
-                      {track.artist}
-                      {track.album && ` • ${track.album}`}
-                    </p>
                   </div>
 
-                  <div className="flex flex-col items-end gap-1.5 shrink-0">
+                  <div className="flex items-center justify-between sm:justify-end sm:flex-col sm:items-end gap-1.5 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 pl-14 sm:pl-0">
                     <BadgeDJ
                       bpm={track.bpm}
                       camelot={track.camelot}
