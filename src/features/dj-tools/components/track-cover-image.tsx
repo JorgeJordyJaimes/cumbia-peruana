@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 export interface TrackCoverImageProps {
   src?: string | null;
+  defaultSrc?: string | null;
   title: string;
   artist?: string | null;
   format?: string | null;
@@ -27,6 +28,7 @@ const sizeClasses = {
 
 export function TrackCoverImage({
   src,
+  defaultSrc,
   title,
   artist,
   format,
@@ -37,6 +39,10 @@ export function TrackCoverImage({
   className,
 }: TrackCoverImageProps) {
   const [imageError, setImageError] = useState(false);
+  const [defaultImageError, setDefaultImageError] = useState(false);
+
+  // En discos circulares (tornamesas) o cuando se solicite expresamente, usar el logo circular oficial como imagen por defecto
+  const fallbackLogo = defaultSrc !== undefined ? defaultSrc : shape === "circle" ? "/branding/logo-circular.png" : null;
 
   const cleanFormat = (format || "LP").toUpperCase();
   const cleanSide = side ? side.trim().toUpperCase() : null;
@@ -48,7 +54,7 @@ export function TrackCoverImage({
   const sideLabel = cleanSide ? `Lado ${cleanSide}` : isSingle ? "Lado A" : null;
   const badgeText = isSingle || isEp ? (sideLabel ? `${cleanFormat} • ${sideLabel}` : cleanFormat) : cleanFormat;
 
-  const hasImage = Boolean(src && !imageError);
+  const activeSrc = src && !imageError ? src : fallbackLogo && !defaultImageError ? fallbackLogo : null;
 
   return (
     <div
@@ -62,12 +68,18 @@ export function TrackCoverImage({
       )}
       title={`${title}${artist ? ` - ${artist}` : ""}${sideLabel ? ` (${sideLabel})` : ""}`}
     >
-      {hasImage ? (
+      {activeSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={src!}
+          src={activeSrc}
           alt={`${title} - ${badgeText}`}
-          onError={() => setImageError(true)}
+          onError={() => {
+            if (src && !imageError) {
+              setImageError(true);
+            } else {
+              setDefaultImageError(true);
+            }
+          }}
           className={cn(
             "h-full w-full object-cover transition-opacity duration-200",
             shape === "circle" && "rounded-full"
