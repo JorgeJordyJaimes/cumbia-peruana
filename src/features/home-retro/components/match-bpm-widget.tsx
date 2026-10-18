@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Music2, SlidersHorizontal, Disc3, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
+import { TrackCoverImage } from "@/features/dj-tools";
 import { temasDJMock } from "../data/cumbia-mock";
 
 import type { TemaDJ } from "../types";
@@ -139,9 +140,15 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
               {/* Ficha Visual de la Pista Maestra */}
               <div className="border-2 border-[#1F1305] bg-[#EDE0D0]/50 p-5 space-y-4 shadow-[3px_3px_0px_#1F1305]">
                 <div className="flex items-center gap-3.5">
-                  <div className="h-12 w-12 border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center text-[#F8C800] shadow-[2px_2px_0px_#1F1305]">
-                    <Disc3 className="h-6 w-6 animate-spin [animation-duration:10s]" />
-                  </div>
+                  <TrackCoverImage
+                    src={currentTema.portadaUrl}
+                    title={currentTema.titulo}
+                    artist={currentTema.artista}
+                    format={currentTema.format}
+                    side={currentTema.side}
+                    size="lg"
+                    showSideBadge={true}
+                  />
                   <div>
                     <h4 className="font-cooper text-xl font-bold text-[#1F1305] leading-tight">
                       {currentTema.titulo}
@@ -149,6 +156,11 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                     <p className="font-mono text-xs text-[#5A5245]">
                       {currentTema.artista} • {currentTema.ano}
                     </p>
+                    {currentTema.format && (
+                      <span className="inline-block mt-1 font-mono text-[10px] font-bold text-[#E80000] border border-[#1F1305] bg-white px-1.5 py-0.2 shadow-[1px_1px_0px_#1F1305]">
+                        {currentTema.format} {currentTema.side ? `• Lado ${currentTema.side}` : ""}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -203,9 +215,15 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                       className="border-2 border-[#1F1305] bg-[#EDE0D0]/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-white hover:shadow-[3px_3px_0px_#E80000] transition-all"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 border border-[#1F1305] bg-[#1F1305] flex items-center justify-center text-[#F8C800] shrink-0 shadow-[1px_1px_0px_#1F1305]">
-                          <Disc3 className="h-5 w-5" />
-                        </div>
+                        <TrackCoverImage
+                          src={match.portadaUrl}
+                          title={match.titulo}
+                          artist={match.artista}
+                          format={match.format}
+                          side={match.side}
+                          size="md"
+                          showSideBadge={true}
+                        />
                         <div>
                           <p className="font-cooper font-bold text-base text-[#1F1305]">
                             {match.titulo}

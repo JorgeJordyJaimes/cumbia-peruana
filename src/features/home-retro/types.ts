@@ -28,6 +28,8 @@ export interface TemaDJ {
   tonalidad: string; // e.g. "Am"
   duracion: string;
   portadaUrl: string;
+  format?: string;
+  side?: string | null;
 }
 
 export interface RadarItem {

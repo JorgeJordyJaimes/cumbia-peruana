@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { MatchBpmWidget, type TemaDJ } from "@/features/home-retro";
-import { CamelotSelector, type TrackDJItem } from "@/features/dj-tools";
+import { CamelotSelector, CreaTuMix, type TrackDJItem } from "@/features/dj-tools";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, SlidersHorizontal, Disc3 } from "lucide-react";
+import { ArrowLeft, Sparkles, SlidersHorizontal, Disc3, Layers } from "lucide-react";
 import type { CamelotCode } from "@/types/domain";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Consola Match BPM & Rueda Camelot | Kumbia Sound",
+  title: "Consola Match BPM & Crea Tu Mix a Dos Tornamesas | Kumbia Sound",
   description:
-    "Herramienta técnica para DJs de vinilo y tornamesistas. Sincronización armónica y tempo match para cumbia costeña, amazónica, andina y chicha.",
+    "Herramienta técnica para DJs de vinilo y tornamesistas. Sincronización armónica, tempo match y secuenciador a dos tornamesas para cumbia peruana patrimonial.",
 };
 
 interface RawTemaRow {
@@ -28,9 +28,13 @@ interface RawTemaRow {
     numero_pista: number | null;
     lado: string | null;
     albumes: {
+      id_album: number;
       nombre_album: string | null;
       año_publicacion: number | null;
       url_portada: string | null;
+      url_contraportada: string | null;
+      id_tipo_album: number;
+      tipos_album: { nombre_tipo: string } | null;
       sellos_discograficos: { nombre_sello: string } | null;
     } | null;
   }> | null;
@@ -56,9 +60,15 @@ export default async function MatchBpmPage() {
         numero_pista,
         lado,
         albumes:albumes!albumes_temas_id_album_fkey (
+          id_album,
           nombre_album,
           año_publicacion,
           url_portada,
+          url_contraportada,
+          id_tipo_album,
+          tipos_album:tipos_album!albumes_id_tipo_album_fkey (
+            nombre_tipo
+          ),
           sellos_discograficos (nombre_sello)
         )
       ),
@@ -71,7 +81,7 @@ export default async function MatchBpmPage() {
 
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
 
-  // Combinar iteraciones de mapeo en un solo ciclo (js-combine-iterations)
+  // Mapeo unificado con regla fonográfica estricta de imágenes según soporte y cara
   const djTracks: TrackDJItem[] = [];
   const temasDJ: TemaDJ[] = [];
 
@@ -83,6 +93,51 @@ export default async function MatchBpmPage() {
     const bpm = t.bpm || 115;
     const camelot = (t.camelot_code as CamelotCode) || "8A";
 
+    const formatName =
+      primaryAlbum?.tipos_album?.nombre_tipo ||
+      (primaryAlbum?.id_tipo_album === 1
+        ? "45"
+        : primaryAlbum?.id_tipo_album === 2
+        ? "LP"
+        : primaryAlbum?.id_tipo_album === 3
+        ? "EP"
+        : primaryAlbum?.id_tipo_album === 4
+        ? "Casete"
+        : primaryAlbum?.id_tipo_album === 5
+        ? "CD"
+        : "LP");
+
+    const lado = primaryAlbumTema?.lado ? primaryAlbumTema.lado.trim().toUpperCase() : null;
+
+    // REGLA ESTRICTA DE IMÁGENES SEGÚN SOPORTE FÍSICO:
+    // 1. LP: Portada del álbum (url_portada)
+    // 2. Single (45 RPM) o EP: Foto de la cara en la que está (Lado A = url_portada, Lado B = url_contraportada)
+    // 3. Casete o CD: Portada (url_portada)
+    const isSingleOrEp =
+      formatName === "45" ||
+      formatName.toLowerCase().includes("single") ||
+      formatName === "EP" ||
+      primaryAlbum?.id_tipo_album === 1 ||
+      primaryAlbum?.id_tipo_album === 3;
+
+    let effectiveCoverUrl: string | null = null;
+    if (isSingleOrEp) {
+      if (lado === "B" && primaryAlbum?.url_contraportada) {
+        effectiveCoverUrl = primaryAlbum.url_contraportada;
+      } else if (primaryAlbum?.url_portada) {
+        effectiveCoverUrl = primaryAlbum.url_portada;
+      } else if (primaryAlbum?.url_contraportada) {
+        effectiveCoverUrl = primaryAlbum.url_contraportada;
+      }
+    } else {
+      effectiveCoverUrl = primaryAlbum?.url_portada || primaryAlbum?.url_contraportada || null;
+    }
+
+    const durationSec = t.duracion_segundos;
+    const durationStr = durationSec
+      ? `${Math.floor(durationSec / 60)}:${(durationSec % 60).toString().padStart(2, "0")}`
+      : "S/D";
+
     djTracks.push({
       id: t.id_tema,
       title: t.titulo_tema,
@@ -91,13 +146,13 @@ export default async function MatchBpmPage() {
       year: primaryAlbum?.año_publicacion || undefined,
       bpm,
       camelot,
-      format: "Vinilo",
+      format: formatName,
+      side: lado,
+      coverUrl: effectiveCoverUrl,
+      label: primaryAlbum?.sellos_discograficos?.nombre_sello || undefined,
+      durationSeconds: durationSec,
+      durationFormatted: durationStr,
     });
-
-    const durationSec = t.duracion_segundos;
-    const durationStr = durationSec
-      ? `${Math.floor(durationSec / 60)}:${(durationSec % 60).toString().padStart(2, "0")}`
-      : "S/D";
 
     temasDJ.push({
       id: `tema-${t.id_tema}`,
@@ -110,9 +165,9 @@ export default async function MatchBpmPage() {
       camelot: t.camelot_code || "8A",
       tonalidad: camelot,
       duracion: durationStr,
-      portadaUrl:
-        primaryAlbum?.url_portada ||
-        "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80",
+      portadaUrl: effectiveCoverUrl || "",
+      format: formatName,
+      side: lado,
     });
   }
 
@@ -141,31 +196,66 @@ export default async function MatchBpmPage() {
             <div className="max-w-3xl space-y-5 relative z-10">
               <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#E80000] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <SlidersHorizontal className="h-3.5 w-3.5" />
-                <span>HERRAMIENTA PARA TORNAMESISTAS & SESIONES EN VIVO</span>
+                <span>CABINA TÉCNICA PARA TORNAMESISTAS & SESIONES EN VIVO</span>
               </div>
 
               <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-                Consola Match BPM & Armonía Camelot
+                Consola Match BPM &amp; Crea Tu Mix
               </h1>
 
               <p className="font-sans text-sm sm:text-base text-[#EDE0D0]/80 leading-relaxed max-w-2xl">
                 Diseñada específicamente para resolver los saltos de afinación y tempo característicos
-                de los vinilos peruanos de los años 70 y 80. Calcula al instante qué temas empatan sin
-                desafinar en tono ni forzar el pitch de tu tornamesa más de un ±3%.
+                de los vinilos peruanos de los años 70 y 80. Conecta dos tornamesas virtuales, crea secuencias
+                de mezcla pista a pista y calcula al instante qué temas empatan sin desafinar.
               </p>
+
+              {/* Botones de navegación interna */}
+              <div className="flex flex-wrap items-center gap-2 pt-2">
+                <a
+                  href="#crea-tu-mix"
+                  className="border-2 border-white bg-[#F8C800] hover:bg-white text-[#1F1305] font-mono text-xs font-black px-3.5 py-1.5 shadow-[2px_2px_0px_#EDE0D0] transition-colors"
+                >
+                  🎛️ 01 / Crea Tu Mix (2 Tornamesas)
+                </a>
+                <a
+                  href="#match-bpm"
+                  className="border-2 border-white bg-transparent hover:bg-white/10 text-white font-mono text-xs font-bold px-3.5 py-1.5 shadow-[2px_2px_0px_#EDE0D0] transition-colors"
+                >
+                  ⚡ 02 / Emparejador Rápido Match BPM
+                </a>
+                <a
+                  href="#rueda-camelot"
+                  className="border-2 border-white bg-transparent hover:bg-white/10 text-white font-mono text-xs font-bold px-3.5 py-1.5 shadow-[2px_2px_0px_#EDE0D0] transition-colors"
+                >
+                  ⭕ 03 / Explorador Rueda Camelot
+                </a>
+              </div>
             </div>
 
             {/* Sello decorativo de fondo */}
             <div className="absolute -bottom-8 -right-6 text-white/[0.04] font-anton text-[220px] font-black pointer-events-none select-none leading-none">
-              BPM
+              MIX
             </div>
           </div>
 
-          {/* WIDGET INTERACTIVO DE PITCH Y EMPAREJAMIENTO */}
-          <MatchBpmWidget tracks={temasDJ} />
+          {/* ============================================================ */}
+          {/* SECCIÓN 1: CREA TU MIX A DOS TORNAMESAS (NUEVA HERRAMIENTA) */}
+          {/* ============================================================ */}
+          <section id="crea-tu-mix" className="scroll-mt-20">
+            <CreaTuMix tracks={djTracks} />
+          </section>
 
-          {/* SELECTOR EXTENDIDO DE LA RUEDA CAMELOT CON BASE DE DATOS COMPLETA */}
-          <section className="space-y-6 pt-6 border-t-2 border-[#1F1305]">
+          {/* ============================================================ */}
+          {/* SECCIÓN 2: EMPAREJADOR RÁPIDO MATCH BPM */}
+          {/* ============================================================ */}
+          <section id="match-bpm" className="scroll-mt-20">
+            <MatchBpmWidget tracks={temasDJ} />
+          </section>
+
+          {/* ============================================================ */}
+          {/* SECCIÓN 3: EXPLORADOR EXTENDIDO DE LA RUEDA CAMELOT */}
+          {/* ============================================================ */}
+          <section id="rueda-camelot" className="space-y-6 pt-6 border-t-2 border-[#1F1305] scroll-mt-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-2 border-[#1F1305] pb-5">
               <div>
                 <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-[#F1730C]">

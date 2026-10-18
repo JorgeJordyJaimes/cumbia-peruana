@@ -9,6 +9,7 @@ import {
 } from "@/features/dj-tools/camelot-utils";
 import type { CamelotCode } from "@/types/domain";
 import { Sliders, Sparkles, Disc, RefreshCw } from "lucide-react";
+import { TrackCoverImage } from "./track-cover-image";
 
 const MINOR_KEYS: CamelotCode[] = [
   "1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A", "9A", "10A", "11A", "12A"
@@ -26,6 +27,11 @@ export interface TrackDJItem {
   bpm: number;
   camelot: CamelotCode;
   format?: string;
+  side?: string | null;
+  coverUrl?: string | null;
+  label?: string | null;
+  durationSeconds?: number | null;
+  durationFormatted?: string;
 }
 
 interface CamelotSelectorProps {
@@ -351,10 +357,20 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                 <div
                   key={track.id}
                   className={cn(
-                    "border-2 border-[#1F1305] bg-white p-4 transition-all flex items-center justify-between gap-4 shadow-[3px_3px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000]",
+                    "border-2 border-[#1F1305] bg-white p-3.5 transition-all flex items-center justify-between gap-3 shadow-[3px_3px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000]",
                     isExact && "bg-[#EDE0D0]/40 border-[#E80000]"
                   )}
                 >
+                  <TrackCoverImage
+                    src={track.coverUrl}
+                    title={track.title}
+                    artist={track.artist}
+                    format={track.format}
+                    side={track.side}
+                    size="md"
+                    showSideBadge={true}
+                  />
+
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <h5 className="font-cooper font-bold text-[#1F1305] truncate text-base">
