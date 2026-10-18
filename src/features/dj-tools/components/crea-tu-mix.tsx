@@ -33,6 +33,64 @@ import {
   MoveRight,
 } from "lucide-react";
 
+export interface GenreAffinity {
+  score: number;
+  badgeText: string;
+  badgeColor: string;
+  description: string;
+  type: "primary_match" | "bridge_match" | "secondary_match" | "contrast";
+}
+
+// Helper técnico DJ para calcular afinidad estilística entre pistas consecutivas
+export function getTrackGenreAffinity(prev: TrackDJItem, cand: TrackDJItem): GenreAffinity {
+  const p1 = (prev.primaryGenre || "").toLowerCase().trim();
+  const p2 = (prev.secondaryGenre || "").toLowerCase().trim();
+  const c1 = (cand.primaryGenre || "").toLowerCase().trim();
+  const c2 = (cand.secondaryGenre || "").toLowerCase().trim();
+
+  // 1. Mismo género principal (máxima afinidad de ritmo, tempo interior y cadencia)
+  if (p1 && c1 && p1 === c1) {
+    return {
+      score: 100,
+      badgeText: "🎯 Mismo Género",
+      badgeColor: "bg-[#10B981] text-white border-[#1F1305]",
+      description: `Misma cadencia rítmica base (${cand.primaryGenre})`,
+      type: "primary_match",
+    };
+  }
+
+  // 2. Puente de Fusión (el principal de una es el secundario de la otra)
+  if ((p1 && c2 && p1 === c2) || (p2 && c1 && p2 === c1)) {
+    return {
+      score: 75,
+      badgeText: "⚡ Fusión Puente",
+      badgeColor: "bg-[#F8C800] text-[#1F1305] border-[#1F1305]",
+      description: `Puente estilístico (${cand.primaryGenre}${cand.secondaryGenre ? ` / ${cand.secondaryGenre}` : ""})`,
+      type: "bridge_match",
+    };
+  }
+
+  // 3. Fusión Compartida (ambas comparten vertiente secundaria)
+  if (p2 && c2 && p2 === c2) {
+    return {
+      score: 50,
+      badgeText: "✨ Fusión Sec.",
+      badgeColor: "bg-[#F1730C] text-white border-[#1F1305]",
+      description: `Comparte vertiente secundaria (${cand.secondaryGenre})`,
+      type: "secondary_match",
+    };
+  }
+
+  // 4. Compatible en BPM/Tono pero de otro estilo (no restrictivo)
+  return {
+    score: 10,
+    badgeText: "🔄 Cruce Libre",
+    badgeColor: "bg-white text-[#5A5245] border-[#1F1305]/30",
+    description: `Cruce estilístico (${cand.primaryGenre || "Variado"})`,
+    type: "contrast",
+  };
+}
+
 export interface MixStepItem {
   id: string; // unique ID for timeline
   track: TrackDJItem;
@@ -44,6 +102,7 @@ export interface MixStepItem {
     label: string;
     type: string;
   };
+  genreAffinity?: GenreAffinity;
 }
 
 interface CreaTuMixProps {
@@ -122,7 +181,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
     return new Set(mixSteps.map((s) => s.track.id));
   }, [mixSteps]);
 
-  // Cálculo de compatibilidad armónica y pitch para el modal selector
+  // Cálculo de compatibilidad armónica, tempo match y afinidad de género para el modal selector
   const candidateRecommendations = useMemo(() => {
     if (!lastTrackInMix) return [];
 
@@ -138,22 +197,33 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
       const absDiff = Math.abs(bpmDiff);
       const isHarmonic = compatibleCodes.has(t.camelot);
 
-      // Si estamos en la pestaña compatible, filtrar por ±5% de BPM y compatibilidad Camelot
+      // Si estamos en la pestaña compatible, filtrar por tolerancia de tempo y clave Camelot
       if (absDiff <= 5.5 && isHarmonic) {
         const transInfo = transitions.find((tr) => tr.code === t.camelot);
+        const genreAffinity = getTrackGenreAffinity(lastTrackInMix, t);
         results.push({
           track: t,
           bpmDiff,
           absDiff,
           transInfo,
+          genreAffinity,
         });
       }
     }
 
-    return results.sort((a, b) => a.absDiff - b.absDiff);
+    // Ordenamiento inteligente DJ:
+    // 1. Mayor afinidad de género (mismo género principal > puente de fusión > fusión secundaria > cruce libre)
+    // 2. Menor diferencia de tempo (BPM / pitch)
+    return results.sort((a, b) => {
+      if (b.genreAffinity.score !== a.genreAffinity.score) {
+        return b.genreAffinity.score - a.genreAffinity.score;
+      }
+      return a.absDiff - b.absDiff;
+    });
   }, [lastTrackInMix, tracks, usedTrackIds]);
 
-  // Lista para la búsqueda general en el modal (excluyendo también temas ya usados en el mix)
+  // Lista para la búsqueda general en el modal (excluyendo temas ya usados en el mix)
+  // Ahora permite buscar también por género principal o secundario
   const searchResults = useMemo(() => {
     const availableTracks = tracks.filter((t) => !usedTrackIds.has(t.id));
     if (!pickerSearchQuery.trim()) return availableTracks.slice(0, 30);
@@ -164,7 +234,9 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
           t.title.toLowerCase().includes(q) ||
           t.artist.toLowerCase().includes(q) ||
           (t.album && t.album.toLowerCase().includes(q)) ||
-          t.camelot.toLowerCase().includes(q)
+          t.camelot.toLowerCase().includes(q) ||
+          (t.primaryGenre && t.primaryGenre.toLowerCase().includes(q)) ||
+          (t.secondaryGenre && t.secondaryGenre.toLowerCase().includes(q))
         );
       })
       .slice(0, 40);
@@ -175,6 +247,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
     (track: TrackDJItem) => {
       let pitchDiffWithPrev: number | undefined;
       let harmonicTransition: { code: CamelotCode; label: string; type: string } | undefined;
+      let genreAffinity: GenreAffinity | undefined;
 
       if (lastTrackInMix) {
         pitchDiffWithPrev = ((track.bpm - lastTrackInMix.bpm) / lastTrackInMix.bpm) * 100;
@@ -193,6 +266,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             type: "custom",
           };
         }
+        genreAffinity = getTrackGenreAffinity(lastTrackInMix, track);
       }
 
       const newStep: MixStepItem = {
@@ -202,6 +276,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
         stepNumber: nextStepNumber,
         pitchDiffWithPrev,
         harmonicTransition,
+        genreAffinity,
       };
 
       setMixSteps((prev) => {
@@ -552,6 +627,16 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                       <p className="text-xs text-[#5A5245] truncate font-sans">
                         {currentPair.trackA.artist} {currentPair.trackA.year ? `• ${currentPair.trackA.year}` : ""}
                       </p>
+                      <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                        <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
+                          {currentPair.trackA.primaryGenre || "Cumbia"}
+                        </span>
+                        {currentPair.trackA.secondaryGenre && (
+                          <span className="px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                            + {currentPair.trackA.secondaryGenre}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <BadgeDJ bpm={currentPair.trackA.bpm} camelot={currentPair.trackA.camelot} />
@@ -839,6 +924,16 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                       <p className="text-xs text-[#5A5245] truncate font-sans">
                         {currentPair.trackB.artist} {currentPair.trackB.year ? `• ${currentPair.trackB.year}` : ""}
                       </p>
+                      <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                        <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
+                          {currentPair.trackB.primaryGenre || "Cumbia"}
+                        </span>
+                        {currentPair.trackB.secondaryGenre && (
+                          <span className="px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                            + {currentPair.trackB.secondaryGenre}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <BadgeDJ bpm={currentPair.trackB.bpm} camelot={currentPair.trackB.camelot} />
@@ -973,12 +1068,20 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                           {step.track.artist}
                           {step.track.year ? ` (${step.track.year})` : ""}
                         </p>
-                        <div className="flex flex-wrap items-center gap-2 mt-1">
-                          <span className="font-mono text-[10px] font-bold text-[#746B5C] bg-[#EDE0D0] border border-[#1F1305]/30 px-1.5 py-0.2">
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                          <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
+                            {step.track.primaryGenre || "Cumbia"}
+                          </span>
+                          {step.track.secondaryGenre && (
+                            <span className="px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                              + {step.track.secondaryGenre}
+                            </span>
+                          )}
+                          <span className="font-bold text-[#746B5C] bg-[#EDE0D0] border border-[#1F1305]/30 px-1.5 py-0.2">
                             {step.track.format || "LP"} {step.track.side ? `• Lado ${step.track.side}` : ""}
                           </span>
                           {step.track.durationFormatted && (
-                            <span className="font-mono text-[10px] text-[#5A5245]">
+                            <span className="text-[#5A5245]">
                               {step.track.durationFormatted}
                             </span>
                           )}
@@ -1041,6 +1144,16 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         {mixSteps[idx + 1].harmonicTransition && (
                           <span className="text-[10px] text-[#1F1305] font-bold">
                             {mixSteps[idx + 1].harmonicTransition!.label}
+                          </span>
+                        )}
+                        {mixSteps[idx + 1].genreAffinity && (
+                          <span
+                            className={cn(
+                              "text-[10px] font-bold px-1.5 py-0.2 border",
+                              mixSteps[idx + 1].genreAffinity!.badgeColor
+                            )}
+                          >
+                            {mixSteps[idx + 1].genreAffinity!.badgeText}
                           </span>
                         )}
                       </div>
@@ -1173,66 +1286,99 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-1 sm:space-y-2">
               {pickerTab === "compatible" && lastTrackInMix ? (
                 candidateRecommendations.length > 0 ? (
-                  candidateRecommendations.map(({ track, bpmDiff, transInfo }) => (
-                    <div
-                      key={track.id}
-                      className="p-2 sm:p-2.5 border-b last:border-b-0 border-[#1F1305]/10 hover:bg-[#EDE0D0]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
-                    >
-                      {/* Bloque 1: Portada + Datos del Tema */}
-                      <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
-                        <TrackCoverImage
-                          src={track.coverUrl}
-                          title={track.title}
-                          artist={track.artist}
-                          format={track.format}
-                          side={track.side}
-                          size="md"
-                          showSideBadge={true}
-                        />
-                        <div className="min-w-0 flex-1">
-                          <h4
-                            className="font-cooper font-bold text-sm sm:text-base text-[#1F1305] line-clamp-2 leading-tight break-words"
+                  <>
+                    <div className="bg-[#FAF5EE] border border-[#1F1305]/30 p-2 text-center font-mono text-[11px] text-[#5A5245] flex items-center justify-center gap-1.5 shadow-[1px_1px_0px_#1F1305]">
+                      <Sparkles className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
+                      <span>
+                        Recomendaciones rankeadas por <strong>afinidad estilística (géneros)</strong> y sincronía de tempo/clave.
+                      </span>
+                    </div>
+
+                    {candidateRecommendations.map(({ track, bpmDiff, transInfo, genreAffinity }) => (
+                      <div
+                        key={track.id}
+                        className="p-2 sm:p-2.5 border-b last:border-b-0 border-[#1F1305]/10 hover:bg-[#EDE0D0]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
+                      >
+                        {/* Bloque 1: Portada + Datos del Tema */}
+                        <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
+                          <TrackCoverImage
+                            src={track.coverUrl}
                             title={track.title}
-                          >
-                            {track.title}
-                          </h4>
-                          <p className="font-mono text-xs text-[#5A5245] truncate mt-0.5">
-                            {track.artist} {track.year ? `• ${track.year}` : ""}
-                          </p>
-                          <div className="flex flex-wrap items-center gap-2 mt-1 font-mono text-[10px]">
-                            <span
-                              className={cn(
-                                "font-bold px-1.5 py-0.2 border border-[#1F1305]/20",
-                                Math.abs(bpmDiff) <= 3
-                                  ? "bg-[#10B981]/20 text-[#065F46]"
-                                  : "bg-[#F1730C]/20 text-[#C2410C]"
-                              )}
+                            artist={track.artist}
+                            format={track.format}
+                            side={track.side}
+                            size="md"
+                            showSideBadge={true}
+                          />
+                          <div className="min-w-0 flex-1">
+                            <h4
+                              className="font-cooper font-bold text-sm sm:text-base text-[#1F1305] line-clamp-2 leading-tight break-words"
+                              title={track.title}
                             >
-                              Pitch: {bpmDiff > 0 ? `+${bpmDiff.toFixed(1)}%` : `${bpmDiff.toFixed(1)}%`}
-                            </span>
-                            <span className="text-[#E80000] font-black truncate">
-                              {transInfo?.label || track.camelot}
-                            </span>
+                              {track.title}
+                            </h4>
+                            <p className="font-mono text-xs text-[#5A5245] truncate mt-0.5">
+                              {track.artist} {track.year ? `• ${track.year}` : ""}
+                            </p>
+                            <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                              {/* Badge de afinidad de género */}
+                              <span
+                                className={cn(
+                                  "font-bold px-1.5 py-0.2 border shadow-[1px_1px_0px_#1F1305]",
+                                  genreAffinity.badgeColor
+                                )}
+                                title={genreAffinity.description}
+                              >
+                                {genreAffinity.badgeText}
+                              </span>
+
+                              {/* Chip género principal */}
+                              <span className="bg-white border border-[#1F1305]/30 text-[#1F1305] px-1.5 py-0.2">
+                                {track.primaryGenre || "Cumbia"}
+                              </span>
+
+                              {/* Chip género secundario si existe */}
+                              {track.secondaryGenre && (
+                                <span className="bg-[#EDE0D0] border border-[#1F1305]/20 text-[#5A5245] px-1.5 py-0.2">
+                                  + {track.secondaryGenre}
+                                </span>
+                              )}
+
+                              <span
+                                className={cn(
+                                  "font-bold px-1.5 py-0.2 border border-[#1F1305]/20",
+                                  Math.abs(bpmDiff) <= 3
+                                    ? "bg-[#10B981]/20 text-[#065F46]"
+                                    : "bg-[#F1730C]/20 text-[#C2410C]"
+                                )}
+                              >
+                                Pitch: {bpmDiff > 0 ? `+${bpmDiff.toFixed(1)}%` : `${bpmDiff.toFixed(1)}%`}
+                              </span>
+
+                              <span className="text-[#E80000] font-black truncate">
+                                {transInfo?.label || track.camelot}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Bloque 2: Badge DJ + Botón Cargar */}
-                      <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 pl-14 sm:pl-0">
-                        <BadgeDJ bpm={track.bpm} camelot={track.camelot} />
-                        <button
-                          type="button"
-                          onClick={() => addTrackToMix(track)}
-                          className={cn(
-                            "border-2 border-[#1F1305] px-4 py-1.5 font-mono text-xs font-black text-white shadow-[2px_2px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 hover:opacity-95 transition-all cursor-pointer shrink-0",
-                            nextDeck === "A" ? "bg-[#E80000]" : "bg-[#F1730C]"
-                          )}
-                        >
-                          Cargar
-                        </button>
+                        {/* Bloque 2: Badge DJ + Botón Cargar */}
+                        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 pl-14 sm:pl-0">
+                          <BadgeDJ bpm={track.bpm} camelot={track.camelot} />
+                          <button
+                            type="button"
+                            onClick={() => addTrackToMix(track)}
+                            className={cn(
+                              "border-2 border-[#1F1305] px-4 py-1.5 font-mono text-xs font-black text-white shadow-[2px_2px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 hover:opacity-95 transition-all cursor-pointer shrink-0",
+                              nextDeck === "A" ? "bg-[#E80000]" : "bg-[#F1730C]"
+                            )}
+                          >
+                            Cargar
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    ))}
+                  </>
                 ) : (
                   <div className="p-8 text-center font-mono text-xs text-[#746B5C] space-y-2">
                     <p>No se encontraron otros temas compatibles que no hayan sido agregados al mix.</p>
@@ -1250,8 +1396,10 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 searchResults.length > 0 ? (
                   searchResults.map((track) => {
                     let diff = 0;
+                    let generalGenreAffinity: GenreAffinity | null = null;
                     if (lastTrackInMix) {
                       diff = ((track.bpm - lastTrackInMix.bpm) / lastTrackInMix.bpm) * 100;
+                      generalGenreAffinity = getTrackGenreAffinity(lastTrackInMix, track);
                     }
 
                     return (
@@ -1280,11 +1428,35 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                             <p className="font-mono text-xs text-[#5A5245] truncate mt-0.5">
                               {track.artist} {track.year ? `• ${track.year}` : ""}
                             </p>
-                            {lastTrackInMix && (
-                              <span className="font-mono text-[10px] text-[#746B5C] block mt-0.5 font-bold">
-                                Pitch: {diff > 0 ? `+${diff.toFixed(1)}%` : `${diff.toFixed(1)}%`}
+                            <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                              {generalGenreAffinity && (
+                                <span
+                                  className={cn(
+                                    "font-bold px-1.5 py-0.2 border shadow-[1px_1px_0px_#1F1305]",
+                                    generalGenreAffinity.badgeColor
+                                  )}
+                                  title={generalGenreAffinity.description}
+                                >
+                                  {generalGenreAffinity.badgeText}
+                                </span>
+                              )}
+
+                              <span className="bg-white border border-[#1F1305]/30 text-[#1F1305] px-1.5 py-0.2">
+                                {track.primaryGenre || "Cumbia"}
                               </span>
-                            )}
+
+                              {track.secondaryGenre && (
+                                <span className="bg-[#EDE0D0] border border-[#1F1305]/20 text-[#5A5245] px-1.5 py-0.2">
+                                  + {track.secondaryGenre}
+                                </span>
+                              )}
+
+                              {lastTrackInMix && (
+                                <span className="font-mono text-[10px] text-[#746B5C] font-bold">
+                                  Pitch: {diff > 0 ? `+${diff.toFixed(1)}%` : `${diff.toFixed(1)}%`}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
 

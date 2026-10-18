@@ -23,6 +23,14 @@ interface RawTemaRow {
   bpm: number | null;
   camelot_code: string | null;
   generos: { nombre_genero: string } | null;
+  temas_generos: Array<{
+    id_genero: number;
+    es_principal: boolean | null;
+    generos: {
+      id_genero: number;
+      nombre_genero: string;
+    } | null;
+  }> | null;
   albumes_temas: Array<{
     id_album: number;
     numero_pista: number | null;
@@ -55,6 +63,14 @@ export default async function MatchBpmPage() {
       bpm,
       camelot_code,
       generos:generos!temas_id_genero_fkey (nombre_genero),
+      temas_generos (
+        id_genero,
+        es_principal,
+        generos (
+          id_genero,
+          nombre_genero
+        )
+      ),
       albumes_temas (
         id_album,
         numero_pista,
@@ -92,6 +108,29 @@ export default async function MatchBpmPage() {
     const artist = primaryGroup?.nombre_grupo || "Agrupación Histórica";
     const bpm = t.bpm || 115;
     const camelot = (t.camelot_code as CamelotCode) || "8A";
+
+    // Extracción jerárquica de géneros (Principal y Secundario / Fusión)
+    const tgList = t.temas_generos || [];
+    const principalTg = tgList.find((g) => g.es_principal === true);
+    const secondaryTg = tgList.find(
+      (g) => g.es_principal === false || (principalTg && g.id_genero !== principalTg.id_genero)
+    );
+
+    const primaryGenre =
+      principalTg?.generos?.nombre_genero ||
+      tgList[0]?.generos?.nombre_genero ||
+      t.generos?.nombre_genero ||
+      "Cumbia Peruana";
+
+    const secondaryGenre =
+      secondaryTg?.generos?.nombre_genero ||
+      (tgList.length > 1 && tgList[1]?.generos?.nombre_genero !== primaryGenre
+        ? tgList[1]?.generos?.nombre_genero
+        : null);
+
+    const genresList: string[] = [];
+    if (primaryGenre) genresList.push(primaryGenre);
+    if (secondaryGenre && !genresList.includes(secondaryGenre)) genresList.push(secondaryGenre);
 
     const formatName =
       primaryAlbum?.tipos_album?.nombre_tipo ||
@@ -152,6 +191,9 @@ export default async function MatchBpmPage() {
       label: primaryAlbum?.sellos_discograficos?.nombre_sello || undefined,
       durationSeconds: durationSec,
       durationFormatted: durationStr,
+      primaryGenre,
+      secondaryGenre,
+      genres: genresList,
     });
 
     temasDJ.push({
@@ -160,7 +202,10 @@ export default async function MatchBpmPage() {
       artista: artist,
       ano: primaryAlbum?.año_publicacion || 1974,
       sello: primaryAlbum?.sellos_discograficos?.nombre_sello || "Sello Particular",
-      subgenero: t.generos?.nombre_genero || "Cumbia",
+      subgenero: primaryGenre,
+      primaryGenre,
+      secondaryGenre,
+      genres: genresList,
       bpm,
       camelot: t.camelot_code || "8A",
       tonalidad: camelot,

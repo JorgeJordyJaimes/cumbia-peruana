@@ -32,6 +32,9 @@ export interface TrackDJItem {
   label?: string | null;
   durationSeconds?: number | null;
   durationFormatted?: string;
+  primaryGenre?: string | null;
+  secondaryGenre?: string | null;
+  genres?: string[];
 }
 
 interface CamelotSelectorProps {
