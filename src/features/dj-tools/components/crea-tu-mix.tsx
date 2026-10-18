@@ -91,6 +91,55 @@ export function getTrackGenreAffinity(prev: TrackDJItem, cand: TrackDJItem): Gen
   };
 }
 
+// Helper para renderizar pastilla de ajuste de Pitch con semántica DJ estricta:
+// - Aumentar pitch (positivo): Color VERDE con símbolo '+' explícito
+// - Reducir pitch (negativo): Color ROJO con símbolo '-' explícito
+// - Sin cambio (0.0%): Color NEUTRAL
+export function renderPitchBadge(pitchDiff: number | undefined, compact = false) {
+  if (pitchDiff === undefined) return null;
+  const rounded = Number(pitchDiff.toFixed(1));
+
+  if (rounded > 0) {
+    return (
+      <span
+        className={cn(
+          "font-black px-1.5 py-0.2 border border-[#10B981] bg-[#10B981]/20 text-[#065F46] shadow-[1px_1px_0px_#10B981]",
+          compact ? "text-[9px]" : "text-[10px]"
+        )}
+        title="Aumentar pitch: Acelerar plato para igualar tempo (+)"
+      >
+        Pitch: +{rounded.toFixed(1)}%
+      </span>
+    );
+  }
+
+  if (rounded < 0) {
+    return (
+      <span
+        className={cn(
+          "font-black px-1.5 py-0.2 border border-[#E80000] bg-[#E80000]/20 text-[#991B1B] shadow-[1px_1px_0px_#E80000]",
+          compact ? "text-[9px]" : "text-[10px]"
+        )}
+        title="Reducir pitch: Frenar plato para igualar tempo (-)"
+      >
+        Pitch: {rounded.toFixed(1)}%
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        "font-bold px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]",
+        compact ? "text-[9px]" : "text-[10px]"
+      )}
+      title="Mismo tempo: 0.0% de ajuste"
+    >
+      Pitch: 0.0%
+    </span>
+  );
+}
+
 export interface MixStepItem {
   id: string; // unique ID for timeline
   track: TrackDJItem;
@@ -1020,7 +1069,88 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
+            {/* ============================================================ */}
+            {/* ANOTACIONES TÉCNICAS Y GUÍA DE SÍMBOLOS (FIJO ARRIBA DE PISTA #1) */}
+            {/* ============================================================ */}
+            <div className="border-2 border-[#1F1305] bg-white p-3 sm:p-4 shadow-[3px_3px_0px_#1F1305] space-y-3 font-mono">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-[#1F1305]/20 pb-2">
+                <span className="text-[11px] font-black uppercase text-[#1F1305] flex items-center gap-1.5">
+                  <HelpCircle className="h-4 w-4 text-[#E80000]" />
+                  Anotaciones Técnicas &amp; Guía de Simbología DJ
+                </span>
+                <span className="text-[10px] text-[#746B5C] font-bold">
+                  Referencia de afinidad estilística y velocidad para mezclas
+                </span>
+              </div>
+
+              {/* Grid explicativo de los 4 símbolos de afinidad */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-[10px]">
+                {/* 1. Mismo Género */}
+                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#10B981] text-white">
+                      🎯 Mismo Género
+                    </span>
+                  </div>
+                  <p className="text-[#5A5245] leading-snug">
+                    <strong>Continuidad rítmica directa:</strong> Ambos temas comparten el mismo género principal. Mantiene la misma cadencia en la pista sin variar el patrón rítmico.
+                  </p>
+                </div>
+
+                {/* 2. Fusión Puente */}
+                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#F8C800] text-[#1F1305]">
+                      ⚡ Fusión Puente
+                    </span>
+                  </div>
+                  <p className="text-[#5A5245] leading-snug">
+                    <strong>Puente de estilo:</strong> El género principal conecta con la vertiente secundaria del otro. Es la técnica clásica para modular de un estilo a otro suavemente.
+                  </p>
+                </div>
+
+                {/* 3. Fusión Secundaria */}
+                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#F1730C] text-white">
+                      ✨ Fusión Sec.
+                    </span>
+                  </div>
+                  <p className="text-[#5A5245] leading-snug">
+                    <strong>Vertiente compartida:</strong> Ambos temas comparten una influencia rítmica secundaria común, aunque sus géneros base sean distintos.
+                  </p>
+                </div>
+
+                {/* 4. Cruce Libre */}
+                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                      🔄 Cruce Libre
+                    </span>
+                  </div>
+                  <p className="text-[#5A5245] leading-snug">
+                    <strong>Cruce de ambiente:</strong> Géneros contrastantes pero armónicamente compatibles en clave Camelot y rango de BPM. Permite quiebres libres en el set.
+                  </p>
+                </div>
+              </div>
+
+              {/* Guía semántica del Ajuste de Pitch */}
+              <div className="pt-2 border-t border-[#1F1305]/15 flex flex-wrap items-center gap-2 sm:gap-4 text-[10px]">
+                <span className="font-bold text-[#1F1305] uppercase">Lectura del Pitch:</span>
+                <span className="inline-flex items-center gap-1 bg-[#10B981]/20 border border-[#10B981] px-1.5 py-0.5 text-[#065F46] font-black">
+                  +X.X% (Verde) = Aumentar Pitch (Acelerar plato)
+                </span>
+                <span className="inline-flex items-center gap-1 bg-[#E80000]/20 border border-[#E80000] px-1.5 py-0.5 text-[#991B1B] font-black">
+                  -X.X% (Rojo) = Reducir Pitch (Frenar plato)
+                </span>
+                <span className="inline-flex items-center gap-1 bg-white border border-[#1F1305]/30 px-1.5 py-0.5 text-[#5A5245] font-bold">
+                  0.0% = Mismo Tempo
+                </span>
+              </div>
+            </div>
+
+            {/* Listado de temas de la mezcla */}
             {mixSteps.map((step, idx) => {
               const isDeckA = step.deck === "A";
               const isLast = idx === mixSteps.length - 1;
@@ -1129,18 +1259,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         <span className="font-bold text-[#1F1305] text-[11px]">
                           Crossfade Tornamesa {step.deck} ➔ Tornamesa {mixSteps[idx + 1].deck}
                         </span>
-                        {mixSteps[idx + 1].pitchDiffWithPrev !== undefined && (
-                          <span
-                            className={cn(
-                              "font-bold text-[10px] px-1.5 py-0.2 border border-[#1F1305]/20",
-                              Math.abs(mixSteps[idx + 1].pitchDiffWithPrev!) <= 3
-                                ? "bg-[#10B981]/20 text-[#065F46]"
-                                : "bg-[#F1730C]/20 text-[#C2410C]"
-                            )}
-                          >
-                            Pitch: {mixSteps[idx + 1].pitchDiffWithPrev! > 0 ? `+${mixSteps[idx + 1].pitchDiffWithPrev!.toFixed(1)}%` : `${mixSteps[idx + 1].pitchDiffWithPrev!.toFixed(1)}%`}
-                          </span>
-                        )}
+                        {renderPitchBadge(mixSteps[idx + 1].pitchDiffWithPrev)}
                         {mixSteps[idx + 1].harmonicTransition && (
                           <span className="text-[10px] text-[#1F1305] font-bold">
                             {mixSteps[idx + 1].harmonicTransition!.label}
@@ -1344,16 +1463,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                                 </span>
                               )}
 
-                              <span
-                                className={cn(
-                                  "font-bold px-1.5 py-0.2 border border-[#1F1305]/20",
-                                  Math.abs(bpmDiff) <= 3
-                                    ? "bg-[#10B981]/20 text-[#065F46]"
-                                    : "bg-[#F1730C]/20 text-[#C2410C]"
-                                )}
-                              >
-                                Pitch: {bpmDiff > 0 ? `+${bpmDiff.toFixed(1)}%` : `${bpmDiff.toFixed(1)}%`}
-                              </span>
+                              {renderPitchBadge(bpmDiff)}
 
                               <span className="text-[#E80000] font-black truncate">
                                 {transInfo?.label || track.camelot}
@@ -1451,11 +1561,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                                 </span>
                               )}
 
-                              {lastTrackInMix && (
-                                <span className="font-mono text-[10px] text-[#746B5C] font-bold">
-                                  Pitch: {diff > 0 ? `+${diff.toFixed(1)}%` : `${diff.toFixed(1)}%`}
-                                </span>
-                              )}
+                              {lastTrackInMix && renderPitchBadge(diff)}
                             </div>
                           </div>
                         </div>

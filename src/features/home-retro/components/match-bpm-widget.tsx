@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { Music2, SlidersHorizontal, Disc3, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { TrackCoverImage } from "@/features/dj-tools";
 import { temasDJMock } from "../data/cumbia-mock";
@@ -318,15 +319,20 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                         <div className="text-right">
                           <span className="text-[10px] font-bold uppercase text-[#746B5C] block">Ajuste Pitch:</span>
                           <span
-                            className={`font-bold ${
-                              match.bpmDiff === 0
-                                ? "text-[#10B981]"
-                                : match.bpmDiff > 0
-                                ? "text-[#F1730C]"
-                                : "text-[#0284C7]"
-                            }`}
+                            className={cn(
+                              "font-black text-xs px-2 py-0.5 border shadow-[1px_1px_0px_#1F1305] inline-block",
+                              Number(match.bpmDiff.toFixed(1)) > 0
+                                ? "bg-[#10B981]/20 text-[#065F46] border-[#10B981]"
+                                : Number(match.bpmDiff.toFixed(1)) < 0
+                                ? "bg-[#E80000]/20 text-[#991B1B] border-[#E80000]"
+                                : "bg-white text-[#5A5245] border-[#1F1305]/30"
+                            )}
                           >
-                            {match.bpmDiff > 0 ? `+${match.bpmDiff.toFixed(1)}%` : `${match.bpmDiff.toFixed(1)}%`}
+                            {Number(match.bpmDiff.toFixed(1)) > 0
+                              ? `+${match.bpmDiff.toFixed(1)}%`
+                              : Number(match.bpmDiff.toFixed(1)) < 0
+                              ? `${match.bpmDiff.toFixed(1)}%`
+                              : "0.0%"}
                           </span>
                         </div>
 
