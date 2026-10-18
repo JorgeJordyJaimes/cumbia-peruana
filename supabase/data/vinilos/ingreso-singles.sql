@@ -307,7 +307,7 @@ VALUES
 (22, 2, '1047', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 (22, 2, '1059', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, TRUE, (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND id_sello = 84 AND numero_catalogo = '4' LIMIT 1), 'Reedición de Prodita 4, se cambió el nombre del tema de Toma mi amor a Muñequita, pero es el mismo tema con los mismos arreglos y letra, solo cambió el nombre a uno más comercial'),
 (22, 2, '1069', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
-(22, 2, '1211', 1985, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
+(22, 2, '1211', 1985, 1, FALSE, TRUE, FALSE, FALSE, 'Lado A', (SELECT id_album FROM Albumes WHERE id_grupo = 22 AND numero_catalogo = 'LPM-216064' LIMIT 1), FALSE, NULL, '');
 
 -- MIDAS
 INSERT INTO Albumes (
