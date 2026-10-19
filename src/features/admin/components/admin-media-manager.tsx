@@ -1,18 +1,25 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { GlassCard } from "@/components/ui/glass-card";
 import { ImageUploader } from "@/features/storage/components/image-uploader";
 import {
   Search,
   Disc3,
+  Disc,
   Users,
   User,
   Building2,
   ExternalLink,
   Trash2,
   CheckCircle2,
+  ArrowRight,
+  X,
+  Sparkles,
+  Radio,
+  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AlbumCoverSlider } from "@/features/albumes";
@@ -21,6 +28,7 @@ export interface AdminAlbumItem {
   id: number;
   title: string;
   artist: string;
+  groupId?: number | null;
   catalogNumber?: string | null;
   year?: number | null;
   label?: string | null;
@@ -37,6 +45,13 @@ export interface AdminGroupItem {
   region?: string | null;
   directorName?: string | null;
   photoUrl?: string | null;
+  totalAlbums?: number;
+  lpsCount?: number;
+  singlesCount?: number;
+  casetesCount?: number;
+  epsCount?: number;
+  cdsCount?: number;
+  albumsWithPhoto?: number;
 }
 
 export interface AdminPersonItem {
@@ -61,6 +76,7 @@ interface AdminMediaManagerProps {
 }
 
 type TabType = "albumes" | "grupos" | "personas" | "sellos";
+type FilterStatus = "all" | "with-image" | "without-image" | "both-sides" | "with-discography";
 
 export function AdminMediaManager({
   initialAlbums,
@@ -70,7 +86,7 @@ export function AdminMediaManager({
 }: AdminMediaManagerProps) {
   const [activeTab, setActiveTab] = useState<TabType>("albumes");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterImageStatus, setFilterImageStatus] = useState<"all" | "with-image" | "without-image" | "both-sides">("all");
+  const [filterImageStatus, setFilterImageStatus] = useState<FilterStatus>("all");
 
   // Estados locales para reflejar cambios en tiempo real
   const [albums, setAlbums] = useState<AdminAlbumItem[]>(initialAlbums);
@@ -232,9 +248,15 @@ export function AdminMediaManager({
     return groups.filter((g) => {
       if (filterImageStatus === "with-image" && !g.photoUrl) return false;
       if (filterImageStatus === "without-image" && g.photoUrl) return false;
+      if (filterImageStatus === "with-discography" && (!g.totalAlbums || g.totalAlbums === 0)) return false;
       if (!searchTerm.trim()) return true;
       const q = searchTerm.toLowerCase();
-      return g.name.toLowerCase().includes(q) || g.region?.toLowerCase().includes(q);
+      return (
+        g.name.toLowerCase().includes(q) ||
+        g.region?.toLowerCase().includes(q) ||
+        g.directorName?.toLowerCase().includes(q) ||
+        String(g.id) === q
+      );
     });
   }, [groups, searchTerm, filterImageStatus]);
 
@@ -301,32 +323,59 @@ export function AdminMediaManager({
 
       {/* Barra de Búsqueda y Filtros de Estado */}
       <GlassCard className="p-4 flex flex-wrap items-center justify-between gap-4">
-        <div className="relative flex-1 min-w-[240px]">
+        <div className="relative flex-1 min-w-[260px]">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
           <input
             type="text"
-            placeholder={`Buscar en ${activeTab}...`}
+            placeholder={
+              activeTab === "grupos"
+                ? "Buscar agrupación (nombre, región, director, ID)..."
+                : `Buscar en ${activeTab}...`
+            }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/50 py-2.5 pl-10 pr-4 font-mono text-xs text-white placeholder-neutral-500 focus:border-amber-400 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-black/50 py-2.5 pl-10 pr-9 font-mono text-xs text-white placeholder-neutral-500 focus:border-amber-400 focus:outline-none"
           />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
+              title="Limpiar búsqueda"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-xs">
-          <span className="text-neutral-400 hidden sm:inline">Filtrar:</span>
-          {[
-            { id: "all" as const, label: "Todos" },
-            { id: "with-image" as const, label: "Con Imagen" },
-            { id: "both-sides" as const, label: "Ambas Caras" },
-            { id: "without-image" as const, label: "Sin Imagen" },
-          ].map((f) => (
+        <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
+          <span className="text-neutral-400 text-[11px] hidden sm:inline">Filtrar:</span>
+          {(activeTab === "grupos"
+            ? [
+                { id: "all" as const, label: "Todos" },
+                { id: "with-discography" as const, label: "Con Discografía" },
+                { id: "with-image" as const, label: "Con Foto" },
+                { id: "without-image" as const, label: "Sin Foto" },
+              ]
+            : activeTab === "albumes"
+            ? [
+                { id: "all" as const, label: "Todos" },
+                { id: "with-image" as const, label: "Con Imagen" },
+                { id: "both-sides" as const, label: "Ambas Caras" },
+                { id: "without-image" as const, label: "Sin Imagen" },
+              ]
+            : [
+                { id: "all" as const, label: "Todos" },
+                { id: "with-image" as const, label: "Con Imagen" },
+                { id: "without-image" as const, label: "Sin Imagen" },
+              ]
+          ).map((f) => (
             <button
               key={f.id}
               onClick={() => setFilterImageStatus(f.id)}
               className={cn(
-                "rounded-lg px-2.5 py-1 transition-colors cursor-pointer",
+                "rounded-lg px-2.5 py-1 text-xs transition-colors cursor-pointer",
                 filterImageStatus === f.id
-                  ? "bg-white/20 text-white font-semibold"
+                  ? "bg-white/20 text-white font-semibold shadow-xs"
                   : "text-neutral-400 hover:text-white"
               )}
             >
@@ -511,56 +560,129 @@ export function AdminMediaManager({
       {/* Lista de Grupos */}
       {activeTab === "grupos" && (
         <div className="space-y-4">
-          <div className="font-mono text-xs text-neutral-400">
-            Mostrando {filteredGroups.length} agrupaciones
+          <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
+            <span>Mostrando {filteredGroups.length} agrupaciones</span>
+            <span className="text-[11px] text-neutral-500">Haz clic en &quot;Entrar a fotos&quot; para ver la discografía completa</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {filteredGroups.slice(0, 40).map((group) => (
-              <GlassCard key={group.id} className="p-5 flex flex-col justify-between gap-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className="font-mono text-[11px] text-amber-400">#{group.id}</span>
-                    <h4 className="text-base font-bold text-white tracking-tight mt-0.5">
-                      {group.name}
-                    </h4>
-                    <p className="text-xs text-neutral-400">
-                      Región: {group.region || "Perú"}
-                    </p>
+            {filteredGroups.slice(0, 40).map((group) => {
+              const hasDiscography = Boolean(group.totalAlbums && group.totalAlbums > 0);
+
+              return (
+                <GlassCard
+                  key={group.id}
+                  className="p-5 flex flex-col justify-between gap-4 border border-white/10 bg-black/40 hover:border-white/20 transition-all"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1 flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[11px] text-amber-400 font-bold">#{group.id}</span>
+                        {group.region && (
+                          <span className="font-mono text-[11px] text-neutral-400">
+                            • {group.region}
+                          </span>
+                        )}
+                        {group.directorName && (
+                          <span className="font-mono text-[11px] text-neutral-400">
+                            • Dir: {group.directorName}
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="text-lg font-bold text-white tracking-tight truncate">
+                        {group.name}
+                      </h4>
+
+                      {/* Resumen de Discografía */}
+                      <div className="pt-1 flex flex-wrap items-center gap-1.5 font-mono text-xs">
+                        {hasDiscography ? (
+                          <>
+                            <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-bold text-amber-300">
+                              <Disc3 className="h-3 w-3" />
+                              {group.totalAlbums} {group.totalAlbums === 1 ? "lanzamiento" : "lanzamientos"}
+                            </span>
+                            {Boolean(group.lpsCount) && (
+                              <span className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] text-neutral-300">
+                                {group.lpsCount} LPs
+                              </span>
+                            )}
+                            {Boolean(group.singlesCount) && (
+                              <span className="rounded border border-cyan-500/20 bg-cyan-500/10 px-1.5 py-0.5 text-[10px] text-cyan-300">
+                                {group.singlesCount} Singles 45s
+                              </span>
+                            )}
+                            {Boolean(group.casetesCount) && (
+                              <span className="rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-300">
+                                {group.casetesCount} Casetes
+                              </span>
+                            )}
+                            {Boolean(group.epsCount) && (
+                              <span className="rounded border border-purple-500/20 bg-purple-500/10 px-1.5 py-0.5 text-[10px] text-purple-300">
+                                {group.epsCount} EPs
+                              </span>
+                            )}
+                            {Boolean(group.cdsCount) && (
+                              <span className="rounded border border-rose-500/20 bg-rose-500/10 px-1.5 py-0.5 text-[10px] text-rose-300">
+                                {group.cdsCount} CDs
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-[11px] text-neutral-500">
+                            Sin lanzamientos catalogados
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {group.photoUrl && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <a
+                          href={group.photoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg border border-white/10 bg-white/5 p-1.5 text-neutral-400 hover:text-amber-400 transition-colors"
+                          title="Abrir foto oficial"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                        <button
+                          onClick={() => handleClearGroupPhoto(group.id)}
+                          className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                          title="Desvincular foto oficial"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
-                  {group.photoUrl && (
-                    <div className="flex items-center gap-2">
-                      <a
-                        href={group.photoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-lg border border-white/10 bg-white/5 p-1.5 text-neutral-400 hover:text-amber-400 transition-colors"
-                        title="Abrir foto"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                      <button
-                        onClick={() => handleClearGroupPhoto(group.id)}
-                        className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
-                        title="Desvincular foto"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
+                  {/* Botón de Entrada a la Subpágina del Grupo */}
+                  <Link
+                    href={`/admin/grupo/${group.id}`}
+                    className="w-full inline-flex items-center justify-between gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 font-mono text-xs font-bold text-amber-300 hover:bg-amber-500 hover:text-neutral-950 transition-all shadow-md group/btn"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-amber-400 group-hover/btn:text-neutral-950 transition-colors" />
+                      <span>Entrar a gestionar fotos de discografía ({group.totalAlbums || 0})</span>
+                    </span>
+                    <ArrowRight className="h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
 
-                <ImageUploader
-                  folderPath="grupos"
-                  fileId={group.id}
-                  suffix="foto"
-                  currentUrl={group.photoUrl}
-                  label="Fotografía Oficial de la Agrupación"
-                  onUploaded={(url) => handleUpdateGroupPhoto(group.id, url)}
-                />
-              </GlassCard>
-            ))}
+                  {/* Uploader Rápido de Foto del Grupo */}
+                  <div className="pt-2 border-t border-white/5">
+                    <ImageUploader
+                      folderPath="grupos"
+                      fileId={group.id}
+                      suffix="foto"
+                      currentUrl={group.photoUrl}
+                      label="Fotografía Oficial de la Agrupación (WebP)"
+                      onUploaded={(url) => handleUpdateGroupPhoto(group.id, url)}
+                    />
+                  </div>
+                </GlassCard>
+              );
+            })}
           </div>
         </div>
       )}

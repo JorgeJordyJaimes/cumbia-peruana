@@ -25,6 +25,7 @@ interface RawAdminAlbum {
   url_contraportada: string | null;
   url_etiqueta: string | null;
   id_tipo_album: number | null;
+  id_grupo: number | null;
   grupos: { nombre_grupo: string } | null;
   sellos_discograficos: { nombre_sello: string } | null;
   tipos_album: { nombre_tipo: string } | null;
@@ -84,6 +85,7 @@ export default async function AdminPage() {
         url_contraportada,
         url_etiqueta,
         id_tipo_album,
+        id_grupo,
         grupos (nombre_grupo),
         sellos_discograficos (nombre_sello),
         tipos_album (nombre_tipo)
@@ -154,6 +156,7 @@ export default async function AdminPage() {
     id: a.id_album,
     title: a.nombre_album || "Sin Título Registrado",
     artist: a.grupos?.nombre_grupo || "Varios Artistas",
+    groupId: a.id_grupo,
     catalogNumber: a.numero_catalogo,
     year: a.año_publicacion,
     label: a.sellos_discograficos?.nombre_sello || null,
@@ -164,15 +167,62 @@ export default async function AdminPage() {
     idTipoAlbum: a.id_tipo_album,
   }));
 
-  // Mapear Grupos
+  // Mapear estadísticas de discografía por grupo
+  const groupStatsMap = new Map<
+    number,
+    { total: number; lps: number; singles: number; casetes: number; eps: number; cds: number; withPhoto: number }
+  >();
+
+  typedAlbumes.forEach((a) => {
+    if (!a.id_grupo) return;
+    const cur = groupStatsMap.get(a.id_grupo) || {
+      total: 0,
+      lps: 0,
+      singles: 0,
+      casetes: 0,
+      eps: 0,
+      cds: 0,
+      withPhoto: 0,
+    };
+    cur.total++;
+    const formatName = a.tipos_album?.nombre_tipo?.toLowerCase() || "";
+    if (formatName === "lp" || a.id_tipo_album === 2) cur.lps++;
+    else if (formatName === "45" || formatName.includes("single") || a.id_tipo_album === 1) cur.singles++;
+    else if (formatName.includes("casete") || formatName.includes("cassete") || a.id_tipo_album === 4) cur.casetes++;
+    else if (formatName === "ep" || a.id_tipo_album === 3) cur.eps++;
+    else if (formatName === "cd" || a.id_tipo_album === 5) cur.cds++;
+
+    if (a.url_portada || a.url_contraportada) cur.withPhoto++;
+    groupStatsMap.set(a.id_grupo, cur);
+  });
+
+  // Mapear Grupos con estadísticas completas
   const typedGrupos = (rawGrupos as unknown as RawAdminGroup[]) || [];
-  const groups: AdminGroupItem[] = typedGrupos.map((g) => ({
-    id: g.id_grupo,
-    name: g.nombre_grupo,
-    region: g.region,
-    directorName: g.personas?.nombre || null,
-    photoUrl: g.url_foto,
-  }));
+  const groups: AdminGroupItem[] = typedGrupos.map((g) => {
+    const stats = groupStatsMap.get(g.id_grupo) || {
+      total: 0,
+      lps: 0,
+      singles: 0,
+      casetes: 0,
+      eps: 0,
+      cds: 0,
+      withPhoto: 0,
+    };
+    return {
+      id: g.id_grupo,
+      name: g.nombre_grupo,
+      region: g.region,
+      directorName: g.personas?.nombre || null,
+      photoUrl: g.url_foto,
+      totalAlbums: stats.total,
+      lpsCount: stats.lps,
+      singlesCount: stats.singles,
+      casetesCount: stats.casetes,
+      epsCount: stats.eps,
+      cdsCount: stats.cds,
+      albumsWithPhoto: stats.withPhoto,
+    };
+  });
 
   // Mapear Personas
   const typedPersonas = (rawPersonas as unknown as RawAdminPerson[]) || [];
