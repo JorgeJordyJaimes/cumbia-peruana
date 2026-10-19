@@ -40,6 +40,8 @@ export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: Bruta
           <span className="hidden sm:inline text-[#746B5C]/40">|</span>
           <Link
             href="/admin"
+            target="_blank"
+            rel="noopener noreferrer"
             className="border-2 border-[#1F1305] bg-white px-2 py-0.5 hover:bg-[#E80000] hover:text-white transition-colors font-black text-[10px] shadow-[1px_1px_0px_#1F1305]"
           >
             PANEL [SYS] ↗

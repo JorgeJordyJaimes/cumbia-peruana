@@ -92,6 +92,8 @@ export function BrutalistFooter() {
                 <div className="pt-3 border-t border-[#3E2C1B]">
                   <Link
                     href="/admin"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/10 hover:bg-[#E80000] text-[#E80000] hover:text-white px-3 py-1.5 font-mono text-xs font-bold transition-all shadow-[2px_2px_0px_#1F1305]"
                   >
                     <span>PANEL DE ADMINISTRACIÓN</span>
@@ -188,6 +190,8 @@ export function BrutalistFooter() {
             <div className="flex items-center gap-4 text-[11px]">
               <Link
                 href="/admin"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[#E80000] hover:text-white font-bold transition-colors flex items-center gap-1 hover:underline"
               >
                 <span>[PANEL ADMIN]</span>
