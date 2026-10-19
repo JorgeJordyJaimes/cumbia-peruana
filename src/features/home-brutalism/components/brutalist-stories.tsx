@@ -38,7 +38,7 @@ export function BrutalistStories() {
             >
               <div className="space-y-4">
                 {/* Cabecera de la carpeta de informe */}
-                <div className="flex items-center justify-between text-[9px] text-[#8E8478] pb-2 border-b border-[#3E2C1B]">
+                <div className="flex items-center justify-between text-[11px] text-[#8E8478] pb-2 border-b border-[#3E2C1B]">
                   <span className="font-black text-[#E80000]">DOC-0{idx + 1} // DESCLASIFICADO</span>
                   <span className="text-white font-bold">FONOTECA NACIONAL</span>
                 </div>
@@ -51,10 +51,10 @@ export function BrutalistStories() {
                     alt={story.titulo}
                     className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300"
                   />
-                  <div className="absolute top-2 left-2 border border-[#1F1305] bg-[#E80000] px-2 py-0.5 text-[9px] font-black text-white uppercase tracking-wider shadow-[2px_2px_0px_#1F1305]">
+                  <div className="absolute top-2 left-2 border border-[#1F1305] bg-[#E80000] px-2 py-0.5 text-[11px] font-black text-white uppercase tracking-wider shadow-[2px_2px_0px_#1F1305]">
                     {story.categoria}
                   </div>
-                  <div className="absolute bottom-2 right-2 border border-[#3E2C1B] bg-black/80 px-2 py-0.5 text-[9px] text-[#EDE0D0] font-bold">
+                  <div className="absolute bottom-2 right-2 border border-[#3E2C1B] bg-[#1F1305] px-2 py-0.5 text-[11px] text-[#EDE0D0] font-bold">
                     CASO #{idx + 1}
                   </div>
                 </div>

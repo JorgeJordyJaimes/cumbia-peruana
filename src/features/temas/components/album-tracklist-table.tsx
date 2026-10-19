@@ -77,7 +77,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
               <th className="p-2.5 text-right w-24">Duración</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1F1305]/20 bg-white">
+          <tbody className="divide-y-2 divide-[#EDE0D0] bg-white">
             {pistas.map((pista) => {
               const isMosaico = pista.es_mosaico;
               const hasSegmentos = isMosaico && (pista.mosaicoSegmentos?.length ?? 0) > 0;
@@ -88,7 +88,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                   <td colSpan={6} className="p-0">
                     <div className="w-full">
                       {/* Fila Principal de la Pista */}
-                      <div className="grid grid-cols-12 items-center hover:bg-[#EDE0D0]/50 transition-colors p-2.5">
+                      <div className="grid grid-cols-12 items-center hover:bg-[#FAF5EE] transition-colors p-2.5">
                         {/* Lado / Pista */}
                         <div className="col-span-1 font-bold whitespace-nowrap">
                           <span className="inline-block border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[11px] font-mono shadow-[1px_1px_0px_#1F1305]">
@@ -125,12 +125,12 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                               <button
                                 type="button"
                                 onClick={() => toggleMosaico(pista.id_album_tema)}
-                                className="border border-[#1F1305] bg-[#F8C800] px-1.5 py-0.2 text-[9px] font-black text-[#1F1305] shadow-[1px_1px_0px_#1F1305] hover:bg-[#F1730C] hover:text-white transition-colors cursor-pointer inline-flex items-center gap-1"
+                                className="border border-[#1F1305] bg-[#F8C800] px-1.5 py-0.2 text-[11px] font-black text-[#1F1305] shadow-[1px_1px_0px_#1F1305] hover:bg-[#F1730C] hover:text-white transition-colors cursor-pointer inline-flex items-center gap-1"
                                 title="Desplegar cortes del popurrí"
                               >
                                 <span>MOSAICO</span>
                                 {hasSegmentos && (
-                                  <span className="text-[8px] bg-black/20 px-1 rounded-sm">
+                                  <span className="text-[11px] bg-[#1F1305] text-white px-1 rounded-sm">
                                     {pista.mosaicoSegmentos?.length}
                                   </span>
                                 )}
@@ -145,7 +145,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                                 setSelectedTemaTitulo(pista.titulo);
                               }}
                               title="Explorar árbol genealógico de versiones y covers"
-                              className="inline-flex items-center gap-0.5 border border-[#1F1305]/40 bg-white px-1.5 py-0.5 text-[9px] font-mono font-bold text-[#746B5C] hover:text-[#E80000] hover:border-[#E80000] transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-0.5 border border-[#1F1305] bg-white px-1.5 py-0.5 text-[11px] font-mono font-bold text-[#746B5C] hover:text-[#E80000] hover:border-[#E80000] transition-colors cursor-pointer"
                             >
                               <GitFork className="h-2.5 w-2.5 text-[#E80000]" />
                               <span>Versiones</span>
@@ -168,7 +168,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                         {/* Vocalista */}
                         <div className="col-span-2">
                           {pista.vocalista === "Instrumental" ? (
-                            <span className="inline-block font-mono text-[10px] font-bold text-[#746B5C] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]/30">
+                            <span className="inline-block font-mono text-[11px] font-bold text-[#746B5C] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]">
                               Instrumental
                             </span>
                           ) : pista.vocalista ? (
@@ -188,7 +188,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                             {pista.autorReal}
                           </div>
                           {pista.creditoGalleta && (
-                            <div className="text-[10px] text-[#746B5C] font-mono italic mt-0.5">
+                            <div className="text-[11px] text-[#746B5C] font-mono italic mt-0.5">
                               En galleta: &ldquo;{pista.creditoGalleta}&rdquo;
                             </div>
                           )}
@@ -219,24 +219,24 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                               <span className="flex items-center gap-2 font-bold text-xs text-[#1F1305]">
                                 <Layers className="h-4 w-4 text-[#F1730C]" />
                                 <span>CORTES &amp; TEMAS INTEGRADOS EN EL MOSAICO</span>
-                                <span className="bg-[#F8C800] border border-[#1F1305] px-1.5 py-0.2 text-[10px]">
+                                <span className="bg-[#F8C800] border border-[#1F1305] px-1.5 py-0.2 text-[11px]">
                                   {pista.mosaicoSegmentos?.length || 0} temas
                                 </span>
                               </span>
-                              <span className="text-[10px] text-[#746B5C] font-bold hidden sm:inline">
+                              <span className="text-[11px] text-[#746B5C] font-bold hidden sm:inline">
                                 Desglose de interpretación continua
                               </span>
                             </div>
 
                             {hasSegmentos ? (
-                              <div className="divide-y divide-[#1F1305]/15 font-mono">
+                              <div className="divide-y-2 divide-[#EDE0D0] font-mono">
                                 {pista.mosaicoSegmentos!.map((seg) => (
                                   <div
                                     key={seg.id_mosaico_tema}
-                                    className="py-2 flex items-center justify-between gap-4 text-xs hover:bg-[#EDE0D0]/30 px-2 transition-colors"
+                                    className="py-2 flex items-center justify-between gap-4 text-xs hover:bg-[#FAF5EE] px-2 transition-colors"
                                   >
                                     <div className="flex items-center gap-3 min-w-0">
-                                      <span className="font-mono text-[10px] font-black border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305] shrink-0">
+                                      <span className="font-mono text-[11px] font-black border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305] shrink-0">
                                         #{seg.orden_segmento}
                                       </span>
                                       <div className="min-w-0">
@@ -260,7 +260,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                                             .padStart(2, "0")}
                                         </span>
                                       ) : (
-                                        <span className="font-mono text-[10px] text-[#746B5C] italic">
+                                        <span className="font-mono text-[11px] text-[#746B5C] italic">
                                           Por cronometrar
                                         </span>
                                       )}

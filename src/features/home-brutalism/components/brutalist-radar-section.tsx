@@ -155,7 +155,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
               >
                 {/* Resalte de caucho para la evidencia central */}
                 {isCenter && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 border-2 border-[#1F1305] bg-[#E80000] text-white px-3 py-0.5 text-[10px] font-black uppercase tracking-wider shadow-[2px_2px_0px_#1F1305] z-20">
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 border-2 border-[#1F1305] bg-[#E80000] text-white px-3 py-0.5 text-[11px] font-black uppercase tracking-wider shadow-[2px_2px_0px_#1F1305] z-20">
                     ★ EVIDENCIA DE MÁXIMO VALOR HISTÓRICO ★
                   </div>
                 )}
@@ -164,16 +164,16 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                   {/* Fila superior: Categoría y Año */}
                   <div className="flex items-center justify-between text-xs">
                     <span
-                      className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border ${
+                      className={`px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider border ${
                         isCenter
-                          ? "border-[#F1730C] bg-[#F1730C]/15 text-[#F1730C]"
-                          : "border-[#3E2C1B] bg-white/5 text-[#B8AFA6]"
+                          ? "border-[#F1730C] bg-[#1F1305] text-[#F1730C]"
+                          : "border-[#3E2C1B] bg-[#140D04] text-[#B8AFA6]"
                       }`}
                     >
                       {album.categoria}
                     </span>
 
-                    <span className="font-bold text-white bg-black/70 px-2 py-0.5 border border-[#3E2C1B]">
+                    <span className="font-bold text-white bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B]">
                       {album.ano}
                     </span>
                   </div>
@@ -186,9 +186,9 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                       aria-hidden="true"
                       className="absolute right-0 top-1/2 -translate-y-1/2 w-[84%] aspect-square bg-[#0E0E10] border-2 border-[#1F1305] shadow-2xl flex items-center justify-center transition-transform duration-500 ease-out translate-x-2 group-hover:translate-x-8 z-0 overflow-hidden"
                     >
-                      <div className="absolute inset-2 border border-white/10" />
-                      <div className="absolute inset-6 border border-white/5" />
-                      <div className="absolute inset-10 border border-white/10" />
+                      <div className="absolute inset-2 border border-[#3E2C1B]" />
+                      <div className="absolute inset-6 border border-[#2A1D12]" />
+                      <div className="absolute inset-10 border border-[#3E2C1B]" />
                       
                       {/* Galleta central */}
                       <div
@@ -199,7 +199,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                         }}
                       >
                         <div className="w-3.5 h-3.5 border border-black bg-white" />
-                        <span className="text-[7px] font-mono font-black uppercase text-white mt-1">
+                        <span className="text-[11px] font-mono font-black uppercase text-white mt-1">
                           {album.sello}
                         </span>
                       </div>
@@ -217,28 +217,28 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                         />
                       ) : (
                         <div className="absolute inset-0 bg-[#1A1108] flex items-center justify-center">
-                          <Disc className="w-12 h-12 text-white/20 animate-spin" />
+                          <Disc className="w-12 h-12 text-[#746B5C] animate-spin" />
                         </div>
                       )}
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black pointer-events-none" />
 
                       {/* Badges superiores sobre la portada */}
                       <div className="relative z-10 flex items-start justify-between p-2">
-                        <span className="text-[9px] font-black uppercase text-white bg-black/80 px-1.5 py-0.5 border border-white/20">
+                        <span className="text-[11px] font-black uppercase text-white bg-[#1F1305] px-1.5 py-0.5 border border-[#3E2C1B]">
                           {album.sello}
                         </span>
-                        <span className="text-[9px] font-bold text-[#F1730C] bg-black/80 px-1.5 py-0.5 border border-white/20">
+                        <span className="text-[11px] font-bold text-[#F1730C] bg-[#1F1305] px-1.5 py-0.5 border border-[#3E2C1B]">
                           {album.catalogo}
                         </span>
                       </div>
 
                       {/* Pie de carátula */}
-                      <div className="relative z-10 p-2 flex items-center justify-between border-t border-white/10 bg-black/70">
-                        <span className="text-[9px] font-bold text-white">
+                      <div className="relative z-10 p-2 flex items-center justify-between border-t border-[#3E2C1B] bg-[#1F1305]">
+                        <span className="text-[11px] font-bold text-white">
                           LP 33 RPM • ESTÉREO
                         </span>
-                        <span className="text-[9px] font-bold text-[#F1730C]">
+                        <span className="text-[11px] font-bold text-[#F1730C]">
                           {album.ano}
                         </span>
                       </div>
@@ -308,7 +308,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
             {/* Cabecera del Modal */}
             <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold tracking-widest text-[#E80000] uppercase">
+                <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
                   {selectedAlbum.categoria} • PRENSAJE MATRIZ {selectedAlbum.ano}
                 </span>
                 <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white">
@@ -322,7 +322,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
               <button
                 type="button"
                 onClick={() => setSelectedAlbum(null)}
-                className="border-2 border-[#3E2C1B] bg-white/10 p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors"
+                className="border-2 border-[#3E2C1B] bg-[#140D04] p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                 title="Cerrar ficha"
               >
                 <X className="h-5 w-5" />
@@ -339,8 +339,8 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                     alt={selectedAlbum.titulo}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                  <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[10px] text-white/90 bg-black/70 px-2 py-0.5 border border-white/10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[11px] text-white bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B]">
                     <span>{selectedAlbum.sello}</span>
                     <span className="text-[#F1730C] font-bold">{selectedAlbum.catalogo}</span>
                   </div>

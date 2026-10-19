@@ -2,14 +2,25 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Search, Menu, X, FolderOpen } from "lucide-react";
 
 interface BrutalistNavbarProps {
   onOpenCommandPalette: () => void;
 }
 
+const NAV_EXPEDIENTES = [
+  { exp: "EXP. 01", label: "GENEALOGÍA", sub: "Árbol de Músicos", href: "/genealogia", accent: "#E80000" },
+  { exp: "EXP. 02", label: "MATCH BPM", sub: "Consola & Mezclador", href: "/match-bpm", accent: "#E80000" },
+  { exp: "EXP. 03", label: "RADAR 45s", sub: "Rarezas Semanales", href: "/radar", accent: "#F1730C" },
+  { exp: "EXP. 04", label: "INFORMES", sub: "Crónicas e Historia", href: "/blog", accent: "#746B5C" },
+  { exp: "EXP. 05", label: "LEGAJO", sub: "Archivo & Manifiesto", href: "/nosotros", accent: "#746B5C" },
+  { exp: "EXP. 06", label: "EVIDENCIAS", sub: "Catálogo de Vinilos", href: "/vinilos", accent: "#F1730C" },
+];
+
 export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] select-none font-mono">
@@ -17,7 +28,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
         
         {/* LOGO: Sello Oficial de Archivo Histórico */}
         <Link href="/" className="group flex items-center gap-3">
-          <div className="relative flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center border-2 border-[#1F1305] bg-[#1F1305] shadow-[3px_3px_0px_#E80000] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-[1px_1px_0px_#E80000] p-1 overflow-hidden">
+          <div className="relative flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center border-2 border-[#1F1305] bg-[#1F1305] shadow-[3px_3px_0px_#E80000] transition-transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[5px_5px_0px_#E80000] p-1 overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/branding/kumbia-sound-logo-cropped.png"
@@ -30,66 +41,44 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
               <span className="font-cooper text-xl sm:text-2xl font-black tracking-tight text-[#1F1305]">
                 Kumbia Sound
               </span>
-              <span className="border border-[#1F1305] bg-[#E80000] text-white text-[8px] font-black px-1 leading-tight">
+              <span className="border border-[#1F1305] bg-[#E80000] text-white text-[11px] font-black px-1.5 leading-tight">
                 REG
               </span>
             </div>
-            <p className="text-[9px] uppercase tracking-widest text-[#746B5C] font-bold">
+            <p className="text-[11px] uppercase tracking-widest text-[#746B5C] font-bold">
               ARCHIVO CLASIFICADO DE LA CUMBIA // 1968–2005
             </p>
           </div>
         </Link>
 
-        {/* NAVEGACIÓN DESKTOP: CARPETAS DE EXPEDIENTE EXP. 01 A 06 */}
-        <nav className="hidden lg:flex items-center gap-4 text-xs font-bold tracking-wider">
-          <Link
-            href="/genealogia"
-            className="group flex items-baseline gap-1 py-1 hover:text-[#E80000] transition-colors border-b-2 border-transparent hover:border-[#E80000]"
-          >
-            <span className="text-[10px] text-[#E80000] font-black">EXP. 01</span>
-            <span>GENEALOGÍA</span>
-          </Link>
-
-          <Link
-            href="/match-bpm"
-            className="group flex items-baseline gap-1 py-1 hover:text-[#E80000] transition-colors border-b-2 border-transparent hover:border-[#E80000]"
-          >
-            <span className="text-[10px] text-[#E80000] font-black">EXP. 02</span>
-            <span>MATCH BPM</span>
-          </Link>
-
-          <Link
-            href="/radar"
-            className="group flex items-baseline gap-1 py-1 hover:text-[#F1730C] transition-colors border-b-2 border-transparent hover:border-[#F1730C]"
-          >
-            <span className="text-[10px] text-[#F1730C] font-black">EXP. 03</span>
-            <span>RADAR 45s</span>
-          </Link>
-
-          <Link
-            href="/blog"
-            className="group flex items-baseline gap-1 py-1 hover:text-[#1F1305] transition-colors border-b-2 border-transparent hover:border-[#1F1305]"
-          >
-            <span className="text-[10px] text-[#746B5C] font-black">EXP. 04</span>
-            <span>INFORMES</span>
-          </Link>
-
-          <Link
-            href="/nosotros"
-            className="group flex items-baseline gap-1 py-1 hover:text-[#E80000] transition-colors border-b-2 border-transparent hover:border-[#E80000]"
-          >
-            <span className="text-[10px] text-[#746B5C] font-black">EXP. 05</span>
-            <span>LEGAJO</span>
-          </Link>
-
-          <Link
-            href="/vinilos"
-            className="flex items-center gap-1.5 border-2 border-[#1F1305] bg-[#F1730C] text-white px-3 py-1 shadow-[2px_2px_0px_#1F1305] hover:bg-[#E80000] hover:border-[#1F1305] transition-all"
-          >
-            <FolderOpen className="h-3.5 w-3.5 text-white" />
-            <span className="text-[10px] font-black bg-white text-[#1F1305] px-1">EXP. 06</span>
-            <span>EVIDENCIAS</span>
-          </Link>
+        {/* NAVEGACIÓN DESKTOP: CARPETAS DE EXPEDIENTE EXP. 01 A 06 (ESTILO PESTAÑA MANILA) */}
+        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2.5 text-xs font-bold tracking-wider self-end mb-[-2px]">
+          {NAV_EXPEDIENTES.map((item) => {
+            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+            return (
+              <Link
+                key={item.exp}
+                href={item.href}
+                className={
+                  isActive
+                    ? "group flex flex-col items-start px-3 py-1.5 border-t-4 border-t-[#E80000] border-x-2 border-x-[#1F1305] border-b-2 border-b-white bg-white translate-y-[2px] transition-all"
+                    : "group flex flex-col items-start px-2.5 py-1.5 border-2 border-[#1F1305] bg-[#EDE0D0] hover:bg-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1F1305] transition-all"
+                }
+              >
+                <div className="flex items-center gap-1.5">
+                  <span className="font-mono text-[11px] font-black" style={{ color: item.accent }}>
+                    {item.exp}
+                  </span>
+                  <span className="font-bold text-xs tracking-wider text-[#1F1305] group-hover:text-[#E80000] transition-colors">
+                    {item.label}
+                  </span>
+                </div>
+                <span className="font-mono text-[11px] text-[#746B5C] font-medium leading-none mt-0.5 hidden xl:block">
+                  {item.sub}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* ACCIONES: BOTÓN CONSULTAR EXPEDIENTE ⌘K + MENÚ MÓVIL */}
@@ -97,12 +86,12 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
           <button
             type="button"
             onClick={onOpenCommandPalette}
-            className="flex items-center gap-2 border-2 border-[#1F1305] bg-white px-3 sm:px-4 py-2 text-[#1F1305] shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white hover:border-[#1F1305] hover:shadow-[3px_3px_0px_#E80000] transition-all active:translate-x-0.5 active:translate-y-0.5"
+            className="flex items-center gap-2 border-2 border-[#1F1305] bg-white px-3 sm:px-4 py-2 text-[#1F1305] shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white hover:border-[#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#E80000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all cursor-pointer"
             title="Abrir buscador de expedientes (⌘K)"
           >
             <Search className="h-4 w-4 text-[#E80000]" />
             <span className="hidden sm:inline font-black tracking-wider text-[11px]">CONSULTAR EXPEDIENTE</span>
-            <kbd className="hidden md:inline-block border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.5 text-[10px] text-[#1F1305] font-bold">
+            <kbd className="hidden md:inline-block border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.5 text-[11px] text-[#1F1305] font-bold">
               ⌘K
             </kbd>
           </button>
@@ -110,7 +99,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] shadow-[2px_2px_0px_#1F1305]"
+            className="lg:hidden border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             aria-label="Abrir menú"
           >
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -118,55 +107,31 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
         </div>
       </div>
 
-      {/* MENÚ MÓVIL: ÍNDICE DE EXPEDIENTES */}
+      {/* MENÚ MÓVIL: ÍNDICE DE EXPEDIENTES (CON FUNCIÓN EXPLICADA) */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t-2 border-[#1F1305] bg-[#EDE0D0] p-4 text-xs font-bold space-y-2 animate-in slide-in-from-top-2 duration-150">
-          <div className="text-[10px] text-[#746B5C] uppercase tracking-widest pb-1 border-b border-[#1F1305]/20 flex items-center justify-between">
+          <div className="text-[11px] text-[#746B5C] uppercase tracking-widest pb-1 border-b border-[#1F1305] flex items-center justify-between">
             <span>ÍNDICE DE LEGAJOS DESCLASIFICADOS</span>
             <span className="text-[#E80000] font-black">CONFIDENCIAL</span>
           </div>
-          <Link
-            href="/genealogia"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block border-2 border-[#1F1305] bg-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
-          >
-            <span className="text-[#E80000]">EXP. 01:</span> EXPLORADOR GENEALÓGICO DE LINAJES
-          </Link>
-          <Link
-            href="/match-bpm"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block border-2 border-[#1F1305] bg-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
-          >
-            <span className="text-[#E80000]">EXP. 02:</span> CONSOLA MATCH BPM DJ
-          </Link>
-          <Link
-            href="/radar"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block border-2 border-[#1F1305] bg-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
-          >
-            <span className="text-[#F1730C]">EXP. 03:</span> EL RADAR SONORO 45 RPM
-          </Link>
-          <Link
-            href="/blog"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block border-2 border-[#1F1305] bg-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
-          >
-            <span className="text-[#746B5C]">EXP. 04:</span> INFORMES DE CAMPO & CRÓNICAS
-          </Link>
-          <Link
-            href="/nosotros"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block border-2 border-[#1F1305] bg-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
-          >
-            <span className="text-[#746B5C]">EXP. 05:</span> LEGAJO DEL EQUIPO & MANIFIESTO
-          </Link>
-          <Link
-            href="/vinilos"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="block border-2 border-[#1F1305] bg-[#F1730C] text-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#E80000] transition-colors"
-          >
-            <span className="text-[#1F1305] bg-white px-1 py-0.2 mr-1">EXP. 06:</span> BÓVEDA DE EVIDENCIAS EN VINILO
-          </Link>
+          {NAV_EXPEDIENTES.map((item) => (
+            <Link
+              key={item.exp}
+              href={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-between border-2 border-[#1F1305] bg-white p-2.5 shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#E80000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+            >
+              <div>
+                <span className="font-mono text-[11px] font-black mr-2" style={{ color: item.accent }}>
+                  {item.exp}:
+                </span>
+                <span className="font-bold text-xs">{item.label}</span>
+              </div>
+              <span className="font-mono text-[11px] text-[#746B5C] group-hover:text-white">
+                {item.sub}
+              </span>
+            </Link>
+          ))}
         </div>
       )}
     </header>

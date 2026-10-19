@@ -92,9 +92,9 @@ export function getTrackGenreAffinity(prev: TrackDJItem, cand: TrackDJItem): Gen
 }
 
 // Helper para renderizar pastilla de ajuste de Pitch con semántica DJ estricta:
-// - Aumentar pitch (positivo): Color VERDE con símbolo '+' explícito
-// - Reducir pitch (negativo): Color ROJO con símbolo '-' explícito
-// - Sin cambio (0.0%): Color NEUTRAL
+// - Aumentar pitch (positivo): Fondo VERDE (#10B981) con símbolo '▲ +' y texto negro
+// - Reducir pitch (negativo): Fondo ROJO (#C91D1D) con símbolo '▼ -' y texto blanco
+// - Sin cambio (0.0%): Fondo CREMA (#EDE0D0)
 export function renderPitchBadge(pitchDiff: number | undefined, compact = false) {
   if (pitchDiff === undefined) return null;
   const rounded = Number(pitchDiff.toFixed(1));
@@ -102,13 +102,11 @@ export function renderPitchBadge(pitchDiff: number | undefined, compact = false)
   if (rounded > 0) {
     return (
       <span
-        className={cn(
-          "font-black px-1.5 py-0.2 border border-[#10B981] bg-[#10B981]/20 text-[#065F46] shadow-[1px_1px_0px_#10B981]",
-          compact ? "text-[9px]" : "text-[10px]"
-        )}
+        className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#10B981] px-1.5 py-0.5 font-mono text-[11px] font-black text-[#1F1305] shadow-[1px_1px_0px_#1F1305]"
         title="Aumentar pitch: Acelerar plato para igualar tempo (+)"
       >
-        Pitch: +{rounded.toFixed(1)}%
+        <span>▲ +{rounded.toFixed(1)}%</span>
+        {!compact && <span className="hidden sm:inline">ACELERADO</span>}
       </span>
     );
   }
@@ -116,26 +114,22 @@ export function renderPitchBadge(pitchDiff: number | undefined, compact = false)
   if (rounded < 0) {
     return (
       <span
-        className={cn(
-          "font-black px-1.5 py-0.2 border border-[#E80000] bg-[#E80000]/20 text-[#991B1B] shadow-[1px_1px_0px_#E80000]",
-          compact ? "text-[9px]" : "text-[10px]"
-        )}
+        className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#C91D1D] px-1.5 py-0.5 font-mono text-[11px] font-black text-white shadow-[1px_1px_0px_#1F1305]"
         title="Reducir pitch: Frenar plato para igualar tempo (-)"
       >
-        Pitch: {rounded.toFixed(1)}%
+        <span>▼ {rounded.toFixed(1)}%</span>
+        {!compact && <span className="hidden sm:inline">FRENADO</span>}
       </span>
     );
   }
 
   return (
     <span
-      className={cn(
-        "font-bold px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]",
-        compact ? "text-[9px]" : "text-[10px]"
-      )}
+      className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.5 font-mono text-[11px] font-bold text-[#1F1305] shadow-[1px_1px_0px_#1F1305]"
       title="Mismo tempo: 0.0% de ajuste"
     >
-      Pitch: 0.0%
+      <span>● 0.0%</span>
+      {!compact && <span className="hidden sm:inline">CALIBRADO</span>}
     </span>
   );
 }
@@ -170,6 +164,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
   const [isSpinningA, setIsSpinningA] = useState<boolean>(true);
   const [isSpinningB, setIsSpinningB] = useState<boolean>(true);
   const [crossfaderPosition, setCrossfaderPosition] = useState<"A" | "center" | "B">("center");
+  const [mobileDeckView, setMobileDeckView] = useState<"DECK_A" | "MIXER" | "DECK_B">("DECK_A");
 
   // Estado del modal de selección de pistas
   const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
@@ -485,7 +480,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-wrap w-full md:w-auto">
             <div className="grid grid-cols-2 gap-2 w-full sm:w-auto">
               <div className="border-2 border-[#1F1305] bg-[#EDE0D0] px-3.5 py-1.5 font-mono text-xs shadow-[2px_2px_0px_#1F1305] text-center">
-                <span className="text-[10px] text-[#746B5C] font-bold block uppercase">Temas en Mix</span>
+                <span className="text-[11px] text-[#746B5C] font-bold block uppercase">Temas en Mix</span>
                 <strong className="text-base text-[#1F1305] font-black">{mixSteps.length}</strong>
               </div>
 
@@ -493,7 +488,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 className="border-2 border-[#1F1305] bg-[#EDE0D0] px-3.5 py-1.5 font-mono text-xs shadow-[2px_2px_0px_#1F1305] text-center"
                 title="Estimación calculada al ~50% de duración de cada corte para mezcla continua en vivo"
               >
-                <span className="text-[10px] text-[#746B5C] font-bold block uppercase">Duración Mix Est. (~50%)</span>
+                <span className="text-[11px] text-[#746B5C] font-bold block uppercase">Duración Mix Est. (~50%)</span>
                 <strong className="text-base text-[#1F1305] font-black">{formattedTotalDuration}</strong>
               </div>
             </div>
@@ -556,16 +551,61 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
       {/* CABINA DE DJ: DOS TORNAMESAS + MESA DE MEZCLAS CENTRAL */}
       <div className="border-2 sm:border-4 border-[#1F1305] bg-white p-3 sm:p-6 shadow-[4px_4px_0px_#1F1305] sm:shadow-[8px_8px_0px_#1F1305] relative overflow-hidden">
         {/* Decoración de cabecera de cabina */}
-        <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-2 mb-4 font-mono text-[9px] sm:text-[10px] text-[#746B5C] uppercase tracking-widest">
+        <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-2 mb-4 font-mono text-[11px] text-[#746B5C] uppercase tracking-widest">
           <span className="font-black text-[#1F1305] truncate">CABINA DE MEZCLA DJ // KS-TURBO 1200</span>
           <span className="hidden sm:inline">DUAL DIRECT-DRIVE TURNTABLES • PALETA KUMBIA SOUND</span>
+        </div>
+
+        {/* Selector de Hardware Móvil (< lg) */}
+        <div className="lg:hidden grid grid-cols-3 gap-1 p-1 bg-[#1F1305] border-2 border-[#1F1305] mb-4">
+          <button
+            type="button"
+            onClick={() => setMobileDeckView("DECK_A")}
+            className={cn(
+              "py-2 text-[11px] font-mono font-black uppercase text-center transition-all cursor-pointer",
+              mobileDeckView === "DECK_A"
+                ? "bg-[#E80000] text-white shadow-[2px_2px_0px_#EDE0D0]"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+            )}
+          >
+            ● PLATO A
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileDeckView("MIXER")}
+            className={cn(
+              "py-2 text-[11px] font-mono font-black uppercase text-center transition-all cursor-pointer",
+              mobileDeckView === "MIXER"
+                ? "bg-[#F8C800] text-[#1F1305] shadow-[2px_2px_0px_#EDE0D0]"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+            )}
+          >
+            MIXER
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileDeckView("DECK_B")}
+            className={cn(
+              "py-2 text-[11px] font-mono font-black uppercase text-center transition-all cursor-pointer",
+              mobileDeckView === "DECK_B"
+                ? "bg-[#F1730C] text-white shadow-[2px_2px_0px_#EDE0D0]"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+            )}
+          >
+            ○ PLATO B
+          </button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch pt-2">
           {/* ============================================================ */}
           {/* TORNAMESA A (CANAL 1 - PISTAS IMPARES: #1, #3, #5...) */}
           {/* ============================================================ */}
-          <div className="lg:col-span-5 border-2 border-[#1F1305] bg-[#FAF5EE] text-[#1F1305] p-3 sm:p-5 shadow-[3px_3px_0px_#1F1305] sm:shadow-[4px_4px_0px_#1F1305] flex flex-col justify-between space-y-4 relative">
+          <div
+            className={cn(
+              "lg:col-span-5 border-2 border-[#1F1305] bg-[#FAF5EE] text-[#1F1305] p-3 sm:p-5 shadow-[3px_3px_0px_#1F1305] sm:shadow-[4px_4px_0px_#1F1305] flex-col justify-between space-y-4 relative",
+              mobileDeckView === "DECK_A" ? "flex" : "hidden lg:flex"
+            )}
+          >
             {/* Header Tornamesa A */}
             <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
               <div className="flex items-center gap-2">
@@ -573,11 +613,11 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   <Disc3 className="h-3.5 w-3.5" />
                   <span>TORNAMESA A</span>
                 </span>
-                <span className="font-mono text-[10px] text-[#746B5C] hidden sm:inline font-bold">CH-1 (Impares)</span>
+                <span className="font-mono text-[11px] text-[#746B5C] hidden sm:inline font-bold">CH-1 (Impares)</span>
               </div>
 
               {/* Indicador LED On-Air */}
-              <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold">
+              <div className="flex items-center gap-1.5 font-mono text-[11px] font-bold">
                 {currentPair.trackA ? (
                   <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#10B981] text-white px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                     <span className="h-2 w-2 rounded-full bg-white animate-ping" />
@@ -667,7 +707,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 <div className="bg-white border-2 border-[#1F1305] p-3 space-y-2 shadow-[2px_2px_0px_#1F1305]">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <span className="text-[10px] text-[#E80000] font-black uppercase block">
+                      <span className="text-[11px] text-[#E80000] font-black uppercase block">
                         Pista Activa {currentPair.activeStepA ? `(#${currentPair.activeStepA})` : ""}
                       </span>
                       <h4 className="font-cooper text-base sm:text-lg font-bold text-[#1F1305] truncate" title={currentPair.trackA.title}>
@@ -676,12 +716,12 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                       <p className="text-xs text-[#5A5245] truncate font-sans">
                         {currentPair.trackA.artist} {currentPair.trackA.year ? `• ${currentPair.trackA.year}` : ""}
                       </p>
-                      <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                      <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[11px]">
                         <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
                           {currentPair.trackA.primaryGenre || "Cumbia"}
                         </span>
                         {currentPair.trackA.secondaryGenre && (
-                          <span className="px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                          <span className="px-1.5 py-0.2 border border-[#EDE0D0] bg-white text-[#5A5245]">
                             + {currentPair.trackA.secondaryGenre}
                           </span>
                         )}
@@ -691,14 +731,14 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <BadgeDJ bpm={currentPair.trackA.bpm} camelot={currentPair.trackA.camelot} />
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] pt-1 border-t border-[#1F1305]/15 text-[#5A5245]">
-                    <span className="bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5 text-[10px] font-bold text-[#1F1305]">
+                  <div className="flex items-center justify-between text-[11px] pt-1 border-t-2 border-[#EDE0D0] text-[#5A5245]">
+                    <span className="bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5 text-[11px] font-bold text-[#1F1305]">
                       {currentPair.trackA.format || "LP"} {currentPair.trackA.side ? `• Lado ${currentPair.trackA.side}` : ""}
                     </span>
                     <span className="font-bold">
                       {currentPair.trackA.durationFormatted || "--:--"}
                       {currentPair.trackA.durationSeconds && (
-                        <span className="text-[9px] text-[#746B5C] ml-1">
+                        <span className="text-[11px] text-[#746B5C] ml-1">
                           (~{Math.floor(Math.round(currentPair.trackA.durationSeconds / 2) / 60)}:{(Math.round(currentPair.trackA.durationSeconds / 2) % 60).toString().padStart(2, "0")} en mix)
                         </span>
                       )}
@@ -716,13 +756,13 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 <button
                   type="button"
                   onClick={() => setIsSpinningA((v) => !v)}
-                  className="inline-flex items-center gap-1.5 border-2 border-[#1F1305] bg-white hover:bg-[#F8C800] text-[#1F1305] px-2.5 py-1 text-[10px] font-black shadow-[2px_2px_0px_#1F1305] cursor-pointer transition-colors"
+                  className="inline-flex items-center gap-1.5 border-2 border-[#1F1305] bg-white hover:bg-[#F8C800] text-[#1F1305] px-2.5 py-1 text-[11px] font-black shadow-[2px_2px_0px_#1F1305] cursor-pointer transition-colors"
                 >
                   {isSpinningA ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                   <span>{isSpinningA ? "DETENER PLATO" : "GIRAR VINILO"}</span>
                 </button>
 
-                <div className="flex items-center gap-1 font-mono text-[10px]">
+                <div className="flex items-center gap-1 font-mono text-[11px]">
                   <span className={cn("px-1.5 py-0.5 border-2 font-bold", currentPair.trackA?.format?.includes("45") ? "border-[#E80000] bg-[#E80000] text-white" : "border-[#1F1305] text-[#746B5C]")}>45 RPM</span>
                   <span className={cn("px-1.5 py-0.5 border-2 font-bold", !currentPair.trackA?.format?.includes("45") ? "border-[#E80000] bg-[#E80000] text-white" : "border-[#1F1305] text-[#746B5C]")}>33 RPM</span>
                 </div>
@@ -733,15 +773,20 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
           {/* ============================================================ */}
           {/* MESA DE MEZCLAS CENTRAL (DJ MIXER KM-2000) */}
           {/* ============================================================ */}
-          <div className="lg:col-span-2 border-2 border-[#1F1305] bg-[#FAF5EE] text-[#1F1305] p-4 shadow-[4px_4px_0px_#1F1305] flex flex-col justify-between space-y-4">
+          <div
+            className={cn(
+              "lg:col-span-2 border-2 border-[#1F1305] bg-[#FAF5EE] text-[#1F1305] p-4 shadow-[4px_4px_0px_#1F1305] flex-col justify-between space-y-4",
+              mobileDeckView === "MIXER" ? "flex" : "hidden lg:flex"
+            )}
+          >
             <div className="border-b-2 border-[#1F1305] pb-2 text-center font-mono">
-              <span className="text-[9px] text-[#746B5C] block uppercase tracking-widest font-bold">AUDIO MATRIX</span>
+              <span className="text-[11px] text-[#746B5C] block uppercase tracking-widest font-bold">AUDIO MATRIX</span>
               <span className="text-xs font-black text-[#1F1305]">KM-2000 MIXER</span>
             </div>
 
             {/* Medidores de Señal VU Stereo */}
             <div className="space-y-2 py-2">
-              <div className="flex items-center justify-between font-mono text-[9px] text-[#746B5C] px-1 font-bold">
+              <div className="flex items-center justify-between font-mono text-[11px] text-[#746B5C] px-1 font-bold">
                 <span>CH-1 (A)</span>
                 <span>CH-2 (B)</span>
               </div>
@@ -752,7 +797,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <div
                       key={`vu-a-${i}`}
                       className={cn(
-                        "w-full h-2 rounded-[1px] transition-all border border-[#1F1305]/20",
+                        "w-full h-2 rounded-[1px] transition-all border border-[#EDE0D0]",
                         currentPair.trackA
                           ? i > 6
                             ? "bg-[#E80000]"
@@ -771,7 +816,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <div
                       key={`vu-b-${i}`}
                       className={cn(
-                        "w-full h-2 rounded-[1px] transition-all border border-[#1F1305]/20",
+                        "w-full h-2 rounded-[1px] transition-all border border-[#EDE0D0]",
                         currentPair.trackB
                           ? i > 6
                             ? "bg-[#E80000]"
@@ -788,38 +833,28 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
 
             {/* DATOS DE LA TRANSICIÓN ENTRE TORNAMESA A Y B */}
             {currentTransitionStats ? (
-              <div className="bg-white border-2 border-[#1F1305] p-2.5 font-mono text-[10px] space-y-1.5 shadow-[2px_2px_0px_#1F1305]">
-                <span className="text-[8px] text-[#E80000] uppercase font-black block">ANÁLISIS DE CORTE:</span>
+              <div className="bg-white border-2 border-[#1F1305] p-2.5 font-mono text-[11px] space-y-1.5 shadow-[2px_2px_0px_#1F1305]">
+                <span className="text-[11px] text-[#E80000] uppercase font-black block">ANÁLISIS DE CORTE:</span>
                 <div className="flex items-center justify-between font-bold">
                   <span>Ajuste Pitch:</span>
-                  <span
-                    className={cn(
-                      Math.abs(currentTransitionStats.pitchAtoB) <= 3
-                        ? "text-[#10B981]"
-                        : "text-[#F1730C]"
-                    )}
-                  >
-                    {currentTransitionStats.pitchAtoB > 0
-                      ? `+${currentTransitionStats.pitchAtoB.toFixed(1)}%`
-                      : `${currentTransitionStats.pitchAtoB.toFixed(1)}%`}
-                  </span>
+                  {renderPitchBadge(currentTransitionStats.pitchAtoB)}
                 </div>
-                <div className="text-[9px] text-[#5A5245] leading-tight border-t border-[#1F1305]/15 pt-1 font-bold">
+                <div className="text-[11px] text-[#5A5245] leading-tight border-t-2 border-[#EDE0D0] pt-1 font-bold">
                   {currentTransitionStats.harmonicLabel}
                 </div>
               </div>
             ) : (
-              <div className="p-2 border-2 border-dashed border-[#1F1305] bg-white text-center font-mono text-[9px] text-[#746B5C]">
+              <div className="p-2 border-2 border-dashed border-[#1F1305] bg-white text-center font-mono text-[11px] text-[#746B5C]">
                 Carga ambos canales para calcular pitch y armonía.
               </div>
             )}
 
             {/* MASTER CROSSFADER */}
             <div className="space-y-1.5 pt-2 border-t-2 border-[#1F1305]">
-              <span className="font-mono text-[9px] text-center block text-[#746B5C] font-black uppercase">
+              <span className="font-mono text-[11px] text-center block text-[#746B5C] font-black uppercase">
                 CROSSFADER
               </span>
-              <div className="flex items-center justify-between text-[8px] font-mono font-bold text-[#746B5C] px-1">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#746B5C] px-1">
                 <span>CH-A</span>
                 <span>CENTRO</span>
                 <span>CH-B</span>
@@ -829,7 +864,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   type="button"
                   onClick={() => setCrossfaderPosition("A")}
                   className={cn(
-                    "py-1 text-[9px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
+                    "py-1 text-[11px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
                     crossfaderPosition === "A" ? "bg-[#E80000] text-white" : "bg-[#EDE0D0] text-[#1F1305] hover:bg-[#F8C800]"
                   )}
                 >
@@ -839,7 +874,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   type="button"
                   onClick={() => setCrossfaderPosition("center")}
                   className={cn(
-                    "py-1 text-[9px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
+                    "py-1 text-[11px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
                     crossfaderPosition === "center" ? "bg-[#F8C800] text-[#1F1305]" : "bg-[#EDE0D0] text-[#1F1305] hover:bg-[#F8C800]"
                   )}
                 >
@@ -849,7 +884,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   type="button"
                   onClick={() => setCrossfaderPosition("B")}
                   className={cn(
-                    "py-1 text-[9px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
+                    "py-1 text-[11px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
                     crossfaderPosition === "B" ? "bg-[#F1730C] text-white" : "bg-[#EDE0D0] text-[#1F1305] hover:bg-[#F8C800]"
                   )}
                 >
@@ -862,7 +897,12 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
           {/* ============================================================ */}
           {/* TORNAMESA B (CANAL 2 - PISTAS PARES: #2, #4, #6...) */}
           {/* ============================================================ */}
-          <div className="lg:col-span-5 border-2 border-[#1F1305] bg-[#FAF5EE] text-[#1F1305] p-3 sm:p-5 shadow-[3px_3px_0px_#1F1305] sm:shadow-[4px_4px_0px_#1F1305] flex flex-col justify-between space-y-4 relative">
+          <div
+            className={cn(
+              "lg:col-span-5 border-2 border-[#1F1305] bg-[#FAF5EE] text-[#1F1305] p-3 sm:p-5 shadow-[3px_3px_0px_#1F1305] sm:shadow-[4px_4px_0px_#1F1305] flex-col justify-between space-y-4 relative",
+              mobileDeckView === "DECK_B" ? "flex" : "hidden lg:flex"
+            )}
+          >
             {/* Header Tornamesa B */}
             <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
               <div className="flex items-center gap-2">
@@ -870,11 +910,11 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   <Disc3 className="h-3.5 w-3.5" />
                   <span>TORNAMESA B</span>
                 </span>
-                <span className="font-mono text-[10px] text-[#746B5C] hidden sm:inline font-bold">CH-2 (Pares)</span>
+                <span className="font-mono text-[11px] text-[#746B5C] hidden sm:inline font-bold">CH-2 (Pares)</span>
               </div>
 
               {/* Indicador LED On-Air */}
-              <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold">
+              <div className="flex items-center gap-1.5 font-mono text-[11px] font-bold">
                 {currentPair.trackB ? (
                   <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#F1730C] text-white px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                     <span className="h-2 w-2 rounded-full bg-white animate-ping" />
@@ -964,7 +1004,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 <div className="bg-white border-2 border-[#1F1305] p-3 space-y-2 shadow-[2px_2px_0px_#1F1305]">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <span className="text-[10px] text-[#F1730C] font-black uppercase block">
+                      <span className="text-[11px] text-[#F1730C] font-black uppercase block">
                         Pista Activa {currentPair.activeStepB ? `(#${currentPair.activeStepB})` : ""}
                       </span>
                       <h4 className="font-cooper text-base sm:text-lg font-bold text-[#1F1305] truncate" title={currentPair.trackB.title}>
@@ -973,12 +1013,12 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                       <p className="text-xs text-[#5A5245] truncate font-sans">
                         {currentPair.trackB.artist} {currentPair.trackB.year ? `• ${currentPair.trackB.year}` : ""}
                       </p>
-                      <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                      <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[11px]">
                         <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
                           {currentPair.trackB.primaryGenre || "Cumbia"}
                         </span>
                         {currentPair.trackB.secondaryGenre && (
-                          <span className="px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                          <span className="px-1.5 py-0.2 border border-[#EDE0D0] bg-white text-[#5A5245]">
                             + {currentPair.trackB.secondaryGenre}
                           </span>
                         )}
@@ -988,14 +1028,14 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <BadgeDJ bpm={currentPair.trackB.bpm} camelot={currentPair.trackB.camelot} />
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] pt-1 border-t border-[#1F1305]/15 text-[#5A5245]">
-                    <span className="bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5 text-[10px] font-bold text-[#1F1305]">
+                  <div className="flex items-center justify-between text-[11px] pt-1 border-t-2 border-[#EDE0D0] text-[#5A5245]">
+                    <span className="bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5 text-[11px] font-bold text-[#1F1305]">
                       {currentPair.trackB.format || "LP"} {currentPair.trackB.side ? `• Lado ${currentPair.trackB.side}` : ""}
                     </span>
                     <span className="font-bold">
                       {currentPair.trackB.durationFormatted || "--:--"}
                       {currentPair.trackB.durationSeconds && (
-                        <span className="text-[9px] text-[#746B5C] ml-1">
+                        <span className="text-[11px] text-[#746B5C] ml-1">
                           (~{Math.floor(Math.round(currentPair.trackB.durationSeconds / 2) / 60)}:{(Math.round(currentPair.trackB.durationSeconds / 2) % 60).toString().padStart(2, "0")} en mix)
                         </span>
                       )}
@@ -1013,13 +1053,13 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 <button
                   type="button"
                   onClick={() => setIsSpinningB((v) => !v)}
-                  className="inline-flex items-center gap-1.5 border-2 border-[#1F1305] bg-white hover:bg-[#F8C800] text-[#1F1305] px-2.5 py-1 text-[10px] font-black shadow-[2px_2px_0px_#1F1305] cursor-pointer transition-colors"
+                  className="inline-flex items-center gap-1.5 border-2 border-[#1F1305] bg-white hover:bg-[#F8C800] text-[#1F1305] px-2.5 py-1 text-[11px] font-black shadow-[2px_2px_0px_#1F1305] cursor-pointer transition-colors"
                 >
                   {isSpinningB ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                   <span>{isSpinningB ? "DETENER PLATO" : "GIRAR VINILO"}</span>
                 </button>
 
-                <div className="flex items-center gap-1 font-mono text-[10px]">
+                <div className="flex items-center gap-1 font-mono text-[11px]">
                   <span className={cn("px-1.5 py-0.5 border-2 font-bold", currentPair.trackB?.format?.includes("45") ? "border-[#F1730C] bg-[#F1730C] text-white" : "border-[#1F1305] text-[#746B5C]")}>45 RPM</span>
                   <span className={cn("px-1.5 py-0.5 border-2 font-bold", !currentPair.trackB?.format?.includes("45") ? "border-[#F1730C] bg-[#F1730C] text-white" : "border-[#1F1305] text-[#746B5C]")}>33 RPM</span>
                 </div>
@@ -1074,20 +1114,20 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             {/* ANOTACIONES TÉCNICAS Y GUÍA DE SÍMBOLOS (FIJO ARRIBA DE PISTA #1) */}
             {/* ============================================================ */}
             <div className="border-2 border-[#1F1305] bg-white p-3 sm:p-4 shadow-[3px_3px_0px_#1F1305] space-y-3 font-mono">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-[#1F1305]/20 pb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b-2 border-[#EDE0D0] pb-2">
                 <span className="text-[11px] font-black uppercase text-[#1F1305] flex items-center gap-1.5">
                   <HelpCircle className="h-4 w-4 text-[#E80000]" />
                   Anotaciones Técnicas &amp; Guía de Simbología DJ
                 </span>
-                <span className="text-[10px] text-[#746B5C] font-bold">
+                <span className="text-[11px] text-[#746B5C] font-bold">
                   Referencia de afinidad estilística y velocidad para mezclas
                 </span>
               </div>
 
               {/* Grid explicativo de los 4 símbolos de afinidad */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-[10px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-[11px]">
                 {/* 1. Mismo Género */}
-                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                <div className="border-2 border-[#1F1305] bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
                   <div className="flex items-center gap-1.5">
                     <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#10B981] text-white">
                       🎯 Mismo Género
@@ -1099,7 +1139,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </div>
 
                 {/* 2. Fusión Puente */}
-                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                <div className="border-2 border-[#1F1305] bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
                   <div className="flex items-center gap-1.5">
                     <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#F8C800] text-[#1F1305]">
                       ⚡ Fusión Puente
@@ -1111,7 +1151,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </div>
 
                 {/* 3. Fusión Secundaria */}
-                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                <div className="border-2 border-[#1F1305] bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
                   <div className="flex items-center gap-1.5">
                     <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#F1730C] text-white">
                       ✨ Fusión Sec.
@@ -1123,9 +1163,9 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </div>
 
                 {/* 4. Cruce Libre */}
-                <div className="border border-[#1F1305]/20 bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
+                <div className="border-2 border-[#1F1305] bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-white text-[#5A5245]">
                       🔄 Cruce Libre
                     </span>
                   </div>
@@ -1136,16 +1176,16 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
               </div>
 
               {/* Guía semántica del Ajuste de Pitch */}
-              <div className="pt-2 border-t border-[#1F1305]/15 flex flex-wrap items-center gap-2 sm:gap-4 text-[10px]">
+              <div className="pt-2 border-t-2 border-[#EDE0D0] flex flex-wrap items-center gap-2 sm:gap-4 text-[11px]">
                 <span className="font-bold text-[#1F1305] uppercase">Lectura del Pitch:</span>
-                <span className="inline-flex items-center gap-1 bg-[#10B981]/20 border border-[#10B981] px-1.5 py-0.5 text-[#065F46] font-black">
-                  +X.X% (Verde) = Aumentar Pitch (Acelerar plato)
+                <span className="inline-flex items-center gap-1 bg-[#10B981] border border-[#1F1305] px-2 py-0.5 text-[#1F1305] font-black shadow-[1px_1px_0px_#1F1305]">
+                  ▲ +X.X% ACELERADO (Aumentar Pitch)
                 </span>
-                <span className="inline-flex items-center gap-1 bg-[#E80000]/20 border border-[#E80000] px-1.5 py-0.5 text-[#991B1B] font-black">
-                  -X.X% (Rojo) = Reducir Pitch (Frenar plato)
+                <span className="inline-flex items-center gap-1 bg-[#C91D1D] border border-[#1F1305] px-2 py-0.5 text-white font-black shadow-[1px_1px_0px_#1F1305]">
+                  ▼ -X.X% FRENADO (Reducir Pitch)
                 </span>
-                <span className="inline-flex items-center gap-1 bg-white border border-[#1F1305]/30 px-1.5 py-0.5 text-[#5A5245] font-bold">
-                  0.0% = Mismo Tempo
+                <span className="inline-flex items-center gap-1 bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5 text-[#1F1305] font-bold shadow-[1px_1px_0px_#1F1305]">
+                  ● 0.0% CALIBRADO (Mismo Tempo)
                 </span>
               </div>
             </div>
@@ -1170,7 +1210,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         <span className="text-base font-black text-[#1F1305]">#{step.stepNumber}</span>
                         <span
                           className={cn(
-                            "text-[9px] font-black uppercase px-1.5 py-0.2 border border-[#1F1305]",
+                            "text-[11px] font-black uppercase px-1.5 py-0.2 border border-[#1F1305]",
                             isDeckA ? "bg-[#E80000] text-white" : "bg-[#F1730C] text-white"
                           )}
                         >
@@ -1198,16 +1238,16 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                           {step.track.artist}
                           {step.track.year ? ` (${step.track.year})` : ""}
                         </p>
-                        <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[11px]">
                           <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
                             {step.track.primaryGenre || "Cumbia"}
                           </span>
                           {step.track.secondaryGenre && (
-                            <span className="px-1.5 py-0.2 border border-[#1F1305]/30 bg-white text-[#5A5245]">
+                            <span className="px-1.5 py-0.2 border border-[#EDE0D0] bg-white text-[#5A5245]">
                               + {step.track.secondaryGenre}
                             </span>
                           )}
-                          <span className="font-bold text-[#746B5C] bg-[#EDE0D0] border border-[#1F1305]/30 px-1.5 py-0.2">
+                          <span className="font-bold text-[#746B5C] bg-[#EDE0D0] border border-[#EDE0D0] px-1.5 py-0.2">
                             {step.track.format || "LP"} {step.track.side ? `• Lado ${step.track.side}` : ""}
                           </span>
                           {step.track.durationFormatted && (
@@ -1220,7 +1260,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     </div>
 
                     {/* Métrica DJ y Acciones: Adaptado para móvil */}
-                    <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 font-mono text-xs w-full sm:w-auto">
+                    <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t-2 sm:border-t-0 border-[#EDE0D0] pt-2 sm:pt-0 font-mono text-xs w-full sm:w-auto">
                       <BadgeDJ bpm={step.track.bpm} camelot={step.track.camelot} />
 
                       <div className="flex items-center gap-2">
@@ -1232,7 +1272,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                             setFocusedTransitionIdx(pairIdx);
                             window.scrollTo({ top: 300, behavior: "smooth" });
                           }}
-                          className="border border-[#1F1305] bg-white hover:bg-[#1F1305] hover:text-white px-2.5 py-1 text-[10px] font-bold shadow-[1px_1px_0px_#1F1305] transition-colors cursor-pointer"
+                          className="border border-[#1F1305] bg-white hover:bg-[#1F1305] hover:text-white px-2.5 py-1 text-[11px] font-bold shadow-[1px_1px_0px_#1F1305] transition-colors cursor-pointer"
                           title="Ver en las tornamesas"
                         >
                           Ver en Decks
@@ -1242,7 +1282,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         <button
                           type="button"
                           onClick={() => removeStep(idx)}
-                          className="text-[#E80000] hover:bg-[#E80000] hover:text-white border border-[#E80000]/40 p-1 transition-colors cursor-pointer"
+                          className="text-[#E80000] hover:bg-[#E80000] hover:text-white border border-[#E80000] p-1 transition-colors cursor-pointer"
                           title="Quitar pista de la secuencia"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -1255,20 +1295,20 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   {!isLast && mixSteps[idx + 1] && (
                     <div className="flex items-center gap-3 pl-8 sm:pl-16 font-mono text-xs text-[#5A5245]">
                       <MoveRight className="h-4 w-4 text-[#E80000] shrink-0" />
-                      <div className="flex flex-wrap items-center gap-2 bg-[#EDE0D0]/80 border border-[#1F1305]/30 px-3 py-1 shadow-[1px_1px_0px_#1F1305]">
+                      <div className="flex flex-wrap items-center gap-2 bg-[#EDE0D0] border-2 border-[#1F1305] px-3 py-1 shadow-[2px_2px_0px_#1F1305]">
                         <span className="font-bold text-[#1F1305] text-[11px]">
                           Crossfade Tornamesa {step.deck} ➔ Tornamesa {mixSteps[idx + 1].deck}
                         </span>
                         {renderPitchBadge(mixSteps[idx + 1].pitchDiffWithPrev)}
                         {mixSteps[idx + 1].harmonicTransition && (
-                          <span className="text-[10px] text-[#1F1305] font-bold">
+                          <span className="text-[11px] text-[#1F1305] font-bold">
                             {mixSteps[idx + 1].harmonicTransition!.label}
                           </span>
                         )}
                         {mixSteps[idx + 1].genreAffinity && (
                           <span
                             className={cn(
-                              "text-[10px] font-bold px-1.5 py-0.2 border",
+                              "text-[11px] font-bold px-1.5 py-0.2 border",
                               mixSteps[idx + 1].genreAffinity!.badgeColor
                             )}
                           >
@@ -1290,7 +1330,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   setPickerTab(lastTrackInMix ? "compatible" : "all");
                   setIsPickerOpen(true);
                 }}
-                className="w-full border-2 border-dashed border-[#1F1305] bg-[#FAF5EE] hover:bg-[#F8C800] p-4 text-center font-mono text-xs font-black text-[#1F1305] shadow-[2px_2px_0px_#1F1305] transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="w-full border-2 border-dashed border-[#1F1305] bg-[#FAF5EE] hover:bg-[#F8C800] p-4 text-center font-mono text-xs font-black text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <Plus className="h-4 w-4 text-[#E80000]" />
                 <span>+ Agregar Pista #{nextStepNumber} en Tornamesa {nextDeck}</span>
@@ -1303,9 +1343,6 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
       {/* ============================================================ */}
       {/* MODAL INTELIGENTE DE SELECCIÓN DE PISTAS PARA EL MIX */}
       {/* ============================================================ */}
-      {/* ============================================================ */}
-      {/* MODAL INTELIGENTE DE SELECCIÓN DE PISTAS PARA EL MIX */}
-      {/* ============================================================ */}
       {isPickerOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-2 sm:p-4 animate-in fade-in duration-200">
           <div className="w-full max-w-2xl border-2 sm:border-4 border-[#1F1305] bg-white shadow-[4px_4px_0px_#1F1305] sm:shadow-[8px_8px_0px_#1F1305] max-h-[92vh] sm:max-h-[90vh] flex flex-col overflow-hidden">
@@ -1314,7 +1351,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
               <div className="min-w-0">
                 <span
                   className={cn(
-                    "font-mono text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 border border-[#1F1305] text-white inline-block",
+                    "font-mono text-[11px] font-black uppercase px-2 py-0.5 border border-[#1F1305] text-white inline-block",
                     nextDeck === "A" ? "bg-[#E80000]" : "bg-[#F1730C]"
                   )}
                 >
@@ -1339,7 +1376,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             {lastTrackInMix && (
               <div className="bg-[#1F1305] text-[#EDE0D0] p-2.5 sm:p-3 px-3 sm:px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono text-xs">
                 <div className="min-w-0 truncate">
-                  <span className="text-[9px] sm:text-[10px] text-[#F8C800] block uppercase font-bold">
+                  <span className="text-[11px] text-[#F8C800] block uppercase font-bold">
                     MEZCLANDO DESDE LA PISTA ANTERIOR:
                   </span>
                   <span className="font-bold text-white truncate block text-xs sm:text-sm">
@@ -1394,7 +1431,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     value={pickerSearchQuery}
                     onChange={(e) => setPickerSearchQuery(e.target.value)}
                     placeholder="Buscar por título, artista o Camelot (ej. 8A)..."
-                    className="w-full border-2 border-[#1F1305] bg-[#EDE0D0]/50 pl-9 pr-3 py-1.5 sm:py-2 font-mono text-xs text-[#1F1305] focus:outline-none focus:bg-white focus:border-[#E80000]"
+                    className="w-full border-2 border-[#1F1305] bg-[#FAF5EE] pl-9 pr-3 py-1.5 sm:py-2 font-mono text-xs text-[#1F1305] focus:outline-none focus:bg-white focus:border-[#E80000] focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[4px_4px_0px_#E80000] transition-all"
                     autoFocus
                   />
                 </div>
@@ -1406,7 +1443,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
               {pickerTab === "compatible" && lastTrackInMix ? (
                 candidateRecommendations.length > 0 ? (
                   <>
-                    <div className="bg-[#FAF5EE] border border-[#1F1305]/30 p-2 text-center font-mono text-[11px] text-[#5A5245] flex items-center justify-center gap-1.5 shadow-[1px_1px_0px_#1F1305]">
+                    <div className="bg-[#FAF5EE] border-2 border-[#1F1305] p-2 text-center font-mono text-[11px] text-[#5A5245] flex items-center justify-center gap-1.5 shadow-[1px_1px_0px_#1F1305]">
                       <Sparkles className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
                       <span>
                         Recomendaciones rankeadas por <strong>afinidad estilística (géneros)</strong> y sincronía de tempo/clave.
@@ -1416,7 +1453,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     {candidateRecommendations.map(({ track, bpmDiff, transInfo, genreAffinity }) => (
                       <div
                         key={track.id}
-                        className="p-2 sm:p-2.5 border-b last:border-b-0 border-[#1F1305]/10 hover:bg-[#EDE0D0]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
+                        className="p-2 sm:p-2.5 border-b-2 last:border-b-0 border-[#EDE0D0] hover:bg-[#FAF5EE] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
                       >
                         {/* Bloque 1: Portada + Datos del Tema */}
                         <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
@@ -1439,7 +1476,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                             <p className="font-mono text-xs text-[#5A5245] truncate mt-0.5">
                               {track.artist} {track.year ? `• ${track.year}` : ""}
                             </p>
-                            <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                            <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[11px]">
                               {/* Badge de afinidad de género */}
                               <span
                                 className={cn(
@@ -1452,13 +1489,13 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                               </span>
 
                               {/* Chip género principal */}
-                              <span className="bg-white border border-[#1F1305]/30 text-[#1F1305] px-1.5 py-0.2">
+                              <span className="bg-white border border-[#EDE0D0] text-[#1F1305] px-1.5 py-0.2">
                                 {track.primaryGenre || "Cumbia"}
                               </span>
 
                               {/* Chip género secundario si existe */}
                               {track.secondaryGenre && (
-                                <span className="bg-[#EDE0D0] border border-[#1F1305]/20 text-[#5A5245] px-1.5 py-0.2">
+                                <span className="bg-[#EDE0D0] border border-[#EDE0D0] text-[#5A5245] px-1.5 py-0.2">
                                   + {track.secondaryGenre}
                                 </span>
                               )}
@@ -1473,13 +1510,13 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         </div>
 
                         {/* Bloque 2: Badge DJ + Botón Cargar */}
-                        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 pl-14 sm:pl-0">
+                        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t-2 sm:border-t-0 border-[#EDE0D0] pt-2 sm:pt-0 pl-14 sm:pl-0">
                           <BadgeDJ bpm={track.bpm} camelot={track.camelot} />
                           <button
                             type="button"
                             onClick={() => addTrackToMix(track)}
                             className={cn(
-                              "border-2 border-[#1F1305] px-4 py-1.5 font-mono text-xs font-black text-white shadow-[2px_2px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 hover:opacity-95 transition-all cursor-pointer shrink-0",
+                              "border-2 border-[#1F1305] px-4 py-1.5 font-mono text-xs font-black text-white shadow-[2px_2px_0px_#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer shrink-0",
                               nextDeck === "A" ? "bg-[#E80000]" : "bg-[#F1730C]"
                             )}
                           >
@@ -1515,7 +1552,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     return (
                       <div
                         key={track.id}
-                        className="p-2 sm:p-2.5 border-b last:border-b-0 border-[#1F1305]/10 hover:bg-[#EDE0D0]/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
+                        className="p-2 sm:p-2.5 border-b-2 last:border-b-0 border-[#EDE0D0] hover:bg-[#FAF5EE] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
                       >
                         {/* Bloque 1: Portada + Datos del Tema */}
                         <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
@@ -1538,7 +1575,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                             <p className="font-mono text-xs text-[#5A5245] truncate mt-0.5">
                               {track.artist} {track.year ? `• ${track.year}` : ""}
                             </p>
-                            <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[10px]">
+                            <div className="flex flex-wrap items-center gap-1.5 mt-1 font-mono text-[11px]">
                               {generalGenreAffinity && (
                                 <span
                                   className={cn(
@@ -1551,12 +1588,12 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                                 </span>
                               )}
 
-                              <span className="bg-white border border-[#1F1305]/30 text-[#1F1305] px-1.5 py-0.2">
+                              <span className="bg-white border border-[#EDE0D0] text-[#1F1305] px-1.5 py-0.2">
                                 {track.primaryGenre || "Cumbia"}
                               </span>
 
                               {track.secondaryGenre && (
-                                <span className="bg-[#EDE0D0] border border-[#1F1305]/20 text-[#5A5245] px-1.5 py-0.2">
+                                <span className="bg-[#EDE0D0] border border-[#EDE0D0] text-[#5A5245] px-1.5 py-0.2">
                                   + {track.secondaryGenre}
                                 </span>
                               )}
@@ -1567,13 +1604,13 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         </div>
 
                         {/* Bloque 2: Badge DJ + Botón Cargar */}
-                        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 pl-14 sm:pl-0">
+                        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t-2 sm:border-t-0 border-[#EDE0D0] pt-2 sm:pt-0 pl-14 sm:pl-0">
                           <BadgeDJ bpm={track.bpm} camelot={track.camelot} />
                           <button
                             type="button"
                             onClick={() => addTrackToMix(track)}
                             className={cn(
-                              "border-2 border-[#1F1305] px-4 py-1.5 font-mono text-xs font-black text-white shadow-[2px_2px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 hover:opacity-95 transition-all cursor-pointer shrink-0",
+                              "border-2 border-[#1F1305] px-4 py-1.5 font-mono text-xs font-black text-white shadow-[2px_2px_0px_#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer shrink-0",
                               nextDeck === "A" ? "bg-[#E80000]" : "bg-[#F1730C]"
                             )}
                           >
@@ -1596,7 +1633,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
               <button
                 type="button"
                 onClick={() => setIsPickerOpen(false)}
-                className="border-2 border-[#1F1305] bg-white hover:bg-[#1F1305] hover:text-white px-4 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] transition-colors cursor-pointer"
+                className="border-2 border-[#1F1305] bg-white hover:bg-[#1F1305] hover:text-white px-4 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
               >
                 Cerrar
               </button>

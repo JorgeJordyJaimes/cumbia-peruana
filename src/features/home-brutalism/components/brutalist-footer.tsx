@@ -94,14 +94,14 @@ export function BrutalistFooter() {
                     href="/admin"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border border-[#E80000] bg-[#E80000]/10 hover:bg-[#E80000] text-[#E80000] hover:text-white px-3 py-1.5 font-mono text-xs font-bold transition-all shadow-[2px_2px_0px_#1F1305]"
+                    className="inline-flex items-center gap-2 border-2 border-[#E80000] bg-transparent hover:bg-[#E80000] text-[#E80000] hover:text-white px-3 py-1.5 font-mono text-xs font-bold transition-all shadow-[2px_2px_0px_#1F1305]"
                   >
                     <span>PANEL DE ADMINISTRACIÓN</span>
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
 
-                <div className="pt-2 text-[10px] text-[#746B5C]">
+                <div className="pt-2 text-[11px] text-[#746B5C]">
                   NIVEL: ACCESO GENERAL DESCLASIFICADO<br />
                   ORIGEN &amp; ARCHIVO: BUCARAMANGA, COLOMBIA
                 </div>
@@ -181,7 +181,7 @@ export function BrutalistFooter() {
               </div>
               <div>
                 <span className="font-bold text-white">KUMBIA SOUND ARCHIVE</span>
-                <span className="text-[#746B5C] ml-2 text-[10px] hidden sm:inline">
+                <span className="text-[#746B5C] ml-2 text-[11px] hidden sm:inline">
                   — ARCHIVO NACIONAL DESCLASIFICADO 1968–2005
                 </span>
               </div>

@@ -31,10 +31,10 @@ export function BrutalistTriptych() {
             <span className="font-anton text-2xl tracking-wide uppercase text-[#1F1305]">
               EXPEDIENTES —
             </span>
-            <span className="text-[10px] text-[#746B5C] font-bold">ÍNDICE 01–06</span>
+            <span className="text-[11px] text-[#746B5C] font-bold">ÍNDICE 01–06</span>
           </div>
 
-          <div className="divide-y divide-[#1F1305]/15 text-xs">
+          <div className="divide-y-2 divide-[#1F1305] text-xs">
             {servicios.map((s) => (
               <Link
                 key={s.num}
@@ -105,16 +105,16 @@ export function BrutalistTriptych() {
             <span className="font-anton text-2xl tracking-wide uppercase text-[#1F1305]">
               NORMAS DE CUSTODIA —
             </span>
-            <span className="text-[10px] text-[#E80000] font-bold">PROTOCOLO</span>
+            <span className="text-[11px] text-[#E80000] font-bold">PROTOCOLO</span>
           </div>
 
-          <div className="divide-y divide-[#1F1305]/15 text-xs">
+          <div className="divide-y-2 divide-[#1F1305] text-xs">
             {techSpecs.map((t) => (
               <div key={t.label} className="py-2.5 flex items-center justify-between">
                 <span className="text-[#5A5245] font-bold text-[11px]">{t.label}</span>
                 <div className="flex items-center gap-2">
                   <span className="font-black text-[#1F1305]">{t.valor}</span>
-                  <span className="text-[8px] border border-[#1F1305] bg-white px-1.5 py-0.2 font-black text-[#E80000]">
+                  <span className="text-[11px] border border-[#1F1305] bg-white px-1.5 py-0.2 font-black text-[#E80000]">
                     {t.sello}
                   </span>
                 </div>

@@ -107,22 +107,28 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
       <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-4 sm:p-6 space-y-4 shadow-[4px_4px_0px_#1F1305]">
         {/* Input de Búsqueda Principal */}
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#E80000]" />
-          <input
-            type="text"
-            placeholder="Buscar por título de álbum, agrupación (ej. Los Destellos, Juaneco), catálogo o sello..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border-2 border-[#1F1305] bg-white py-3.5 pl-12 pr-4 text-sm text-[#1F1305] placeholder-[#746B5C] font-mono font-medium shadow-[2px_2px_0px_#1F1305] focus:border-[#E80000] focus:outline-none"
-          />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm("")}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 font-mono text-xs font-bold text-[#1F1305] hover:bg-white"
-            >
-              Limpiar
-            </button>
-          )}
+          <label htmlFor="search-evidencia" className="block font-mono text-[11px] font-black uppercase tracking-widest text-[#1F1305] mb-1">
+            CRITERIO DE BÚSQUEDA // FOLIO, AGRUPACIÓN O TÍTULO
+          </label>
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#E80000]" />
+            <input
+              id="search-evidencia"
+              type="text"
+              placeholder="Buscar por título de álbum, agrupación (ej. Los Destellos, Juaneco), catálogo o sello..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full border-2 border-[#1F1305] bg-white py-3.5 pl-12 pr-4 text-xs font-bold text-[#1F1305] placeholder-[#746B5C] font-mono shadow-[3px_3px_0px_#1F1305] focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[5px_5px_0px_#E80000] transition-all duration-100"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 border-2 border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 font-mono text-xs font-bold text-[#1F1305] shadow-[1px_1px_0px_#1F1305] hover:bg-white cursor-pointer active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+              >
+                Limpiar
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Filtros Rápidos (Formatos, Sellos, Década) */}
@@ -210,8 +216,11 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
 
       {/* Grid de Álbumes */}
       {filteredAlbums.length === 0 ? (
-        <div className="border-2 border-[#1F1305] bg-white py-16 text-center shadow-[6px_6px_0px_#1F1305] p-6 max-w-2xl mx-auto">
-          <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3 opacity-80" />
+        <div className="border-2 border-[#1F1305] bg-white py-14 px-6 text-center shadow-[6px_6px_0px_#1F1305] max-w-2xl mx-auto relative overflow-hidden">
+          <div className="inline-block border-2 border-[#E80000] bg-[#E80000] text-white px-3 py-1 font-mono text-xs font-black uppercase rotate-[-2deg] shadow-[2px_2px_0px_#1F1305] mb-4">
+            EXPEDIENTE NO LOCALIZADO // 404 MATRIZ
+          </div>
+          <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3" />
           <h3 className="font-cooper text-xl text-[#1F1305]">
             {selectedFormat === "EP"
               ? "No hay producciones en formato EP catalogadas aún"
@@ -233,9 +242,9 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               setSelectedLabel("ALL");
               setSelectedYear("ALL");
             }}
-            className="mt-6 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-5 py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:shadow-[3px_3px_0px_#E80000] transition-all cursor-pointer"
+            className="mt-6 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-5 py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#E80000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all cursor-pointer"
           >
-            Restablecer todos los filtros
+            [ REINICIAR CRITERIOS DE PERITAJE ]
           </button>
         </div>
       ) : (
@@ -255,11 +264,11 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               <button
                 type="button"
                 onClick={() => setVisibleCount((prev) => prev + 48)}
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-6 py-3.5 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[4px_4px_0px_#E80000] transition-all active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-6 py-3.5 font-mono text-xs font-bold text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
               >
                 <Disc className="h-4 w-4" />
                 <span>CARGAR MÁS PRODUCCIONES (+48)</span>
-                <span className="bg-white/20 px-2 py-0.5 rounded text-[10px]">
+                <span className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-2 py-0.5 text-[11px] font-mono font-bold">
                   {Math.min(visibleCount, filteredAlbums.length)} / {filteredAlbums.length}
                 </span>
               </button>

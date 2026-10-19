@@ -21,14 +21,14 @@ export function BrutalistHero({
         {/* CINTILLO SUPERIOR DE LEGAJO DESCLASIFICADO */}
         <div className="mb-6 pb-3 border-b-2 border-[#1F1305] flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-[#746B5C]">
           <div className="flex items-center gap-2">
-            <span className="border-2 border-[#E80000] bg-[#E80000] text-white px-2 py-0.5 text-[9px] font-black uppercase rotate-[-2deg] shadow-[2px_2px_0px_#1F1305]">
+            <span className="border-2 border-[#E80000] bg-[#E80000] text-white px-2 py-0.5 text-[11px] font-black uppercase rotate-[-2deg] shadow-[2px_2px_0px_#1F1305]">
               CONFIDENCIAL // LEGAJO OFICIAL
             </span>
-            <span className="text-[#1F1305] font-black uppercase tracking-wider">
+            <span className="text-[#1F1305] font-black uppercase tracking-wider text-xs">
               EXP-CM-1970 // SUJETO DE INTERÉS MUSICAL
             </span>
           </div>
-          <div className="flex items-center gap-2 text-[10px]">
+          <div className="flex items-center gap-2 text-[11px]">
             <span>FOLIO: 001/719</span>
             <span className="text-[#1F1305] font-black">████████</span>
             <span className="text-[#E80000] font-black">ACCESO LIBRE</span>
@@ -43,39 +43,39 @@ export function BrutalistHero({
             <div className="flex flex-wrap items-center gap-2 font-mono text-xs font-bold tracking-widest text-[#746B5C]">
               <span className="text-[#E80000] font-black">+</span>
               <span className="text-[#1F1305] uppercase">MATRIZ MAESTRA // VOZ DE PLANTA</span>
-              <span className="border border-[#1F1305] bg-[#1F1305] px-2 py-0.5 text-[9px] text-[#EDE0D0] font-black uppercase">
+              <span className="border border-[#1F1305] bg-[#1F1305] px-2 py-0.5 text-[11px] text-[#EDE0D0] font-black uppercase">
                 ALFONSO ALEJANDRO MORÁN SIRUMBAL
               </span>
             </div>
 
             {/* TITULAR POSTER GIGANTE EN ANTON CON LÍNEA LATERAL */}
-            <div className="border-l-2 border-[#1F1305] pl-4 sm:pl-6 space-y-0 leading-[0.88] tracking-tighter font-anton uppercase text-[50px] sm:text-[72px] md:text-[90px] lg:text-[100px] xl:text-[112px]">
+            <div className="border-l-4 border-[#1F1305] pl-4 sm:pl-6 space-y-0 leading-[0.88] tracking-tighter font-anton uppercase text-[48px] sm:text-[72px] md:text-[90px] lg:text-[100px] xl:text-[112px]">
               <div className="text-[#1F1305]">
                 EL REY DE LAS
               </div>
               <div className="text-[#1F1305]">
                 CUMBIAS
               </div>
-              <div className="text-[#F1730C] flex items-baseline">
+              <div className="text-[#F1730C] drop-shadow-[3px_3px_0px_#1F1305] flex items-baseline">
                 <span>PEGADITAS</span>
-                <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 bg-[#E80000] ml-3 align-baseline" />
+                <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 bg-[#E80000] border border-[#1F1305] ml-3 align-baseline" />
               </div>
             </div>
 
             {/* FICHA TÉCNICA Y RESEÑA DOCUMENTAL CON CRUCES ROJAS EN LAS 4 ESQUINAS */}
-            <div className="border border-[#1F1305] bg-white/80 p-5 space-y-3 relative">
+            <div className="border border-[#1F1305] bg-white p-5 space-y-3 relative shadow-[3px_3px_0px_#1F1305]">
               {/* Marcas de cruceta roja de calibración en las 4 esquinas */}
               <span className="absolute -top-1.5 -left-1.5 font-mono text-xs text-[#E80000] font-bold leading-none">+</span>
               <span className="absolute -top-1.5 -right-1.5 font-mono text-xs text-[#E80000] font-bold leading-none">+</span>
               <span className="absolute -bottom-1.5 -left-1.5 font-mono text-xs text-[#E80000] font-bold leading-none">+</span>
               <span className="absolute -bottom-1.5 -right-1.5 font-mono text-xs text-[#E80000] font-bold leading-none">+</span>
 
-              <div className="flex items-center justify-between border-b border-[#1F1305]/20 pb-2 font-mono text-[11px] font-bold uppercase text-[#1F1305]">
+              <div className="flex items-center justify-between border-b border-[#EDE0D0] pb-2 font-mono text-xs font-bold uppercase text-[#1F1305]">
                 <span className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-[#E80000]" />
                   DOCUMENTACIÓN DE ORIGEN & PRENSADO
                 </span>
-                <span className="text-[#746B5C] text-[10px]">CÓDIGO: CLAUDIO-MORAN-01</span>
+                <span className="text-[#746B5C] text-[11px]">CÓDIGO: CLAUDIO-MORAN-01</span>
               </div>
 
               <p className="font-mono text-xs sm:text-[13px] text-[#3A3026] leading-relaxed">
@@ -87,7 +87,7 @@ export function BrutalistHero({
               </p>
 
               {/* Parámetros de Sesión */}
-              <div className="pt-2 flex flex-wrap items-center gap-2 font-mono text-[10px]">
+              <div className="pt-2 flex flex-wrap items-center gap-2 font-mono text-[11px]">
                 <span className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-1 font-bold text-[#1F1305]">
                   SELLOS: ODEÓN • INFOPESA • VIRREY
                 </span>
@@ -101,7 +101,7 @@ export function BrutalistHero({
             <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-bold font-mono">
               <Link
                 href="/genealogia"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-6 py-3.5 text-white shadow-[4px_4px_0px_#E80000] hover:bg-[#E80000] hover:text-white hover:border-[#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-6 py-3.5 text-white shadow-[4px_4px_0px_#E80000] hover:bg-[#E80000] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all"
               >
                 <span>EXP. 01: CONSULTAR LINAJES ↗</span>
                 <ArrowUpRight className="h-4 w-4" />
@@ -109,15 +109,15 @@ export function BrutalistHero({
 
               <Link
                 href="/match-bpm"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#E80000] hover:text-white hover:shadow-[4px_4px_0px_#1F1305] transition-all active:translate-x-0.5 active:translate-y-0.5"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#E80000] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all"
               >
                 <span>EXP. 02: CONSOLA MATCH BPM</span>
-                <span className="text-white text-[10px]">●</span>
+                <span className="text-white text-[11px]">●</span>
               </Link>
 
               <Link
                 href="/vinilos"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-5 py-3.5 text-[#1F1305] shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-all active:translate-x-0.5 active:translate-y-0.5"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-5 py-3.5 text-[#1F1305] shadow-[4px_4px_0px_#1F1305] hover:bg-[#EDE0D0] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
                 <Disc className="h-4 w-4 text-[#F1730C]" />
                 <span>EXP. 06: BÓVEDA DE EVIDENCIAS</span>
@@ -133,7 +133,7 @@ export function BrutalistHero({
               <div className="relative z-10 border-2 border-[#1F1305] bg-[#EDE0D0] shadow-[8px_8px_0px_#1F1305] overflow-hidden flex flex-col justify-end">
                 
                 {/* Cabecera con número de registro y sello de caucho */}
-                <div className="border-b-2 border-[#1F1305] bg-[#1F1305] px-3 py-1.5 flex items-center justify-between text-[10px] font-bold text-white uppercase tracking-widest">
+                <div className="border-b-2 border-[#1F1305] bg-[#1F1305] px-3 py-1.5 flex items-center justify-between text-[11px] font-bold text-white uppercase tracking-widest">
                   <div className="flex items-center gap-2">
                     <span className="text-[#E80000]">●</span>
                     <span>FICHA DE ARCHIVO NO. 01</span>
@@ -144,7 +144,7 @@ export function BrutalistHero({
                 {/* Fotografía de Claudio Morán */}
                 <div className="relative w-full h-[390px] sm:h-[440px] md:h-[480px] flex items-end justify-center px-4 pt-4">
                   {/* Sello estampado de tinta roja en la esquina de la foto */}
-                  <div className="absolute top-4 left-4 z-20 border-2 border-[#E80000] bg-[#E80000]/15 text-[#E80000] p-1.5 text-[9px] font-black uppercase rotate-[-8deg] shadow-[1px_1px_0px_#1F1305]">
+                  <div className="absolute top-4 left-4 z-20 border-2 border-[#E80000] bg-[#EDE0D0] text-[#E80000] p-1.5 text-[11px] font-black uppercase rotate-[-8deg] shadow-[1px_1px_0px_#1F1305]">
                     CULTURA POPULAR // VERIFICADO
                   </div>
 
@@ -162,11 +162,11 @@ export function BrutalistHero({
                     <h4 className="font-anton text-lg uppercase tracking-wide text-white leading-none">
                       CLAUDIO MORÁN
                     </h4>
-                    <p className="text-[10px] text-[#F1730C] font-black uppercase mt-1">
+                    <p className="text-[11px] text-[#F1730C] font-black uppercase mt-1">
                       VOZ PRINCIPAL // MATRICES 1968–2005
                     </p>
                   </div>
-                  <div className="border border-[#E80000] bg-[#E80000]/20 px-2 py-1 text-[9px] font-black text-[#E80000]">
+                  <div className="border border-[#E80000] bg-[#EDE0D0] px-2 py-1 text-[11px] font-black text-[#E80000]">
                     REGISTRADO
                   </div>
                 </div>
@@ -188,53 +188,53 @@ export function BrutalistHero({
           <span className="absolute -bottom-1.5 -right-1.5 font-mono text-xs text-[#E80000] font-bold leading-none z-20">+</span>
           
           <div className="p-5 sm:p-6 space-y-1 relative">
-            <div className="flex items-center justify-between text-[10px] text-[#746B5C] font-black pb-1 border-b border-[#1F1305]/15">
+            <div className="flex items-center justify-between text-[11px] text-[#746B5C] font-black pb-1 border-b border-[#EDE0D0]">
               <span>EXP-01 / PRENSAJES</span>
               <span className="text-[#E80000]">EN CUSTODIA</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#1F1305] tracking-tight pt-1">
               {totalAlbumes}+
             </span>
-            <span className="text-[10px] uppercase font-bold text-[#746B5C] block tracking-wider">
+            <span className="text-[11px] uppercase font-bold text-[#746B5C] block tracking-wider">
               Piezas de Evidencia Física
             </span>
           </div>
 
           <div className="p-5 sm:p-6 space-y-1 relative">
-            <div className="flex items-center justify-between text-[10px] text-[#746B5C] font-black pb-1 border-b border-[#1F1305]/15">
+            <div className="flex items-center justify-between text-[11px] text-[#746B5C] font-black pb-1 border-b border-[#EDE0D0]">
               <span>EXP-02 / COMBOS</span>
               <span className="text-[#F1730C]">FICHADOS</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#F1730C] tracking-tight pt-1">
               {totalGrupos}
             </span>
-            <span className="text-[10px] uppercase font-bold text-[#746B5C] block tracking-wider">
+            <span className="text-[11px] uppercase font-bold text-[#746B5C] block tracking-wider">
               Agrupaciones Históricas
             </span>
           </div>
 
           <div className="p-5 sm:p-6 space-y-1 relative">
-            <div className="flex items-center justify-between text-[10px] text-[#746B5C] font-black pb-1 border-b border-[#1F1305]/15">
+            <div className="flex items-center justify-between text-[11px] text-[#746B5C] font-black pb-1 border-b border-[#EDE0D0]">
               <span>EXP-03 / SESIÓN</span>
               <span className="text-[#1F1305]">IDENTIFICADOS</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#1F1305] tracking-tight pt-1">
               {totalPersonas}
             </span>
-            <span className="text-[10px] uppercase font-bold text-[#746B5C] block tracking-wider">
+            <span className="text-[11px] uppercase font-bold text-[#746B5C] block tracking-wider">
               Músicos & Guitarristas
             </span>
           </div>
 
           <div className="p-5 sm:p-6 space-y-1 relative">
-            <div className="flex items-center justify-between text-[10px] text-[#746B5C] font-black pb-1 border-b border-[#1F1305]/15">
+            <div className="flex items-center justify-between text-[11px] text-[#746B5C] font-black pb-1 border-b border-[#EDE0D0]">
               <span>EXP-04 / SELLOS</span>
               <span className="text-[#E80000]">MATRICULADOS</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#E80000] tracking-tight pt-1">
               {totalSellos}
             </span>
-            <span className="text-[10px] uppercase font-bold text-[#746B5C] block tracking-wider">
+            <span className="text-[11px] uppercase font-bold text-[#746B5C] block tracking-wider">
               Sellos Discográficos
             </span>
           </div>

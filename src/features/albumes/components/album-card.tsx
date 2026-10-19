@@ -67,15 +67,15 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
           </div>
         </div>
 
-        {/* Funda Externa / Carpeta de Evidencia Translúcida Oscura con Borde 2px y Sombra Brutalista */}
+        {/* Funda Externa / Carpeta de Evidencia con Borde 2px y Sombra Brutalista */}
         <div
           className={cn(
-            "relative z-10 h-full w-full overflow-hidden border-2 border-[#1F1305] bg-neutral-900/90 shadow-[4px_4px_0px_#1F1305] transition-all duration-200 group-hover:shadow-[6px_6px_0px_#E80000] group-hover:-translate-y-1 flex flex-col justify-between p-3.5",
+            "relative z-10 h-full w-full overflow-hidden border-2 border-[#1F1305] bg-[#140D04] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 group-hover:shadow-[6px_6px_0px_#E80000] group-hover:-translate-y-1 flex flex-col justify-between p-3.5",
             gradient
           )}
         >
           {/* Sello de expediente superior */}
-          <div className="absolute top-0 left-0 right-0 h-4 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 text-[8px] text-[#1F1305] font-black z-20">
+          <div className="absolute top-0 left-0 right-0 h-5 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 text-[11px] text-[#1F1305] font-black z-20">
             <span>EVIDENCIA NO. {String(album.id).padStart(4, "0")}</span>
             <span className="text-[#E80000]">{album.year || "VERIFICADO"}</span>
           </div>
@@ -86,20 +86,20 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
               src={album.coverUrl}
               alt={album.title}
               onError={() => setImageError(true)}
-              className="absolute inset-0 h-full w-full object-cover pt-4 transition-transform duration-300 group-hover:scale-102"
+              className="absolute inset-0 h-full w-full object-cover pt-5 transition-transform duration-300 group-hover:scale-102"
             />
           ) : (
             // Funda Editorial Texturizada Retro
-            <div className="absolute inset-0 pt-4 flex flex-col justify-between p-5 bg-gradient-to-b from-white/[0.04] to-transparent">
+            <div className="absolute inset-0 pt-5 flex flex-col justify-between p-5 bg-gradient-to-b from-white/[0.04] to-transparent">
               <Disc3 className="absolute -right-6 -bottom-6 h-36 w-36 text-white/[0.03] rotate-12" />
             </div>
           )}
 
           {/* Overlay Oscuro Translúcido para Legibilidad */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
           {/* Cabecera de la Funda: Formato y Año con Sello Rojo */}
-          <div className="relative z-10 pt-3 flex items-start justify-between gap-1.5">
+          <div className="relative z-10 pt-4 flex items-start justify-between gap-1.5">
             <BadgeFormat formatName={album.format || "LP"} size="sm" />
             {album.year && (
               <span className="border border-[#1F1305] bg-[#1F1305] px-2 py-0.5 text-[11px] font-black text-white shadow-[2px_2px_0px_#E80000]">
@@ -110,10 +110,10 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
 
           {/* Pie de la Funda: Datos del Fonograma y Archivo */}
           <div className="relative z-10 space-y-1">
-            <div className="flex items-center justify-between text-[9px] text-[#F8C800] uppercase font-bold tracking-wider">
+            <div className="flex items-center justify-between text-[11px] text-[#F8C800] uppercase font-bold tracking-wider">
               <span className="truncate max-w-[130px]">{album.label || "ARCHIVO GENERAL"}</span>
               {album.catalogNumber && (
-                <span className="text-white bg-black/70 px-1.5 py-0.2 border border-white/20">
+                <span className="text-white bg-[#1F1305] px-1.5 py-0.2 border border-[#3E2C1B]">
                   {album.catalogNumber}
                 </span>
               )}

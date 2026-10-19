@@ -175,11 +175,11 @@ export function BrutalistGenresSection() {
                 className="group relative flex flex-col justify-between items-center text-center p-4 sm:p-5 border-2 border-[#1F1305] bg-white min-h-[260px] sm:min-h-[290px] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[6px_6px_0px_#E80000] cursor-pointer overflow-hidden"
               >
                 {/* Zona en la parte superior */}
-                <div className="w-full flex items-center justify-between border-b border-[#1F1305]/20 pb-1.5 text-xs">
+                <div className="w-full flex items-center justify-between border-b-2 border-[#EDE0D0] pb-1.5 text-xs">
                   <span className="font-anton text-base font-black text-[#E80000]">
                     ZONA-0{genero.id}
                   </span>
-                  <span className="text-[9px] uppercase font-bold text-[#746B5C] truncate max-w-[80px]">
+                  <span className="text-[11px] uppercase font-bold text-[#746B5C] truncate max-w-[80px]">
                     {genero.region.split("&")[0]}
                   </span>
                 </div>
@@ -187,7 +187,7 @@ export function BrutalistGenresSection() {
                 {/* Emblema central */}
                 <div className="my-3 flex items-center justify-center">
                   <div className="relative w-14 h-14 sm:w-16 sm:h-16 border-2 border-[#1F1305] bg-[#140D04] flex items-center justify-center shadow-md group-hover:scale-105 transition-all">
-                    <div className="absolute inset-1 border border-white/10" />
+                    <div className="absolute inset-1 border border-[#3E2C1B]" />
                     <div className="relative z-10 w-6 h-6 border border-black bg-[#1F1305] flex items-center justify-center">
                       <Disc className="h-3.5 w-3.5 text-[#F1730C]" />
                     </div>
@@ -200,7 +200,7 @@ export function BrutalistGenresSection() {
                     {genero.nombre}
                   </h3>
 
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-[#746B5C] group-hover:text-[#1F1305] transition-colors font-bold">
+                  <div className="flex items-center justify-center gap-1 text-[11px] text-[#746B5C] group-hover:text-[#1F1305] transition-colors font-bold">
                     <span className="text-[#E80000]">★</span>
                     <span>{genero.titulos}</span>
                   </div>
@@ -245,7 +245,7 @@ export function BrutalistGenresSection() {
             {/* Cabecera del Modal */}
             <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold tracking-widest text-[#E80000] uppercase">
+                <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
                   INFORME DE ZONA NO. 0{selectedGenero.id} // LEGAJO PERICIAL
                 </span>
                 <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white">

@@ -26,11 +26,11 @@ export function BrutalistSelectedWork() {
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <span className="text-[#E80000] font-black text-sm">EXP. 01</span>
-                  <span className="border border-[#E80000] bg-[#E80000]/15 text-[#E80000] px-1.5 py-0.2 text-[9px] font-black uppercase rotate-[-2deg]">
+                  <span className="border border-[#E80000] bg-[#1F1305] text-[#E80000] px-1.5 py-0.2 text-[11px] font-black uppercase rotate-[-2deg]">
                     CASO ABIERTO
                   </span>
                 </div>
-                <span className="text-[#8E8478] uppercase tracking-widest text-[10px] font-bold">
+                <span className="text-[#8E8478] uppercase tracking-widest text-[11px] font-bold">
                   LINAJES DE SESIÓN
                 </span>
               </div>
@@ -39,7 +39,7 @@ export function BrutalistSelectedWork() {
               <div className="aspect-[16/9] w-full border-2 border-[#3E2C1B] bg-[#140D04] p-4 flex flex-col justify-between relative overflow-hidden group-hover:border-[#E80000] transition-colors">
                 <div className="flex items-center justify-between">
                   <GitFork className="h-6 w-6 text-[#E80000]" />
-                  <span className="text-[10px] text-[#EDE0D0] bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B] font-bold">
+                  <span className="text-[11px] text-[#EDE0D0] bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B] font-bold">
                     360+ GUITARRAS IDENTIFICADAS
                   </span>
                 </div>
@@ -47,7 +47,7 @@ export function BrutalistSelectedWork() {
                   <h4 className="font-anton text-2xl tracking-wide uppercase text-white group-hover:text-[#E80000] transition-colors">
                     ÁRBOL & CRUCES
                   </h4>
-                  <p className="text-[10px] text-[#B8AFA6]">
+                  <p className="text-[11px] text-[#B8AFA6]">
                     LOS DESTELLOS • MANZANITA • INFOPESA
                   </p>
                 </div>
@@ -81,11 +81,11 @@ export function BrutalistSelectedWork() {
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <span className="text-[#E80000] font-black text-sm">EXP. 02</span>
-                  <span className="border border-[#F1730C] bg-[#F1730C]/15 text-[#F1730C] px-1.5 py-0.2 text-[9px] font-black uppercase rotate-[2deg]">
+                  <span className="border border-[#F1730C] bg-[#1F1305] text-[#F1730C] px-1.5 py-0.2 text-[11px] font-black uppercase rotate-[2deg]">
                     CALIBRADO
                   </span>
                 </div>
-                <span className="text-[#8E8478] uppercase tracking-widest text-[10px] font-bold">
+                <span className="text-[#8E8478] uppercase tracking-widest text-[11px] font-bold">
                   SINCRONIZACIÓN DJ
                 </span>
               </div>
@@ -94,7 +94,7 @@ export function BrutalistSelectedWork() {
               <div className="aspect-[16/9] w-full border-2 border-[#3E2C1B] bg-[#140D04] p-4 flex flex-col justify-between relative overflow-hidden group-hover:border-[#E80000] transition-colors">
                 <div className="flex items-center justify-between">
                   <Music2 className="h-6 w-6 text-[#E80000]" />
-                  <span className="text-[10px] text-[#F8C800] bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B] font-bold">
+                  <span className="text-[11px] text-[#F8C800] bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B] font-bold">
                     RUEDA CAMELOT
                   </span>
                 </div>
@@ -102,7 +102,7 @@ export function BrutalistSelectedWork() {
                   <h4 className="font-anton text-2xl tracking-wide uppercase text-white group-hover:text-[#E80000] transition-colors">
                     CONSOLA DJ
                   </h4>
-                  <p className="text-[10px] text-[#B8AFA6]">
+                  <p className="text-[11px] text-[#B8AFA6]">
                     PITCH ±3% / ±5% • 440 HZ STANDARD
                   </p>
                 </div>
@@ -136,11 +136,11 @@ export function BrutalistSelectedWork() {
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <span className="text-[#F1730C] font-black text-sm">EXP. 03</span>
-                  <span className="border border-[#F1730C] bg-[#F1730C]/15 text-[#F1730C] px-1.5 py-0.2 text-[9px] font-black uppercase rotate-[-1deg]">
+                  <span className="border border-[#F1730C] bg-[#1F1305] text-[#F1730C] px-1.5 py-0.2 text-[11px] font-black uppercase rotate-[-1deg]">
                     RAREZA 45s
                   </span>
                 </div>
-                <span className="text-[#8E8478] uppercase tracking-widest text-[10px] font-bold">
+                <span className="text-[#8E8478] uppercase tracking-widest text-[11px] font-bold">
                   MICROGROOVE 45 RPM
                 </span>
               </div>
@@ -149,7 +149,7 @@ export function BrutalistSelectedWork() {
               <div className="aspect-[16/9] w-full border-2 border-[#3E2C1B] bg-[#140D04] p-4 flex flex-col justify-between relative overflow-hidden group-hover:border-[#F1730C] transition-colors">
                 <div className="flex items-center justify-between">
                   <Radio className="h-6 w-6 text-[#F1730C]" />
-                  <span className="text-[10px] text-[#F1730C] bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B] font-bold">
+                  <span className="text-[11px] text-[#F1730C] bg-[#1F1305] px-2 py-0.5 border border-[#3E2C1B] font-bold">
                     SONDA ANALÓGICA
                   </span>
                 </div>
@@ -157,7 +157,7 @@ export function BrutalistSelectedWork() {
                   <h4 className="font-anton text-2xl tracking-wide uppercase text-white group-hover:text-[#F1730C] transition-colors">
                     EL RADAR SONORO
                   </h4>
-                  <p className="text-[10px] text-[#B8AFA6]">
+                  <p className="text-[11px] text-[#B8AFA6]">
                     TIRAJES LIMITADOS • MATRICES ORIGINALES
                   </p>
                 </div>

@@ -18,8 +18,8 @@ export interface TrackCoverImageProps {
 }
 
 const sizeClasses = {
-  xs: "h-8 w-8 text-[9px]",
-  sm: "h-10 w-10 text-[10px]",
+  xs: "h-8 w-8 text-[11px]",
+  sm: "h-10 w-10 text-[11px]",
   md: "h-12 w-12 text-xs",
   lg: "h-16 w-16 text-sm",
   xl: "h-24 w-24 text-base",
@@ -109,7 +109,7 @@ export function TrackCoverImage({
           )}
 
           {size !== "xs" && size !== "sm" && (
-            <span className="mt-1 line-clamp-1 max-w-[90%] text-[8px] font-black uppercase tracking-wider text-neutral-300">
+            <span className="mt-1 line-clamp-1 max-w-[90%] text-[11px] font-black uppercase tracking-wider text-neutral-300">
               {cleanSide ? `Lado ${cleanSide}` : cleanFormat}
             </span>
           )}
@@ -120,7 +120,7 @@ export function TrackCoverImage({
       {showSideBadge && badgeText && shape !== "circle" && (
         <span
           className={cn(
-            "absolute bottom-0 inset-x-0 bg-[#1F1305]/90 text-center font-mono text-[8px] font-black uppercase tracking-wider text-white backdrop-blur-[1px] py-0.5 px-1 truncate",
+            "absolute bottom-0 inset-x-0 bg-[#1F1305] text-center font-mono text-[11px] font-black uppercase tracking-wider text-white py-0.5 px-1 truncate",
             cleanSide === "A" && "text-[#F8C800]",
             cleanSide === "B" && "text-[#F1730C]"
           )}

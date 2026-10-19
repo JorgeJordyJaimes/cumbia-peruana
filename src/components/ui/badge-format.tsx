@@ -45,7 +45,7 @@ export function BadgeFormat({
     <span
       className={cn(
         "inline-flex items-center gap-1.5 border border-[#1F1305] bg-white font-mono font-bold uppercase tracking-wider text-[#E80000] shadow-[1px_1px_0px_#1F1305]",
-        size === "sm" ? "px-1.5 py-0.5 text-[10px]" : "px-2 py-0.5 text-xs",
+        size === "sm" ? "px-1.5 py-0.5 text-[11px]" : "px-2 py-0.5 text-xs",
         className
       )}
     >

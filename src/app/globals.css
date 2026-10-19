@@ -15,13 +15,18 @@
   --color-gold-solar: #f59e0b;
   --color-cumbia-red: #dc2626;
   --color-chicha-green: #10b981;
+  --color-pitch-red: #c91d1d;
   --color-chicha-cyan: #06b6d4;
   --color-brutalist-cream: #ede0d0;
-  --color-brutalist-orange: #f1730c;
+  --color-brutalist-white: #ffffff;
   --color-brutalist-black: #1f1305;
   --color-brutalist-dark: #1f1305;
+  --color-ink-faded: #746b5c;
+  --color-ink-editorial: #5a5245;
+  --color-border-leather: #3e2c1b;
   --color-logo-red: #e80000;
   --color-logo-gold: #f8c800;
+  --color-brutalist-orange: #f1730c;
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -130,10 +135,10 @@
 .vinyl-grooves {
   background: repeating-radial-gradient(
     circle at center,
-    rgba(255, 255, 255, 0.015) 0,
-    rgba(255, 255, 255, 0.015) 2px,
+    rgba(237, 224, 208, 0.07) 0,
+    rgba(237, 224, 208, 0.07) 2px,
     transparent 3px,
-    transparent 5px
+    transparent 6px
   );
 }
 

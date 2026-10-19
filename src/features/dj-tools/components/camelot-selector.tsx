@@ -139,13 +139,13 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                         ? "border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000]"
                         : isCompatible
                         ? "border-[#1F1305] bg-white text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0]"
-                        : "border-[#1F1305]/30 bg-[#EDE0D0]/50 text-[#746B5C] hover:border-[#1F1305] hover:bg-white"
+                        : "border-[#EDE0D0] bg-[#FAF5EE] text-[#746B5C] hover:border-[#1F1305] hover:bg-white"
                     )}
                   >
                     <span className="text-sm font-black tracking-tight">
                       {code}
                     </span>
-                    <span className="text-[10px] font-bold">
+                    <span className="text-[11px] font-bold">
                       {info.standardKey}
                     </span>
                     {isSelected && (
@@ -183,13 +183,13 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                         ? "border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000]"
                         : isCompatible
                         ? "border-[#1F1305] bg-white text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0]"
-                        : "border-[#1F1305]/30 bg-[#EDE0D0]/50 text-[#746B5C] hover:border-[#1F1305] hover:bg-white"
+                        : "border-[#EDE0D0] bg-[#FAF5EE] text-[#746B5C] hover:border-[#1F1305] hover:bg-white"
                     )}
                   >
                     <span className="text-sm font-black tracking-tight">
                       {code}
                     </span>
-                    <span className="text-[10px] font-bold">
+                    <span className="text-[11px] font-bold">
                       {info.standardKey}
                     </span>
                     {isSelected && (
@@ -203,7 +203,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
         </div>
 
         {/* Guía de Transiciones Armónicas Compatibles para la Clave Seleccionada */}
-        <div className="mt-8 border-2 border-[#1F1305] bg-[#EDE0D0]/60 p-4 shadow-[3px_3px_0px_#1F1305]">
+        <div className="mt-8 border-2 border-[#1F1305] bg-[#EDE0D0] p-4 shadow-[3px_3px_0px_#1F1305]">
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-[#E80000]" />
@@ -244,7 +244,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                   <div className={cn("mt-1 text-xs font-bold", isCurrent ? "text-white" : "text-[#E80000]")}>
                     {t.label}
                   </div>
-                  <p className={cn("mt-0.5 text-[11px] leading-tight font-sans", isCurrent ? "text-[#EDE0D0]/80" : "text-[#5A5245]")}>
+                  <p className={cn("mt-0.5 text-[11px] leading-tight font-sans", isCurrent ? "text-[#EDE0D0]" : "text-[#5A5245]")}>
                     {t.description}
                   </p>
                 </div>
@@ -361,7 +361,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                   key={track.id}
                   className={cn(
                     "border-2 border-[#1F1305] bg-white p-3 sm:p-3.5 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-[3px_3px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000]",
-                    isExact && "bg-[#EDE0D0]/40 border-[#E80000]"
+                    isExact && "bg-[#EDE0D0] border-[#E80000]"
                   )}
                 >
                   <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -393,17 +393,17 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between sm:justify-end sm:flex-col sm:items-end gap-1.5 shrink-0 border-t sm:border-t-0 border-[#1F1305]/10 pt-2 sm:pt-0 pl-14 sm:pl-0">
+                  <div className="flex items-center justify-between sm:justify-end sm:flex-col sm:items-end gap-1.5 shrink-0 border-t sm:border-t-0 border-[#EDE0D0] pt-2 sm:pt-0 pl-14 sm:pl-0">
                     <BadgeDJ
                       bpm={track.bpm}
                       camelot={track.camelot}
                     />
                     {isExact ? (
-                      <span className="text-[10px] font-mono text-[#E80000] font-black uppercase">
+                      <span className="text-[11px] font-mono text-[#E80000] font-black uppercase">
                         ★ Match Exacto
                       </span>
                     ) : (
-                      <span className="text-[10px] font-mono text-[#5A5245] font-bold">
+                      <span className="text-[11px] font-mono text-[#5A5245] font-bold">
                         Compatible ({track.camelot})
                       </span>
                     )}
