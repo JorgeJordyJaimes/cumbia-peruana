@@ -168,8 +168,8 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 25, '76-040', 1976, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 25, '77-043', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 25, '76-040', 1976, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 25, '77-043', 1977, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- GALEM
 INSERT INTO Albumes (
@@ -179,10 +179,10 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 68, '001', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 68, '003', 1977, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 68, '006', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 68, '009', 1978, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 68, '001', 1977, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 68, '003', 1977, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 68, '006', 1978, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 68, '009', 1978, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- HORÓSCOPO
 INSERT INTO Albumes (
@@ -192,9 +192,9 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 2, '1025', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 2, '1029', 1979, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, 'Tiene dos temas en el lado A y se reproduce a 45 rpm'),
-(23, 2, '1099', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 2, '1025', 1979, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 2, '1029', 1979, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, TRUE, NULL, 'Este disco es partícular. El tema del Lado A es el mismo tema del Lado A del disco 1025 para el sello Horóscopo, del mismo modo, este disco en el lado A trae como número de catálogo el 1025, sin embargo lo he puesto como 1029 porque es necesario tenerlos agrupados. En su cara B trae dos temas, la etiqueta o galleta deja en claro que A y B son número de catálogo 1029, es decir, metieron en un solo lado a 45 rpm, un solo single, mientras en el lado A volvieron a sacar el tema Mi Pueblo, la motivación de esyo no se sabe, quizá lo querían volver a pegar porque le veían potencial o quién sabe, solo son supociosiones mías.'),
+(23, 2, '1099', 1982, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- DIFA
 INSERT INTO Albumes (
@@ -204,13 +204,13 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 11, '90', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 11, '99', 1980, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 11, '108', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 11, '118', 1981, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 11, '128', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 11, '135', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 11, '156', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 11, '090', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 11, '099', 1980, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 11, '81-108', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 11, '118', 1981, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 11, '128', 1982, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, TRUE, NULL, 'Reedición de Galem 003'),
+(23, 11, '135', 1982, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', (SELECT id_album FROM Albumes WHERE id_grupo = 23 AND numero_catalogo = 'DLPS-81009'), FALSE, NULL, ''),
+(23, 11, '156', 1982, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- MUSIC SHOP
 INSERT INTO Albumes (
@@ -220,7 +220,7 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 7, '01-183', 1985, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 7, '01-183', 1985, 1, FALSE, TRUE, FALSE, FALSE, 'Ambos', (SELECT id_album FROM Albumes WHERE id_grupo = 23 AND numero_catalogo = 'LPN-0285147'), FALSE, NULL, '');
 
 -- INFOPESA
 INSERT INTO Albumes (
@@ -230,10 +230,10 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 1, '171404', 1983, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 1, '171433', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 1, '171440', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 1, '171446', 1984, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 1, '171404', 1983, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 1, '171433', 1984, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 1, '171440', 1984, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 1, '171446', 1984, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 -- WR
 INSERT INTO Albumes (
@@ -243,7 +243,7 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 56, '10', 1986, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 56, '10', 1986, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
 
 -- CARAVANA RECORD
 INSERT INTO Albumes (
@@ -253,8 +253,8 @@ INSERT INTO Albumes (
 
 VALUES
 
-(23, 9, '42', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, ''),
-(23, 9, '44', 1987, 1, FALSE, FALSE, FALSE, FALSE, NULL, NULL, FALSE, NULL, '');
+(23, 9, '42', 1987, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, ''),
+(23, 9, '44', 1987, 1, FALSE, FALSE, FALSE, TRUE, NULL, NULL, FALSE, NULL, '');
 
 ---------------------------------------------------------------------------------------------------------------------- CIELO GRIS ----------------------------------------------------------------------------------------------------------------------
 

@@ -30,5 +30,11 @@ VALUES
 (22, 'Chicha'),
 (23, 'Beat Soul'),
 (24, 'Cumbia Carretera'),
-(25, 'Cumbión Amazónico')
+(25, 'Cumbión Amazónico'),
+(26, 'Cumbia Fusión'),
+(27, 'Cumbia Tropical'),
+(28, 'Pop'),
+(29, 'Rumba'),
+(30, 'Salsa'),
+(31, 'Soul')
 ON CONFLICT (id_genero) DO UPDATE SET nombre_genero = EXCLUDED.nombre_genero;
