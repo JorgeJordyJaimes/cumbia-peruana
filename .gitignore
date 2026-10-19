@@ -47,6 +47,7 @@ next-env.d.ts
 .temp/
 supabase/.temp/
 documentacio-paso-paso.md
+estilo-web.md
 
 # binaries
 *.exe
