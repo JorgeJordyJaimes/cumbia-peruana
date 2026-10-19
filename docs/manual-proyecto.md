@@ -83,6 +83,7 @@ cumbia-peruana/
 │   ├── arquitectura-tecnica.md          # Especificación del modelo relacional y RPCs
 │   ├── catalogo-skills.md               # Catálogo e inventario de skills para agentes y desarrolladores
 │   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes
+│   ├── estilo-web.md                    # Manual de identidad visual y sistema de diseño brutalista editorial
 │   ├── lineamientos-desarrollo.md       # Guía de setup, estándares y flujo Git
 │   ├── manifiesto-arquitectura.md       # Manifiesto histórico y grafo fonográfico
 │   └── manual-proyecto.md               # Este manual para agentes y desarrolladores

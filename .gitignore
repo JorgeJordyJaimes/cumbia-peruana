@@ -1,4 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+﻿# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -47,7 +47,6 @@ next-env.d.ts
 .temp/
 supabase/.temp/
 documentacio-paso-paso.md
-estilo-web.md
 
 # binaries
 *.exe
