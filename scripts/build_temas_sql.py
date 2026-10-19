@@ -245,7 +245,10 @@ for idx, r in enumerate(ts_rows[68:], start=69):
             for vpart in voz.split(';'):
                 pname = resolve_persona(vpart)
                 if pname:
-                    new_tema_musicos.append((tid, pname, 'Voz', 5, pname))
+                    new_tema_musicos.append((tid, pname, 'Voz', 5, None))
+        elif voz and voz.lower() == 'instrumental':
+            if 11 not in genres:
+                genres.append(11)
         
         for g_order, gid in enumerate(genres):
             new_temas_generos.append((tid, gid, g_order == 0))
@@ -317,7 +320,9 @@ for idx, r in enumerate(tlp_rows[68:], start=69):
         if voz and voz.lower() != 'instrumental':
             for vpart in voz.split(';'):
                 pname = resolve_persona(vpart)
-                if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, pname))
+                if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, None))
+        elif voz and voz.lower() == 'instrumental':
+            if 11 not in genres: genres.append(11)
         for g_order, gid in enumerate(genres):
             new_temas_generos.append((tid, gid, g_order == 0))
 
@@ -358,7 +363,9 @@ for r in tep_rows:
     if voz and voz.lower() != 'instrumental':
         for vpart in voz.split(';'):
             pname = resolve_persona(vpart)
-            if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, pname))
+            if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, None))
+    elif voz and voz.lower() == 'instrumental':
+        if 11 not in genres: genres.append(11)
     for g_order, gid in enumerate(genres):
         new_temas_generos.append((tid, gid, g_order == 0))
 
@@ -399,7 +406,9 @@ for r in tcas_rows:
     if voz and voz.lower() != 'instrumental':
         for vpart in voz.split(';'):
             pname = resolve_persona(vpart)
-            if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, pname))
+            if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, None))
+    elif voz and voz.lower() == 'instrumental':
+        if 11 not in genres: genres.append(11)
     for g_order, gid in enumerate(genres):
         new_temas_generos.append((tid, gid, g_order == 0))
 
@@ -439,7 +448,9 @@ for r in tcd_rows:
     if voz and voz.lower() != 'instrumental':
         for vpart in voz.split(';'):
             pname = resolve_persona(vpart)
-            if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, pname))
+            if pname: new_tema_musicos.append((tid, pname, 'Voz', 5, None))
+    elif voz and voz.lower() == 'instrumental':
+        if 11 not in genres: genres.append(11)
     for g_order, gid in enumerate(genres):
         new_temas_generos.append((tid, gid, g_order == 0))
 
@@ -735,8 +746,8 @@ out.append("INSERT INTO Tema_Musicos (id_tema, id_musico, instrumento, id_rol, c
 tm_lines = [orig_tema_musicos_sql.strip().rstrip(';')]
 for tid, pname, inst, rol_id, alias in new_tema_musicos:
     mus_subq = f"(SELECT id_persona FROM Personas WHERE nombre = '{pname}')"
-    alias_esc = alias.replace("'", "''")
-    tm_lines.append(f"({tid}, {mus_subq}, '{inst}', {rol_id}, '{alias_esc}')")
+    alias_sql = f"'{alias.replace(chr(39), chr(39)+chr(39))}'" if alias else "NULL"
+    tm_lines.append(f"({tid}, {mus_subq}, '{inst}', {rol_id}, {alias_sql})")
 
 out.append(",\n".join(tm_lines))
 out.append("""ON CONFLICT (id_tema, id_musico) DO UPDATE SET

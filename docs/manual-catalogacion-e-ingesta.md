@@ -141,22 +141,26 @@ Durante la época de oro de la cumbia peruana (décadas de 1970 y 1980), los con
 * **Función de la Columna `CRÉDITO EN GALLETA (SEUDÓNIMO)`:**
   Esta columna captura el crédito literal del **autor o compositor** tal como aparece impreso en la galleta física del vinilo (*center label*), inmediatamente después del título o al lado de este:
   1. **Identidad Biográfica (`Personas`):** La columna previa `COMPOSITOR REAL` debe contener siempre el nombre legal verificado de la persona (ej. `Víctor Horacio Casahuamán Bendezú`, `Lener Alejandro Muñoz Reyes`, `Pedro Castillo Valenzuela`). Si la persona no existe en `supabase/data/base/personas.sql`, debe registrarse allí primero.
-  2. **Crédito Impreso (`credito_como`):** El valor en `CRÉDITO EN GALLETA (SEUDÓNIMO)` (ej. *"Víctor Casahuamán B."*, *"V. Casahuamán"*, *"Juan de Dios"*, *"El Zurdo de Oro"*) se almacena en el atributo `credito_como` de `Temas_Compositores` y `Tema_Musicos`.
-  3. **Grupos con Seudónimos / Alter-Egos:** En la época, orquestas enteras bajo contrato de exclusividad (ej. *Los Destellos* con Odeón) grababan clandestinamente para otros sellos usando nombres de fachada (ej. *Los Sanders*, *El Combo de Oro*). Esta columna de la hoja está reservada para el crédito autoral/compositivo; la trazabilidad de grupos fantasma/alter-egos institucionales se gestiona a nivel de agrupación (`Grupos`).
+  2. **Crédito Impreso (`credito_como`):** El valor en `CRÉDITO EN GALLETA (SEUDÓNIMO)` (ej. *"Víctor Casahuamán B."*, *"V. Casahuamán"*, *"Juan de Dios"*, *"El Zurdo de Oro"*) se almacena en el atributo `credito_como` de `Temas_Compositores` y en `Albumes_Temas.credito_galleta`.
+  3. **PROHIBICIÓN ESTRICTA:** **NUNCA DEBE ASIGNARSE A `Tema_Musicos.credito_como`**. La columna de galleta se refiere única y exclusivamente a la autoría o composición de la obra, jamás a la interpretación vocal.
+  4. **Grupos con Seudónimos / Alter-Egos:** En la época, orquestas enteras bajo contrato de exclusividad (ej. *Los Destellos* con Odeón) grababan clandestinamente para otros sellos usando nombres de fachada (ej. *Los Sanders*, *El Combo de Oro*). Esta columna de la hoja está reservada para el crédito autoral/compositivo; la trazabilidad de grupos fantasma/alter-egos institucionales se gestiona a nivel de agrupación (`Grupos`).
 
 ---
 
 ### 4.6. Registro de Vocalistas y Pistas Instrumentales (Columna `VOZ`)
 
-Todas las hojas de temas (`Temas Singles`, `Temas LP`, `Temas EP`, `Temas Cassete`, `Temas CD`) cuentan con la columna **`VOZ`**, ubicada inmediatamente después de `TÍTULO DE LA CANCIÓN` y antes de `COMPOSITOR REAL`.
+Todas las hojas de temas (`Singles`, `Temas Singles`, `Temas LP`, `Temas EP`, `Temas Cassete`, `Temas CD`) cuentan con la columna **`VOZ`**, ubicada inmediatamente después de `TÍTULO DE LA CANCIÓN` y antes de `COMPOSITOR REAL`.
 
-* **Protocolo y Convención Óptima de Catalogación:**
-  1. **Tema con Vocalista Identificado:** Ingresar el nombre completo de la persona que canta (ej. `Lorenzo Palacios Quispe`, `Alfonso Escalante Quispe`, `Claudio Morán`).
-     * *Destino en BD:* Se vincula a `Personas` y se inserta en `Tema_Musicos` con instrumento `'Voz'` (o `'Voz Principal'`).
-  2. **Tema Instrumental (Sin Vocalista):** Escribir explícitamente **`Instrumental`** (o dejar constancia en la columna).
-     * *Ventaja Fonográfica:* Evita la ambigüedad y permite a los filtros y motores DJ de la plataforma indexar consultas directas (`WHERE es_instrumental = TRUE`).
+* **Protocolo y Convención Óptima de Catalogación e Ingesta:**
+  1. **Tema con Vocalista Identificado:** Ingresar el nombre completo de la persona que canta (ej. `Lorenzo Palacios Quispe`, `Alfonso Escalante Quispe`, `Claudio Morán`, `Félix Tello`, `Elias Medina Rementerio`).
+     * *Destino en BD:* Se vincula a `Personas` y se inserta en `Tema_Musicos` con instrumento `'Voz'` e `id_rol = 5`.
+     * *Regla Mandatoria para `credito_como` en `Tema_Musicos`:* Debe insertarse **ESTRICTAMENTE como `NULL`**. La interfaz web extrae el vocalista mediante `v.credito_como || v.personas.nombre`; al tener `credito_como = NULL`, el frontend siempre mostrará de forma limpia y fidedigna el nombre del cantante.
+     * *Aislamiento Absoluto:* Nunca copiar el valor de `CRÉDITO EN GALLETA (SEUDÓNIMO)` a `Tema_Musicos`.
+  2. **Tema Instrumental (Sin Vocalista):** Escribir explícitamente **`Instrumental`** en la columna `VOZ`.
+     * *Destino en BD:* **NO** insertar ninguna fila en `Tema_Musicos` (ya que no existe cantante humano en la pista).
+     * *Etiquetado de Género:* Insertar obligatoriamente la fila `(id_tema, 11, FALSE)` en la tabla `Temas_Generos` (`id_genero = 11` corresponde a *Instrumental*). Esto permite que el reproductor y las fichas de álbum detecten automáticamente la pista como instrumental y muestren el badge *"Instrumental"*.
   3. **Casilla Vacía / En Blanco:** Representa exclusivamente **"Tema vocal con cantante no identificado o pendiente de investigación histórica"**.
-     * Dejar la casilla en blanco no debe confundirse con un tema instrumental; indica que el tema tiene lírica pero la galleta/funda no acreditó quién fue la voz solista.
+     * *Destino en BD:* **NO** se inserta en `Tema_Musicos` ni se marca como `Instrumental`. La canción permanece sin vocalista asignado hasta que una futura investigación identifique al cantante.
 
 ---
 
