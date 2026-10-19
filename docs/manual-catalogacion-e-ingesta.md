@@ -241,6 +241,20 @@ Un mosaico musical en vinilo o casete representa **un único surco físico conti
 > **Criterio del Máster Original:**
 > El atributo `id_album_origen` en `Albumes_Temas` debe apuntar **siempre a la primera aparición física conocida del audio**, no a reediciones intermedias.
 
+### 6.1. Títulos Canónicos de Singles (`nombre_album` = 'Lado A / Lado B')
+
+* **Naturaleza del Single de 45 RPM:** Un disco sencillo de 45 RPM no se publicaba con un título conceptual o de álbum como un LP o EP. Su título canónico patrimonial y comercial está constituido exclusivamente por las canciones prensadas en sus caras.
+* **Convención Canónica Obligatoria:** El título en `Albumes.nombre_album` se compone uniendo las canciones del Lado A y del Lado B con el separador `" / "` (espacio, barra diagonal, espacio).
+  * Ejemplo estándar: `Viento / Te perdí`
+  * Caso de múltiples canciones por cara (ej. singles con 3 pistas): `Tema A / Tema B1, Tema B2`
+* **Automatización en Base de Datos (PostgreSQL):**
+  * La base de datos posee la función `fn_sync_single_title(p_id_album INT)` y dos triggers automáticos:
+    1. `trg_sync_single_title_albumes_temas`: Se dispara tras `INSERT`, `UPDATE` o `DELETE` en `Albumes_Temas`. Al asociar pistas a un single, su `nombre_album` se calcula y actualiza de inmediato.
+    2. `trg_sync_single_title_temas`: Se dispara tras `UPDATE of titulo_tema` en `Temas`. Si se corrige la ortografía o título de una canción, el título de todos los singles vinculados se actualiza automáticamente.
+* **Retroactividad y Futuras Ingestas:**
+  * Todos los singles existentes en la base de datos han sido sincronizados retroactivamente con esta regla.
+  * Para cualquier nueva ingesta desde `Datos BD.ods`, tan pronto como se inserten las filas en `Albumes_Temas`, la base de datos asignará el título canónico sin necesidad de definirlo manualmente.
+
 ---
 
 ## 7. 🖼️ Estándar Multimedia y Carga Gráfica en `/admin`

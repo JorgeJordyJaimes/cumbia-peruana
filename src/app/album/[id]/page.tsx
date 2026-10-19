@@ -134,7 +134,8 @@ export async function generateMetadata({ params }: AlbumPageProps): Promise<Meta
   }
 
   const groupName = album.grupos?.nombre_grupo || "Varios Artistas";
-  const albumTitle = album.nombre_album || "Sin título";
+  const isSingle = album.tipos_album?.nombre_tipo === "45";
+  const albumTitle = album.nombre_album || (isSingle ? `Single [Cat: ${album.numero_catalogo || album.id_album}]` : "Sin título");
   const label = album.sellos_discograficos?.nombre_sello;
   const year = album.año_publicacion;
 
@@ -342,7 +343,25 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
 
   const artistName = album.grupos?.nombre_grupo || (album.es_varios_artistas ? "Varios Artistas" : "Desconocido");
   const directorName = album.grupos?.personas?.nombre || null;
-  const albumTitle = album.nombre_album || "Sin título";
+  const isSingle = album.tipos_album?.nombre_tipo === "45";
+  let albumTitle = album.nombre_album;
+  if (!albumTitle) {
+    if (isSingle && pistas.length > 0) {
+      const sideATracks = pistas.filter((p) => (p.lado || "").trim().toUpperCase() === "A").map((p) => p.titulo);
+      const sideBTracks = pistas.filter((p) => (p.lado || "").trim().toUpperCase() === "B").map((p) => p.titulo);
+      if (sideATracks.length > 0 && sideBTracks.length > 0) {
+        albumTitle = `${sideATracks.join(", ")} / ${sideBTracks.join(", ")}`;
+      } else if (sideATracks.length > 0) {
+        albumTitle = sideATracks.join(", ");
+      } else if (sideBTracks.length > 0) {
+        albumTitle = sideBTracks.join(", ");
+      } else {
+        albumTitle = `Single [Cat: ${album.numero_catalogo || album.id_album}]`;
+      }
+    } else {
+      albumTitle = isSingle ? `Single [Cat: ${album.numero_catalogo || album.id_album}]` : "Sin título";
+    }
+  }
 
   // 3. Generar objeto Schema.org MusicAlbum con trackList
   const jsonLdData = buildMusicAlbumJsonLd({

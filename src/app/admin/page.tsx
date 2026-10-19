@@ -152,10 +152,12 @@ export default async function AdminPage() {
 
   // Mapear Álbumes
   const typedAlbumes = (rawAlbumes as unknown as RawAdminAlbum[]) || [];
-  const albums: AdminAlbumItem[] = typedAlbumes.map((a) => ({
-    id: a.id_album,
-    title: a.nombre_album || "Sin Título Registrado",
-    artist: a.grupos?.nombre_grupo || "Varios Artistas",
+  const albums: AdminAlbumItem[] = typedAlbumes.map((a) => {
+    const isSingle = a.tipos_album?.nombre_tipo === "45" || a.id_tipo_album === 1;
+    return {
+      id: a.id_album,
+      title: a.nombre_album || (isSingle ? `Single [Cat: ${a.numero_catalogo || a.id_album}]` : "Sin Título Registrado"),
+      artist: a.grupos?.nombre_grupo || "Varios Artistas",
     groupId: a.id_grupo,
     catalogNumber: a.numero_catalogo,
     year: a.año_publicacion,
@@ -165,7 +167,8 @@ export default async function AdminPage() {
     vinylLabelUrl: a.url_etiqueta,
     format: a.tipos_album?.nombre_tipo || null,
     idTipoAlbum: a.id_tipo_album,
-  }));
+  };
+});
 
   // Mapear estadísticas de discografía por grupo
   const groupStatsMap = new Map<

@@ -127,29 +127,6 @@ export default async function VinilosPage() {
       .limit(2000),
   ]);
 
-  // Mapear Álbumes
-  const rawAlbumsList = (rawAlbumes as unknown as RawAlbumRow[]) || [];
-  const albums: AlbumItem[] = rawAlbumsList.map((a) => {
-    const isSingle = a.tipos_album?.nombre_tipo === "45";
-    return {
-      id: a.id_album,
-      title:
-        a.nombre_album ||
-        (isSingle
-          ? `Single [Cat: ${a.numero_catalogo || a.id_album}]`
-          : "Sin Título Registrado"),
-      artist: a.grupos?.nombre_grupo || "Varios Artistas",
-      directorName: a.grupos?.personas?.nombre || null,
-      year: a.año_publicacion,
-      catalogNumber: a.numero_catalogo,
-      label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
-      format: isSingle ? "Single" : a.tipos_album?.nombre_tipo || "LP",
-      coverUrl: a.url_portada,
-      backCoverUrl: a.url_contraportada,
-      isCompilation: a.es_recopilatorio ?? false,
-    };
-  });
-
   // Mapa de pistas por álbum para las fichas técnicas
   const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
   const tracksMap: Record<number, TrackItem[]> = {};
@@ -197,6 +174,43 @@ export default async function VinilosPage() {
         genre,
       });
     });
+  });
+
+  // Mapear Álbumes
+  const rawAlbumsList = (rawAlbumes as unknown as RawAlbumRow[]) || [];
+  const albums: AlbumItem[] = rawAlbumsList.map((a) => {
+    const isSingle = a.tipos_album?.nombre_tipo === "45";
+    let displayTitle = a.nombre_album;
+    if (!displayTitle && isSingle) {
+      const albumTracks = tracksMap[a.id_album] || [];
+      const sideATracks = albumTracks.filter((t) => (t.side || "").trim().toUpperCase() === "A").map((t) => t.title);
+      const sideBTracks = albumTracks.filter((t) => (t.side || "").trim().toUpperCase() === "B").map((t) => t.title);
+      if (sideATracks.length > 0 && sideBTracks.length > 0) {
+        displayTitle = `${sideATracks.join(", ")} / ${sideBTracks.join(", ")}`;
+      } else if (sideATracks.length > 0) {
+        displayTitle = sideATracks.join(", ");
+      } else if (sideBTracks.length > 0) {
+        displayTitle = sideBTracks.join(", ");
+      }
+    }
+
+    return {
+      id: a.id_album,
+      title:
+        displayTitle ||
+        (isSingle
+          ? `Single [Cat: ${a.numero_catalogo || a.id_album}]`
+          : "Sin Título Registrado"),
+      artist: a.grupos?.nombre_grupo || "Varios Artistas",
+      directorName: a.grupos?.personas?.nombre || null,
+      year: a.año_publicacion,
+      catalogNumber: a.numero_catalogo,
+      label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
+      format: isSingle ? "Single" : a.tipos_album?.nombre_tipo || "LP",
+      coverUrl: a.url_portada,
+      backCoverUrl: a.url_contraportada,
+      isCompilation: a.es_recopilatorio ?? false,
+    };
   });
 
   // Ordenación estricta de pistas por álbum: Lado A (1..N) y luego Lado B (1..N)

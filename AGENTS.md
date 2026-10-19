@@ -33,5 +33,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
      - Si la celda `VOZ` está **vacía o en blanco**, representa un tema vocal con cantante pendiente de identificar: **NO** se inserta fila en `Tema_Musicos` y **NO** se marca como Instrumental.
   9. **Catálogo de Géneros (`generos.sql`):** Cada vez que en `Datos BD.ods` aparezca un nuevo género musical, agregarlo obligatoriamente a `supabase/data/base/generos.sql` con su correspondiente `id_genero` secuencial único y documentar su adición.
   10. **Catálogo de Roles (`roles.sql`):** Mantener y enriquecer `supabase/data/base/roles.sql` con todos los roles que se van creando por asociación en la discografía y créditos reales (ej. Director Musical / Director de Grupo, Compositor, Voz Principal / Participación Vocal, Primera Guitarra, Bajo Eléctrico, Músico de Planta, etc.).
+  11. **Títulos Canónicos de Singles de 45 RPM (`nombre_album`):**
+      - Los singles de 45 RPM (`id_tipo_album = 1`) no poseen título de álbum propio comercial; su título canónico es obligatoriamente el nombre de los temas del Lado A y Lado B separados estrictamente por `" / "` (ej. `Viento / Te perdí`).
+      - La base de datos cuenta con la función `fn_sync_single_title` y triggers (`trg_sync_single_title_albumes_temas`, `trg_sync_single_title_temas`) que mantienen `Albumes.nombre_album` sincronizado automáticamente ante cualquier inserción, modificación o eliminación de temas.
+      - En cualquier script, migración o sentencia SQL de ingesta, todo single debe respetar o delegar este formato.
 
 

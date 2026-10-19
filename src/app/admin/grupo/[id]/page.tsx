@@ -150,9 +150,22 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
         return (x.trackNumber || 0) - (y.trackNumber || 0);
       });
 
+    let displayTitle = a.nombre_album;
+    if (!displayTitle && isSingle && tracks.length > 0) {
+      const sideATracks = tracks.filter((t) => (t.side || "").trim().toUpperCase() === "A").map((t) => t.title);
+      const sideBTracks = tracks.filter((t) => (t.side || "").trim().toUpperCase() === "B").map((t) => t.title);
+      if (sideATracks.length > 0 && sideBTracks.length > 0) {
+        displayTitle = `${sideATracks.join(", ")} / ${sideBTracks.join(", ")}`;
+      } else if (sideATracks.length > 0) {
+        displayTitle = sideATracks.join(", ");
+      } else if (sideBTracks.length > 0) {
+        displayTitle = sideBTracks.join(", ");
+      }
+    }
+
     return {
       id: a.id_album,
-      title: a.nombre_album || (isSingle ? `Single [Cat: ${a.numero_catalogo || a.id_album}]` : "Sin Título Registrado"),
+      title: displayTitle || (isSingle ? `Single [Cat: ${a.numero_catalogo || a.id_album}]` : "Sin Título Registrado"),
       catalogNumber: a.numero_catalogo,
       year: a.año_publicacion,
       label: a.sellos_discograficos?.nombre_sello || null,
