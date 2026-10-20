@@ -240,6 +240,17 @@ export default async function Home() {
     });
   });
 
+  // Conteo dinámico de subgéneros musicales desde la base de datos
+  const subgenreCounts: Record<string, number> = {};
+  for (const t of rawTemasList) {
+    for (const tg of t.temas_generos || []) {
+      const gName = tg.generos?.nombre_genero;
+      if (gName) {
+        subgenreCounts[gName] = (subgenreCounts[gName] || 0) + 1;
+      }
+    }
+  }
+
   // Generar datos estructurados Schema.org MusicAlbum para el catálogo fonográfico
   const catalogJsonLd = albums.slice(0, 15).map((a) =>
     buildMusicAlbumJsonLd({
@@ -291,7 +302,7 @@ export default async function Home() {
           <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
 
           {/* ZONAS TERRITORIALES & MAPA DE OPERACIONES SONORAS (6 Zonas) */}
-          <BrutalistGenresSection />
+          <BrutalistGenresSection genreCounts={subgenreCounts} />
 
           {/* EVIDENCIAS DE MÁXIMA CUSTODIA: MATRICES ODEÓN / IEMPSA (Radar) */}
           <BrutalistRadarSection albums={albums} />
