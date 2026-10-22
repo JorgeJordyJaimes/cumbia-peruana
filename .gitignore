@@ -51,3 +51,7 @@ documentacio-paso-paso.md
 # binaries
 *.exe
 .agents/**/bin/
+
+# guias locales transferibles
+GIT_RULES.md
+REGLAS_GIT.md
