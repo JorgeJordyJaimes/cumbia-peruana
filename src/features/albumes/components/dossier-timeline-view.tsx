@@ -48,6 +48,26 @@ function formatDuration(seconds?: number | null): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
+// Comprobación de elegibilidad para singles con al menos un lado exclusivo en 45 RPM
+function isEligibleSoloEn45(album: AlbumItem): boolean {
+  if (album.onlyOn45) return true;
+  // Si solo un lado entró al LP, el otro lado quedó exclusivo en 45
+  if (album.sidesInLp === "Lado A" || album.sidesInLp === "Lado B") return true;
+  return false;
+}
+
+// Comprobación de elegibilidad para singles con al menos un lado incluido en LP
+function isEligibleIncluidoEnLp(album: AlbumItem): boolean {
+  if (album.includedInLp) return true;
+  if (
+    album.sidesInLp === "Lado A" ||
+    album.sidesInLp === "Lado B" ||
+    album.sidesInLp === "Ambos"
+  )
+    return true;
+  return false;
+}
+
 export function DossierTimelineViewComponent({
   albums,
   tracksMap = {},
@@ -122,8 +142,8 @@ export function DossierTimelineViewComponent({
       const f = (a.format || "").toLowerCase();
       if (!(f.includes("45") || f.includes("single"))) return;
       c.all++;
-      if (a.onlyOn45) c.solo_en_45++;
-      if (a.includedInLp) c.incluido_en_lp++;
+      if (isEligibleSoloEn45(a)) c.solo_en_45++;
+      if (isEligibleIncluidoEnLp(a)) c.incluido_en_lp++;
       if (a.extractedFromLp) c.extraido_de_lp++;
       if (a.isSplit) c.disco_split++;
       if (a.isReissue) c.reedicion++;
@@ -159,8 +179,8 @@ export function DossierTimelineViewComponent({
 
     return albumsForTimeline.filter((album) => {
       if (selectedFormat === "45") {
-        if (subFilter === "solo_en_45" && !album.onlyOn45) return false;
-        if (subFilter === "incluido_en_lp" && !album.includedInLp) return false;
+        if (subFilter === "solo_en_45" && !isEligibleSoloEn45(album)) return false;
+        if (subFilter === "incluido_en_lp" && !isEligibleIncluidoEnLp(album)) return false;
         if (subFilter === "extraido_de_lp" && !album.extractedFromLp) return false;
         if (subFilter === "disco_split" && !album.isSplit) return false;
         if (subFilter === "reedicion" && !album.isReissue) return false;
@@ -577,7 +597,7 @@ export function DossierTimelineViewComponent({
             </span>
             {[
               { id: "ALL", label: `Todos (${subFilterCounts45.all})` },
-              { id: "solo_en_45", label: `Solo en 45 / Inédito en LP (${subFilterCounts45.solo_en_45})` },
+              { id: "solo_en_45", label: `Solo en 45 (${subFilterCounts45.solo_en_45})` },
               { id: "incluido_en_lp", label: `Incluido en LP (${subFilterCounts45.incluido_en_lp})` },
               { id: "extraido_de_lp", label: `Extraído de LP (${subFilterCounts45.extraido_de_lp})` },
               { id: "disco_split", label: `Disco Split (${subFilterCounts45.disco_split})` },
@@ -642,7 +662,9 @@ export function DossierTimelineViewComponent({
             <strong className="text-[#1F1305]">{groupedSections.length}</strong> capítulos{" "}
             {groupingMode === "year" ? "cronológicos" : "por sello fonográfico"}
             {subFilter !== "ALL" && (
-              <span className="text-[#E80000] ml-1">[ FILTRO ACTIVO: {subFilter.toUpperCase()} ]</span>
+              <span className="text-[#E80000] ml-1">
+                [ FILTRO ACTIVO: {subFilter === "solo_en_45" ? "SOLO EN 45" : subFilter.toUpperCase()} ]
+              </span>
             )}
           </span>
         </div>
@@ -767,20 +789,28 @@ export function DossierTimelineViewComponent({
                                     {album.label || "Particular"}
                                   </span>
 
-                                  {/* Badges de condición fonográfica */}
-                                  {album.onlyOn45 && (
+                                  {/* Badges de condición fonográfica con anotaciones específicas de lados */}
+                                  {album.sidesInLp === "Lado A" && (
+                                    <span className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
+                                      Lado A en LP / Lado B solo en 45
+                                    </span>
+                                  )}
+                                  {album.sidesInLp === "Lado B" && (
+                                    <span className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
+                                      Lado B en LP / Lado A solo en 45
+                                    </span>
+                                  )}
+                                  {album.onlyOn45 && !album.sidesInLp && (
                                     <span className="border border-[#1F1305] bg-[#E80000] text-white px-1.5 py-0.5 text-[10px] font-bold">
                                       Solo en 45
                                     </span>
                                   )}
-                                  {album.includedInLp && (
-                                    <span
-                                      className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold"
-                                      title={album.sidesInLp ? `Lados en LP: ${album.sidesInLp}` : undefined}
-                                    >
-                                      En LP {album.sidesInLp ? `(${album.sidesInLp})` : ""}
-                                    </span>
-                                  )}
+                                  {album.includedInLp &&
+                                    (!album.sidesInLp || album.sidesInLp === "Ambos") && (
+                                      <span className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
+                                        Incluido en LP
+                                      </span>
+                                    )}
                                   {album.extractedFromLp && (
                                     <span className="border border-[#1F1305] bg-[#F8C800] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
                                       De LP
@@ -825,16 +855,38 @@ export function DossierTimelineViewComponent({
                                 </p>
                               </div>
 
-                              {/* Desglose de Pistas Lado A / Lado B */}
-                              <div className="border border-[#1F1305]/20 bg-white p-2 text-[11px] space-y-1">
+                              {/* Desglose de Pistas Lado A / Lado B con anotaciones precisas de destino */}
+                              <div className="border border-[#1F1305]/20 bg-white p-2 text-[11px] space-y-1.5">
                                 {sideATracks.length > 0 ? (
                                   <div className="flex items-center justify-between text-[#1F1305]">
                                     <span className="font-bold text-[#E80000] flex items-center gap-1">
                                       <Disc className="h-3 w-3" /> A:
                                     </span>
-                                    <span className="truncate max-w-[180px] font-medium">
-                                      {sideATracks[0].title}
-                                    </span>
+                                    <div className="flex items-center gap-1.5 truncate max-w-[200px] sm:max-w-[240px]">
+                                      <span className="truncate font-medium">{sideATracks[0].title}</span>
+                                      {/* Anotación específica para el tema del Lado A */}
+                                      {album.sidesInLp === "Lado A" && (
+                                        <span
+                                          className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1 py-0.2 text-[9px] font-black uppercase flex-shrink-0"
+                                          title="Este tema fue incluido en LP"
+                                        >
+                                          En LP
+                                        </span>
+                                      )}
+                                      {album.sidesInLp === "Lado B" && (
+                                        <span
+                                          className="border border-[#1F1305] bg-[#E80000] text-white px-1 py-0.2 text-[9px] font-black uppercase flex-shrink-0"
+                                          title="Este tema quedó exclusivo en 45 RPM"
+                                        >
+                                          Solo en 45
+                                        </span>
+                                      )}
+                                      {album.onlyOn45 && !album.sidesInLp && (
+                                        <span className="border border-[#1F1305] bg-[#E80000] text-white px-1 py-0.2 text-[9px] font-black uppercase flex-shrink-0">
+                                          Solo en 45
+                                        </span>
+                                      )}
+                                    </div>
                                     <span className="font-mono text-[10px] text-[#746B5C]">
                                       {formatDuration(sideATracks[0].durationSeconds)}
                                     </span>
@@ -846,9 +898,31 @@ export function DossierTimelineViewComponent({
                                     <span className="font-bold text-[#1F1305] flex items-center gap-1">
                                       <Disc className="h-3 w-3" /> B:
                                     </span>
-                                    <span className="truncate max-w-[180px] font-medium">
-                                      {sideBTracks[0].title}
-                                    </span>
+                                    <div className="flex items-center gap-1.5 truncate max-w-[200px] sm:max-w-[240px]">
+                                      <span className="truncate font-medium">{sideBTracks[0].title}</span>
+                                      {/* Anotación específica para el tema del Lado B */}
+                                      {album.sidesInLp === "Lado B" && (
+                                        <span
+                                          className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1 py-0.2 text-[9px] font-black uppercase flex-shrink-0"
+                                          title="Este tema fue incluido en LP"
+                                        >
+                                          En LP
+                                        </span>
+                                      )}
+                                      {album.sidesInLp === "Lado A" && (
+                                        <span
+                                          className="border border-[#1F1305] bg-[#E80000] text-white px-1 py-0.2 text-[9px] font-black uppercase flex-shrink-0"
+                                          title="Este tema quedó exclusivo en 45 RPM"
+                                        >
+                                          Solo en 45
+                                        </span>
+                                      )}
+                                      {album.onlyOn45 && !album.sidesInLp && (
+                                        <span className="border border-[#1F1305] bg-[#E80000] text-white px-1 py-0.2 text-[9px] font-black uppercase flex-shrink-0">
+                                          Solo en 45
+                                        </span>
+                                      )}
+                                    </div>
                                     <span className="font-mono text-[10px] text-[#746B5C]">
                                       {formatDuration(sideBTracks[0].durationSeconds)}
                                     </span>
@@ -935,16 +1009,27 @@ export function DossierTimelineViewComponent({
                             {/* Badges revelados en hover */}
                             <div className="relative z-10 pt-7 px-2.5 flex items-start justify-start gap-1 flex-wrap opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                               <BadgeFormat formatName={album.format || "LP"} size="sm" />
-                              {album.onlyOn45 && (
+                              {album.sidesInLp === "Lado A" && (
+                                <span className="border border-white/20 bg-black/70 text-[#EDE0D0] px-1 py-0.2 text-[9px] font-bold">
+                                  Lado A LP / B 45
+                                </span>
+                              )}
+                              {album.sidesInLp === "Lado B" && (
+                                <span className="border border-white/20 bg-black/70 text-[#EDE0D0] px-1 py-0.2 text-[9px] font-bold">
+                                  Lado B LP / A 45
+                                </span>
+                              )}
+                              {album.onlyOn45 && !album.sidesInLp && (
                                 <span className="border border-white/20 bg-[#E80000] text-white px-1 py-0.2 text-[9px] font-bold">
                                   Solo 45
                                 </span>
                               )}
-                              {album.includedInLp && (
-                                <span className="border border-white/20 bg-black/60 text-[#EDE0D0] px-1 py-0.2 text-[9px] font-bold">
-                                  En LP
-                                </span>
-                              )}
+                              {album.includedInLp &&
+                                (!album.sidesInLp || album.sidesInLp === "Ambos") && (
+                                  <span className="border border-white/20 bg-black/70 text-[#EDE0D0] px-1 py-0.2 text-[9px] font-bold">
+                                    En LP
+                                  </span>
+                                )}
                               {album.extractedFromLp && (
                                 <span className="border border-white/20 bg-[#F8C800] text-[#1F1305] px-1 py-0.2 text-[9px] font-bold">
                                   De LP
