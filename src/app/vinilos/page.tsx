@@ -206,7 +206,7 @@ export default async function VinilosPage() {
       year: a.año_publicacion,
       catalogNumber: a.numero_catalogo,
       label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
-      format: isSingle ? "Single" : a.tipos_album?.nombre_tipo || "LP",
+      format: isSingle ? "45" : a.tipos_album?.nombre_tipo || "LP",
       coverUrl: a.url_portada,
       backCoverUrl: a.url_contraportada,
       isCompilation: a.es_recopilatorio ?? false,

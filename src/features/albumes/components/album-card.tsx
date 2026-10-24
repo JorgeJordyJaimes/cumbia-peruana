@@ -38,6 +38,7 @@ const GRADIENTS = [
 function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
   const [imageError, setImageError] = useState(false);
   const gradient = GRADIENTS[album.id % GRADIENTS.length];
+  const hasCover = Boolean(album.coverUrl && !imageError);
 
   return (
     <div
@@ -74,42 +75,52 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
             gradient
           )}
         >
-          {/* Sello de expediente superior */}
+          {/* Sello de expediente superior: Único lugar donde se muestra el año */}
           <div className="absolute top-0 left-0 right-0 h-5 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 text-[11px] text-[#1F1305] font-black z-20">
             <span>EVIDENCIA NO. {String(album.id).padStart(4, "0")}</span>
             <span className="text-[#E80000]">{album.year || "VERIFICADO"}</span>
           </div>
 
-          {album.coverUrl && !imageError ? (
+          {hasCover ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={album.coverUrl}
+              src={album.coverUrl!}
               alt={album.title}
               onError={() => setImageError(true)}
               className="absolute inset-0 h-full w-full object-cover pt-5 transition-transform duration-300 group-hover:scale-102"
             />
           ) : (
-            // Funda Editorial Texturizada Retro
+            // Funda Editorial Texturizada Retro cuando no hay imagen
             <div className="absolute inset-0 pt-5 flex flex-col justify-between p-5 bg-gradient-to-b from-white/[0.04] to-transparent">
               <Disc3 className="absolute -right-6 -bottom-6 h-36 w-36 text-white/[0.03] rotate-12" />
             </div>
           )}
 
-          {/* Overlay Oscuro Translúcido para Legibilidad */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-
-          {/* Cabecera de la Funda: Formato y Año con Sello Rojo */}
-          <div className="relative z-10 pt-4 flex items-start justify-between gap-1.5">
-            <BadgeFormat formatName={album.format || "LP"} size="sm" />
-            {album.year && (
-              <span className="border border-[#1F1305] bg-[#1F1305] px-2 py-0.5 text-[11px] font-black text-white shadow-[2px_2px_0px_#E80000]">
-                {album.year}
-              </span>
+          {/* Overlay Oscuro Translúcido que solo aparece en hover si hay foto */}
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/20 pointer-events-none transition-opacity duration-300",
+              hasCover ? "opacity-0 group-hover:opacity-100" : "opacity-100"
             )}
+          />
+
+          {/* Cabecera de la Funda: Formato (45, LP, etc.) revelado en hover */}
+          <div
+            className={cn(
+              "relative z-10 pt-4 flex items-start justify-start gap-1.5 transition-all duration-300",
+              hasCover ? "opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0" : "opacity-100"
+            )}
+          >
+            <BadgeFormat formatName={album.format || "LP"} size="sm" />
           </div>
 
-          {/* Pie de la Funda: Datos del Fonograma y Archivo */}
-          <div className="relative z-10 space-y-1">
+          {/* Pie de la Funda: Datos del Fonograma y Archivo revelados en hover */}
+          <div
+            className={cn(
+              "relative z-10 space-y-1 transition-all duration-300",
+              hasCover ? "opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0" : "opacity-100"
+            )}
+          >
             <div className="flex items-center justify-between text-[11px] text-[#F8C800] uppercase font-bold tracking-wider">
               <span className="truncate max-w-[130px]">{album.label || "ARCHIVO GENERAL"}</span>
               {album.catalogNumber && (

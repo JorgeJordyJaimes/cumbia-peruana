@@ -23,7 +23,7 @@ export function BadgeFormat({
 
   if (normalized.includes("45") || normalized.includes("single")) {
     Icon = Disc;
-    label = "Single";
+    label = "45";
   } else if (normalized === "ep" || normalized.includes("ep")) {
     Icon = Disc3;
     label = "EP";

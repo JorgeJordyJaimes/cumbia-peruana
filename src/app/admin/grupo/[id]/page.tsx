@@ -137,7 +137,7 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
   // Mapear álbumes
   const groupAlbums: GroupDetailAlbum[] = typedAlbums.map((a) => {
     const isSingle = a.tipos_album?.nombre_tipo === "45" || a.id_tipo_album === 1;
-    const formatName = a.tipos_album?.nombre_tipo || (isSingle ? "Single" : "LP");
+    const formatName = a.tipos_album?.nombre_tipo || (isSingle ? "45" : "LP");
 
     const tracks: GroupDetailTrack[] = (a.albumes_temas || [])
       .map((at) => ({

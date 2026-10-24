@@ -141,7 +141,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
             {[
               { id: "ALL", label: "Todos" },
               { id: "LP", label: "LP" },
-              { id: "45", label: "Single" },
+              { id: "45", label: "45" },
               { id: "EP", label: "EP" },
               { id: "CASETE", label: "Cassete" },
               { id: "CD", label: "CD" },
