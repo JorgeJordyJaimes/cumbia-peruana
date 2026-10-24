@@ -2,8 +2,10 @@
 
 import { useState, useMemo, useEffect, useDeferredValue } from "react";
 import dynamic from "next/dynamic";
-import { Search, SlidersHorizontal, Disc, Filter, Sparkles } from "lucide-react";
+import { Search, SlidersHorizontal, Disc, Filter, Sparkles, Layers, LayoutGrid } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { AlbumCard, type AlbumItem } from "@/features/albumes/components/album-card";
+import { CrateDiggerView } from "@/features/albumes/components/crate-digger-view";
 import type { TrackItem } from "@/features/temas/components/tracklist-table";
 
 // Lazy-load del modal de detalle fonográfico (bundle-dynamic-imports)
@@ -34,6 +36,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
   const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(null);
   const [visibleCount, setVisibleCount] = useState<number>(48);
+  const [viewMode, setViewMode] = useState<"crate" | "grid">("crate");
 
   // Restablecer paginación visible cuando cambie cualquier filtro
   useEffect(() => {
@@ -200,24 +203,53 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         </div>
       </div>
 
-      {/* Resumen de Resultados */}
-      <div className="flex items-center justify-between font-mono text-xs text-[#5A5245] font-bold px-1">
+      {/* Resumen de Resultados y Conmutador de Vistas */}
+      <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-[#5A5245] font-bold px-1">
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-[#E80000]" />
           <span>
-            Mostrando <strong className="text-[#1F1305]">{Math.min(visibleCount, filteredAlbums.length)}</strong> de{" "}
-            <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> producciones físicas
+            Mostrando <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> producciones físicas
           </span>
         </div>
-        <span className="hidden sm:inline">
-          Pasa el cursor sobre la funda para ver asomar el vinilo
-        </span>
+
+        {/* Selector de Modo: Gaveta Crate vs Mosaico */}
+        <div className="flex items-center gap-1.5 border-2 border-[#1F1305] bg-white p-0.5 shadow-[2px_2px_0px_#1F1305]">
+          <button
+            type="button"
+            onClick={() => setViewMode("crate")}
+            className={cn(
+              "inline-flex items-center gap-1.5 px-3 py-1 font-mono text-xs font-bold transition-all cursor-pointer",
+              viewMode === "crate"
+                ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
+                : "text-[#1F1305] hover:bg-[#EDE0D0]"
+            )}
+            title="Vista física de gaveta de vinilos (Crate Digging 3D)"
+          >
+            <Layers className="h-3.5 w-3.5 text-[#E80000]" />
+            <span>GAVETA CRATE</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setViewMode("grid")}
+            className={cn(
+              "inline-flex items-center gap-1.5 px-3 py-1 font-mono text-xs font-bold transition-all cursor-pointer",
+              viewMode === "grid"
+                ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
+                : "text-[#1F1305] hover:bg-[#EDE0D0]"
+            )}
+            title="Vista tradicional de cuadrícula completa"
+          >
+            <LayoutGrid className="h-3.5 w-3.5 text-[#E80000]" />
+            <span>MOSAICO</span>
+          </button>
+        </div>
       </div>
 
-      {/* Grid de Álbumes */}
+      {/* Contenido según Resultados */}
       {filteredAlbums.length === 0 ? (
-        <div className="border-2 border-[#1F1305] bg-white py-14 px-6 text-center shadow-[6px_6px_0px_#1F1305] max-w-2xl mx-auto relative overflow-hidden">
-          <div className="inline-block border-2 border-[#E80000] bg-[#E80000] text-white px-3 py-1 font-mono text-xs font-black uppercase rotate-[-2deg] shadow-[2px_2px_0px_#1F1305] mb-4">
+        <div className="border-2 border-[#1F1305] bg-white py-14 px-6 text-center shadow-[6px_6px_0px_#1F1305] max-w-2xl mx-auto relative overflow-hidden font-mono">
+          <div className="inline-block border-2 border-[#E80000] bg-[#E80000] text-white px-3 py-1 text-xs font-black uppercase rotate-[-2deg] shadow-[2px_2px_0px_#1F1305] mb-4">
             EXPEDIENTE NO LOCALIZADO // 404 MATRIZ
           </div>
           <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3" />
@@ -230,7 +262,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               ? "No hay producciones en formato CD catalogadas aún"
               : "No se encontraron producciones discográficas"}
           </h3>
-          <p className="font-mono text-xs text-[#5A5245] mt-2 max-w-md mx-auto leading-relaxed">
+          <p className="text-xs text-[#5A5245] mt-2 max-w-md mx-auto leading-relaxed">
             {selectedFormat === "EP" || selectedFormat === "CASETE" || selectedFormat === "CD"
               ? "Este formato se encuentra en etapa de investigación e ingreso patrimonial desde los archivos físicos oficiales. Solo se despliega información real y verificada."
               : "No existen registros en el archivo histórico que coincidan exactamente con los criterios de búsqueda o filtros aplicados."}
@@ -242,13 +274,21 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               setSelectedLabel("ALL");
               setSelectedYear("ALL");
             }}
-            className="mt-6 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-5 py-2.5 font-mono text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#E80000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all cursor-pointer"
+            className="mt-6 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-5 py-2.5 text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#E80000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all cursor-pointer"
           >
             [ REINICIAR CRITERIOS DE PERITAJE ]
           </button>
         </div>
+      ) : viewMode === "crate" ? (
+        /* VISTA 1: CRATE DIGGER (GAVETA DE VINILOS) */
+        <CrateDiggerView
+          albums={filteredAlbums}
+          tracksMap={tracksMap}
+          onSelectAlbum={(a) => setSelectedAlbum(a)}
+        />
       ) : (
-        <div className="space-y-8">
+        /* VISTA 2: CUADRÍCULA / MOSAICO TRADICIONAL */
+        <div className="space-y-8 font-mono">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {filteredAlbums.slice(0, visibleCount).map((album) => (
               <AlbumCard
