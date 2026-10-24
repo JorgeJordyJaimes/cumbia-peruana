@@ -20,6 +20,7 @@ import {
   FileText,
   Eye,
   CheckCircle2,
+  SlidersHorizontal,
 } from "lucide-react";
 
 export interface DossierTimelineViewProps {
@@ -56,12 +57,19 @@ export function DossierTimelineViewComponent({
   // Estados de control del Dossier
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFormat, setSelectedFormat] = useState<string>("ALL");
+  const [subFilter, setSubFilter] = useState<string>("ALL");
   const [selectedLabel, setSelectedLabel] = useState<string>("ALL");
   const [selectedDecade, setSelectedDecade] = useState<string>("ALL");
   const [selectedYear, setSelectedYear] = useState<number | "ALL">("ALL");
   const [groupingMode, setGroupingMode] = useState<GroupingMode>("year");
   const [displayLayout, setDisplayLayout] = useState<DisplayLayout>("dossier");
   const [photoOnly, setPhotoOnly] = useState<boolean>(false);
+
+  // Manejador de cambio de formato (reinicia sub-filtro)
+  const handleFormatChange = (newFormat: string) => {
+    setSelectedFormat(newFormat);
+    setSubFilter("ALL");
+  };
 
   // 1. Base filtrada por la búsqueda de texto (artista, título, catálogo o sello)
   const searchFilteredAlbums = useMemo(() => {
@@ -77,7 +85,7 @@ export function DossierTimelineViewComponent({
     });
   }, [albums, searchTerm]);
 
-  // 2. Base para la línea de tiempo (se ajusta a la búsqueda activa y formatos/sellos seleccionados)
+  // 2. Base para la línea de tiempo (se ajusta a la búsqueda activa y sellos seleccionados)
   const albumsForTimeline = useMemo(() => {
     let list = searchFilteredAlbums;
 
@@ -100,10 +108,81 @@ export function DossierTimelineViewComponent({
     return list;
   }, [searchFilteredAlbums, selectedFormat, selectedLabel]);
 
-  // 3. Conteo dinámico de años ajustado a la búsqueda
+  // 3. Conteos de sub-filtros dinámicos según el formato activo
+  const subFilterCounts45 = useMemo(() => {
+    const c = {
+      all: 0,
+      solo_en_45: 0,
+      incluido_en_lp: 0,
+      extraido_de_lp: 0,
+      disco_split: 0,
+      reedicion: 0,
+    };
+    albumsForTimeline.forEach((a) => {
+      const f = (a.format || "").toLowerCase();
+      if (!(f.includes("45") || f.includes("single"))) return;
+      c.all++;
+      if (a.onlyOn45) c.solo_en_45++;
+      if (a.includedInLp) c.incluido_en_lp++;
+      if (a.extractedFromLp) c.extraido_de_lp++;
+      if (a.isSplit) c.disco_split++;
+      if (a.isReissue) c.reedicion++;
+    });
+    return c;
+  }, [albumsForTimeline]);
+
+  const subFilterCountsLP = useMemo(() => {
+    const c = {
+      all: 0,
+      estudio: 0,
+      recopilatorio: 0,
+      varios_artistas: 0,
+      disco_split: 0,
+      reedicion: 0,
+    };
+    albumsForTimeline.forEach((a) => {
+      const f = (a.format || "").toLowerCase();
+      if (!f.includes("lp")) return;
+      c.all++;
+      if (!a.isCompilation && !a.isVariousArtists && !a.isSplit && !a.isReissue) c.estudio++;
+      if (a.isCompilation) c.recopilatorio++;
+      if (a.isVariousArtists) c.varios_artistas++;
+      if (a.isSplit) c.disco_split++;
+      if (a.isReissue) c.reedicion++;
+    });
+    return c;
+  }, [albumsForTimeline]);
+
+  // 4. Base que aplica el sub-filtro específico del formato
+  const albumsWithSubFilter = useMemo(() => {
+    if (subFilter === "ALL") return albumsForTimeline;
+
+    return albumsForTimeline.filter((album) => {
+      if (selectedFormat === "45") {
+        if (subFilter === "solo_en_45" && !album.onlyOn45) return false;
+        if (subFilter === "incluido_en_lp" && !album.includedInLp) return false;
+        if (subFilter === "extraido_de_lp" && !album.extractedFromLp) return false;
+        if (subFilter === "disco_split" && !album.isSplit) return false;
+        if (subFilter === "reedicion" && !album.isReissue) return false;
+      } else if (selectedFormat === "LP") {
+        if (
+          subFilter === "estudio" &&
+          (album.isCompilation || album.isVariousArtists || album.isSplit || album.isReissue)
+        )
+          return false;
+        if (subFilter === "recopilatorio" && !album.isCompilation) return false;
+        if (subFilter === "varios_artistas" && !album.isVariousArtists) return false;
+        if (subFilter === "disco_split" && !album.isSplit) return false;
+        if (subFilter === "reedicion" && !album.isReissue) return false;
+      }
+      return true;
+    });
+  }, [albumsForTimeline, selectedFormat, subFilter]);
+
+  // 5. Conteo dinámico de años ajustado a la búsqueda y sub-filtros
   const yearCounts = useMemo(() => {
     const map = new Map<number, number>();
-    albumsForTimeline.forEach((a) => {
+    albumsWithSubFilter.forEach((a) => {
       if (a.year && a.year > 1950 && a.year < 2030) {
         if (selectedDecade !== "ALL") {
           const start = parseInt(selectedDecade, 10);
@@ -116,16 +195,16 @@ export function DossierTimelineViewComponent({
     return Array.from(map.entries())
       .map(([year, count]) => ({ year, count }))
       .sort((a, b) => a.year - b.year);
-  }, [albumsForTimeline, selectedDecade]);
+  }, [albumsWithSubFilter, selectedDecade]);
 
-  // Total de obras en la línea de tiempo ajustado a la búsqueda
+  // Total de obras en la línea de tiempo ajustado
   const timelineTotal = useMemo(() => {
     if (selectedDecade !== "ALL") {
       const start = parseInt(selectedDecade, 10);
-      return albumsForTimeline.filter((a) => a.year && a.year >= start && a.year <= start + 9).length;
+      return albumsWithSubFilter.filter((a) => a.year && a.year >= start && a.year <= start + 9).length;
     }
-    return albumsForTimeline.length;
-  }, [albumsForTimeline, selectedDecade]);
+    return albumsWithSubFilter.length;
+  }, [albumsWithSubFilter, selectedDecade]);
 
   // Si el año seleccionado ya no existe en los resultados de la nueva búsqueda, resetearlo a "ALL"
   useEffect(() => {
@@ -137,7 +216,7 @@ export function DossierTimelineViewComponent({
     }
   }, [yearCounts, selectedYear]);
 
-  // 4. Conteo de formatos ajustado a la búsqueda actual
+  // 6. Conteo de formatos ajustado a la búsqueda actual
   const formatCounts = useMemo(() => {
     const counts = { total: searchFilteredAlbums.length, "45": 0, lp: 0, ep: 0, casete: 0, cd: 0 };
     searchFilteredAlbums.forEach((a) => {
@@ -160,9 +239,9 @@ export function DossierTimelineViewComponent({
     return Array.from(set).sort();
   }, [albums]);
 
-  // 5. Filtrar álbumes finales respetando todos los criterios
+  // 7. Filtrar álbumes finales respetando todos los criterios
   const filteredAlbums = useMemo(() => {
-    return albumsForTimeline.filter((album) => {
+    return albumsWithSubFilter.filter((album) => {
       // Filtro década
       if (selectedDecade !== "ALL") {
         const start = parseInt(selectedDecade, 10);
@@ -181,9 +260,9 @@ export function DossierTimelineViewComponent({
 
       return true;
     });
-  }, [albumsForTimeline, selectedDecade, selectedYear, photoOnly]);
+  }, [albumsWithSubFilter, selectedDecade, selectedYear, photoOnly]);
 
-  // 6. Agrupar álbumes para el Dossier (por Año o por Sello)
+  // 8. Agrupar álbumes para el Dossier (por Año o por Sello)
   const groupedSections = useMemo(() => {
     if (groupingMode === "year") {
       const groups = new Map<string, AlbumItem[]>();
@@ -215,6 +294,7 @@ export function DossierTimelineViewComponent({
   const resetFilters = () => {
     setSearchTerm("");
     setSelectedFormat("ALL");
+    setSubFilter("ALL");
     setSelectedLabel("ALL");
     setSelectedDecade("ALL");
     setSelectedYear("ALL");
@@ -224,6 +304,7 @@ export function DossierTimelineViewComponent({
   const hasActiveFilters =
     searchTerm !== "" ||
     selectedFormat !== "ALL" ||
+    subFilter !== "ALL" ||
     selectedLabel !== "ALL" ||
     selectedDecade !== "ALL" ||
     selectedYear !== "ALL" ||
@@ -425,7 +506,7 @@ export function DossierTimelineViewComponent({
               <button
                 key={f.id}
                 type="button"
-                onClick={() => setSelectedFormat(f.id)}
+                onClick={() => handleFormatChange(f.id)}
                 className={cn(
                   "border border-[#1F1305] px-2.5 py-0.5 font-bold transition-all cursor-pointer text-[11px]",
                   selectedFormat === f.id
@@ -485,6 +566,69 @@ export function DossierTimelineViewComponent({
             )}
           </div>
         </div>
+
+        {/* ============================================================== */}
+        {/* FILA 3: SUB-FILTROS DINÁMICOS SEGÚN EL FORMATO SELECCIONADO     */}
+        {/* ============================================================== */}
+        {selectedFormat === "45" && (
+          <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-[#1F1305]/20 text-xs">
+            <span className="font-bold text-[#1F1305] mr-1 flex items-center gap-1 text-[11px]">
+              <SlidersHorizontal className="h-3 w-3 text-[#E80000]" /> CONDICIÓN 45 RPM:
+            </span>
+            {[
+              { id: "ALL", label: `Todos (${subFilterCounts45.all})` },
+              { id: "solo_en_45", label: `Solo en 45 / Inédito en LP (${subFilterCounts45.solo_en_45})` },
+              { id: "incluido_en_lp", label: `Incluido en LP (${subFilterCounts45.incluido_en_lp})` },
+              { id: "extraido_de_lp", label: `Extraído de LP (${subFilterCounts45.extraido_de_lp})` },
+              { id: "disco_split", label: `Disco Split (${subFilterCounts45.disco_split})` },
+              { id: "reedicion", label: `Reedición (${subFilterCounts45.reedicion})` },
+            ].map((sub) => (
+              <button
+                key={sub.id}
+                type="button"
+                onClick={() => setSubFilter(sub.id)}
+                className={cn(
+                  "border border-[#1F1305] px-2 py-0.5 font-bold transition-all cursor-pointer text-[11px]",
+                  subFilter === sub.id
+                    ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
+                    : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+                )}
+              >
+                {sub.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {selectedFormat === "LP" && (
+          <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-[#1F1305]/20 text-xs">
+            <span className="font-bold text-[#1F1305] mr-1 flex items-center gap-1 text-[11px]">
+              <SlidersHorizontal className="h-3 w-3 text-[#E80000]" /> TIPOLOGÍA DE LP:
+            </span>
+            {[
+              { id: "ALL", label: `Todos (${subFilterCountsLP.all})` },
+              { id: "estudio", label: `Álbum de Estudio Oficial (${subFilterCountsLP.estudio})` },
+              { id: "recopilatorio", label: `Recopilatorio (${subFilterCountsLP.recopilatorio})` },
+              { id: "varios_artistas", label: `Varios Artistas (${subFilterCountsLP.varios_artistas})` },
+              { id: "disco_split", label: `Disco Split (${subFilterCountsLP.disco_split})` },
+              { id: "reedicion", label: `Reedición (${subFilterCountsLP.reedicion})` },
+            ].map((sub) => (
+              <button
+                key={sub.id}
+                type="button"
+                onClick={() => setSubFilter(sub.id)}
+                className={cn(
+                  "border border-[#1F1305] px-2 py-0.5 font-bold transition-all cursor-pointer text-[11px]",
+                  subFilter === sub.id
+                    ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
+                    : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+                )}
+              >
+                {sub.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ============================================================== */}
@@ -497,6 +641,9 @@ export function DossierTimelineViewComponent({
             Mostrando <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> expedientes en{" "}
             <strong className="text-[#1F1305]">{groupedSections.length}</strong> capítulos{" "}
             {groupingMode === "year" ? "cronológicos" : "por sello fonográfico"}
+            {subFilter !== "ALL" && (
+              <span className="text-[#E80000] ml-1">[ FILTRO ACTIVO: {subFilter.toUpperCase()} ]</span>
+            )}
           </span>
         </div>
         <div className="hidden sm:inline text-[11px] text-[#1F1305]">
@@ -514,10 +661,10 @@ export function DossierTimelineViewComponent({
           </div>
           <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3" />
           <h3 className="font-cooper text-xl text-[#1F1305]">
-            No se hallaron expedientes para este criterio
+            No se hallaron expedientes para este criterio o filtro
           </h3>
           <p className="text-xs text-[#5A5245] mt-2 max-w-md mx-auto leading-relaxed">
-            Verifica el término de búsqueda o limpia los filtros temporales para volver a ver todo el acervo.
+            Verifica el término de búsqueda o limpia los filtros para volver a ver todo el acervo.
           </p>
           <button
             type="button"
@@ -587,7 +734,7 @@ export function DossierTimelineViewComponent({
                           onClick={() => onSelectAlbum?.(album)}
                           className="group border-2 border-[#1F1305] bg-[#F4EFEA] shadow-[4px_4px_0px_#1F1305] hover:shadow-[6px_6px_0px_#E80000] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col sm:flex-row overflow-hidden"
                         >
-                          {/* Columna Izquierda: Funda Limpia y Nítida (Sin vinilo asomándose) */}
+                          {/* Columna Izquierda: Funda Limpia y Nítida */}
                           <div className="relative w-full sm:w-44 sm:min-w-[176px] aspect-square bg-[#140D04] border-b-2 sm:border-b-0 sm:border-r-2 border-[#1F1305] flex-shrink-0 overflow-hidden">
                             {/* Cabecera de evidencia: ÚNICO lugar donde aparece el año */}
                             <div className="absolute top-0 left-0 right-0 h-5 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 text-[10px] text-[#1F1305] font-black z-20">
@@ -612,14 +759,55 @@ export function DossierTimelineViewComponent({
                           {/* Columna Derecha: Ficha Técnica & Cortes */}
                           <div className="p-3.5 flex-1 flex flex-col justify-between space-y-3">
                             <div className="space-y-1.5">
-                              {/* Barra superior de insignias */}
-                              <div className="flex items-center justify-between gap-2 flex-wrap">
-                                <div className="flex items-center gap-1.5">
+                              {/* Barra superior de insignias técnicas */}
+                              <div className="flex items-center justify-between gap-1.5 flex-wrap">
+                                <div className="flex items-center gap-1.5 flex-wrap">
                                   <BadgeFormat formatName={album.format || "LP"} size="sm" />
                                   <span className="text-[10px] font-bold text-[#1F1305] bg-white px-1.5 py-0.5 border border-[#1F1305] truncate max-w-[120px]">
                                     {album.label || "Particular"}
                                   </span>
+
+                                  {/* Badges de condición fonográfica */}
+                                  {album.onlyOn45 && (
+                                    <span className="border border-[#1F1305] bg-[#E80000] text-white px-1.5 py-0.5 text-[10px] font-bold">
+                                      Solo en 45
+                                    </span>
+                                  )}
+                                  {album.includedInLp && (
+                                    <span
+                                      className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold"
+                                      title={album.sidesInLp ? `Lados en LP: ${album.sidesInLp}` : undefined}
+                                    >
+                                      En LP {album.sidesInLp ? `(${album.sidesInLp})` : ""}
+                                    </span>
+                                  )}
+                                  {album.extractedFromLp && (
+                                    <span className="border border-[#1F1305] bg-[#F8C800] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
+                                      De LP
+                                    </span>
+                                  )}
+                                  {album.isSplit && (
+                                    <span className="border border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] px-1.5 py-0.5 text-[10px] font-bold">
+                                      Split
+                                    </span>
+                                  )}
+                                  {album.isReissue && (
+                                    <span className="border border-[#1F1305] bg-white text-[#746B5C] px-1.5 py-0.5 text-[10px] font-bold">
+                                      Reedición
+                                    </span>
+                                  )}
+                                  {album.isCompilation && !album.format?.toLowerCase().includes("45") && (
+                                    <span className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
+                                      Recopilatorio
+                                    </span>
+                                  )}
+                                  {album.isVariousArtists && (
+                                    <span className="border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] px-1.5 py-0.5 text-[10px] font-bold">
+                                      Varios
+                                    </span>
+                                  )}
                                 </div>
+
                                 {album.catalogNumber && (
                                   <span className="font-mono text-[10px] font-bold bg-[#1F1305] text-white px-1.5 py-0.5 border border-white/20">
                                     {album.catalogNumber}
@@ -744,8 +932,29 @@ export function DossierTimelineViewComponent({
                             {/* Overlay de hover translúcido */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                            <div className="relative z-10 pt-7 px-2.5 flex items-start justify-start opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                            {/* Badges revelados en hover */}
+                            <div className="relative z-10 pt-7 px-2.5 flex items-start justify-start gap-1 flex-wrap opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                               <BadgeFormat formatName={album.format || "LP"} size="sm" />
+                              {album.onlyOn45 && (
+                                <span className="border border-white/20 bg-[#E80000] text-white px-1 py-0.2 text-[9px] font-bold">
+                                  Solo 45
+                                </span>
+                              )}
+                              {album.includedInLp && (
+                                <span className="border border-white/20 bg-black/60 text-[#EDE0D0] px-1 py-0.2 text-[9px] font-bold">
+                                  En LP
+                                </span>
+                              )}
+                              {album.extractedFromLp && (
+                                <span className="border border-white/20 bg-[#F8C800] text-[#1F1305] px-1 py-0.2 text-[9px] font-bold">
+                                  De LP
+                                </span>
+                              )}
+                              {album.isSplit && (
+                                <span className="border border-white/20 bg-white text-[#1F1305] px-1 py-0.2 text-[9px] font-bold">
+                                  Split
+                                </span>
+                              )}
                             </div>
 
                             <div className="relative z-10 p-2.5 space-y-0.5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">

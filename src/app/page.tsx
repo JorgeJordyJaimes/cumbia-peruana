@@ -25,7 +25,14 @@ interface RawAlbumRow {
   año_publicacion: number | null;
   url_portada: string | null;
   url_contraportada: string | null;
-  es_recopilatorio: boolean;
+  es_recopilatorio: boolean | null;
+  es_varios_artistas: boolean | null;
+  es_disco_split: boolean | null;
+  es_reedicion: boolean | null;
+  incluido_en_lp: boolean | null;
+  extraido_de_lp: boolean | null;
+  solo_en_45: boolean | null;
+  lados_en_lp: string | null;
   grupos: {
     nombre_grupo: string;
     personas: { nombre: string; apodo: string | null } | null;
@@ -95,6 +102,13 @@ export default async function Home() {
         url_portada,
         url_contraportada,
         es_recopilatorio,
+        es_varios_artistas,
+        es_disco_split,
+        es_reedicion,
+        incluido_en_lp,
+        extraido_de_lp,
+        solo_en_45,
+        lados_en_lp,
         grupos (
           nombre_grupo,
           personas (nombre, apodo)
@@ -171,7 +185,14 @@ export default async function Home() {
     format: a.tipos_album?.nombre_tipo === "45" ? "45" : a.tipos_album?.nombre_tipo || "LP",
     coverUrl: a.url_portada,
     backCoverUrl: a.url_contraportada,
-    isCompilation: a.es_recopilatorio,
+    isCompilation: a.es_recopilatorio ?? false,
+    isVariousArtists: a.es_varios_artistas ?? false,
+    isSplit: a.es_disco_split ?? false,
+    isReissue: a.es_reedicion ?? false,
+    includedInLp: a.incluido_en_lp ?? false,
+    extractedFromLp: a.extraido_de_lp ?? false,
+    onlyOn45: a.solo_en_45 ?? false,
+    sidesInLp: a.lados_en_lp ?? null,
   }));
 
   // Mapa de pistas por álbum para contraportadas

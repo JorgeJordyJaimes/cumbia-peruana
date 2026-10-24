@@ -18,6 +18,13 @@ export interface AlbumItem {
   backCoverUrl?: string | null;
   tracksCount?: number;
   isCompilation?: boolean;
+  isVariousArtists?: boolean;
+  isSplit?: boolean;
+  isReissue?: boolean;
+  includedInLp?: boolean;
+  extractedFromLp?: boolean;
+  onlyOn45?: boolean;
+  sidesInLp?: string | null;
 }
 
 interface AlbumCardProps {
