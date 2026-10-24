@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, memo } from "react";
+import { useState, useMemo, useEffect, memo } from "react";
 import { cn } from "@/lib/utils";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
@@ -13,15 +13,11 @@ import {
   Disc3,
   Search,
   Filter,
-  Layers,
   Sparkles,
   ArrowRight,
-  SlidersHorizontal,
   RotateCcw,
   LayoutGrid,
   FileText,
-  ChevronRight,
-  Music2,
   Eye,
   CheckCircle2,
 } from "lucide-react";
@@ -67,32 +63,84 @@ export function DossierTimelineViewComponent({
   const [displayLayout, setDisplayLayout] = useState<DisplayLayout>("dossier");
   const [photoOnly, setPhotoOnly] = useState<boolean>(false);
 
-  // Extraer lista de sellos para el filtro
-  const uniqueLabels = useMemo(() => {
-    const set = new Set<string>();
-    albums.forEach((a) => {
-      if (a.label) set.add(a.label);
-    });
-    return Array.from(set).sort();
-  }, [albums]);
+  // 1. Base filtrada por la búsqueda de texto (artista, título, catálogo o sello)
+  const searchFilteredAlbums = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return albums;
 
-  // Extraer años únicos disponibles con su respectivo conteo
+    return albums.filter((album) => {
+      const matchTitle = album.title.toLowerCase().includes(q);
+      const matchArtist = album.artist.toLowerCase().includes(q);
+      const matchCat = album.catalogNumber?.toLowerCase().includes(q);
+      const matchLabel = album.label?.toLowerCase().includes(q);
+      return matchTitle || matchArtist || matchCat || matchLabel;
+    });
+  }, [albums, searchTerm]);
+
+  // 2. Base para la línea de tiempo (se ajusta a la búsqueda activa y formatos/sellos seleccionados)
+  const albumsForTimeline = useMemo(() => {
+    let list = searchFilteredAlbums;
+
+    if (selectedFormat !== "ALL") {
+      list = list.filter((album) => {
+        const f = (album.format || "").toLowerCase();
+        if (selectedFormat === "45" && !(f.includes("45") || f.includes("single"))) return false;
+        if (selectedFormat === "LP" && !f.includes("lp")) return false;
+        if (selectedFormat === "EP" && !f.includes("ep")) return false;
+        if (selectedFormat === "CASETE" && !(f.includes("caset") || f.includes("cassette"))) return false;
+        if (selectedFormat === "CD" && !f.includes("cd")) return false;
+        return true;
+      });
+    }
+
+    if (selectedLabel !== "ALL") {
+      list = list.filter((album) => album.label === selectedLabel);
+    }
+
+    return list;
+  }, [searchFilteredAlbums, selectedFormat, selectedLabel]);
+
+  // 3. Conteo dinámico de años ajustado a la búsqueda
   const yearCounts = useMemo(() => {
     const map = new Map<number, number>();
-    albums.forEach((a) => {
+    albumsForTimeline.forEach((a) => {
       if (a.year && a.year > 1950 && a.year < 2030) {
+        if (selectedDecade !== "ALL") {
+          const start = parseInt(selectedDecade, 10);
+          if (a.year < start || a.year > start + 9) return;
+        }
         map.set(a.year, (map.get(a.year) || 0) + 1);
       }
     });
+
     return Array.from(map.entries())
       .map(([year, count]) => ({ year, count }))
       .sort((a, b) => a.year - b.year);
-  }, [albums]);
+  }, [albumsForTimeline, selectedDecade]);
 
-  // Conteo de formatos
+  // Total de obras en la línea de tiempo ajustado a la búsqueda
+  const timelineTotal = useMemo(() => {
+    if (selectedDecade !== "ALL") {
+      const start = parseInt(selectedDecade, 10);
+      return albumsForTimeline.filter((a) => a.year && a.year >= start && a.year <= start + 9).length;
+    }
+    return albumsForTimeline.length;
+  }, [albumsForTimeline, selectedDecade]);
+
+  // Si el año seleccionado ya no existe en los resultados de la nueva búsqueda, resetearlo a "ALL"
+  useEffect(() => {
+    if (selectedYear !== "ALL") {
+      const exists = yearCounts.some((y) => y.year === selectedYear);
+      if (!exists) {
+        setSelectedYear("ALL");
+      }
+    }
+  }, [yearCounts, selectedYear]);
+
+  // 4. Conteo de formatos ajustado a la búsqueda actual
   const formatCounts = useMemo(() => {
-    const counts = { total: albums.length, "45": 0, lp: 0, ep: 0, casete: 0, cd: 0 };
-    albums.forEach((a) => {
+    const counts = { total: searchFilteredAlbums.length, "45": 0, lp: 0, ep: 0, casete: 0, cd: 0 };
+    searchFilteredAlbums.forEach((a) => {
       const f = (a.format || "").toLowerCase();
       if (f.includes("45") || f.includes("single")) counts["45"]++;
       else if (f.includes("lp")) counts.lp++;
@@ -101,58 +149,41 @@ export function DossierTimelineViewComponent({
       else if (f.includes("cd")) counts.cd++;
     });
     return counts;
+  }, [searchFilteredAlbums]);
+
+  // Extraer sellos únicos presentes en la búsqueda
+  const uniqueLabels = useMemo(() => {
+    const set = new Set<string>();
+    albums.forEach((a) => {
+      if (a.label) set.add(a.label);
+    });
+    return Array.from(set).sort();
   }, [albums]);
 
-  // Filtrar álbumes
+  // 5. Filtrar álbumes finales respetando todos los criterios
   const filteredAlbums = useMemo(() => {
-    const q = searchTerm.trim().toLowerCase();
-
-    return albums.filter((album) => {
-      // 1. Filtro formato
-      if (selectedFormat !== "ALL") {
-        const f = (album.format || "").toLowerCase();
-        if (selectedFormat === "45" && !(f.includes("45") || f.includes("single"))) return false;
-        if (selectedFormat === "LP" && !f.includes("lp")) return false;
-        if (selectedFormat === "EP" && !f.includes("ep")) return false;
-        if (selectedFormat === "CASETE" && !(f.includes("caset") || f.includes("cassette"))) return false;
-        if (selectedFormat === "CD" && !f.includes("cd")) return false;
-      }
-
-      // 2. Filtro sello
-      if (selectedLabel !== "ALL" && album.label !== selectedLabel) {
-        return false;
-      }
-
-      // 3. Filtro década
+    return albumsForTimeline.filter((album) => {
+      // Filtro década
       if (selectedDecade !== "ALL") {
         const start = parseInt(selectedDecade, 10);
         if (!album.year || album.year < start || album.year > start + 9) return false;
       }
 
-      // 4. Filtro año exacto desde el timeline scrubber
+      // Filtro año exacto del timeline scrubber
       if (selectedYear !== "ALL" && album.year !== selectedYear) {
         return false;
       }
 
-      // 5. Filtro foto
+      // Filtro foto
       if (photoOnly && !album.coverUrl) {
         return false;
       }
 
-      // 6. Búsqueda de texto
-      if (q) {
-        const matchTitle = album.title.toLowerCase().includes(q);
-        const matchArtist = album.artist.toLowerCase().includes(q);
-        const matchCat = album.catalogNumber?.toLowerCase().includes(q);
-        const matchLabel = album.label?.toLowerCase().includes(q);
-        if (!matchTitle && !matchArtist && !matchCat && !matchLabel) return false;
-      }
-
       return true;
     });
-  }, [albums, selectedFormat, selectedLabel, selectedDecade, selectedYear, photoOnly, searchTerm]);
+  }, [albumsForTimeline, selectedDecade, selectedYear, photoOnly]);
 
-  // Agrupar álbumes para el Dossier (por Año o por Sello)
+  // 6. Agrupar álbumes para el Dossier (por Año o por Sello)
   const groupedSections = useMemo(() => {
     if (groupingMode === "year") {
       const groups = new Map<string, AlbumItem[]>();
@@ -163,14 +194,12 @@ export function DossierTimelineViewComponent({
         groups.set(key, list);
       });
 
-      // Ordenar años cronológicamente
       return Array.from(groups.entries()).sort(([a], [b]) => {
         if (a === "S/D (Sin Datação)") return 1;
         if (b === "S/D (Sin Datação)") return -1;
         return parseInt(a, 10) - parseInt(b, 10);
       });
     } else {
-      // Agrupar por Sello Fonográfico
       const groups = new Map<string, AlbumItem[]>();
       filteredAlbums.forEach((album) => {
         const key = album.label ? album.label : "Sello Particular / No especificado";
@@ -179,7 +208,6 @@ export function DossierTimelineViewComponent({
         groups.set(key, list);
       });
 
-      // Ordenar por volumen de producciones
       return Array.from(groups.entries()).sort(([, a], [, b]) => b.length - a.length);
     }
   }, [filteredAlbums, groupingMode]);
@@ -242,7 +270,7 @@ export function DossierTimelineViewComponent({
           </div>
         </div>
 
-        {/* Cinta Scrubber Horizontal de Años Individuales */}
+        {/* Cinta Scrubber Horizontal de Años Dinámica según la búsqueda */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 scrollbar-thin scrollbar-thumb-[#E80000] scrollbar-track-[#140D04]">
           <button
             type="button"
@@ -254,27 +282,33 @@ export function DossierTimelineViewComponent({
                 : "bg-white/10 text-white/70 border-white/10 hover:bg-white/20 hover:text-white"
             )}
           >
-            AÑOS: TODOS ({albums.length})
+            AÑOS: TODOS ({timelineTotal})
           </button>
-          {yearCounts.map((item) => {
-            const isSelected = selectedYear === item.year;
-            return (
-              <button
-                key={item.year}
-                type="button"
-                onClick={() => setSelectedYear(item.year)}
-                className={cn(
-                  "px-2 py-1 text-xs font-bold transition-all flex-shrink-0 flex items-center gap-1 border cursor-pointer",
-                  isSelected
-                    ? "bg-[#F8C800] text-[#1F1305] border-[#F8C800] font-black shadow-[2px_2px_0px_#E80000]"
-                    : "bg-[#2A1D0E] text-[#EDE0D0] border-white/10 hover:border-white/40 hover:bg-[#3E2C1B]"
-                )}
-              >
-                <span>{item.year}</span>
-                <span className="text-[10px] opacity-60">({item.count})</span>
-              </button>
-            );
-          })}
+          {yearCounts.length === 0 ? (
+            <span className="text-white/40 text-[11px] italic px-2">
+              No hay años registrados para este criterio
+            </span>
+          ) : (
+            yearCounts.map((item) => {
+              const isSelected = selectedYear === item.year;
+              return (
+                <button
+                  key={item.year}
+                  type="button"
+                  onClick={() => setSelectedYear(item.year)}
+                  className={cn(
+                    "px-2 py-1 text-xs font-bold transition-all flex-shrink-0 flex items-center gap-1 border cursor-pointer",
+                    isSelected
+                      ? "bg-[#F8C800] text-[#1F1305] border-[#F8C800] font-black shadow-[2px_2px_0px_#E80000]"
+                      : "bg-[#2A1D0E] text-[#EDE0D0] border-white/10 hover:border-white/40 hover:bg-[#3E2C1B]"
+                  )}
+                >
+                  <span>{item.year}</span>
+                  <span className="text-[10px] opacity-75 font-mono">({item.count})</span>
+                </button>
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -291,7 +325,7 @@ export function DossierTimelineViewComponent({
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar en la cronología por título, agrupación, catálogo o sello..."
+              placeholder="Buscar por agrupación (ej. Super Grupo), título, catálogo o sello..."
               className="w-full border-2 border-[#1F1305] bg-white py-2 pl-10 pr-20 text-xs font-bold text-[#1F1305] placeholder-[#746B5C] shadow-[2px_2px_0px_#1F1305] focus:outline-none focus:border-[#E80000]"
             />
             {searchTerm && (
@@ -307,7 +341,7 @@ export function DossierTimelineViewComponent({
 
           {/* Conmutadores: Agrupación (Año vs Sello) + Diseño (Dossier vs Mosaico) */}
           <div className="flex flex-wrap items-center gap-2">
-            {/* Conmutador de Agrupación */}
+            {/* Conmutador de Agrupación sin emojis duplicados */}
             <div className="flex items-center border-2 border-[#1F1305] bg-white p-0.5 shadow-[2px_2px_0px_#1F1305]">
               <button
                 type="button"
@@ -321,7 +355,7 @@ export function DossierTimelineViewComponent({
                 )}
               >
                 <Clock className="h-3.5 w-3.5 text-[#E80000]" />
-                <span>[ ⏱ CRONOLOGÍA ]</span>
+                <span>[ CRONOLOGÍA ]</span>
               </button>
               <button
                 type="button"
@@ -335,7 +369,7 @@ export function DossierTimelineViewComponent({
                 )}
               >
                 <Building2 className="h-3.5 w-3.5 text-[#E80000]" />
-                <span>[ 🏢 POR SELLO ]</span>
+                <span>[ POR SELLO ]</span>
               </button>
             </div>
 
@@ -346,36 +380,36 @@ export function DossierTimelineViewComponent({
                 onClick={() => setDisplayLayout("dossier")}
                 title="Diseño Dossier Horizontal con Tracklist"
                 className={cn(
-                  "flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold transition-all cursor-pointer",
+                  "flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold transition-all cursor-pointer",
                   displayLayout === "dossier"
-                    ? "bg-[#1F1305] text-[#EDE0D0]"
+                    ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
                     : "text-[#1F1305] hover:bg-[#EDE0D0]"
                 )}
               >
-                <FileText className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Dossier</span>
+                <FileText className="h-3.5 w-3.5 text-[#E80000]" />
+                <span>[ DOSSIER ]</span>
               </button>
               <button
                 type="button"
                 onClick={() => setDisplayLayout("grid")}
-                title="Diseño Mosaico Compacto"
+                title="Diseño Mosaico Compacto con Vinilo al Cursor"
                 className={cn(
-                  "flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold transition-all cursor-pointer",
+                  "flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold transition-all cursor-pointer",
                   displayLayout === "grid"
-                    ? "bg-[#1F1305] text-[#EDE0D0]"
+                    ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
                     : "text-[#1F1305] hover:bg-[#EDE0D0]"
                 )}
               >
-                <LayoutGrid className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Mosaico</span>
+                <LayoutGrid className="h-3.5 w-3.5 text-[#E80000]" />
+                <span>[ MOSAICO ]</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* FILA 2: Soportes físicos, selector de sello y filtros secundarios */}
+        {/* FILA 2: Soportes físicos ajustados a la búsqueda, selector de sello y filtros secundarios */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#1F1305]/20">
-          {/* Pills de Formato */}
+          {/* Pills de Formato dinámicos */}
           <div className="flex flex-wrap items-center gap-1 text-xs">
             <span className="font-bold text-[#1F1305] mr-1 flex items-center gap-1 text-[11px]">
               <Disc className="h-3 w-3 text-[#E80000]" /> FORMATO:
@@ -480,23 +514,22 @@ export function DossierTimelineViewComponent({
           </div>
           <Disc className="mx-auto h-12 w-12 text-[#F1730C] mb-3" />
           <h3 className="font-cooper text-xl text-[#1F1305]">
-            No se hallaron expedientes para este período o sello
+            No se hallaron expedientes para este criterio
           </h3>
           <p className="text-xs text-[#5A5245] mt-2 max-w-md mx-auto leading-relaxed">
-            Ajusta los filtros temporales en el riel superior o restablece la búsqueda.
+            Verifica el término de búsqueda o limpia los filtros temporales para volver a ver todo el acervo.
           </p>
           <button
             type="button"
             onClick={resetFilters}
             className="mt-6 inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] px-5 py-2.5 text-xs font-bold text-white shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all cursor-pointer"
           >
-            [ REINICIAR CRONOLOGÍA ]
+            [ REINICIAR CRITERIOS ]
           </button>
         </div>
       ) : (
         <div className="space-y-10">
           {groupedSections.map(([groupKey, sectionAlbums]) => {
-            // Obtener contexto de década si se agrupa por año
             const decadeKey =
               groupingMode === "year" && groupKey !== "S/D (Sin Datação)"
                 ? `${groupKey.slice(0, 3)}0`
@@ -536,7 +569,7 @@ export function DossierTimelineViewComponent({
                 {/* Renderizado de los álbumes según el layout (Dossier vs Mosaico) */}
                 {displayLayout === "dossier" ? (
                   /* ======================================================== */
-                  /* DISEÑO 1: DOSSIER EDITORIAL HORIZONTAL                  */
+                  /* DISEÑO 1: DOSSIER EDITORIAL HORIZONTAL (SIN VINILO HOVER) */
                   /* ======================================================== */
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {sectionAlbums.map((album) => {
@@ -554,7 +587,7 @@ export function DossierTimelineViewComponent({
                           onClick={() => onSelectAlbum?.(album)}
                           className="group border-2 border-[#1F1305] bg-[#F4EFEA] shadow-[4px_4px_0px_#1F1305] hover:shadow-[6px_6px_0px_#E80000] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col sm:flex-row overflow-hidden"
                         >
-                          {/* Columna Izquierda: Funda Limpia + Vinilo que asoma */}
+                          {/* Columna Izquierda: Funda Limpia y Nítida (Sin vinilo asomándose) */}
                           <div className="relative w-full sm:w-44 sm:min-w-[176px] aspect-square bg-[#140D04] border-b-2 sm:border-b-0 sm:border-r-2 border-[#1F1305] flex-shrink-0 overflow-hidden">
                             {/* Cabecera de evidencia: ÚNICO lugar donde aparece el año */}
                             <div className="absolute top-0 left-0 right-0 h-5 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 text-[10px] text-[#1F1305] font-black z-20">
@@ -574,16 +607,6 @@ export function DossierTimelineViewComponent({
                                 <Disc3 className="h-12 w-12" />
                               </div>
                             )}
-
-                            {/* Vinilo negro deslizable en hover */}
-                            <div
-                              aria-hidden="true"
-                              className="hidden sm:flex absolute inset-y-6 -right-6 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out group-hover:translate-x-4 z-10 overflow-hidden items-center justify-center border border-white/10 pointer-events-none opacity-0 group-hover:opacity-100"
-                            >
-                              <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center border border-white/30 text-[5px] font-black text-[#1F1305]">
-                                45
-                              </div>
-                            </div>
                           </div>
 
                           {/* Columna Derecha: Ficha Técnica & Cortes */}
@@ -671,19 +694,35 @@ export function DossierTimelineViewComponent({
                   </div>
                 ) : (
                   /* ======================================================== */
-                  /* DISEÑO 2: MOSAICO CRONOLÓGICO TRADICIONAL               */
+                  /* DISEÑO 2: MOSAICO CRONOLÓGICO CON VINILO ASOMÁNDOSE     */
                   /* ======================================================== */
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
                     {sectionAlbums.map((album) => (
                       <div
                         key={album.id}
                         onClick={() => onSelectAlbum?.(album)}
-                        className="group relative flex flex-col cursor-pointer transition-all duration-200"
+                        className="group relative flex flex-col cursor-pointer transition-all duration-200 select-none"
                       >
                         <div className="relative aspect-square w-full">
-                          {/* Funda Limpia */}
+                          {/* Disco de Vinilo Circular que asoma lateralmente al pasar el cursor */}
+                          <div
+                            aria-hidden="true"
+                            className="absolute inset-y-2 right-2 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out group-hover:translate-x-7 sm:group-hover:translate-x-9 z-0 overflow-hidden flex items-center justify-center border border-white/10 pointer-events-none"
+                          >
+                            <div className="absolute inset-2 rounded-full border border-white/5 vinyl-grooves opacity-60" />
+                            <div className="absolute inset-6 rounded-full border border-white/10" />
+                            <div className="absolute inset-10 rounded-full border border-white/5" />
+                            <div className="relative h-11 w-11 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex flex-col items-center justify-center shadow-inner border border-white/30 text-center">
+                              <span className="text-[6px] font-black text-[#1F1305] leading-none">
+                                {album.format?.toLowerCase().includes("45") ? "45 RPM" : "33 RPM"}
+                              </span>
+                              <div className="h-1.5 w-1.5 rounded-full bg-black my-0.5" />
+                            </div>
+                          </div>
+
+                          {/* Funda Limpia (z-10) */}
                           <div className="relative z-10 h-full w-full overflow-hidden border-2 border-[#1F1305] bg-[#140D04] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 group-hover:shadow-[6px_6px_0px_#E80000] group-hover:-translate-y-1 flex flex-col justify-between">
-                            {/* Cabecera con año */}
+                            {/* Cabecera con año: ÚNICO lugar donde aparece el año */}
                             <div className="absolute top-0 left-0 right-0 h-5 bg-[#EDE0D0] border-b border-[#1F1305] flex items-center justify-between px-2 text-[10px] text-[#1F1305] font-black z-20">
                               <span>FOLIO #{String(album.id).padStart(4, "0")}</span>
                               <span className="text-[#E80000]">{album.year || "S/D"}</span>
@@ -702,7 +741,7 @@ export function DossierTimelineViewComponent({
                               </div>
                             )}
 
-                            {/* Overlay de hover */}
+                            {/* Overlay de hover translúcido */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                             <div className="relative z-10 pt-7 px-2.5 flex items-start justify-start opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
