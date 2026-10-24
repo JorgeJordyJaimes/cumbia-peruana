@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
-import { CatalogExplorer, type AlbumItem } from "@/features/albumes";
+import { VinilosCatalogExplorer, type AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 import Link from "next/link";
@@ -345,7 +345,7 @@ export default async function VinilosPage() {
 
           {/* EXPLORADOR & FILTRADOR DE VINILOS */}
           <div className="border-2 border-[#1F1305] bg-white p-4 sm:p-8 shadow-[6px_6px_0px_#1F1305]">
-            <CatalogExplorer initialAlbums={albums} tracksMap={tracksMap} />
+            <VinilosCatalogExplorer initialAlbums={albums} tracksMap={tracksMap} />
           </div>
         </main>
       </BrutalistCoordinator>
