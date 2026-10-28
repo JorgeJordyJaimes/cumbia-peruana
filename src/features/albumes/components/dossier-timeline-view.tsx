@@ -282,11 +282,15 @@ export function DossierTimelineViewComponent({
     });
   }, [albumsWithSubFilter, selectedDecade, selectedYear, photoOnly]);
 
-  // 8. Agrupar álbumes para el Dossier (por Año o por Sello)
+  // 8. Agrupar álbumes para el Dossier paginados por lotes de 60
+  const paginatedAlbums = useMemo(() => {
+    return filteredAlbums.slice(0, visibleCount);
+  }, [filteredAlbums, visibleCount]);
+
   const groupedSections = useMemo(() => {
     if (groupingMode === "year") {
       const groups = new Map<string, AlbumItem[]>();
-      filteredAlbums.forEach((album) => {
+      paginatedAlbums.forEach((album) => {
         const key = album.year ? String(album.year) : "S/D (Sin Datação)";
         const list = groups.get(key) || [];
         list.push(album);
@@ -300,7 +304,7 @@ export function DossierTimelineViewComponent({
       });
     } else {
       const groups = new Map<string, AlbumItem[]>();
-      filteredAlbums.forEach((album) => {
+      paginatedAlbums.forEach((album) => {
         const key = album.label ? album.label : "Sello Particular / No especificado";
         const list = groups.get(key) || [];
         list.push(album);
