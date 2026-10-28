@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect, useDeferredValue } from "react";
+import { useState, useMemo, useEffect, useDeferredValue, useCallback, Suspense } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Search, SlidersHorizontal, Disc, Filter, Sparkles, Layers, LayoutGrid, ArrowUpRight } from "lucide-react";
@@ -29,15 +30,19 @@ interface CatalogExplorerProps {
   tracksMap?: Record<number, TrackItem[]>;
 }
 
-export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplorerProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+function CatalogExplorerInner({ initialAlbums, tracksMap = {} }: CatalogExplorerProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [searchTerm, setSearchTerm] = useState(() => searchParams.get("q") || "");
   const deferredSearchTerm = useDeferredValue(searchTerm);
-  const [selectedFormat, setSelectedFormat] = useState<string>("ALL");
-  const [selectedLabel, setSelectedLabel] = useState<string>("ALL");
-  const [selectedYear, setSelectedYear] = useState<string>("ALL");
+  const [selectedFormat, setSelectedFormat] = useState<string>(() => searchParams.get("formato") || "ALL");
+  const [selectedLabel, setSelectedLabel] = useState<string>(() => searchParams.get("sello") || "ALL");
+  const [selectedYear, setSelectedYear] = useState<string>(() => searchParams.get("decada") || "ALL");
   const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(null);
   const [visibleCount, setVisibleCount] = useState<number>(24);
-  const [viewMode, setViewMode] = useState<"crate" | "grid">("crate");
+  const [viewMode, setViewMode] = useState<"crate" | "grid">(() => (searchParams.get("vista") as "crate" | "grid") || "crate");
 
   // Conteo de formatos dinámico
   const formatCounts = useMemo(() => {
@@ -66,10 +71,56 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
     };
   }, [initialAlbums]);
 
+  // Sincronizar álbum con ?album=ID de la URL
+  useEffect(() => {
+    const albumIdParam = searchParams.get("album");
+    if (albumIdParam) {
+      const idNum = parseInt(albumIdParam, 10);
+      const found = initialAlbums.find((a) => a.id === idNum);
+      if (found) {
+        setSelectedAlbum(found);
+      }
+    } else {
+      setSelectedAlbum(null);
+    }
+  }, [searchParams, initialAlbums]);
+
   // Restablecer paginación visible cuando cambie cualquier filtro
   useEffect(() => {
     setVisibleCount(24);
   }, [deferredSearchTerm, selectedFormat, selectedLabel, selectedYear]);
+
+  // Sincronizar filtros a la URL con debounce
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (deferredSearchTerm.trim()) params.set("q", deferredSearchTerm.trim());
+      if (selectedFormat !== "ALL") params.set("formato", selectedFormat);
+      if (selectedLabel !== "ALL") params.set("sello", selectedLabel);
+      if (selectedYear !== "ALL") params.set("decada", selectedYear);
+      if (viewMode !== "crate") params.set("vista", viewMode);
+      if (selectedAlbum) params.set("album", String(selectedAlbum.id));
+
+      const newQuery = params.toString();
+      const currentQuery = searchParams.toString();
+      if (newQuery !== currentQuery) {
+        router.replace(newQuery ? `${pathname}?${newQuery}` : pathname, { scroll: false });
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [deferredSearchTerm, selectedFormat, selectedLabel, selectedYear, viewMode, selectedAlbum, pathname, router, searchParams]);
+
+  const handleSelectAlbum = useCallback(
+    (album: AlbumItem) => {
+      setSelectedAlbum(album);
+    },
+    []
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedAlbum(null);
+  }, []);
 
   // Extraer sellos únicos
   const labels = useMemo(() => {
@@ -117,7 +168,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         }
       }
 
-      // 4. Búsqueda de texto (solo evaluada si pasa los filtros previos)
+      // 4. Búsqueda de texto
       if (query) {
         const matchTitle = album.title.toLowerCase().includes(query);
         const matchArtist = album.artist.toLowerCase().includes(query);
@@ -149,7 +200,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               placeholder="Buscar por título de álbum, agrupación o folio (ej: Cumbia del Desierto, Mirlos, Infopesa)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border-2 border-[#1F1305] bg-white py-3.5 pl-12 pr-4 text-xs font-bold text-[#1F1305] placeholder-[#746B5C] font-mono shadow-[3px_3px_0px_#1F1305] focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[5px_5px_0px_#E80000] transition-all duration-100"
+              className="w-full border-2 border-[#1F1305] bg-white py-3.5 pl-12 pr-4 text-xs font-bold text-[#1F1305] placeholder-[#665D4F] font-mono shadow-[3px_3px_0px_#1F1305] focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[5px_5px_0px_#E80000] transition-all duration-100"
             />
             {searchTerm && (
               <button
@@ -235,7 +286,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
 
       {/* Resumen de Resultados y Conmutador de Vistas */}
       <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-[#5A5245] font-bold px-1">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" aria-live="polite">
           <Sparkles className="h-4 w-4 text-[#E80000]" />
           <span>
             ENCONTRADAS EN GAVETA: <strong className="text-[#1F1305]">{filteredAlbums.length}</strong> PRODUCCIONES
@@ -315,7 +366,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         <CrateDiggerView
           albums={filteredAlbums}
           tracksMap={tracksMap}
-          onSelectAlbum={(a) => setSelectedAlbum(a)}
+          onSelectAlbum={handleSelectAlbum}
         />
       ) : (
         /* VISTA 2: CUADRÍCULA / MOSAICO COMPACTO CON PAGINACIÓN */
@@ -325,7 +376,7 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
               <AlbumCard
                 key={album.id}
                 album={album}
-                onSelect={(a) => setSelectedAlbum(a)}
+                onSelect={handleSelectAlbum}
               />
             ))}
           </div>
@@ -361,9 +412,17 @@ export function CatalogExplorer({ initialAlbums, tracksMap = {} }: CatalogExplor
         <AlbumDetailModal
           album={selectedAlbum}
           tracks={tracksMap[selectedAlbum.id] || []}
-          onClose={() => setSelectedAlbum(null)}
+          onClose={handleCloseModal}
         />
       ) : null}
     </div>
+  );
+}
+
+export function CatalogExplorer(props: CatalogExplorerProps) {
+  return (
+    <Suspense fallback={null}>
+      <CatalogExplorerInner {...props} />
+    </Suspense>
   );
 }
