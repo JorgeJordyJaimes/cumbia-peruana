@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+import { getArchiveStats } from "@/lib/services/archive-stats";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { VinilosCatalogExplorer, type AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
@@ -70,21 +71,11 @@ export default async function VinilosPage() {
 
   // Carga paralela sin cascadas (elimina waterfalls) según vercel-react-best-practices
   const [
-    [
-      { count: totalAlbumes },
-      { count: totalSellos },
-      { count: totalLPs },
-      { count: totalSingles },
-    ],
+    stats,
     { data: rawAlbumes },
     { data: rawTemas },
   ] = await Promise.all([
-    Promise.all([
-      supabase.from("albumes").select("*", { count: "exact", head: true }),
-      supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
-      supabase.from("albumes").select("*", { count: "exact", head: true }).eq("id_tipo_album", 2),
-      supabase.from("albumes").select("*", { count: "exact", head: true }).eq("id_tipo_album", 1),
-    ]),
+    getArchiveStats(),
     supabase
       .from("albumes")
       .select(`
@@ -277,7 +268,7 @@ export default async function VinilosPage() {
       {/* Schema.org JSON-LD para motores de búsqueda */}
       {catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
 
-      <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
+      <BrutalistCoordinator totalAlbumes={stats.totalAlbumes} totalSellos={stats.totalSellos}>
         <main id="contenido" className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-10">
           {/* Breadcrumb / Retorno a Portada */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
@@ -323,16 +314,16 @@ export default async function VinilosPage() {
               {/* Chips de Métricas en Vivo */}
               <div className="pt-2 flex flex-wrap gap-2.5 text-xs">
                 <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-[#F8C800]">
-                  <Disc className="h-4 w-4 text-[#F8C800]" /> {totalAlbumes ?? albums.length}+ Obras Catalogadas
+                  <Disc className="h-4 w-4 text-[#F8C800]" /> {stats.totalAlbumes > 0 ? stats.totalAlbumes.toLocaleString("es-PE") : albums.length}+ Obras Catalogadas
                 </span>
                 <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Layers className="h-4 w-4 text-[#F1730C]" /> {totalLPs ?? "300+"} LPs (33 RPM)
+                  <Layers className="h-4 w-4 text-[#F1730C]" /> {stats.totalLps > 0 ? stats.totalLps.toLocaleString("es-PE") : "—"} LPs (33 RPM)
                 </span>
                 <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Radio className="h-4 w-4 text-[#E80000]" /> {totalSingles ?? "370+"} Singles (45 RPM)
+                  <Radio className="h-4 w-4 text-[#E80000]" /> {stats.totalSingles > 0 ? stats.totalSingles.toLocaleString("es-PE") : "—"} Singles (45 RPM)
                 </span>
                 <span className="flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Building2 className="h-4 w-4 text-[#EDE0D0]" /> {totalSellos ?? "25+"} Sellos Matrices
+                  <Building2 className="h-4 w-4 text-[#EDE0D0]" /> {stats.totalSellos > 0 ? stats.totalSellos.toLocaleString("es-PE") : "—"} Sellos Matrices
                 </span>
               </div>
             </div>

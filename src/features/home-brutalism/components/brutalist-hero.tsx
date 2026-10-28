@@ -9,11 +9,15 @@ interface BrutalistHeroProps {
 }
 
 export function BrutalistHero({
-  totalAlbumes = 719,
-  totalGrupos = 581,
-  totalPersonas = 360,
-  totalSellos = 258,
+  totalAlbumes,
+  totalGrupos,
+  totalPersonas,
+  totalSellos,
 }: BrutalistHeroProps) {
+  const displayAlbumes = totalAlbumes && totalAlbumes > 0 ? totalAlbumes.toLocaleString("es-PE") : "—";
+  const displayGrupos = totalGrupos && totalGrupos > 0 ? totalGrupos.toLocaleString("es-PE") : "—";
+  const displayPersonas = totalPersonas && totalPersonas > 0 ? totalPersonas.toLocaleString("es-PE") : "—";
+  const displaySellos = totalSellos && totalSellos > 0 ? totalSellos.toLocaleString("es-PE") : "—";
   return (
     <section className="relative w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] bg-[radial-gradient(#1F1305_1px,transparent_1px)] [background-size:16px_16px] text-[#1F1305] overflow-hidden pt-6 pb-12 sm:pt-10 sm:pb-16 select-none font-mono">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6">
@@ -29,7 +33,7 @@ export function BrutalistHero({
             </span>
           </div>
           <div className="flex items-center gap-2 text-[11px]">
-            <span>FOLIO: 001/719</span>
+            <span>FOLIO: 001/{displayAlbumes}</span>
             <span className="text-[#1F1305] font-black">████████</span>
             <span className="text-[#E80000] font-black">ACCESO LIBRE</span>
           </div>
@@ -193,7 +197,7 @@ export function BrutalistHero({
               <span className="text-[#E80000]">EN CUSTODIA</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#1F1305] tracking-tight pt-1">
-              {totalAlbumes}+
+              {displayAlbumes}+
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
               Piezas de Evidencia Física
@@ -206,7 +210,7 @@ export function BrutalistHero({
               <span className="text-[#F1730C]">FICHADOS</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#F1730C] tracking-tight pt-1">
-              {totalGrupos}
+              {displayGrupos}
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
               Agrupaciones Históricas
@@ -219,7 +223,7 @@ export function BrutalistHero({
               <span className="text-[#1F1305]">IDENTIFICADOS</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#1F1305] tracking-tight pt-1">
-              {totalPersonas}
+              {displayPersonas}
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
               Músicos & Guitarristas
@@ -232,7 +236,7 @@ export function BrutalistHero({
               <span className="text-[#E80000]">MATRICULADOS</span>
             </div>
             <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#E80000] tracking-tight pt-1">
-              {totalSellos}
+              {displaySellos}
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
               Sellos Discográficos

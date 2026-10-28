@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getArchiveStats } from "@/lib/services/archive-stats";
 import {
   BrutalistCoordinator,
   BrutalistHero,
@@ -76,22 +77,12 @@ export default async function Home() {
 
   // Carga paralela sin cascadas (elimina waterfalls) según vercel-react-best-practices
   const [
-    [
-      { count: totalAlbumes },
-      { count: totalGrupos },
-      { count: totalPersonas },
-      { count: totalSellos },
-    ],
+    stats,
     { data: rawAlbumes },
     { data: rawTemas },
     { data: rawHomeConfig },
   ] = await Promise.all([
-    Promise.all([
-      supabase.from("albumes").select("*", { count: "exact", head: true }),
-      supabase.from("grupos").select("*", { count: "exact", head: true }),
-      supabase.from("personas").select("*", { count: "exact", head: true }),
-      supabase.from("sellos_discograficos").select("*", { count: "exact", head: true }),
-    ]),
+    getArchiveStats(),
     supabase
       .from("albumes")
       .select(`
@@ -306,14 +297,14 @@ export default async function Home() {
       ) : null}
 
       {/* Coordinador con TopBar, Navbar y Buscador Command-Palette (⌘K) */}
-      <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
+      <BrutalistCoordinator totalAlbumes={stats.totalAlbumes} totalSellos={stats.totalSellos}>
         <main>
           {/* HERO: Expediente Biográfico de Claudio Morán & Evidencias Cuantitativas */}
           <BrutalistHero
-            totalAlbumes={totalAlbumes}
-            totalGrupos={totalGrupos}
-            totalSellos={totalSellos}
-            totalPersonas={totalPersonas}
+            totalAlbumes={stats.totalAlbumes}
+            totalGrupos={stats.totalGrupos}
+            totalSellos={stats.totalSellos}
+            totalPersonas={stats.totalPersonas}
           />
 
           {/* LEGAJOS CLASIFICADOS DE INVESTIGACIÓN (EXP. 01, EXP. 02, EXP. 03) */}

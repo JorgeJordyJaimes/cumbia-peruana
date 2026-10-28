@@ -5,7 +5,9 @@ interface BrutalistTopBarProps {
   totalSellos?: number | null;
 }
 
-export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: BrutalistTopBarProps) {
+export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarProps) {
+  const formattedAlbumes = totalAlbumes && totalAlbumes > 0 ? `${totalAlbumes.toLocaleString("es-PE")}+` : "—";
+  const formattedSellos = totalSellos && totalSellos > 0 ? totalSellos.toLocaleString("es-PE") : "—";
   return (
     <div className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] font-mono text-[11px] select-none">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-2">
@@ -33,9 +35,9 @@ export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: Bruta
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 font-bold text-[#1F1305]">
             <span className="text-[#E80000] font-black">★</span>
-            <span>{totalAlbumes}+ EVIDENCIAS EN CUSTODIA</span>
+            <span>{formattedAlbumes} EVIDENCIAS EN CUSTODIA</span>
             <span>•</span>
-            <span>{totalSellos} SELLOS</span>
+            <span>{formattedSellos} SELLOS</span>
           </div>
           <span className="hidden sm:inline text-[#665D4F]">|</span>
           <Link

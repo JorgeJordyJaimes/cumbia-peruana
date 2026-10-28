@@ -19,8 +19,8 @@ interface BrutalistCoordinatorProps {
 
 export function BrutalistCoordinator({
   children,
-  totalAlbumes = 719,
-  totalSellos = 258,
+  totalAlbumes,
+  totalSellos,
 }: BrutalistCoordinatorProps) {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
