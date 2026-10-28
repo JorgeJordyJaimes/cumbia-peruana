@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
-import { Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck } from "lucide-react";
+import { Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck, Copy } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { ExpedienteModal } from "@/components/ui/expediente-modal";
+import { CopyField } from "@/components/ui/copy-field";
+import { showToast } from "@/components/ui/toast-host";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
 import { AlbumCoverSlider } from "./album-cover-slider";
@@ -23,6 +25,17 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
+
+  // Copiar referencia completa
+  const handleCopyReference = useCallback(() => {
+    if (!album) return;
+    const refText = `${album.artist} — ${album.title} (${album.year || "S/D"}) · ${album.label || "Archivo"} · Cat. ${album.catalogNumber || "S/C"}`;
+    navigator.clipboard.writeText(refText).then(() => {
+      showToast("Referencia copiada al portapapeles");
+    }).catch(() => {
+      showToast("Referencia copiada");
+    });
+  }, [album]);
 
   // Métricas técnicas del disco
   const totalDurationSeconds = useMemo(() => {
@@ -87,111 +100,124 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
       showCloseButton={true}
       className="p-6 sm:p-8 md:p-10"
     >
+      {/* Cabecera Editorial */}
+      <div className="flex flex-col sm:flex-row gap-6 md:gap-8 items-start">
+        <div className="w-full max-w-[280px] sm:max-w-none sm:w-64 md:w-72 lg:w-80 shrink-0 mx-auto sm:mx-0">
+          <AlbumCoverSlider
+            coverUrl={album.coverUrl}
+            backCoverUrl={album.backCoverUrl}
+            title={album.title}
+            artist={album.artist}
+            format={album.format}
+            label={album.label}
+            showSideLabels={true}
+          />
+        </div>
 
-        {/* Cabecera Editorial */}
-        <div className="flex flex-col sm:flex-row gap-6 md:gap-8 items-start">
-          <div className="w-full max-w-[280px] sm:max-w-none sm:w-64 md:w-72 lg:w-80 shrink-0 mx-auto sm:mx-0">
-            <AlbumCoverSlider
-              coverUrl={album.coverUrl}
-              backCoverUrl={album.backCoverUrl}
-              title={album.title}
-              artist={album.artist}
-              format={album.format}
-              label={album.label}
-              showSideLabels={true}
-            />
-          </div>
-
-          <div className="flex-1 space-y-3.5 min-w-0">
+        <div className="flex-1 space-y-3.5 min-w-0">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap items-center gap-2">
               <BadgeFormat formatName={album.format || "LP"} />
               {album.catalogNumber && (
-                <span className="font-mono text-xs font-bold text-[#1F1305] border border-[#1F1305] px-2 py-0.5 bg-white shadow-[1px_1px_0px_#1F1305]">
-                  {album.catalogNumber}
-                </span>
+                <CopyField
+                  value={album.catalogNumber}
+                  label={`CAT: ${album.catalogNumber}`}
+                  toastLabel={`Catálogo ${album.catalogNumber}`}
+                />
               )}
             </div>
 
-            <div>
-              <h2 id="modal-album-title" className="text-2xl sm:text-3xl lg:text-4xl font-cooper tracking-tight text-[#1F1305] leading-tight">
-                {album.title}
-              </h2>
-              <p className="text-base sm:text-lg text-[#5A5245] font-bold mt-0.5">
-                {album.artist}
+            <button
+              type="button"
+              onClick={handleCopyReference}
+              className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0] transition-colors cursor-pointer"
+              title="Copiar referencia bibliográfica del álbum"
+            >
+              <Copy className="h-3 w-3 text-[#665D4F]" />
+              <span>COPIAR REFERENCIA</span>
+            </button>
+          </div>
+
+          <div>
+            <h2 id="modal-album-title" className="text-2xl sm:text-3xl lg:text-4xl font-cooper tracking-tight text-[#1F1305] leading-tight">
+              {album.title}
+            </h2>
+            <p className="text-base sm:text-lg text-[#5A5245] font-bold mt-0.5">
+              {album.artist}
+            </p>
+            {album.directorName && (
+              <p className="font-mono text-xs sm:text-sm font-bold text-[#665D4F] mt-1.5 flex items-center gap-1.5">
+                <UserCheck className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
+                <span>Director del Grupo: <strong className="text-[#1F1305]">{album.directorName}</strong></span>
               </p>
-              {album.directorName && (
-                <p className="font-mono text-xs sm:text-sm font-bold text-[#665D4F] mt-1.5 flex items-center gap-1.5">
-                  <UserCheck className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
-                  <span>Director del Grupo: <strong className="text-[#1F1305]">{album.directorName}</strong></span>
-                </p>
-              )}
+            )}
+          </div>
+
+          {/* Ficha Técnica Rápida: 2 filas de 3 ítems con coherencia cromática (un único acento en año) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3 pt-3.5 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#665D4F]">
+            {/* Fila 1 */}
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <Calendar className="h-3.5 w-3.5 text-[#F1730C] shrink-0" />
+              <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
+            </div>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Building2 className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <span className="truncate">Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
+            </div>
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <Layers className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <span>Pistas: <strong className="text-[#1F1305]">{tracks.length || album.tracksCount || "--"}</strong></span>
             </div>
 
-            {/* Ficha Técnica Rápida: 2 filas de 3 ítems */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3 pt-3.5 border-t-2 border-[#1F1305]/20 font-mono text-xs font-bold text-[#5A5245]">
-              {/* Fila 1 */}
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <Calendar className="h-3.5 w-3.5 text-[#F1730C] shrink-0" />
-                <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 min-w-0">
-                <Building2 className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
-                <span className="truncate">Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
-                <span>Pistas: <strong className="text-[#1F1305]">{tracks.length || album.tracksCount || "--"}</strong></span>
-              </div>
-
-              {/* Fila 2 */}
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <Clock className="h-3.5 w-3.5 text-[#2563EB] shrink-0" />
-                <span>Duración: <strong className="text-[#1F1305]">{formattedTotalDuration}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <Activity className="h-3.5 w-3.5 text-[#D97706] shrink-0" />
-                <span>BPM Promedio: <strong className="text-[#1F1305]">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 min-w-0">
-                <Music className="h-3.5 w-3.5 text-[#7C3AED] shrink-0" />
-                <span className="truncate" title={mostCommonGenre}>
-                  Género: <strong className="text-[#1F1305]">{mostCommonGenre}</strong>
-                </span>
-              </div>
+            {/* Fila 2 */}
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <Clock className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <span>Duración: <strong className="text-[#1F1305]">{formattedTotalDuration}</strong></span>
+            </div>
+            <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <Activity className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <span>BPM Promedio: <strong className="text-[#1F1305] font-black">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
+            </div>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Music className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <span className="truncate" title={mostCommonGenre}>
+                Género: <strong className="text-[#1F1305]">{mostCommonGenre}</strong>
+              </span>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Sección Tracklist */}
-        <div className="mt-8 space-y-3">
-          <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-2">
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1305]">
-              Contraportada del Vinilo // Tracklist & Armonía
-            </h3>
-            <span className="font-mono text-[11px] text-[#665D4F] font-bold">
-              Archivo Discográfico Histórico
-            </span>
-          </div>
-
-          <TracklistTable tracks={tracks} />
+      {/* Sección Tracklist */}
+      <div className="mt-8 space-y-3">
+        <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-2">
+          <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1305]">
+            Contraportada del Vinilo // Tracklist & Armonía
+          </h3>
+          <span className="font-mono text-[11px] text-[#665D4F] font-bold">
+            Archivo Discográfico Histórico
+          </span>
         </div>
 
-        {/* Enlace Permanente a Ficha Completa */}
-        <div className="mt-4 flex justify-end">
-          <Link
-            href={`/album/${album.id}`}
-            className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
-          >
-            <span>Ver Ficha Completa</span>
-            <ExternalLink className="h-3.5 w-3.5 text-[#E80000]" />
-          </Link>
-        </div>
+        <TracklistTable tracks={tracks} />
+      </div>
 
-        {/* Nota Histórica / Sin Audio */}
-        <div className="mt-4 border-2 border-[#1F1305] bg-white p-3 text-center font-mono text-[11px] font-bold text-[#5A5245] shadow-[2px_2px_0px_#1F1305]">
-          Esta plataforma preserva metadatos técnicos y musicológicos para investigadores y DJs.
-          No contiene archivos ni reproducción de audio.
-        </div>
+      {/* Enlace Permanente a Ficha Completa */}
+      <div className="mt-4 flex justify-end">
+        <Link
+          href={`/album/${album.id}`}
+          className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
+        >
+          <span>Ver Ficha Completa</span>
+          <ExternalLink className="h-3.5 w-3.5 text-[#E80000]" />
+        </Link>
+      </div>
+
+      {/* Nota Histórica / Sin Audio */}
+      <div className="mt-4 border-2 border-[#1F1305] bg-white p-3 text-center font-mono text-[11px] font-bold text-[#5A5245] shadow-[2px_2px_0px_#1F1305]">
+        Esta plataforma preserva metadatos técnicos y musicológicos para investigadores y DJs.
+        No contiene archivos ni reproducción de audio.
+      </div>
     </ExpedienteModal>
   );
 }
