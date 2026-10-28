@@ -105,7 +105,7 @@ export function renderPitchBadge(pitchDiff: number | undefined, compact = false)
         className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#10B981] px-1.5 py-0.5 font-mono text-[11px] font-black text-[#1F1305] shadow-[1px_1px_0px_#1F1305]"
         title="Aumentar pitch: Acelerar plato para igualar tempo (+)"
       >
-        <span>▲ +{rounded.toFixed(1)}%</span>
+        <span>▲ +{Math.abs(rounded).toFixed(1)} %</span>
         {!compact && <span className="hidden sm:inline">ACELERADO</span>}
       </span>
     );
@@ -117,7 +117,7 @@ export function renderPitchBadge(pitchDiff: number | undefined, compact = false)
         className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#C91D1D] px-1.5 py-0.5 font-mono text-[11px] font-black text-white shadow-[1px_1px_0px_#1F1305]"
         title="Reducir pitch: Frenar plato para igualar tempo (-)"
       >
-        <span>▼ {rounded.toFixed(1)}%</span>
+        <span>▼ −{Math.abs(rounded).toFixed(1)} %</span>
         {!compact && <span className="hidden sm:inline">FRENADO</span>}
       </span>
     );
@@ -128,7 +128,7 @@ export function renderPitchBadge(pitchDiff: number | undefined, compact = false)
       className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.5 font-mono text-[11px] font-bold text-[#1F1305] shadow-[1px_1px_0px_#1F1305]"
       title="Mismo tempo: 0.0% de ajuste"
     >
-      <span>● 0.0%</span>
+      <span>● 0.0 %</span>
       {!compact && <span className="hidden sm:inline">CALIBRADO</span>}
     </span>
   );

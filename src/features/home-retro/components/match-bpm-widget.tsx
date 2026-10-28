@@ -329,10 +329,10 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                             )}
                           >
                             {Number(match.bpmDiff.toFixed(1)) > 0
-                              ? `+${match.bpmDiff.toFixed(1)}%`
+                              ? `▲ +${Math.abs(match.bpmDiff).toFixed(1)} %`
                               : Number(match.bpmDiff.toFixed(1)) < 0
-                              ? `${match.bpmDiff.toFixed(1)}%`
-                              : "0.0%"}
+                              ? `▼ −${Math.abs(match.bpmDiff).toFixed(1)} %`
+                              : "● 0.0 %"}
                           </span>
                         </div>
 
@@ -374,7 +374,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
         {isHighlight && (
           <div className="border-2 border-[#1F1305] bg-[#F1730C] text-[#1F1305] p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
-              <p className="font-cooper text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+              <p className="font-cooper text-base sm:text-lg font-bold text-[#1F1305] flex items-center justify-center sm:justify-start gap-2">
                 <SlidersHorizontal className="h-4 w-4" />
                 ¿Necesitas mezclar en vivo con todo el repertorio del archivo?
               </p>
