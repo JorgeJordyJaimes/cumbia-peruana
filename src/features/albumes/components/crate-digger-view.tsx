@@ -261,7 +261,7 @@ export function CrateDiggerViewComponent({
               {/* Vinilo Circular Asomando por detrás */}
               <div
                 aria-hidden="true"
-                className="absolute inset-y-3 right-0 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out translate-x-12 sm:translate-x-16 z-0 overflow-hidden flex items-center justify-center border-2 border-white/20 animate-spin-slow"
+                className="absolute inset-y-3 right-0 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out translate-x-12 sm:translate-x-16 z-0 overflow-hidden flex items-center justify-center border-2 border-white/20 animate-spin-slow will-change-transform"
                 style={{ animationDuration: "20s" }}
               >
                 <div className="absolute inset-3 rounded-full border border-white/5 vinyl-grooves opacity-60" />
