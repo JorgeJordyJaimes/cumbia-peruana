@@ -60,7 +60,7 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
         }
       }}
       className={cn(
-        "group relative flex flex-col cursor-pointer transition-all duration-200 select-none font-mono focus-visible:outline-none",
+        "group relative flex flex-col cursor-pointer transition-all duration-200 font-mono focus-visible:outline-none",
         className
       )}
     >

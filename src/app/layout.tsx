@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Anton, Shrikhand } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { ToastHost } from "@/components/ui/toast-host";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,7 +42,7 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} ${shrikhand.variable} h-full antialiased dark`}
     >
-            <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100">
+      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100">
         <a
           href="#contenido"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] border-2 border-[#1F1305] bg-white px-4 py-2 font-mono text-xs font-black uppercase shadow-[3px_3px_0px_#1F1305] text-[#1F1305]"
@@ -49,6 +50,7 @@ export default function RootLayout({
           SALTAR AL EXPEDIENTE ↓
         </a>
         {children}
+        <ToastHost />
         <Analytics />
       </body>
     </html>

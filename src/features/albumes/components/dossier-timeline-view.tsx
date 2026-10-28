@@ -84,6 +84,12 @@ export function DossierTimelineViewComponent({
   const [groupingMode, setGroupingMode] = useState<GroupingMode>("year");
   const [displayLayout, setDisplayLayout] = useState<DisplayLayout>("dossier");
   const [photoOnly, setPhotoOnly] = useState<boolean>(false);
+  const [visibleCount, setVisibleCount] = useState<number>(60);
+
+  // Resetear paginación por lotes de 60 al cambiar cualquier filtro
+  useEffect(() => {
+    setVisibleCount(60);
+  }, [searchTerm, selectedFormat, subFilter, selectedLabel, selectedDecade, selectedYear, photoOnly]);
 
   // Manejador de cambio de formato (reinicia sub-filtro)
   const handleFormatChange = (newFormat: string) => {
@@ -335,7 +341,7 @@ export function DossierTimelineViewComponent({
     photoOnly;
 
   return (
-    <div className={cn("space-y-6 font-mono select-none", className)}>
+    <div className={cn("space-y-6 font-mono", className)}>
       {/* ============================================================== */}
       {/* RIEL CRONOLÓGICO / TIMELINE SCRUBBER (Ruler Interactivo de Años) */}
       {/* ============================================================== */}
@@ -967,7 +973,7 @@ export function DossierTimelineViewComponent({
                       <div
                         key={album.id}
                         onClick={() => onSelectAlbum?.(album)}
-                        className="group relative flex flex-col cursor-pointer transition-all duration-200 select-none"
+                        className="group relative flex flex-col cursor-pointer transition-all duration-200"
                       >
                         <div className="relative aspect-square w-full">
                           {/* Disco de Vinilo Circular que asoma lateralmente al pasar el cursor */}
