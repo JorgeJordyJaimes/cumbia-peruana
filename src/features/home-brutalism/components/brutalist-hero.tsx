@@ -192,7 +192,7 @@ export function BrutalistHero({
               <span>EXP-01 / PRENSAJES</span>
               <span className="text-[#E80000]">EN CUSTODIA</span>
             </div>
-            <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#1F1305] tracking-tight pt-1">
+            <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#1F1305] tracking-tight pt-1">
               {totalAlbumes}+
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
@@ -205,7 +205,7 @@ export function BrutalistHero({
               <span>EXP-02 / COMBOS</span>
               <span className="text-[#F1730C]">FICHADOS</span>
             </div>
-            <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#F1730C] tracking-tight pt-1">
+            <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#F1730C] tracking-tight pt-1">
               {totalGrupos}
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
@@ -218,7 +218,7 @@ export function BrutalistHero({
               <span>EXP-03 / SESIÓN</span>
               <span className="text-[#1F1305]">IDENTIFICADOS</span>
             </div>
-            <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#1F1305] tracking-tight pt-1">
+            <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#1F1305] tracking-tight pt-1">
               {totalPersonas}
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">
@@ -231,7 +231,7 @@ export function BrutalistHero({
               <span>EXP-04 / SELLOS</span>
               <span className="text-[#E80000]">MATRICULADOS</span>
             </div>
-            <span className="block text-4xl sm:text-5xl lg:text-6xl font-black font-anton text-[#E80000] tracking-tight pt-1">
+            <span className="block text-4xl sm:text-5xl lg:text-6xl font-anton text-[#E80000] tracking-tight pt-1">
               {totalSellos}
             </span>
             <span className="text-[11px] uppercase font-bold text-[#665D4F] block tracking-wider">

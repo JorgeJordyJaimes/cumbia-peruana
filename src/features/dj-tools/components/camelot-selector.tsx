@@ -377,7 +377,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <h5 className="font-cooper font-bold text-[#1F1305] truncate text-sm sm:text-base">
+                        <h5 className="font-cooper text-[#1F1305] truncate text-sm sm:text-base">
                           {track.title}
                         </h5>
                         {track.year && (

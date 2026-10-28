@@ -213,7 +213,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       className="w-full flex items-center justify-between p-3 border-2 border-[#1F1305] bg-white shadow-[2px_2px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000] text-left transition-all group"
                     >
                       <div>
-                        <p className="font-cooper font-bold text-[#1F1305] group-hover:text-[#E80000]">
+                        <p className="font-cooper text-[#1F1305] group-hover:text-[#E80000]">
                           {m.nombre}
                         </p>
                         <p className="font-mono text-xs text-[#5A5245]">
@@ -247,7 +247,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       <div className="flex items-center gap-3">
                         <Disc3 className="h-5 w-5 text-[#F1730C]" />
                         <div>
-                          <p className="font-cooper font-bold text-[#1F1305] group-hover:text-[#E80000]">
+                          <p className="font-cooper text-[#1F1305] group-hover:text-[#E80000]">
                             {t.titulo}
                           </p>
                           <p className="font-mono text-xs text-[#5A5245]">
@@ -286,7 +286,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       className="w-full flex items-center justify-between p-3 border-2 border-[#1F1305] bg-white shadow-[2px_2px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000] text-left transition-all group"
                     >
                       <div>
-                        <p className="font-cooper font-bold text-[#1F1305] group-hover:text-[#E80000]">
+                        <p className="font-cooper text-[#1F1305] group-hover:text-[#E80000]">
                           {h.titulo}
                         </p>
                         <p className="font-mono text-xs text-[#5A5245]">{h.categoria}</p>

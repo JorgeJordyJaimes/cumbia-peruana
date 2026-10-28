@@ -29,7 +29,7 @@ dialog.variant-oscura::backdrop {
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-anton: var(--font-anton), Impact, 'Arial Black', sans-serif;
-  --font-cooper: 'Cooper Black', var(--font-cooper), serif;
+  --font-cooper: var(--font-cooper), Georgia, serif;
 
   --color-gold-solar: #f59e0b;
   --color-cumbia-red: #dc2626;
@@ -165,10 +165,12 @@ dialog.variant-oscura::backdrop {
 /* Swiss / Neo-Brutalist Typographic & Layout Utilities */
 .font-anton {
   font-family: var(--font-anton), Impact, 'Arial Black', sans-serif;
+  font-synthesis: none;
 }
 
 .font-cooper {
-  font-family: 'Cooper Black', var(--font-cooper), serif;
+  font-family: var(--font-cooper), Georgia, serif;
+  font-synthesis: none;
 }
 
 .writing-vertical-rl {

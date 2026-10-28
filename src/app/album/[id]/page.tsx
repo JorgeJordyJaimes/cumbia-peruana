@@ -443,10 +443,10 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                 </div>
 
                 <div>
-                  <h1 className="text-3xl sm:text-5xl font-cooper font-black tracking-tight text-[#1F1305]">
+                  <h1 className="text-3xl sm:text-5xl font-cooper tracking-tight text-[#1F1305]">
                     {albumTitle}
                   </h1>
-                  <p className="text-xl sm:text-2xl text-[#E80000] font-cooper font-bold mt-1">
+                  <p className="text-xl sm:text-2xl text-[#E80000] font-cooper mt-1">
                     {artistName}
                   </p>
                   {directorName && (

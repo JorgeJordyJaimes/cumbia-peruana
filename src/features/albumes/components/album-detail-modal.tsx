@@ -113,7 +113,7 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
             </div>
 
             <div>
-              <h2 id="modal-album-title" className="text-2xl sm:text-3xl lg:text-4xl font-cooper font-black tracking-tight text-[#1F1305] leading-tight">
+              <h2 id="modal-album-title" className="text-2xl sm:text-3xl lg:text-4xl font-cooper tracking-tight text-[#1F1305] leading-tight">
                 {album.title}
               </h2>
               <p className="text-base sm:text-lg text-[#5A5245] font-bold mt-0.5">

@@ -289,7 +289,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                           showSideBadge={true}
                         />
                         <div className="min-w-0">
-                          <p className="font-cooper font-bold text-base text-[#1F1305] truncate">
+                          <p className="font-cooper text-base text-[#1F1305] truncate">
                             {match.titulo}
                           </p>
                           <p className="font-mono text-xs text-[#5A5245] truncate">

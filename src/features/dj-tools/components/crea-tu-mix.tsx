@@ -1231,7 +1231,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
 
                       {/* Datos del tema */}
                       <div className="min-w-0 flex-1">
-                        <h4 className="font-cooper font-bold text-[#1F1305] text-sm sm:text-base line-clamp-1 leading-snug" title={step.track.title}>
+                        <h4 className="font-cooper text-[#1F1305] text-sm sm:text-base line-clamp-1 leading-snug" title={step.track.title}>
                           {step.track.title}
                         </h4>
                         <p className="font-mono text-xs text-[#5A5245] truncate mt-0.5">
@@ -1468,7 +1468,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                           />
                           <div className="min-w-0 flex-1">
                             <h4
-                              className="font-cooper font-bold text-sm sm:text-base text-[#1F1305] line-clamp-2 leading-tight break-words"
+                              className="font-cooper text-sm sm:text-base text-[#1F1305] line-clamp-2 leading-tight break-words"
                               title={track.title}
                             >
                               {track.title}
@@ -1567,7 +1567,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                           />
                           <div className="min-w-0 flex-1">
                             <h4
-                              className="font-cooper font-bold text-sm sm:text-base text-[#1F1305] line-clamp-2 leading-tight break-words"
+                              className="font-cooper text-sm sm:text-base text-[#1F1305] line-clamp-2 leading-tight break-words"
                               title={track.title}
                             >
                               {track.title}

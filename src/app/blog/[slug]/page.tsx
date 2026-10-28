@@ -100,7 +100,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
 
             <div className="flex items-center justify-between border-y-2 border-[#1F1305]/15 py-4 font-mono text-xs text-[#665D4F]">
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center text-[#EDE0D0] font-cooper font-bold text-xs shadow-[2px_2px_0px_#E80000]">
+                <div className="h-9 w-9 border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center text-[#EDE0D0] font-cooper text-xs shadow-[2px_2px_0px_#E80000]">
                   KS
                 </div>
                 <div>

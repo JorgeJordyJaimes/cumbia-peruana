@@ -76,7 +76,7 @@ export function GenealogyExplorer({ isHighlight = false }: GenealogyExplorerProp
                   {currentMusico.periodoActivo}
                 </span>
                 {currentMusico.apodo && (
-                  <span className="text-[#F1730C] font-bold font-cooper text-base">
+                  <span className="text-[#F1730C] font-cooper text-base">
                     &ldquo;{currentMusico.apodo}&rdquo;
                   </span>
                 )}
@@ -128,7 +128,7 @@ export function GenealogyExplorer({ isHighlight = false }: GenealogyExplorerProp
                   className="border-2 border-[#1F1305] bg-[#EDE0D0]/40 p-5 space-y-4 shadow-[3px_3px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000] hover:bg-white transition-all relative overflow-hidden"
                 >
                   <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
-                    <span className="font-cooper font-black text-lg text-[#1F1305]">
+                    <span className="font-cooper text-lg text-[#1F1305]">
                       {step.grupo}
                     </span>
                     <span className="font-mono text-[11px] font-bold text-[#1F1305] bg-[#F1730C] border border-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
