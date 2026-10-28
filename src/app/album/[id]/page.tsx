@@ -478,35 +478,35 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[11px] font-bold uppercase">Sello Discográfico</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1 truncate">
-                      <Building2 className="h-3.5 w-3.5 text-[#1F1305]" /> {album.sellos_discograficos?.nombre_sello || "N/D"}
+                      <Building2 className="h-3.5 w-3.5 text-[#E80000]" /> {album.sellos_discograficos?.nombre_sello || "N/D"}
                     </span>
                   </div>
 
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[11px] font-bold uppercase">Total Pistas</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
-                      <Layers className="h-3.5 w-3.5 text-[#1F1305]" /> {pistas.length} Pistas
+                      <Layers className="h-3.5 w-3.5 text-[#10B981]" /> {pistas.length} Pistas
                     </span>
                   </div>
 
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[11px] font-bold uppercase">Duración Total</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5 text-[#1F1305]" /> {formattedTotalDuration}
+                      <Clock className="h-3.5 w-3.5 text-[#2563EB]" /> {formattedTotalDuration}
                     </span>
                   </div>
 
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[11px] font-bold uppercase">BPM Promedio</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1">
-                      <Activity className="h-3.5 w-3.5 text-[#1F1305]" /> {avgBpm ? `${avgBpm} BPM` : "--"}
+                      <Activity className="h-3.5 w-3.5 text-[#D97706]" /> {avgBpm ? `${avgBpm} BPM` : "--"}
                     </span>
                   </div>
 
                   <div className="border border-[#1F1305] bg-[#EDE0D0] p-2.5 shadow-[2px_2px_0px_#1F1305]">
                     <span className="text-[#5A5245] block text-[11px] font-bold uppercase">Género Principal</span>
                     <span className="text-sm font-bold text-[#1F1305] flex items-center gap-1 truncate" title={albumTopGenre}>
-                      <Music className="h-3.5 w-3.5 text-[#1F1305]" /> {albumTopGenre}
+                      <Music className="h-3.5 w-3.5 text-[#7C3AED]" /> {albumTopGenre}
                     </span>
                   </div>
                 </div>

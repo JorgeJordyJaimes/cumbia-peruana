@@ -161,25 +161,25 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
               <span>Año: <strong className="text-[#1F1305]">{album.year || "N/D"}</strong></span>
             </div>
             <div className="flex items-center gap-1.5 min-w-0">
-              <Building2 className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <Building2 className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
               <span className="truncate">Sello: <strong className="text-[#1F1305]">{album.label || "Desconocido"}</strong></span>
             </div>
             <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <Layers className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <Layers className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
               <span>Pistas: <strong className="text-[#1F1305]">{tracks.length || album.tracksCount || "--"}</strong></span>
             </div>
 
             {/* Fila 2 */}
             <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <Clock className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <Clock className="h-3.5 w-3.5 text-[#2563EB] shrink-0" />
               <span>Duración: <strong className="text-[#1F1305]">{formattedTotalDuration}</strong></span>
             </div>
             <div className="flex items-center gap-1.5 whitespace-nowrap">
-              <Activity className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <Activity className="h-3.5 w-3.5 text-[#D97706] shrink-0" />
               <span>BPM Promedio: <strong className="text-[#1F1305] font-black">{avgBpm ? `${avgBpm} BPM` : "--"}</strong></span>
             </div>
             <div className="flex items-center gap-1.5 min-w-0">
-              <Music className="h-3.5 w-3.5 text-[#1F1305] shrink-0" />
+              <Music className="h-3.5 w-3.5 text-[#7C3AED] shrink-0" />
               <span className="truncate" title={mostCommonGenre}>
                 Género: <strong className="text-[#1F1305]">{mostCommonGenre}</strong>
               </span>
