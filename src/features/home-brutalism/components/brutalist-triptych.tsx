@@ -31,7 +31,7 @@ export function BrutalistTriptych() {
             <span className="font-anton text-2xl tracking-wide uppercase text-[#1F1305]">
               EXPEDIENTES —
             </span>
-            <span className="text-[11px] text-[#746B5C] font-bold">ÍNDICE 01–06</span>
+            <span className="text-[11px] text-[#665D4F] font-bold">ÍNDICE 01–06</span>
           </div>
 
           <div className="divide-y-2 divide-[#1F1305] text-xs">

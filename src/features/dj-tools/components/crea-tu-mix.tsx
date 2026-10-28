@@ -75,7 +75,7 @@ export function getTrackGenreAffinity(prev: TrackDJItem, cand: TrackDJItem): Gen
     return {
       score: 50,
       badgeText: "✨ Fusión Sec.",
-      badgeColor: "bg-[#F1730C] text-white border-[#1F1305]",
+      badgeColor: "bg-[#F1730C] text-[#1F1305] border-[#1F1305]",
       description: `Comparte vertiente secundaria (${cand.secondaryGenre})`,
       type: "secondary_match",
     };
@@ -480,7 +480,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-wrap w-full md:w-auto">
             <div className="grid grid-cols-2 gap-2 w-full sm:w-auto">
               <div className="border-2 border-[#1F1305] bg-[#EDE0D0] px-3.5 py-1.5 font-mono text-xs shadow-[2px_2px_0px_#1F1305] text-center">
-                <span className="text-[11px] text-[#746B5C] font-bold block uppercase">Temas en Mix</span>
+                <span className="text-[11px] text-[#665D4F] font-bold block uppercase">Temas en Mix</span>
                 <strong className="text-base text-[#1F1305] font-black">{mixSteps.length}</strong>
               </div>
 
@@ -488,7 +488,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 className="border-2 border-[#1F1305] bg-[#EDE0D0] px-3.5 py-1.5 font-mono text-xs shadow-[2px_2px_0px_#1F1305] text-center"
                 title="Estimación calculada al ~50% de duración de cada corte para mezcla continua en vivo"
               >
-                <span className="text-[11px] text-[#746B5C] font-bold block uppercase">Duración Mix Est. (~50%)</span>
+                <span className="text-[11px] text-[#665D4F] font-bold block uppercase">Duración Mix Est. (~50%)</span>
                 <strong className="text-base text-[#1F1305] font-black">{formattedTotalDuration}</strong>
               </div>
             </div>
@@ -522,11 +522,11 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
         {/* INDICADOR DEL SIGUIENTE TURNO */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FAF5EE] border-2 border-[#1F1305] p-3 sm:p-4 shadow-[2px_2px_0px_#1F1305]">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <span className="font-mono text-xs font-bold text-[#746B5C] uppercase">Siguiente Acción:</span>
+            <span className="font-mono text-xs font-bold text-[#665D4F] uppercase">Siguiente Acción:</span>
             <span
               className={cn(
                 "inline-flex items-center gap-1.5 border border-[#1F1305] px-2.5 py-0.5 font-mono text-xs font-black shadow-[1px_1px_0px_#1F1305]",
-                nextDeck === "A" ? "bg-[#E80000] text-white" : "bg-[#F1730C] text-white"
+                nextDeck === "A" ? "bg-[#E80000] text-white" : "bg-[#F1730C] text-[#1F1305]"
               )}
             >
               <Disc3 className="h-3.5 w-3.5 animate-spin [animation-duration:3s]" />
@@ -551,7 +551,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
       {/* CABINA DE DJ: DOS TORNAMESAS + MESA DE MEZCLAS CENTRAL */}
       <div className="border-2 sm:border-4 border-[#1F1305] bg-white p-3 sm:p-6 shadow-[4px_4px_0px_#1F1305] sm:shadow-[8px_8px_0px_#1F1305] relative overflow-hidden">
         {/* Decoración de cabecera de cabina */}
-        <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-2 mb-4 font-mono text-[11px] text-[#746B5C] uppercase tracking-widest">
+        <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-2 mb-4 font-mono text-[11px] text-[#665D4F] uppercase tracking-widest">
           <span className="font-black text-[#1F1305] truncate">CABINA DE MEZCLA DJ // KS-TURBO 1200</span>
           <span className="hidden sm:inline">DUAL DIRECT-DRIVE TURNTABLES • PALETA KUMBIA SOUND</span>
         </div>
@@ -588,7 +588,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             className={cn(
               "py-2 text-[11px] font-mono font-black uppercase text-center transition-all cursor-pointer",
               mobileDeckView === "DECK_B"
-                ? "bg-[#F1730C] text-white shadow-[2px_2px_0px_#EDE0D0]"
+                ? "bg-[#F1730C] text-[#1F1305] shadow-[2px_2px_0px_#EDE0D0]"
                 : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
             )}
           >
@@ -613,7 +613,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   <Disc3 className="h-3.5 w-3.5" />
                   <span>TORNAMESA A</span>
                 </span>
-                <span className="font-mono text-[11px] text-[#746B5C] hidden sm:inline font-bold">CH-1 (Impares)</span>
+                <span className="font-mono text-[11px] text-[#665D4F] hidden sm:inline font-bold">CH-1 (Impares)</span>
               </div>
 
               {/* Indicador LED On-Air */}
@@ -624,7 +624,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <span>CARGADO {currentPair.activeStepA ? `(#${currentPair.activeStepA})` : ""}</span>
                   </span>
                 ) : (
-                  <span className="text-[#746B5C] bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5">VACÍO</span>
+                  <span className="text-[#665D4F] bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5">VACÍO</span>
                 )}
               </div>
             </div>
@@ -738,7 +738,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <span className="font-bold">
                       {currentPair.trackA.durationFormatted || "--:--"}
                       {currentPair.trackA.durationSeconds && (
-                        <span className="text-[11px] text-[#746B5C] ml-1">
+                        <span className="text-[11px] text-[#665D4F] ml-1">
                           (~{Math.floor(Math.round(currentPair.trackA.durationSeconds / 2) / 60)}:{(Math.round(currentPair.trackA.durationSeconds / 2) % 60).toString().padStart(2, "0")} en mix)
                         </span>
                       )}
@@ -747,7 +747,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </div>
               ) : (
                 <div className="border-2 border-dashed border-[#1F1305] bg-white p-4 text-center">
-                  <p className="text-xs text-[#746B5C] font-bold">Tornamesa A esperando primera pista o turno impar.</p>
+                  <p className="text-xs text-[#665D4F] font-bold">Tornamesa A esperando primera pista o turno impar.</p>
                 </div>
               )}
 
@@ -763,8 +763,8 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </button>
 
                 <div className="flex items-center gap-1 font-mono text-[11px]">
-                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", currentPair.trackA?.format?.includes("45") ? "border-[#E80000] bg-[#E80000] text-white" : "border-[#1F1305] text-[#746B5C]")}>45 RPM</span>
-                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", !currentPair.trackA?.format?.includes("45") ? "border-[#E80000] bg-[#E80000] text-white" : "border-[#1F1305] text-[#746B5C]")}>33 RPM</span>
+                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", currentPair.trackA?.format?.includes("45") ? "border-[#E80000] bg-[#E80000] text-white" : "border-[#1F1305] text-[#665D4F]")}>45 RPM</span>
+                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", !currentPair.trackA?.format?.includes("45") ? "border-[#E80000] bg-[#E80000] text-white" : "border-[#1F1305] text-[#665D4F]")}>33 RPM</span>
                 </div>
               </div>
             </div>
@@ -780,13 +780,13 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             )}
           >
             <div className="border-b-2 border-[#1F1305] pb-2 text-center font-mono">
-              <span className="text-[11px] text-[#746B5C] block uppercase tracking-widest font-bold">AUDIO MATRIX</span>
+              <span className="text-[11px] text-[#665D4F] block uppercase tracking-widest font-bold">AUDIO MATRIX</span>
               <span className="text-xs font-black text-[#1F1305]">KM-2000 MIXER</span>
             </div>
 
             {/* Medidores de Señal VU Stereo */}
             <div className="space-y-2 py-2">
-              <div className="flex items-center justify-between font-mono text-[11px] text-[#746B5C] px-1 font-bold">
+              <div className="flex items-center justify-between font-mono text-[11px] text-[#665D4F] px-1 font-bold">
                 <span>CH-1 (A)</span>
                 <span>CH-2 (B)</span>
               </div>
@@ -844,17 +844,17 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </div>
               </div>
             ) : (
-              <div className="p-2 border-2 border-dashed border-[#1F1305] bg-white text-center font-mono text-[11px] text-[#746B5C]">
+              <div className="p-2 border-2 border-dashed border-[#1F1305] bg-white text-center font-mono text-[11px] text-[#665D4F]">
                 Carga ambos canales para calcular pitch y armonía.
               </div>
             )}
 
             {/* MASTER CROSSFADER */}
             <div className="space-y-1.5 pt-2 border-t-2 border-[#1F1305]">
-              <span className="font-mono text-[11px] text-center block text-[#746B5C] font-black uppercase">
+              <span className="font-mono text-[11px] text-center block text-[#665D4F] font-black uppercase">
                 CROSSFADER
               </span>
-              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#746B5C] px-1">
+              <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#665D4F] px-1">
                 <span>CH-A</span>
                 <span>CENTRO</span>
                 <span>CH-B</span>
@@ -885,7 +885,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   onClick={() => setCrossfaderPosition("B")}
                   className={cn(
                     "py-1 text-[11px] font-mono font-black transition-colors cursor-pointer border border-[#1F1305]",
-                    crossfaderPosition === "B" ? "bg-[#F1730C] text-white" : "bg-[#EDE0D0] text-[#1F1305] hover:bg-[#F8C800]"
+                    crossfaderPosition === "B" ? "bg-[#F1730C] text-[#1F1305]" : "bg-[#EDE0D0] text-[#1F1305] hover:bg-[#F8C800]"
                   )}
                 >
                   B
@@ -906,22 +906,22 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             {/* Header Tornamesa B */}
             <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
               <div className="flex items-center gap-2">
-                <span className="border border-[#1F1305] bg-[#F1730C] text-white font-mono font-black text-xs px-2.5 py-0.5 shadow-[1px_1px_0px_#1F1305] uppercase tracking-wider flex items-center gap-1.5">
+                <span className="border border-[#1F1305] bg-[#F1730C] text-[#1F1305] font-mono font-black text-xs px-2.5 py-0.5 shadow-[1px_1px_0px_#1F1305] uppercase tracking-wider flex items-center gap-1.5">
                   <Disc3 className="h-3.5 w-3.5" />
                   <span>TORNAMESA B</span>
                 </span>
-                <span className="font-mono text-[11px] text-[#746B5C] hidden sm:inline font-bold">CH-2 (Pares)</span>
+                <span className="font-mono text-[11px] text-[#665D4F] hidden sm:inline font-bold">CH-2 (Pares)</span>
               </div>
 
               {/* Indicador LED On-Air */}
               <div className="flex items-center gap-1.5 font-mono text-[11px] font-bold">
                 {currentPair.trackB ? (
-                  <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#F1730C] text-white px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
+                  <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#F1730C] text-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                     <span className="h-2 w-2 rounded-full bg-white animate-ping" />
                     <span>CARGADO {currentPair.activeStepB ? `(#${currentPair.activeStepB})` : ""}</span>
                   </span>
                 ) : (
-                  <span className="text-[#746B5C] bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5">VACÍO</span>
+                  <span className="text-[#665D4F] bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5">VACÍO</span>
                 )}
               </div>
             </div>
@@ -1035,7 +1035,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     <span className="font-bold">
                       {currentPair.trackB.durationFormatted || "--:--"}
                       {currentPair.trackB.durationSeconds && (
-                        <span className="text-[11px] text-[#746B5C] ml-1">
+                        <span className="text-[11px] text-[#665D4F] ml-1">
                           (~{Math.floor(Math.round(currentPair.trackB.durationSeconds / 2) / 60)}:{(Math.round(currentPair.trackB.durationSeconds / 2) % 60).toString().padStart(2, "0")} en mix)
                         </span>
                       )}
@@ -1044,7 +1044,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </div>
               ) : (
                 <div className="border-2 border-dashed border-[#1F1305] bg-white p-4 text-center">
-                  <p className="text-xs text-[#746B5C] font-bold">Tornamesa B esperando pista #2 o turno par.</p>
+                  <p className="text-xs text-[#665D4F] font-bold">Tornamesa B esperando pista #2 o turno par.</p>
                 </div>
               )}
 
@@ -1060,8 +1060,8 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 </button>
 
                 <div className="flex items-center gap-1 font-mono text-[11px]">
-                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", currentPair.trackB?.format?.includes("45") ? "border-[#F1730C] bg-[#F1730C] text-white" : "border-[#1F1305] text-[#746B5C]")}>45 RPM</span>
-                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", !currentPair.trackB?.format?.includes("45") ? "border-[#F1730C] bg-[#F1730C] text-white" : "border-[#1F1305] text-[#746B5C]")}>33 RPM</span>
+                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", currentPair.trackB?.format?.includes("45") ? "border-[#F1730C] bg-[#F1730C] text-[#1F1305]" : "border-[#1F1305] text-[#665D4F]")}>45 RPM</span>
+                  <span className={cn("px-1.5 py-0.5 border-2 font-bold", !currentPair.trackB?.format?.includes("45") ? "border-[#F1730C] bg-[#F1730C] text-[#1F1305]" : "border-[#1F1305] text-[#665D4F]")}>33 RPM</span>
                 </div>
               </div>
             </div>
@@ -1080,7 +1080,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
               Secuencia de Mezcla DJ // Playlist Alternada ({mixSteps.length} pistas)
             </h3>
           </div>
-          <span className="text-[11px] text-[#746B5C] font-bold hidden sm:inline">
+          <span className="text-[11px] text-[#665D4F] font-bold hidden sm:inline">
             Alternancia estricta: Tornamesa A ➔ Tornamesa B ➔ Tornamesa A...
           </span>
         </div>
@@ -1119,7 +1119,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                   <HelpCircle className="h-4 w-4 text-[#E80000]" />
                   Anotaciones Técnicas &amp; Guía de Simbología DJ
                 </span>
-                <span className="text-[11px] text-[#746B5C] font-bold">
+                <span className="text-[11px] text-[#665D4F] font-bold">
                   Referencia de afinidad estilística y velocidad para mezclas
                 </span>
               </div>
@@ -1153,7 +1153,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                 {/* 3. Fusión Secundaria */}
                 <div className="border-2 border-[#1F1305] bg-[#FAF5EE] p-2.5 space-y-1.5 shadow-[1px_1px_0px_#1F1305]">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#F1730C] text-white">
+                    <span className="font-bold px-1.5 py-0.2 border border-[#1F1305] bg-[#F1730C] text-[#1F1305]">
                       ✨ Fusión Sec.
                     </span>
                   </div>
@@ -1211,7 +1211,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                         <span
                           className={cn(
                             "text-[11px] font-black uppercase px-1.5 py-0.2 border border-[#1F1305]",
-                            isDeckA ? "bg-[#E80000] text-white" : "bg-[#F1730C] text-white"
+                            isDeckA ? "bg-[#E80000] text-white" : "bg-[#F1730C] text-[#1F1305]"
                           )}
                         >
                           DECK {step.deck}
@@ -1247,7 +1247,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                               + {step.track.secondaryGenre}
                             </span>
                           )}
-                          <span className="font-bold text-[#746B5C] bg-[#EDE0D0] border border-[#EDE0D0] px-1.5 py-0.2">
+                          <span className="font-bold text-[#665D4F] bg-[#EDE0D0] border border-[#EDE0D0] px-1.5 py-0.2">
                             {step.track.format || "LP"} {step.track.side ? `• Lado ${step.track.side}` : ""}
                           </span>
                           {step.track.durationFormatted && (
@@ -1425,7 +1425,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
             {(pickerTab === "all" || !lastTrackInMix) && (
               <div className="p-2.5 sm:p-3 border-b-2 border-[#1F1305] bg-white">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#746B5C]" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#665D4F]" />
                   <input
                     type="text"
                     value={pickerSearchQuery}
@@ -1527,7 +1527,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     ))}
                   </>
                 ) : (
-                  <div className="p-8 text-center font-mono text-xs text-[#746B5C] space-y-2">
+                  <div className="p-8 text-center font-mono text-xs text-[#665D4F] space-y-2">
                     <p>No se encontraron otros temas compatibles que no hayan sido agregados al mix.</p>
                     <button
                       type="button"
@@ -1621,7 +1621,7 @@ export function CreaTuMix({ tracks = [], className }: CreaTuMixProps) {
                     );
                   })
                 ) : (
-                  <div className="p-8 text-center font-mono text-xs text-[#746B5C]">
+                  <div className="p-8 text-center font-mono text-xs text-[#665D4F]">
                     <p>No se encontraron temas disponibles con ese criterio de búsqueda.</p>
                   </div>
                 )

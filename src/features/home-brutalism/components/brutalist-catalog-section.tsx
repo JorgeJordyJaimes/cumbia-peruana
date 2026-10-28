@@ -50,7 +50,7 @@ export function BrutalistCatalogSection({
           <span className="absolute -top-1.5 -right-1.5 font-mono text-xs text-[#E80000] font-bold leading-none z-20">+</span>
           <span className="absolute -bottom-1.5 -left-1.5 font-mono text-xs text-[#E80000] font-bold leading-none z-20">+</span>
           <span className="absolute -bottom-1.5 -right-1.5 font-mono text-xs text-[#E80000] font-bold leading-none z-20">+</span>
-          <div className="flex items-center justify-between text-[11px] text-[#746B5C] font-black border-b-2 border-[#1F1305] pb-2 mb-4">
+          <div className="flex items-center justify-between text-[11px] text-[#665D4F] font-black border-b-2 border-[#1F1305] pb-2 mb-4">
             <span>REGISTRO DE INVENTARIO GENERAL // ARCHIVO NACIONAL</span>
             <span className="text-[#E80000]">719+ PIEZAS IDENTIFICADAS</span>
           </div>

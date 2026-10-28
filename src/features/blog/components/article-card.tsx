@@ -51,7 +51,7 @@ export function ArticleCard({ article, featured = false }: ArticleCardProps) {
         <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
           <div className="space-y-2.5">
             {/* Metadatos: Fecha y Tiempo de Lectura */}
-            <div className="flex items-center gap-4 font-mono text-xs text-[#746B5C] font-bold">
+            <div className="flex items-center gap-4 font-mono text-xs text-[#665D4F] font-bold">
               <span className="flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5 text-[#F1730C]" />
                 {formattedDate}

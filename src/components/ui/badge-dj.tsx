@@ -46,7 +46,7 @@ export function BadgeDJ({
       )}
 
       {bpm && validCamelot && (
-        <span className="text-[#746B5C] font-bold select-none">/</span>
+        <span className="text-[#665D4F] font-bold select-none">/</span>
       )}
 
       {validCamelot && (

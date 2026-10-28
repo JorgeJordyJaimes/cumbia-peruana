@@ -217,7 +217,7 @@ export default async function MatchBpmPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       <BrutalistCoordinator>
         <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">
           {/* Breadcrumb / Retorno al Home */}

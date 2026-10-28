@@ -45,7 +45,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
                 REG
               </span>
             </div>
-            <p className="text-[11px] uppercase tracking-widest text-[#746B5C] font-bold">
+            <p className="text-[11px] uppercase tracking-widest text-[#665D4F] font-bold">
               ARCHIVO CLASIFICADO DE LA CUMBIA // 1968–2005
             </p>
           </div>
@@ -73,7 +73,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
                     {item.label}
                   </span>
                 </div>
-                <span className="font-mono text-[11px] text-[#746B5C] font-medium leading-none mt-0.5 hidden xl:block">
+                <span className="font-mono text-[11px] text-[#665D4F] font-medium leading-none mt-0.5 hidden xl:block">
                   {item.sub}
                 </span>
               </Link>
@@ -110,7 +110,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
       {/* MENÚ MÓVIL: ÍNDICE DE EXPEDIENTES (CON FUNCIÓN EXPLICADA) */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t-2 border-[#1F1305] bg-[#EDE0D0] p-4 text-xs font-bold space-y-2 animate-in slide-in-from-top-2 duration-150">
-          <div className="text-[11px] text-[#746B5C] uppercase tracking-widest pb-1 border-b border-[#1F1305] flex items-center justify-between">
+          <div className="text-[11px] text-[#665D4F] uppercase tracking-widest pb-1 border-b border-[#1F1305] flex items-center justify-between">
             <span>ÍNDICE DE LEGAJOS DESCLASIFICADOS</span>
             <span className="text-[#E80000] font-black">CONFIDENCIAL</span>
           </div>
@@ -127,7 +127,7 @@ export function BrutalistNavbar({ onOpenCommandPalette }: BrutalistNavbarProps) 
                 </span>
                 <span className="font-bold text-xs">{item.label}</span>
               </div>
-              <span className="font-mono text-[11px] text-[#746B5C] group-hover:text-white">
+              <span className="font-mono text-[11px] text-[#665D4F] group-hover:text-white">
                 {item.sub}
               </span>
             </Link>

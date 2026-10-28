@@ -120,7 +120,7 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
                 {album.artist}
               </p>
               {album.directorName && (
-                <p className="font-mono text-xs sm:text-sm font-bold text-[#746B5C] mt-1.5 flex items-center gap-1.5">
+                <p className="font-mono text-xs sm:text-sm font-bold text-[#665D4F] mt-1.5 flex items-center gap-1.5">
                   <UserCheck className="h-3.5 w-3.5 text-[#E80000] shrink-0" />
                   <span>Director del Grupo: <strong className="text-[#1F1305]">{album.directorName}</strong></span>
                 </p>
@@ -168,7 +168,7 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
             <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1305]">
               Contraportada del Vinilo // Tracklist & Armonía
             </h3>
-            <span className="font-mono text-[11px] text-[#746B5C] font-bold">
+            <span className="font-mono text-[11px] text-[#665D4F] font-bold">
               Archivo Discográfico Histórico
             </span>
           </div>

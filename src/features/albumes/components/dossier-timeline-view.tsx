@@ -822,7 +822,7 @@ export function DossierTimelineViewComponent({
                                     </span>
                                   )}
                                   {album.isReissue && (
-                                    <span className="border border-[#1F1305] bg-white text-[#746B5C] px-1.5 py-0.5 text-[10px] font-bold">
+                                    <span className="border border-[#1F1305] bg-white text-[#665D4F] px-1.5 py-0.5 text-[10px] font-bold">
                                       Reedición
                                     </span>
                                   )}
@@ -887,7 +887,7 @@ export function DossierTimelineViewComponent({
                                         </span>
                                       )}
                                     </div>
-                                    <span className="font-mono text-[10px] text-[#746B5C]">
+                                    <span className="font-mono text-[10px] text-[#665D4F]">
                                       {formatDuration(sideATracks[0].durationSeconds)}
                                     </span>
                                   </div>
@@ -923,14 +923,14 @@ export function DossierTimelineViewComponent({
                                         </span>
                                       )}
                                     </div>
-                                    <span className="font-mono text-[10px] text-[#746B5C]">
+                                    <span className="font-mono text-[10px] text-[#665D4F]">
                                       {formatDuration(sideBTracks[0].durationSeconds)}
                                     </span>
                                   </div>
                                 ) : null}
 
                                 {albumTracks.length === 0 && (
-                                  <div className="text-[10px] text-[#746B5C] italic flex items-center justify-between">
+                                  <div className="text-[10px] text-[#665D4F] italic flex items-center justify-between">
                                     <span>Pistas en proceso de catalogación</span>
                                     <span>{album.tracksCount ? `${album.tracksCount} cortes` : "Custodia"}</span>
                                   </div>

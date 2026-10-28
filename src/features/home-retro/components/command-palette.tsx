@@ -125,7 +125,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="text-[#746B5C] hover:text-[#1F1305] p-1"
+              className="text-[#665D4F] hover:text-[#1F1305] p-1"
             >
               <X className="h-4 w-4" />
             </button>
@@ -271,7 +271,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
               {/* Resultados Crónicas */}
               {searchResults && searchResults.cronicas.length > 0 && (
                 <div className="space-y-1.5">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#746B5C] flex items-center gap-1.5">
+                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#665D4F] flex items-center gap-1.5">
                     <BookOpen className="h-3.5 w-3.5 text-[#F1730C]" />
                     Crónicas Históricas
                   </span>

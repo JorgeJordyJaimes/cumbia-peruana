@@ -105,7 +105,7 @@ export function AlbumCoverSlider({
         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1305]">
           {label || "KUMBIA SOUND"}
         </span>
-        <span className="font-mono text-[11px] text-[#746B5C] mt-1">
+        <span className="font-mono text-[11px] text-[#665D4F] mt-1">
           {format || "Vinilo 1968–2005"}
         </span>
       </div>

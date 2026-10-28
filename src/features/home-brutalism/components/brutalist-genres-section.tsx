@@ -192,7 +192,7 @@ export function BrutalistGenresSection({ genreCounts }: BrutalistGenresSectionPr
                   <span className="font-anton text-base font-black text-[#E80000]">
                     SUB-0{genero.id}
                   </span>
-                  <span className="text-[11px] uppercase font-bold text-[#746B5C] truncate max-w-[80px]" title={genero.region}>
+                  <span className="text-[11px] uppercase font-bold text-[#665D4F] truncate max-w-[80px]" title={genero.region}>
                     {genero.region.split("&")[0].trim()}
                   </span>
                 </div>
@@ -213,7 +213,7 @@ export function BrutalistGenresSection({ genreCounts }: BrutalistGenresSectionPr
                     {genero.nombre}
                   </h3>
 
-                  <div className="flex items-center justify-center gap-1 text-[11px] text-[#746B5C] group-hover:text-[#1F1305] transition-colors font-bold">
+                  <div className="flex items-center justify-center gap-1 text-[11px] text-[#665D4F] group-hover:text-[#1F1305] transition-colors font-bold">
                     <span className="text-[#E80000]">★</span>
                     <span>{count} títulos</span>
                   </div>
@@ -268,7 +268,7 @@ export function BrutalistGenresSection({ genreCounts }: BrutalistGenresSectionPr
               <div className="flex items-center gap-2 text-xs text-[#F1730C]">
                 <MapPin className="h-3.5 w-3.5 text-[#F1730C]" />
                 <span>{selectedGenero.region}</span>
-                <span className="text-[#746B5C]">|</span>
+                <span className="text-[#665D4F]">|</span>
                 <span className="text-white font-bold">
                   ★ {genreCounts?.[selectedGenero.nombre] ?? selectedGenero.titulosBase} TÍTULOS EN BÓVEDA
                 </span>

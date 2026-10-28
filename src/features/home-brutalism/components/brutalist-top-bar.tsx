@@ -17,13 +17,13 @@ export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: Bruta
           <span className="font-bold uppercase tracking-wider text-[#1F1305]">
             EXPEDIENTE GENERAL // CUMBIA PERUANA (1968–2005)
           </span>
-          <span className="hidden xl:inline-block text-[#746B5C] font-semibold">
+          <span className="hidden xl:inline-block text-[#665D4F] font-semibold">
             — LEGAJO NO. EXP-PE-1970
           </span>
         </div>
 
         {/* Centro: Barra de censura decorativa y nivel de acceso */}
-        <div className="hidden lg:flex items-center gap-2 text-[#746B5C] font-bold text-[11px]">
+        <div className="hidden lg:flex items-center gap-2 text-[#665D4F] font-bold text-[11px]">
           <span>CLASIF: PÚBLICA</span>
           <span className="text-[#1F1305] font-black">██████</span>
           <span>CUSTODIA: PATRIMONIAL</span>
@@ -37,7 +37,7 @@ export function BrutalistTopBar({ totalAlbumes = 719, totalSellos = 258 }: Bruta
             <span>•</span>
             <span>{totalSellos} SELLOS</span>
           </div>
-          <span className="hidden sm:inline text-[#746B5C]">|</span>
+          <span className="hidden sm:inline text-[#665D4F]">|</span>
           <Link
             href="/admin"
             target="_blank"

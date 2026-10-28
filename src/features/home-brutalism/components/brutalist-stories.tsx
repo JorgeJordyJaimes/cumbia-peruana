@@ -68,7 +68,7 @@ export function BrutalistStories() {
                     </span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3 text-[#746B5C]" />
+                      <Calendar className="h-3 w-3 text-[#665D4F]" />
                       {story.fecha}
                     </span>
                   </div>

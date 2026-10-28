@@ -294,7 +294,7 @@ export default async function Home() {
   );
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       {/* Schema.org MusicAlbum JSON-LD para motores de búsqueda */}
       {catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
 

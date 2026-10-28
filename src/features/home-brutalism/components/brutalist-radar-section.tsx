@@ -218,7 +218,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                         />
                       ) : (
                         <div className="absolute inset-0 bg-[#1A1108] flex items-center justify-center">
-                          <Disc className="w-12 h-12 text-[#746B5C] animate-spin" />
+                          <Disc className="w-12 h-12 text-[#665D4F] animate-spin" />
                         </div>
                       )}
 

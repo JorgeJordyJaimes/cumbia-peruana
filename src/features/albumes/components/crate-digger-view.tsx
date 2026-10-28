@@ -474,7 +474,7 @@ export function CrateDiggerViewComponent({
                   </span>
                 )}
                 {activeAlbum.isReissue && (
-                  <span className="border border-[#1F1305] bg-white text-[#746B5C] px-1.5 py-0.5 text-[10px] font-bold">
+                  <span className="border border-[#1F1305] bg-white text-[#665D4F] px-1.5 py-0.5 text-[10px] font-bold">
                     Reedición
                   </span>
                 )}

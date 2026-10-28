@@ -90,7 +90,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                 {/* Vista Desktop (>= sm) */}
                 <div className="hidden sm:grid sm:grid-cols-12 items-center gap-3 px-4 py-3 text-xs">
                   {/* Posición / Lado */}
-                  <div className="col-span-1 text-center font-mono font-bold text-[#746B5C]">
+                  <div className="col-span-1 text-center font-mono font-bold text-[#665D4F]">
                     {trackLabel}
                   </div>
 
@@ -120,7 +120,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                   {/* Voz / Vocalista */}
                   <div className="col-span-3 min-w-0">
                     {track.vocalist === "Instrumental" ? (
-                      <span className="inline-block font-mono text-[11px] font-bold text-[#746B5C] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]">
+                      <span className="inline-block font-mono text-[11px] font-bold text-[#665D4F] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]">
                         Instrumental
                       </span>
                     ) : track.vocalist ? (
@@ -128,7 +128,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                         {track.vocalist}
                       </span>
                     ) : (
-                      <span className="text-[#746B5C] font-mono text-[11px]">
+                      <span className="text-[#665D4F] font-mono text-[11px]">
                         Pendiente
                       </span>
                     )}
@@ -141,7 +141,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                         {track.composer}
                       </span>
                     ) : (
-                      <span className="text-[#746B5C] font-mono text-[11px]">
+                      <span className="text-[#665D4F] font-mono text-[11px]">
                         D.R.
                       </span>
                     )}
@@ -155,7 +155,7 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                         {track.bpm} BPM
                       </span>
                     ) : (
-                      <span className="font-mono text-[11px] text-[#746B5C]">
+                      <span className="font-mono text-[11px] text-[#665D4F]">
                         --
                       </span>
                     )}
@@ -179,13 +179,13 @@ export function TracklistTable({ tracks, className }: TracklistTableProps) {
                         {track.bpm} BPM
                       </span>
                     ) : (
-                      <span className="font-mono text-[11px] text-[#746B5C] shrink-0">--</span>
+                      <span className="font-mono text-[11px] text-[#665D4F] shrink-0">--</span>
                     )}
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
                     {track.vocalist === "Instrumental" ? (
-                      <span className="bg-[#EDE0D0] border border-[#1F1305] px-1.5 py-0.2 font-bold text-[#746B5C]">
+                      <span className="bg-[#EDE0D0] border border-[#1F1305] px-1.5 py-0.2 font-bold text-[#665D4F]">
                         INSTRUMENTAL
                       </span>
                     ) : track.vocalist ? (

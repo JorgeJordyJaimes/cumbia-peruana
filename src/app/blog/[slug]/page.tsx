@@ -58,7 +58,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       <BrutalistCoordinator>
         <main className="container mx-auto max-w-4xl px-4 sm:px-6 pt-6 pb-20 space-y-8">
           {/* Breadcrumb / Retorno a Crónicas */}
@@ -78,7 +78,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
 
           {/* Cabecera del Artículo */}
           <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-10 shadow-[6px_6px_0px_#1F1305] space-y-6">
-            <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-[#746B5C] font-bold">
+            <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-[#665D4F] font-bold">
               <span className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-[#F1730C] px-3 py-1 text-white shadow-[2px_2px_0px_#1F1305]">
                 <BookOpen className="h-3.5 w-3.5" />
                 {article.categoria}
@@ -98,14 +98,14 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
               {article.titulo}
             </h1>
 
-            <div className="flex items-center justify-between border-y-2 border-[#1F1305]/15 py-4 font-mono text-xs text-[#746B5C]">
+            <div className="flex items-center justify-between border-y-2 border-[#1F1305]/15 py-4 font-mono text-xs text-[#665D4F]">
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 border-2 border-[#1F1305] bg-[#1F1305] flex items-center justify-center text-[#EDE0D0] font-cooper font-bold text-xs shadow-[2px_2px_0px_#E80000]">
                   KS
                 </div>
                 <div>
                   <p className="text-[#1F1305] font-bold text-sm">{article.autor_nombre}</p>
-                  <p className="text-[11px] text-[#746B5C]">Investigación & Preservación</p>
+                  <p className="text-[11px] text-[#665D4F]">Investigación & Preservación</p>
                 </div>
               </div>
 

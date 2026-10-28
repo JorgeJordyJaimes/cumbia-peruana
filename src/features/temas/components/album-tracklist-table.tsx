@@ -145,7 +145,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                                 setSelectedTemaTitulo(pista.titulo);
                               }}
                               title="Explorar árbol genealógico de versiones y covers"
-                              className="inline-flex items-center gap-0.5 border border-[#1F1305] bg-white px-1.5 py-0.5 text-[11px] font-mono font-bold text-[#746B5C] hover:text-[#E80000] hover:border-[#E80000] transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-0.5 border border-[#1F1305] bg-white px-1.5 py-0.5 text-[11px] font-mono font-bold text-[#665D4F] hover:text-[#E80000] hover:border-[#E80000] transition-colors cursor-pointer"
                             >
                               <GitFork className="h-2.5 w-2.5 text-[#E80000]" />
                               <span>Versiones</span>
@@ -159,7 +159,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                           )}
 
                           {pista.generos && (
-                            <div className="text-[11px] text-[#746B5C] font-mono mt-0.5">
+                            <div className="text-[11px] text-[#665D4F] font-mono mt-0.5">
                               {pista.generos}
                             </div>
                           )}
@@ -168,7 +168,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                         {/* Vocalista */}
                         <div className="col-span-2">
                           {pista.vocalista === "Instrumental" ? (
-                            <span className="inline-block font-mono text-[11px] font-bold text-[#746B5C] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]">
+                            <span className="inline-block font-mono text-[11px] font-bold text-[#665D4F] bg-[#EDE0D0] px-2 py-0.5 border border-[#1F1305]">
                               Instrumental
                             </span>
                           ) : pista.vocalista ? (
@@ -176,7 +176,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                               {pista.vocalista}
                             </span>
                           ) : (
-                            <span className="text-[#746B5C] font-mono text-[11px]">
+                            <span className="text-[#665D4F] font-mono text-[11px]">
                               Pendiente
                             </span>
                           )}
@@ -188,7 +188,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                             {pista.autorReal}
                           </div>
                           {pista.creditoGalleta && (
-                            <div className="text-[11px] text-[#746B5C] font-mono italic mt-0.5">
+                            <div className="text-[11px] text-[#665D4F] font-mono italic mt-0.5">
                               En galleta: &ldquo;{pista.creditoGalleta}&rdquo;
                             </div>
                           )}
@@ -199,7 +199,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                           {pista.bpm || pista.camelot ? (
                             <BadgeDJ bpm={pista.bpm} camelot={pista.camelot} />
                           ) : (
-                            <span className="text-[#746B5C] font-mono text-[11px]">--</span>
+                            <span className="text-[#665D4F] font-mono text-[11px]">--</span>
                           )}
                         </div>
 
@@ -223,7 +223,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                                   {pista.mosaicoSegmentos?.length || 0} temas
                                 </span>
                               </span>
-                              <span className="text-[11px] text-[#746B5C] font-bold hidden sm:inline">
+                              <span className="text-[11px] text-[#665D4F] font-bold hidden sm:inline">
                                 Desglose de interpretación continua
                               </span>
                             </div>
@@ -260,7 +260,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                                             .padStart(2, "0")}
                                         </span>
                                       ) : (
-                                        <span className="font-mono text-[11px] text-[#746B5C] italic">
+                                        <span className="font-mono text-[11px] text-[#665D4F] italic">
                                           Por cronometrar
                                         </span>
                                       )}
@@ -269,7 +269,7 @@ export function AlbumTracklistTable({ pistas, artistName }: AlbumTracklistTableP
                                 ))}
                               </div>
                             ) : (
-                              <p className="text-xs text-[#746B5C] italic py-2">
+                              <p className="text-xs text-[#665D4F] italic py-2">
                                 Los cortes individuales de este popurrí están en proceso de catalogación en la investigación fonográfica.
                               </p>
                             )}

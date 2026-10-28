@@ -140,7 +140,7 @@ export function RadarSonoro({ isHighlight = false }: RadarSonoroProps) {
                     <button
                       type="button"
                       onClick={() => setActiveEmbedId(item.id)}
-                      className="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center border-2 border-[#1F1305] bg-[#F1730C] text-white shadow-[4px_4px_0px_#1F1305] transition-transform hover:scale-110 active:scale-95 hover:bg-[#E80000]"
+                      className="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center border-2 border-[#1F1305] bg-[#F1730C] text-[#1F1305] shadow-[4px_4px_0px_#1F1305] transition-transform hover:scale-110 active:scale-95 hover:bg-[#E80000]"
                       title="Cargar vista previa de audio (Lite Embed)"
                     >
                       <Play className="h-6 w-6 fill-white ml-1 text-white" />
@@ -163,7 +163,7 @@ export function RadarSonoro({ isHighlight = false }: RadarSonoroProps) {
               {/* Ficha Editorial */}
               <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between font-mono text-[11px] font-bold text-[#746B5C]">
+                  <div className="flex items-center justify-between font-mono text-[11px] font-bold text-[#665D4F]">
                     <span>{item.artista}</span>
                     {item.sello && <span className="border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.5 text-[#1F1305]">{item.sello}</span>}
                   </div>
@@ -193,7 +193,7 @@ export function RadarSonoro({ isHighlight = false }: RadarSonoroProps) {
 
         {/* CTA al Apartado Completo si es Vista Destacada */}
         {isHighlight && (
-          <div className="border-2 border-[#1F1305] bg-[#F1730C] text-white p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-2 border-[#1F1305] bg-[#F1730C] text-[#1F1305] p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <p className="font-cooper text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
                 <Radio className="h-4 w-4" />

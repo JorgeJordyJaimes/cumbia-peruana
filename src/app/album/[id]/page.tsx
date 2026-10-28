@@ -384,7 +384,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
   });
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       {/* Schema.org MusicAlbum JSON-LD para motores de búsqueda */}
       <JsonLd data={jsonLdData} />
 
@@ -436,7 +436,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
                     </span>
                   )}
                   {album.es_disco_split && (
-                    <span className="font-mono text-[11px] font-bold bg-[#F1730C] text-white border border-[#1F1305] px-2 py-0.5">
+                    <span className="font-mono text-[11px] font-bold bg-[#F1730C] text-[#1F1305] border border-[#1F1305] px-2 py-0.5">
                       Disco Split
                     </span>
                   )}

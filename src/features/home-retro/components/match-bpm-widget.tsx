@@ -75,7 +75,7 @@ function getGenreAffinity(prev: TemaDJ, cand: TemaDJ) {
     return {
       score: 50,
       badgeText: "✨ Fusión Compartida",
-      badgeColor: "bg-[#F1730C] text-white",
+      badgeColor: "bg-[#F1730C] text-[#1F1305]",
       description: `Comparte vertiente (${cand.secondaryGenre})`,
     };
   }
@@ -225,9 +225,9 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
 
                 <div className="grid grid-cols-3 gap-2 pt-2 border-t border-[#1F1305]/20 font-mono text-xs text-center">
                   <div className="border border-[#1F1305] bg-white p-2 shadow-[1px_1px_0px_#1F1305]">
-                    <span className="text-[10px] text-[#746B5C] font-bold block">TEMPO</span>
+                    <span className="text-[10px] text-[#665D4F] font-bold block">TEMPO</span>
                     <span className="font-black text-[#1F1305] text-base">{currentTema.bpm}</span>
-                    <span className="text-[9px] text-[#746B5C] block">BPM</span>
+                    <span className="text-[9px] text-[#665D4F] block">BPM</span>
                   </div>
 
                   <div className="border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] p-2 shadow-[2px_2px_0px_#E80000]">
@@ -237,7 +237,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                   </div>
 
                   <div className="border border-[#1F1305] bg-white p-2 shadow-[1px_1px_0px_#1F1305] flex flex-col justify-center">
-                    <span className="text-[10px] text-[#746B5C] font-bold block">GÉNERO BASE</span>
+                    <span className="text-[10px] text-[#665D4F] font-bold block">GÉNERO BASE</span>
                     <span className="font-bold text-[#F1730C] text-[11px] block truncate" title={currentTema.primaryGenre || currentTema.subgenero}>
                       {currentTema.primaryGenre || currentTema.subgenero}
                     </span>
@@ -317,7 +317,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                       <div className="flex items-center gap-3 font-mono text-xs shrink-0 self-end sm:self-center">
                         {/* Indicador de Ajuste Pitch */}
                         <div className="text-right">
-                          <span className="text-[10px] font-bold uppercase text-[#746B5C] block">Ajuste Pitch:</span>
+                          <span className="text-[10px] font-bold uppercase text-[#665D4F] block">Ajuste Pitch:</span>
                           <span
                             className={cn(
                               "font-black text-xs px-2 py-0.5 border shadow-[1px_1px_0px_#1F1305] inline-block",
@@ -341,7 +341,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                           <span className="font-black text-[#1F1305] text-sm block">
                             {match.camelot}
                           </span>
-                          <span className="text-[9px] text-[#746B5C] block leading-tight font-medium">
+                          <span className="text-[9px] text-[#665D4F] block leading-tight font-medium">
                             {match.harmonic.type}
                           </span>
                         </div>
@@ -349,7 +349,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
                     </div>
                   ))
                 ) : (
-                  <div className="py-8 text-center font-mono text-xs text-[#746B5C]">
+                  <div className="py-8 text-center font-mono text-xs text-[#665D4F]">
                     No se encontraron temas en el rango ±3% de BPM con compatibilidad armónica en el catálogo cargado. Prueba
                     seleccionando otro tema.
                   </div>
@@ -372,7 +372,7 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
 
         {/* CTA al Apartado Completo si es Vista Destacada */}
         {isHighlight && (
-          <div className="border-2 border-[#1F1305] bg-[#F1730C] text-white p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-2 border-[#1F1305] bg-[#F1730C] text-[#1F1305] p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <p className="font-cooper text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
                 <SlidersHorizontal className="h-4 w-4" />

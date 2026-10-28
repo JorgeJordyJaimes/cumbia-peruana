@@ -84,7 +84,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-[#746B5C] font-bold">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#665D4F] font-bold">
                   Consola de Mezcla Armónica // Camelot Engine v2.4
                 </h3>
               </div>
@@ -118,7 +118,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1305]">
                 Escala Menor (A) · Tonalidades Melancólicas / Psicodélicas
               </span>
-              <span className="font-mono text-[11px] font-bold text-[#746B5C]">
+              <span className="font-mono text-[11px] font-bold text-[#665D4F]">
                 1A a 12A
               </span>
             </div>
@@ -139,7 +139,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                         ? "border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000]"
                         : isCompatible
                         ? "border-[#1F1305] bg-white text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0]"
-                        : "border-[#EDE0D0] bg-[#FAF5EE] text-[#746B5C] hover:border-[#1F1305] hover:bg-white"
+                        : "border-[#EDE0D0] bg-[#FAF5EE] text-[#665D4F] hover:border-[#1F1305] hover:bg-white"
                     )}
                   >
                     <span className="text-sm font-black tracking-tight">
@@ -162,7 +162,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1F1305]">
                 Escala Mayor (B) · Tonalidades Festivas / Costeras
               </span>
-              <span className="font-mono text-[11px] font-bold text-[#746B5C]">
+              <span className="font-mono text-[11px] font-bold text-[#665D4F]">
                 1B a 12B
               </span>
             </div>
@@ -183,7 +183,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                         ? "border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000]"
                         : isCompatible
                         ? "border-[#1F1305] bg-white text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0]"
-                        : "border-[#EDE0D0] bg-[#FAF5EE] text-[#746B5C] hover:border-[#1F1305] hover:bg-white"
+                        : "border-[#EDE0D0] bg-[#FAF5EE] text-[#665D4F] hover:border-[#1F1305] hover:bg-white"
                     )}
                   >
                     <span className="text-sm font-black tracking-tight">
@@ -237,7 +237,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                     <span className="font-mono text-base font-black">
                       {t.code}
                     </span>
-                    <span className={cn("font-mono text-xs font-bold", isCurrent ? "text-[#F8C800]" : "text-[#746B5C]")}>
+                    <span className={cn("font-mono text-xs font-bold", isCurrent ? "text-[#F8C800]" : "text-[#665D4F]")}>
                       {info.standardKey} ({info.mode})
                     </span>
                   </div>
@@ -272,7 +272,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                 onChange={(e) => setMinBpm(Number(e.target.value))}
                 className="w-16 border-2 border-[#1F1305] bg-[#EDE0D0] px-2 py-1 text-center font-mono text-xs font-bold text-[#1F1305] shadow-[1px_1px_0px_#1F1305] focus:outline-none focus:border-[#E80000]"
               />
-              <span className="text-xs text-[#746B5C] font-mono font-bold">hasta</span>
+              <span className="text-xs text-[#665D4F] font-mono font-bold">hasta</span>
               <input
                 type="number"
                 min={70}
@@ -286,7 +286,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold text-[#746B5C]">Criterio:</span>
+            <span className="font-mono text-xs font-bold text-[#665D4F]">Criterio:</span>
             <div className="inline-flex border-2 border-[#1F1305] bg-white p-0.5 text-xs font-mono shadow-[2px_2px_0px_#1F1305]">
               <button
                 type="button"
@@ -348,7 +348,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
             <p className="font-mono text-sm text-[#1F1305] font-bold">
               No hay pistas registradas para el rango {minBpm}–{maxBpm} BPM con tonalidad compatible a {selectedKey}.
             </p>
-            <p className="mt-1 text-xs text-[#746B5C]">
+            <p className="mt-1 text-xs text-[#665D4F]">
               Prueba ampliando el rango de BPM o seleccionando otra tonalidad Camelot.
             </p>
           </div>
@@ -381,7 +381,7 @@ export function CamelotSelector({ tracks = [], className }: CamelotSelectorProps
                           {track.title}
                         </h5>
                         {track.year && (
-                          <span className="text-[11px] font-mono text-[#746B5C] font-bold">
+                          <span className="text-[11px] font-mono text-[#665D4F] font-bold">
                             ({track.year})
                           </span>
                         )}

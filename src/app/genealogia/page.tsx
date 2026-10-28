@@ -65,7 +65,7 @@ export default async function GenealogiaPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-white">
+    <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       {/* Schema.org JSON-LD para motores de búsqueda */}
       {structuredDataList.length > 0 ? <JsonLd data={structuredDataList} /> : null}
 

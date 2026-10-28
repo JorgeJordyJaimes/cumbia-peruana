@@ -131,19 +131,19 @@ export function GenealogyExplorer({ isHighlight = false }: GenealogyExplorerProp
                     <span className="font-cooper font-black text-lg text-[#1F1305]">
                       {step.grupo}
                     </span>
-                    <span className="font-mono text-[11px] font-bold text-white bg-[#F1730C] border border-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
+                    <span className="font-mono text-[11px] font-bold text-[#1F1305] bg-[#F1730C] border border-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                       {step.anos}
                     </span>
                   </div>
 
                   <div className="space-y-2 font-mono text-xs">
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-[#746B5C] block">Rol de Estudio:</span>
+                      <span className="text-[10px] font-bold uppercase text-[#665D4F] block">Rol de Estudio:</span>
                       <span className="text-[#1F1305] font-medium">{step.rol}</span>
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-[#746B5C] block flex items-center gap-1">
+                      <span className="text-[10px] font-bold uppercase text-[#665D4F] block flex items-center gap-1">
                         <Building2 className="h-3 w-3 text-[#10B981]" /> Sellos Discográficos:
                       </span>
                       <div className="flex flex-wrap gap-1 pt-1">
@@ -159,7 +159,7 @@ export function GenealogyExplorer({ isHighlight = false }: GenealogyExplorerProp
                     </div>
 
                     <div className="pt-2 border-t border-[#1F1305]/20">
-                      <span className="text-[10px] font-bold uppercase text-[#746B5C] block flex items-center gap-1">
+                      <span className="text-[10px] font-bold uppercase text-[#665D4F] block flex items-center gap-1">
                         <Disc3 className="h-3 w-3 text-[#F1730C]" /> Grabaciones Notables:
                       </span>
                       <p className="font-serif italic text-xs text-[#1F1305] pt-1">
@@ -175,7 +175,7 @@ export function GenealogyExplorer({ isHighlight = false }: GenealogyExplorerProp
 
         {/* CTA al Apartado Completo si es Vista Destacada */}
         {isHighlight && (
-          <div className="border-2 border-[#1F1305] bg-[#F1730C] text-white p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-2 border-[#1F1305] bg-[#F1730C] text-[#1F1305] p-5 sm:p-6 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <p className="font-cooper text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
                 <GitFork className="h-4 w-4" />

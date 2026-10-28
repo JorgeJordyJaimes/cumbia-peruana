@@ -53,7 +53,7 @@ export function NosotrosManifiesto() {
         {/* MINI-CARDS DEL EQUIPO */}
         <div className="space-y-6">
           <div className="text-center space-y-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-[#746B5C] font-bold">
+            <span className="font-mono text-xs uppercase tracking-widest text-[#665D4F] font-bold">
               Equipo de Investigación & Curaduría
             </span>
             <h3 className="font-cooper text-2xl sm:text-4xl font-bold text-[#1F1305]">
@@ -88,7 +88,7 @@ export function NosotrosManifiesto() {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t-2 border-[#1F1305]/10 flex items-center gap-3 font-mono text-[11px] text-[#746B5C]">
+                <div className="pt-3 border-t-2 border-[#1F1305]/10 flex items-center gap-3 font-mono text-[11px] text-[#665D4F]">
                   {member.redes.map((r, rIdx) => (
                     <a
                       key={rIdx}
