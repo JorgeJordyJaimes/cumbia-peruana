@@ -49,9 +49,18 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label={`Ver expediente de ${album.title} - ${album.artist}`}
       onClick={() => onSelect?.(album)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect?.(album);
+        }
+      }}
       className={cn(
-        "group relative flex flex-col cursor-pointer transition-all duration-200 select-none font-mono",
+        "group relative flex flex-col cursor-pointer transition-all duration-200 select-none font-mono focus-visible:outline-none",
         className
       )}
     >
@@ -60,7 +69,7 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
         {/* Disco de Vinilo Circular que asoma en hover */}
         <div
           aria-hidden="true"
-          className="absolute inset-y-2 right-2 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out group-hover:translate-x-7 sm:group-hover:translate-x-9 z-0 overflow-hidden flex items-center justify-center border border-white/10"
+          className="absolute inset-y-2 right-2 aspect-square rounded-full bg-[#111114] shadow-2xl transition-transform duration-500 ease-out group-hover:translate-x-7 sm:group-hover:translate-x-9 group-focus-within:translate-x-7 sm:group-focus-within:translate-x-9 z-0 overflow-hidden flex items-center justify-center border border-white/10"
         >
           {/* Surcos concéntricos del vinilo */}
           <div className="absolute inset-2 rounded-full border border-white/5 vinyl-grooves opacity-60" />
@@ -78,7 +87,7 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
         {/* Funda Externa / Carpeta de Evidencia con Borde 2px y Sombra Brutalista */}
         <div
           className={cn(
-            "relative z-10 h-full w-full overflow-hidden border-2 border-[#1F1305] bg-[#140D04] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 group-hover:shadow-[6px_6px_0px_#E80000] group-hover:-translate-y-1 flex flex-col justify-between p-3.5",
+            "relative z-10 h-full w-full overflow-hidden border-2 border-[#1F1305] bg-[#140D04] shadow-[4px_4px_0px_#1F1305] transition-all duration-200 group-hover:shadow-[6px_6px_0px_#E80000] group-hover:-translate-y-1 group-focus-within:shadow-[6px_6px_0px_#E80000] group-focus-within:-translate-y-1 flex flex-col justify-between p-3.5",
             gradient
           )}
         >
@@ -103,29 +112,35 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
             </div>
           )}
 
-          {/* Overlay Oscuro Translúcido que solo aparece en hover si hay foto */}
+          {/* Overlay Oscuro Translúcido en escritorio con hover / foco */}
           <div
             className={cn(
               "absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/20 pointer-events-none transition-opacity duration-300",
-              hasCover ? "opacity-0 group-hover:opacity-100" : "opacity-100"
+              hasCover
+                ? "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 no-hover:opacity-0"
+                : "opacity-100"
             )}
           />
 
-          {/* Cabecera de la Funda: Formato (45, LP, etc.) revelado en hover */}
+          {/* Cabecera de la Funda: Formato (45, LP, etc.) */}
           <div
             className={cn(
               "relative z-10 pt-4 flex items-start justify-start gap-1.5 transition-all duration-300",
-              hasCover ? "opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0" : "opacity-100"
+              hasCover
+                ? "opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 no-hover:opacity-100 no-hover:translate-y-0"
+                : "opacity-100"
             )}
           >
             <BadgeFormat formatName={album.format || "LP"} size="sm" />
           </div>
 
-          {/* Pie de la Funda: Datos del Fonograma y Archivo revelados en hover */}
+          {/* Pie de la Funda: Franja táctil sólida #140D04 con borde superior de 2px */}
           <div
             className={cn(
               "relative z-10 space-y-1 transition-all duration-300",
-              hasCover ? "opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0" : "opacity-100"
+              hasCover
+                ? "opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 no-hover:opacity-100 no-hover:translate-y-0 no-hover:bg-[#140D04] no-hover:border-t-2 no-hover:border-[#1F1305] no-hover:-mx-3.5 no-hover:-mb-3.5 no-hover:p-2.5"
+                : "opacity-100"
             )}
           >
             <div className="flex items-center justify-between text-[11px] text-[#F8C800] uppercase font-bold tracking-wider">
@@ -137,11 +152,11 @@ function AlbumCardComponent({ album, className, onSelect }: AlbumCardProps) {
               )}
             </div>
 
-            <h4 className="font-bold text-white tracking-tight text-sm sm:text-base leading-tight line-clamp-1 group-hover:text-[#F8C800] transition-colors">
+            <h4 className="font-bold text-white tracking-tight text-xs sm:text-sm leading-tight line-clamp-1 group-hover:text-[#F8C800] transition-colors">
               {album.title}
             </h4>
 
-            <p className="text-xs text-[#EDE0D0] font-medium line-clamp-1">
+            <p className="text-[11px] sm:text-xs text-[#B8AFA6] font-medium line-clamp-1">
               {album.artist}
             </p>
           </div>
