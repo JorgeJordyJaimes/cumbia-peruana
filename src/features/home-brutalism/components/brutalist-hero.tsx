@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Disc, Music2, ShieldAlert, Stamp } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Disc, Music2, ShieldAlert, Stamp } from "lucide-react";
 
 interface BrutalistHeroProps {
   totalAlbumes?: number | null;
@@ -102,29 +102,33 @@ export function BrutalistHero({
             </div>
 
             {/* ACCIONES DEL EXPEDIENTE (CTAs) */}
-            <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-bold font-mono">
+            <div className="pt-2 flex flex-wrap items-center gap-3 font-mono">
+              {/* CTA Primario Canónico: Catálogo / Bóveda */}
               <Link
-                href="/genealogia"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-6 py-3.5 text-white shadow-[4px_4px_0px_#E80000] hover:bg-[#E80000] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all"
+                href="/vinilos"
+                className="inline-flex items-center gap-2.5 border-2 border-[#1F1305] bg-[#E80000] px-7 py-3.5 text-sm font-black text-white shadow-[5px_5px_0px_#1F1305] hover:bg-[#C40000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#1F1305] transition-all tracking-wide"
               >
-                <span>EXP. 01: CONSULTAR LINAJES ↗</span>
+                <Disc className="h-4 w-4 text-white" />
+                <span>EXPLORAR BÓVEDA DE VINILOS</span>
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
 
+              {/* CTA Secundario: Consola Match BPM */}
               <Link
                 href="/match-bpm"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F1730C] px-6 py-3.5 text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#E80000] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all"
+                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-5 py-3 text-xs font-bold text-[#1F1305] shadow-[3px_3px_0px_#1F1305] hover:bg-[#EDE0D0] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#1F1305] transition-all"
               >
-                <span>EXP. 02: CONSOLA MATCH BPM</span>
-                <span className="text-white text-[11px]">●</span>
+                <span>CONSOLA MATCH BPM</span>
+                <span className="text-[#E80000] text-[11px]">●</span>
               </Link>
 
+              {/* CTA Terciario Fantasma: Genealogía */}
               <Link
-                href="/vinilos"
-                className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-5 py-3.5 text-[#1F1305] shadow-[4px_4px_0px_#1F1305] hover:bg-[#EDE0D0] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                href="/genealogia"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-[#1F1305] hover:text-[#E80000] transition-colors underline underline-offset-4 decoration-2 decoration-[#1F1305]/30 hover:decoration-[#E80000]"
               >
-                <Disc className="h-4 w-4 text-[#F1730C]" />
-                <span>EXP. 06: BÓVEDA DE EVIDENCIAS</span>
+                <span>Consultar linajes</span>
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
