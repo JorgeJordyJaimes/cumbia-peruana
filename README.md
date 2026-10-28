@@ -14,36 +14,50 @@ El proyecto combina rigor musicológico con herramientas de análisis armónico 
 
 ---
 
-## 🗺️ Mapa de Navegación Documental (Suite `docs/`)
+## 🗺️ Mapa Canónico de Navegación Documental (Suite `docs/`)
 
-La documentación formal del proyecto está organizada en [`docs/`](docs/) bajo estándares de *Docs-as-Code*:
+La documentación formal del proyecto está centralizada y clasificada temáticamente en [`docs/`](docs/) bajo el estándar de **Docs-as-Code**:
 
-| Documento | Audiencia Principal | Descripción y Alcance |
-| :--- | :--- | :--- |
-| [🤖 **Manual del Proyecto (Agentes & Devs)**](docs/manual-proyecto.md) | Agentes IA / Nuevos Devs | Secuencia obligatoria de lectura, guía de setup desde cero, reglas inmutables y reorganización estándar. |
-| [📖 **Manifiesto & Alcance Histórico**](docs/manifiesto-arquitectura.md) | Investigadores / General | Fundamentos socioculturales, vertientes (costeña, amazónica, chicha, norteña, tecnocumbia) y propósito patrimonial. |
-| [🏛️ **Arquitectura Técnica & Modelo de Datos**](docs/arquitectura-tecnica.md) | Desarrolladores / Arquitectos | Especificación del modelo relacional, diccionario de campos críticos, procedimientos RPC recursivos y capa frontend. |
-| [📜 **Manual de Catalogación e Ingesta a SQL**](docs/manual-catalogacion-e-ingesta.md) | Catalogadores / Agentes IA | Protocolo operativo y de ingesta a SQL: verificación de entidades, duraciones en segundos, Camelot exclusivo, trazabilidad 45 vs LP, mosaicos y seudónimos. |
-| [🛠️ **Lineamientos de Desarrollo & Estándares**](docs/lineamientos-desarrollo.md) | Desarrolladores Full-Stack | Guía de setup, política de permisos en Supabase Data API, separación de servicios cliente/servidor y flujo Git. |
-| [📑 **Registros de Decisiones de Arquitectura (ADRs)**](docs/adr/README.md) | Equipo de Ingeniería | Registro histórico y técnico de las decisiones estructurales del proyecto: |
-| ↳ [ADR 001: Lados A y B Estrictos](docs/adr/001-soporte-estricto-lados-a-b.md) | Arquitectura / Datos | Justificación histórica de la restricción exclusiva a Lados A y B (sin lados C o D). |
-| ↳ [ADR 002: Modelado de Mosaicos y Popurrís](docs/adr/002-modelado-mosaicos-y-enganchados.md) | Modelo Relacional | Desglose en `Mosaicos_Temas` preservando la integridad del surco físico en `Albumes_Temas`. |
-| ↳ [ADR 003: Grafos Genealógicos con RPC](docs/adr/003-resolucion-grafo-genealogico-rpc.md) | Base de Datos / SQL | Resolución de versiones y árboles biográficos en PostgreSQL vía `WITH RECURSIVE`. |
-| ↳ [ADR 004: Conversión WebP en Cliente](docs/adr/004-conversion-cliente-webp.md) | Frontend / Multimedia | Pipeline Canvas API en el navegador para compresión automática y ahorro de ancho de banda. |
-| [📊 **Datos & Notas de Investigación**](docs/datos-investigacion/) | Curaduría Fonográfica | Planillas tabulares de control (`Datos BD.ods`) y notas históricas de sellos. |
-| [🗄️ **Esquema DDL de Referencia**](docs/sql-referencia/estructural.sql) | Administradores de BD | Definición SQL consolidada de tablas maestras, claves foráneas e índices GIN. |
-| [🧰 **Catálogo de Skills de Agentes**](docs/catalogo-skills.md) | Agentes IA / Desarrolladores | Registro de las 28 skills instaladas (HyperFrames, Taste UI, Superpowers y Vercel Best Practices). |
+### 📂 `docs/01-gobernanza-y-manuales/`
+* [🤖 **Manual Operativo del Proyecto**](docs/01-gobernanza-y-manuales/manual-operativo-proyecto.md): Onboarding, visión integral, guía de instalación desde cero, reglas inmutables y protocolo de documentación viva.
+* [🛠️ **Lineamientos de Desarrollo y Código**](docs/01-gobernanza-y-manuales/lineamientos-desarrollo-codigo.md): Estándares de TypeScript, Server Components vs Client Components, optimización frontend Vercel/Next.js y permisos RLS.
+* [🚀 **Flujo de Trabajo Git y Convenciones**](docs/01-gobernanza-y-manuales/flujo-git-y-convenciones.md): Ciclo obligatorio de trabajo, Conventional Commits en español y buenas prácticas.
+* [🧠 **Reglas e Instrucciones para Agentes de IA**](docs/01-gobernanza-y-manuales/reglas-agentes-ia.md): Directivas mandatorias de seguridad, preservación de datos e ingesta para asistentes autónomos (Antigravity, Cursor, Claude).
+* [🧰 **Catálogo de Skills para Agentes**](docs/01-gobernanza-y-manuales/catalogo-skills-ia.md): Inventario auditado de las 28 skills instaladas (HyperFrames, Taste UI, Superpowers, Vercel).
+* [📋 **Guía Maestra para Documentar Proyectos**](docs/01-gobernanza-y-manuales/guia-documentacion-proyectos.md): Metodología transferible para auditar y documentar plataformas de catálogo y e-commerce.
+
+### 📂 `docs/02-arquitectura-y-backend/`
+* [🏛️ **Arquitectura Integral del Sistema, Modelo Fonográfico y Backend**](docs/02-arquitectura-y-backend/arquitectura-sistema-y-datos.md): Diagramas de capas (Mermaid), modelo relacional ER fonográfico, funciones recursivas RPC en PostgreSQL (`WITH RECURSIVE`) y pipeline Canvas WebP.
+* [🗄️ **Esquema DDL Estructural de Referencia**](docs/sql-referencia/estructural.sql): Definición SQL canónica de tablas, índices GIN y llaves foráneas.
+
+### 📂 `docs/03-diseno-uiux/`
+* [🪗 **Sistema de Diseño Neo-Brutalista Editorial & Identidad Visual**](docs/03-diseno-uiux/sistema-diseno-brutalista.md): Filosofía del archivo pericial desclasificado, paleta cromática canónica, tokens CSS, geometría ortogonal (`rounded-none`), tipografía y componentes de expediente.
+
+### 📂 `docs/04-especificaciones-y-requisitos/`
+* [📜 **Manual de Catalogación Fonográfica e Ingesta a SQL**](docs/04-especificaciones-y-requisitos/manual-catalogacion-e-ingesta.md): Protocolo operativo musicológico, duraciones en segundos, notación Camelot, seudónimos en galleta y aislamiento de créditos de voz.
+* [📊 **Hojas de Investigación y Datos Tabulares**](docs/datos-investigacion/Datos%20BD.ods): Archivo maestro tabular de auditoría fonográfica directa.
+
+### 📂 `docs/05-soporte-y-resolucion/`
+* [🛠️ **Guía de Resolución de Problemas y Troubleshooting (FAQ)**](docs/05-soporte-y-resolucion/guia-resolucion-problemas.md): Diagnóstico y mitigación de errores de cookies SSR, hydration mismatch, permisos de storage WebP y discrepancias de datos.
+
+### 📂 `docs/06-bitacora-y-decisiones/`
+* [📑 **Índice Maestro de Registros de Decisiones (ADRs)**](docs/06-bitacora-y-decisiones/adr/README.md):
+  * [**ADR 001:** Restricción Estricta a Lados A y B (1968–2005)](docs/06-bitacora-y-decisiones/adr/001-soporte-estricto-lados-a-b.md)
+  * [**ADR 002:** Modelado Relacional de Mosaicos y Popurrís (`Mosaicos_Temas`)](docs/06-bitacora-y-decisiones/adr/002-modelado-mosaicos-y-enganchados.md)
+  * [**ADR 003:** Resolución de Grafos Genealógicos mediante RPC en PostgreSQL](docs/06-bitacora-y-decisiones/adr/003-resolucion-grafo-genealogico-rpc.md)
+  * [**ADR 004:** Conversión de Imágenes a WebP en Cliente vía Canvas API](docs/06-bitacora-y-decisiones/adr/004-conversion-cliente-webp.md)
+  * [**ADR 005:** Optimización de Rendimiento Frontend (Vercel React Best Practices)](docs/06-bitacora-y-decisiones/adr/005-optimizacion-rendimiento-vercel-react-best-practices.md)
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
 * **Frontend:** [Next.js](https://nextjs.org/) (App Router, Server Components y TypeScript) con estilos en [Tailwind CSS](https://tailwindcss.com/) y primitivas accesibles de [Radix UI / shadcn/ui](https://ui.shadcn.com/).
-* **Estilado & UI:** Diseño *Atmospheric Glassmorphism meets Retro Vinyl Editorial*, con modo brutalista editorial de alto impacto visual.
-* **Base de Datos:** [PostgreSQL](https://www.postgresql.org/) en [Supabase](https://supabase.com/), con extensiones para búsqueda de texto completo en español (índices GIN), procedimientos almacenados (`SECURITY DEFINER`) y recursión jerárquica (`WITH RECURSIVE`).
+* **Estilado & UI:** Neo-Brutalismo Editorial (*Archivo Nacional Desclasificado*), con paleta papel manila, tinta espresso, tipografía Anton/Cooper/Geist y física de sombras duras sin desenfoque.
+* **Base de Datos:** [PostgreSQL](https://www.postgresql.org/) en [Supabase](https://supabase.com/), con extensiones para búsqueda de texto completo en español (índices GIN), procedimientos almacenados y recursión jerárquica (`WITH RECURSIVE`).
 * **Almacenamiento Multimedia:** Buckets de Supabase Storage configurados exclusivamente para formato **WebP** de alta fidelidad, con pipeline de compresión automática en cliente vía HTML5 Canvas API.
 * **SEO Patrimonial:** Emisión de metadatos estructurados [Schema.org (JSON-LD)](https://schema.org/) para `MusicAlbum`, `MusicRecording`, `MusicGroup`, `Person` y `RecordLabel`.
-* **Despliegue & Analíticas:** Alojado en [Vercel](https://vercel.com/) con métricas de privacidad de `@vercel/analytics`.
+* **Despliegue & Analíticas:** Alojado en [Vercel](https://vercel.com/) con métricas de `@vercel/analytics`.
 
 ---
 
@@ -51,47 +65,25 @@ La documentación formal del proyecto está organizada en [`docs/`](docs/) bajo 
 
 ```text
 cumbia-peruana/
-├── docs/                                # Documentación formal (Docs-as-Code)
-│   ├── adr/                             # Architecture Decision Records (ADRs)
-│   │   ├── 001-soporte-estricto-lados-a-b.md
-│   │   ├── 002-modelado-mosaicos-y-enganchados.md
-│   │   ├── 003-resolucion-grafo-genealogico-rpc.md
-│   │   ├── 004-conversion-cliente-webp.md
-│   │   └── README.md                    # Índice maestro de ADRs
-│   ├── datos-investigacion/             # Control tabular de investigación fonográfica (Datos BD.ods)
-│   ├── sql-referencia/                  # Esquemas DDL estructurales de referencia histórica
-│   ├── arquitectura-tecnica.md          # Especificación técnica, modelo de datos y RPCs
-│   ├── catalogo-skills.md               # Catálogo e inventario de skills para agentes y desarrolladores
-│   ├── manual-catalogacion-e-ingesta.md # Manual operativo y protocolo de ingesta SQL para agentes
-│   ├── lineamientos-desarrollo.md       # Guía de desarrollo, políticas de Supabase y estándares
-│   ├── manifiesto-arquitectura.md       # Manifiesto sociocultural, etapas de la cumbia y grafo
-│   └── manual-proyecto.md               # Manual de contexto y onboarding para agentes y devs
-├── public/                              # Activos estáticos públicos
-│   ├── branding/                        # Logotipos e isotipos institucionales (kumbia-sound-logo*.png)
-│   └── images/                          # Fotografías históricas y fondos hero (hero-brutalist.png)
-├── scripts/                             # Automatización y sincronización
-│   └── poblar-db.mjs                    # Poblado masivo idempotente hacia Supabase vía Data API
-├── src/                                 # Código fuente de la aplicación (Next.js App Router)
-│   ├── app/                             # Rutas, layouts y páginas del App Router
-│   │   ├── admin/                       # Panel de administración (subida WebP y gestión)
-│   │   ├── album/[id]/                  # Ficha de álbum dinámica (Server Component + JSON-LD)
-│   │   ├── blog/                        # CMS de artículos históricos en Markdown
-│   │   ├── genealogia/                  # Explorador genealógico interactivo
-│   │   ├── match-bpm/                   # Herramientas armónicas para DJs (Camelot & BPM)
-│   │   ├── radar/                       # Curaduría de 45 RPM huérfanos y ediciones split
-│   │   └── layout.tsx                   # Root Layout con Vercel Analytics y tipografía
-│   ├── components/                      # Componentes transversales (UI y generadores JSON-LD)
-│   ├── features/                        # Módulos de dominio desacoplados (Feature-Driven Architecture)
-│   ├── lib/                             # Clientes Supabase segregados (client.ts y server.ts)
-│   └── types/                           # Definiciones estrictas de TypeScript (database.ts)
-├── supabase/                            # Infraestructura de base de datos
-│   ├── consultas/                       # Consultas SQL analíticas (trazabilidad, splits, 45 vs LP)
-│   ├── data/                            # Inserts SQL históricos (base, vinilos, casetes, canciones)
-│   ├── migrations/                      # Migraciones SQL versionadas y auditables
-│   └── seed.sql                         # Catálogos base (roles, tipos de álbum)
-├── .env.example                         # Plantilla de variables de entorno requeridas
-├── package.json                         # Dependencias y scripts del proyecto
-└── README.md                            # Guía principal del repositorio (este archivo)
+├── docs/                                      # Documentación formal centralizada (Docs-as-Code)
+│   ├── 01-gobernanza-y-manuales/              # Gobernanza, manuales operativos y reglas IA
+│   ├── 02-arquitectura-y-backend/             # Arquitectura del sistema, capas y DDL
+│   ├── 03-diseno-uiux/                        # Sistema de diseño brutalista editorial
+│   ├── 04-especificaciones-y-requisitos/      # Catalogación fonográfica e investigación ODS
+│   ├── 05-soporte-y-resolucion/               # Troubleshooting y solución de errores comunes
+│   └── 06-bitacora-y-decisiones/              # Registros de Decisiones de Arquitectura (ADRs)
+├── public/                                    # Activos estáticos públicos (branding/ e images/)
+├── scripts/                                   # Scripts de automatización y poblado de BD
+├── src/                                       # Código fuente de Next.js App Router
+│   ├── app/                                   # Rutas, layouts y páginas
+│   ├── components/                            # Componentes transversales y SEO JSON-LD
+│   ├── features/                              # Módulos de dominio desacoplados (Feature-Driven)
+│   ├── lib/                                   # Clientes Supabase segregados (client.ts y server.ts)
+│   └── types/                                 # Interfaces TypeScript y tipos de base de datos
+├── supabase/                                  # Infraestructura SQL (data/, migrations/)
+├── .env.example                               # Plantilla de variables de entorno requeridas
+├── package.json                               # Dependencias y scripts del proyecto
+└── README.md                                  # Único archivo Markdown en la raíz del proyecto
 ```
 
 ---
@@ -109,29 +101,21 @@ cumbia-peruana/
 git clone https://github.com/JorgeJordyJaimes/cumbia-peruana.git
 cd cumbia-peruana
 npm install
-npm run skills:install # Restaura las 28 skills para agentes IA desde skills-lock.json (ver docs/catalogo-skills.md)
+npm run skills:install # Restaura las 28 skills para agentes IA desde skills-lock.json
 ```
 
 ### 3. Configuración de Variables de Entorno
-
-> [!CAUTION]
-> **POLÍTICA DE SEGURIDAD ESTRICTA SOBRE CLAVES Y SECRETOS**
-> Por seguridad y cumplimiento normativo, nunca almacenes claves reales ni tokens de Supabase dentro de archivos rastreados por Git.
-> Si acabas de clonar el repositorio, **solicita directamente las credenciales autorizadas al mantenedor del proyecto (Jordy Jaimes)**.
-
 Copia la plantilla y configura tus credenciales locales en `.env.local`:
 ```bash
 cp .env.example .env.local
 ```
 
-Configuración requerida en `.env.local`:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-clave-anonima-publica
 ```
 
 ### 4. Poblado de la Base de Datos
-Para cargar el catálogo histórico consolidado de sellos, álbumes, pistas y seudónimos hacia Supabase:
 ```bash
 npm run db:poblar
 ```
@@ -140,23 +124,26 @@ npm run db:poblar
 ```bash
 npm run dev
 ```
-La aplicación estará disponible localmente en [http://localhost:3000](http://localhost:3000).
+Disponible localmente en [http://localhost:3000](http://localhost:3000).
 
 ### 6. Scripts Disponibles
 ```bash
-npm run dev         # Iniciar entorno de desarrollo local con Turbopack
-npm run build       # Compilar aplicación para producción y validar TypeScript
-npm run lint        # Ejecutar análisis estático con ESLint
-npm run db:poblar   # Ejecutar script de poblado idempotente hacia Supabase Data API
+npm run dev            # Iniciar entorno de desarrollo local con Turbopack
+npm run build          # Compilar aplicación para producción y validar TypeScript
+npm run lint           # Ejecutar análisis estático con ESLint
+npm run db:poblar      # Ejecutar script de poblado idempotente hacia Supabase Data API
+npm run skills:install # Restaurar skills auditadas desde skills-lock.json
+npm run skills:list    # Listar skills instaladas
 ```
 
 ---
 
 ## 🛡️ Políticas Obligatorias del Proyecto
 
-1. **Soportes Físicos (Exclusividad Lado A y Lado B):** En la fonografía peruana de 1968–2005 los soportes físicos se limitan a Lado A y Lado B. Queda prohibido introducir lógica para lados C o D ([ADR 001](docs/adr/001-soporte-estricto-lados-a-b.md)).
+1. **Soportes Físicos (Exclusividad Lado A y Lado B):** En la fonografía peruana de 1968–2005 los soportes físicos se limitan a Lado A y Lado B. Queda prohibido introducir lógica para lados C o D ([ADR 001](docs/06-bitacora-y-decisiones/adr/001-soporte-estricto-lados-a-b.md)).
 2. **Supabase Data API (Concesión Explícita de Permisos):** Toda tabla creada en `public` debe tener RLS activo y conceder permisos explícitos de `GRANT` a `anon, authenticated, service_role`.
 3. **Flujo de Trabajo Git:** Todo commit debe seguir la convención de *Conventional Commits* estrictamente en **español** (`feat:`, `fix:`, `refactor:`, `docs:`, etc.) y enviarse inmediatamente a la rama remota correspondiente.
+4. **Regla de Documentación Continua (Living Docs):** Todo cambio en código, esquemas o diseño debe actualizar inmediatamente la documentación correspondiente en `docs/`.
 
 ---
 
