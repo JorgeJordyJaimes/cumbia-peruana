@@ -47,6 +47,9 @@ dialog.variant-oscura::backdrop {
   --color-logo-red: #e80000;
   --color-logo-gold: #f8c800;
   --color-brutalist-orange: #f1730c;
+  --color-ink-900: #140d04;
+  --color-ink-800: #1f1305;
+  --color-ink-700: #2a1c0e;
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
