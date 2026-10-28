@@ -8,16 +8,16 @@ export function NosotrosManifiesto() {
         {/* BLOQUE EDITORIAL / MANIFIESTO */}
         <div className="border-2 border-[#1F1305] bg-white text-[#1F1305] p-8 sm:p-12 lg:p-16 shadow-[8px_8px_0px_#1F1305] relative overflow-hidden">
           <div className="max-w-3xl space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 border border-[#1F1305] bg-[#F1730C] px-3 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#1F1305]">
+            <div className="inline-flex items-center gap-2 border border-[#1F1305] bg-[#F1730C] px-3 py-1 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305]">
               <Sparkles className="h-4 w-4" />
               <span>MANIFIESTO KUMBIA SOUND</span>
             </div>
 
-            <h2 className="font-cooper text-3xl sm:text-5xl font-black text-[#1F1305] tracking-tight leading-tight">
+            <h2 className="font-cooper text-3xl sm:text-5xl font-black text-[#1F1305] tracking-tight leading-tight [text-wrap:balance]">
               Quiénes rescatan la historia
             </h2>
 
-            <div className="space-y-4 font-sans text-sm sm:text-base text-[#5A5245] leading-relaxed">
+            <div className="max-w-[65ch] space-y-4 font-sans text-base leading-[1.7] text-[#1F1305] [text-wrap:pretty]">
               <p>
                 Durante décadas, la cumbia peruana fue consumida con fervor popular en barrios,
                 provincias y rockolas, pero marginada por los registros académicos oficiales. Músicos

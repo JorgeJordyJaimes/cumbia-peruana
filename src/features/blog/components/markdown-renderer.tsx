@@ -15,7 +15,7 @@ interface MarkdownRendererProps {
 /**
  * Renderizador ligero y nativo de Markdown editorial para crónicas musicales.
  * Convierte encabezados, citas históricas, párrafos, negritas y listas en elementos
- * semánticos con la estética tipográfica de Kumbia Sound sin dependencias externas pesadas.
+ * semánticos con la estética tipográfica de Kumbia Sound y confort de lectura (65ch, 16px, leading 1.7).
  */
 export function MarkdownRenderer({ content, className = "" }: MarkdownRendererProps) {
   if (!content) return null;
@@ -24,7 +24,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
   const blocks = content.split(BLOCKS_SPLIT_REGEX);
 
   return (
-    <div className={`space-y-6 text-[#1F1305] font-sans text-base sm:text-lg leading-relaxed ${className}`}>
+    <div className={`max-w-[65ch] mx-auto space-y-6 text-[#1F1305] font-sans text-base leading-[1.7] hyphens-auto ${className}`}>
       {blocks.map((block, bIdx) => {
         const trimmed = block.trim();
         if (!trimmed) return null;
@@ -34,7 +34,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <h1
               key={bIdx}
-              className="font-cooper text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1305] tracking-tight pt-4 pb-2 border-b-2 border-[#1F1305]"
+              className="font-cooper text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1305] tracking-tight pt-4 pb-2 border-b-2 border-[#1F1305] [text-wrap:balance]"
             >
               {renderInline(trimmed.slice(2))}
             </h1>
@@ -46,7 +46,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <h2
               key={bIdx}
-              className="font-cooper text-2xl sm:text-3xl font-bold text-[#E80000] tracking-tight pt-4 pb-1 border-b border-[#1F1305]/20"
+              className="font-cooper text-2xl sm:text-3xl font-bold text-[#E80000] tracking-tight pt-4 pb-1 border-b border-[#1F1305]/20 [text-wrap:balance]"
             >
               {renderInline(trimmed.slice(3))}
             </h2>
@@ -58,7 +58,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <h3
               key={bIdx}
-              className="font-cooper text-xl sm:text-2xl font-bold text-[#1F1305] tracking-tight pt-2"
+              className="font-cooper text-xl sm:text-2xl font-bold text-[#1F1305] tracking-tight pt-2 [text-wrap:balance]"
             >
               {renderInline(trimmed.slice(4))}
             </h3>
@@ -75,7 +75,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           return (
             <blockquote
               key={bIdx}
-              className="my-6 border-2 border-l-8 border-[#1F1305] bg-[#EDE0D0] py-4 px-6 italic font-serif text-lg sm:text-xl text-[#1F1305] shadow-[4px_4px_0px_#1F1305]"
+              className="my-6 border-2 border-l-8 border-[#1F1305] bg-[#EDE0D0] py-4 px-6 italic font-serif text-base sm:text-lg text-[#1F1305] shadow-[4px_4px_0px_#1F1305] [text-wrap:pretty]"
             >
               “{renderInline(quoteLines)}”
             </blockquote>
@@ -86,9 +86,9 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
         if (trimmed.split("\n").every((l) => l.trim().startsWith("- ") || l.trim().startsWith("* "))) {
           const items = trimmed.split("\n").map((l) => l.trim().replace(LIST_ITEM_PREFIX_REGEX, ""));
           return (
-            <ul key={bIdx} className="space-y-2 my-4 pl-6 list-disc list-outside text-[#1F1305]">
+            <ul key={bIdx} className="space-y-2 my-4 pl-6 list-disc list-outside text-[#1F1305] [text-wrap:pretty]">
               {items.map((item, iIdx) => (
-                <li key={iIdx} className="pl-1 text-[#5A5245]">
+                <li key={iIdx} className="pl-1 text-[#1F1305]">
                   {renderInline(item)}
                 </li>
               ))}
@@ -99,7 +99,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
         // Párrafo estándar con soporte para saltos de línea internos
         const lines = trimmed.split("\n");
         return (
-          <p key={bIdx} className="text-[#5A5245] leading-relaxed">
+          <p key={bIdx} className="text-[#1F1305] text-base leading-[1.7] [text-wrap:pretty]">
             {lines.map((line, lIdx) => (
               <React.Fragment key={lIdx}>
                 {renderInline(line)}

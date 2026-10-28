@@ -79,7 +79,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
           {/* Cabecera del Artículo */}
           <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-10 shadow-[6px_6px_0px_#1F1305] space-y-6">
             <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-[#665D4F] font-bold">
-              <span className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-[#F1730C] px-3 py-1 text-white shadow-[2px_2px_0px_#1F1305]">
+              <span className="inline-flex items-center gap-1.5 border border-[#1F1305] bg-[#F1730C] px-3 py-1 text-[#1F1305] shadow-[2px_2px_0px_#1F1305]">
                 <BookOpen className="h-3.5 w-3.5" />
                 {article.categoria}
               </span>
@@ -94,7 +94,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
               </span>
             </div>
 
-            <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-[#1F1305] tracking-tight leading-tight">
+            <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-[#1F1305] tracking-tight leading-tight [text-wrap:balance]">
               {article.titulo}
             </h1>
 
