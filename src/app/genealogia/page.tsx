@@ -70,7 +70,7 @@ export default async function GenealogiaPage() {
       {structuredDataList.length > 0 ? <JsonLd data={structuredDataList} /> : null}
 
       <BrutalistCoordinator>
-        <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">
+        <main id="contenido" className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">
           {/* Breadcrumb / Retorno al Home */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link

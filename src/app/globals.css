@@ -210,3 +210,12 @@ dialog.variant-oscura::backdrop {
   background-image: radial-gradient(rgba(31, 19, 5, 0.22) 1px, transparent 1px);
   background-size: 16px 16px;
 }
+/* Foco visible global accesible (3px solido con offset) */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #E80000;
+  outline-offset: 3px;
+}
+
+:where(.surface-dark, footer) :focus-visible {
+  outline-color: #EDE0D0;
+}

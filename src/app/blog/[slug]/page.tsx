@@ -60,7 +60,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       <BrutalistCoordinator>
-        <main className="container mx-auto max-w-4xl px-4 sm:px-6 pt-6 pb-20 space-y-8">
+        <main id="contenido" className="container mx-auto max-w-4xl px-4 sm:px-6 pt-6 pb-20 space-y-8">
           {/* Breadcrumb / Retorno a Crónicas */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link

@@ -278,7 +278,7 @@ export default async function VinilosPage() {
       {catalogJsonLd.length > 0 ? <JsonLd data={catalogJsonLd} /> : null}
 
       <BrutalistCoordinator totalAlbumes={totalAlbumes} totalSellos={totalSellos}>
-        <main className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-10">
+        <main id="contenido" className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-10">
           {/* Breadcrumb / Retorno a Portada */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link

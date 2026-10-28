@@ -296,7 +296,7 @@ export default async function AdminPage() {
       </header>
 
       {/* Main Admin Content */}
-      <main className="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 space-y-8">
+      <main id="contenido" className="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 space-y-8">
         {/* Banner de Estado y Estadísticas */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           <GlassCard className="p-4">
