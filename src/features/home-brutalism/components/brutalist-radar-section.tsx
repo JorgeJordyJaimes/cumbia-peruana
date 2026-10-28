@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import { Disc, ArrowUpRight, X, Music, ExternalLink, ShieldCheck } from "lucide-react";
 import type { AlbumItem } from "@/features/albumes";
 
@@ -297,37 +298,29 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
 
       {/* MODAL EDITORIAL: FICHA TÉCNICA DEL VINILO SELECCIONADO */}
       {selectedAlbum && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 select-none"
-          onClick={() => setSelectedAlbum(null)}
+        <ExpedienteModal
+          open={Boolean(selectedAlbum)}
+          onClose={() => setSelectedAlbum(null)}
+          variant="oscura"
+          size="lg"
+          labelledBy="modal-radar-title"
+          showCloseButton={true}
+          className="p-6 sm:p-8 space-y-6"
         >
-          <div
-            className="relative w-full max-w-2xl border-2 border-[#1F1305] bg-[#1F1305] text-white p-6 sm:p-8 shadow-[8px_8px_0px_#E80000] space-y-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Cabecera del Modal */}
-            <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4">
-              <div className="space-y-1">
-                <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
-                  {selectedAlbum.categoria} • PRENSAJE MATRIZ {selectedAlbum.ano}
-                </span>
-                <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white">
-                  {selectedAlbum.titulo}
-                </h3>
-                <p className="text-xs text-[#F1730C]">
-                  {selectedAlbum.artista} {"//"} {selectedAlbum.sello} ({selectedAlbum.catalogo})
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setSelectedAlbum(null)}
-                className="border-2 border-[#3E2C1B] bg-[#140D04] p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
-                title="Cerrar ficha"
-              >
-                <X className="h-5 w-5" />
-              </button>
+          {/* Cabecera del Modal */}
+          <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4 pr-10">
+            <div className="space-y-1">
+              <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
+                {selectedAlbum.categoria} • PRENSAJE MATRIZ {selectedAlbum.ano}
+              </span>
+              <h3 id="modal-radar-title" className="font-cooper text-2xl sm:text-3xl font-black text-white">
+                {selectedAlbum.titulo}
+              </h3>
+              <p className="text-xs text-[#F1730C]">
+                {selectedAlbum.artista} {"//"} {selectedAlbum.sello} ({selectedAlbum.catalogo})
+              </p>
             </div>
+          </div>
 
             {/* CUERPO DEL MODAL */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-5 items-start">
@@ -405,8 +398,7 @@ export function BrutalistRadarSection({ albums = [] }: BrutalistRadarSectionProp
                 <ExternalLink className="h-4 w-4" />
               </Link>
             </div>
-          </div>
-        </div>
+        </ExpedienteModal>
       )}
 
     </section>

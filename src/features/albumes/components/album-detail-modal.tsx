@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
-import { X, Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck } from "lucide-react";
+import { Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
+import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import { TracklistTable, type TrackItem } from "@/features/temas/components/tracklist-table";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
 import { AlbumCoverSlider } from "./album-cover-slider";
@@ -77,28 +78,15 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
   if (!album) return null;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10"
+    <ExpedienteModal
+      open={Boolean(album)}
+      onClose={onClose}
+      variant="clara"
+      size="xl"
+      labelledBy="modal-album-title"
+      showCloseButton={true}
+      className="p-6 sm:p-8 md:p-10"
     >
-      {/* Backdrop con Blur Profundo */}
-      <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
-      />
-
-      {/* Modal Container Brutalista */}
-      <div className="relative z-10 max-h-[92vh] w-full max-w-4xl lg:max-w-5xl overflow-y-auto overflow-x-hidden border-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] p-6 sm:p-8 md:p-10 shadow-[10px_10px_0px_#1F1305]">
-        {/* Botón Cerrar */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
-        >
-          <X className="h-5 w-5" />
-          <span className="sr-only">Cerrar ficha</span>
-        </button>
 
         {/* Cabecera Editorial */}
         <div className="flex flex-col sm:flex-row gap-6 md:gap-8 items-start">
@@ -125,7 +113,7 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
             </div>
 
             <div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-cooper font-black tracking-tight text-[#1F1305] leading-tight">
+              <h2 id="modal-album-title" className="text-2xl sm:text-3xl lg:text-4xl font-cooper font-black tracking-tight text-[#1F1305] leading-tight">
                 {album.title}
               </h2>
               <p className="text-base sm:text-lg text-[#5A5245] font-bold mt-0.5">
@@ -204,7 +192,6 @@ export function AlbumDetailModal({ album, tracks = [], onClose }: AlbumDetailMod
           Esta plataforma preserva metadatos técnicos y musicológicos para investigadores y DJs.
           No contiene archivos ni reproducción de audio.
         </div>
-      </div>
-    </div>
+    </ExpedienteModal>
   );
 }

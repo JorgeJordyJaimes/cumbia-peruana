@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { X, GitFork, Disc, Music, Loader2, Calendar, User, ArrowDown } from "lucide-react";
 import { getGenealogiaVersionesClient } from "../services/genealogia-service";
+import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import type { GenealogiaVersionesResult, NodoGenealogiaVersion } from "@/types/database";
 
 interface VersionesExplorerModalProps {
@@ -58,26 +59,15 @@ export function VersionesExplorerModal({
   if (!temaId) return null;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+    <ExpedienteModal
+      open={Boolean(temaId)}
+      onClose={onClose}
+      variant="clara"
+      size="lg"
+      labelledBy="modal-versiones-title"
+      showCloseButton={true}
+      className="p-6 sm:p-8"
     >
-      <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
-      />
-
-      <div className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto border-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] p-6 sm:p-8 shadow-[8px_8px_0px_#1F1305]">
-        {/* Botón Cerrar */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
-        >
-          <X className="h-5 w-5" />
-          <span className="sr-only">Cerrar</span>
-        </button>
 
         {/* Cabecera */}
         <div className="space-y-2 border-b-2 border-[#1F1305] pb-5 pr-10">
@@ -86,7 +76,7 @@ export function VersionesExplorerModal({
             <span>GENEALOGÍA DE VERSIONES (WITH RECURSIVE)</span>
           </div>
 
-          <h2 className="font-cooper text-2xl sm:text-3xl font-black text-[#1F1305]">
+          <h2 id="modal-versiones-title" className="font-cooper text-2xl sm:text-3xl font-black text-[#1F1305]">
             {tituloTema ? `Linaje de: "${tituloTema}"` : "Árbol Fonográfico de Versiones"}
           </h2>
 
@@ -247,7 +237,6 @@ export function VersionesExplorerModal({
             </div>
           )}
         </div>
-      </div>
-    </div>
+    </ExpedienteModal>
   );
 }

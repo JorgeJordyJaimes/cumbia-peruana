@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo, useDeferredValue } from "react";
+import { useEffect, useState, useMemo, useDeferredValue, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Search, X, Disc3, Music2, Users, BookOpen, ArrowRight } from "lucide-react";
 import { musicosGenealogia, temasDJMock, historiasFondoMock } from "../data/cumbia-mock";
@@ -15,6 +15,18 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const lastActiveElementRef = useRef<HTMLElement | null>(null);
+
+  // Guardar foco al abrir y restaurarlo al cerrar
+  useEffect(() => {
+    if (isOpen) {
+      lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+      setSelectedIndex(0);
+    } else if (lastActiveElementRef.current && document.body.contains(lastActiveElementRef.current)) {
+      lastActiveElementRef.current.focus();
+    }
+  }, [isOpen]);
 
   // Atajo de teclado global ⌘K o Ctrl+K
   useEffect(() => {
@@ -28,6 +40,14 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         }
       } else if (e.key === "Escape" && isOpen) {
         onClose();
+      } else if (isOpen) {
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setSelectedIndex((prev) => prev + 1);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+        }
       }
     };
 
@@ -87,8 +107,16 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
           <Search className="h-5 w-5 text-[#E80000] shrink-0 mr-3" />
           <input
             type="text"
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-haspopup="listbox"
+            aria-controls="command-palette-results"
+            aria-autocomplete="list"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelectedIndex(0);
+            }}
             placeholder="Buscar por guitarrista, grupo, tema, sello o BPM..."
             className="w-full py-4 bg-transparent font-sans text-base text-[#1F1305] placeholder-[#746B5C] font-medium focus:outline-none"
             autoFocus
@@ -108,7 +136,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         </div>
 
         {/* Results Body */}
-        <div className="max-h-[60vh] overflow-y-auto p-4 space-y-4 bg-[#EDE0D0]">
+        <div id="command-palette-results" role="listbox" className="max-h-[60vh] overflow-y-auto p-4 space-y-4 bg-[#EDE0D0] overscroll-contain">
           {!query.trim() ? (
             <div className="py-6 text-center space-y-3 font-mono text-xs text-[#5A5245]">
               <p className="text-[#1F1305] font-bold uppercase tracking-wider">Apartados directos del archivo:</p>

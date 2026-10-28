@@ -5,6 +5,24 @@
 @custom-variant dark (&:is(.dark *));
 @custom-variant no-hover (@media (hover: none));
 
+/* Scroll Lock y Backdrop Nativo de ExpedienteModal */
+body:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+dialog.variant-oscura::backdrop {
+  background-color: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

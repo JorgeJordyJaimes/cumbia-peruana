@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import {
   Disc,
   ArrowUpRight,
@@ -246,42 +247,34 @@ export function BrutalistGenresSection({ genreCounts }: BrutalistGenresSectionPr
 
       {/* MODAL DEL INFORME PERICIAL DEL SUBGÉNERO */}
       {selectedGenero && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200 select-none"
-          onClick={() => setSelectedGenero(null)}
+        <ExpedienteModal
+          open={Boolean(selectedGenero)}
+          onClose={() => setSelectedGenero(null)}
+          variant="oscura"
+          size="md"
+          labelledBy="modal-genero-title"
+          showCloseButton={true}
+          className="p-6 sm:p-8 space-y-6"
         >
-          <div
-            className="relative w-full max-w-xl border-2 border-[#1F1305] bg-[#1F1305] text-white p-6 sm:p-8 shadow-[8px_8px_0px_#E80000] space-y-6 font-mono"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Cabecera del Modal */}
-            <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4">
-              <div className="space-y-1">
-                <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
-                  INFORME DE SUBGÉNERO NO. 0{selectedGenero.id} // LEGAJO PERICIAL
+          {/* Cabecera del Modal */}
+          <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4 pr-10">
+            <div className="space-y-1">
+              <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
+                INFORME DE SUBGÉNERO NO. 0{selectedGenero.id} // LEGAJO PERICIAL
+              </span>
+              <h3 id="modal-genero-title" className="font-cooper text-2xl sm:text-3xl font-black text-white">
+                {selectedGenero.nombre}
+              </h3>
+              <div className="flex items-center gap-2 text-xs text-[#F1730C]">
+                <MapPin className="h-3.5 w-3.5 text-[#F1730C]" />
+                <span>{selectedGenero.region}</span>
+                <span className="text-[#746B5C]">|</span>
+                <span className="text-white font-bold">
+                  ★ {genreCounts?.[selectedGenero.nombre] ?? selectedGenero.titulosBase} TÍTULOS EN BÓVEDA
                 </span>
-                <h3 className="font-cooper text-2xl sm:text-3xl font-black text-white">
-                  {selectedGenero.nombre}
-                </h3>
-                <div className="flex items-center gap-2 text-xs text-[#F1730C]">
-                  <MapPin className="h-3.5 w-3.5 text-[#F1730C]" />
-                  <span>{selectedGenero.region}</span>
-                  <span className="text-[#746B5C]">|</span>
-                  <span className="text-white font-bold">
-                    ★ {genreCounts?.[selectedGenero.nombre] ?? selectedGenero.titulosBase} TÍTULOS EN BÓVEDA
-                  </span>
-                </div>
               </div>
-
-              <button
-                type="button"
-                onClick={() => setSelectedGenero(null)}
-                className="border-2 border-[#3E2C1B] bg-[#3E2C1B] p-1.5 text-white hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
-                title="Cerrar ventana"
-              >
-                <X className="h-5 w-5" />
-              </button>
             </div>
+          </div>
 
             {/* Reseña Histórica */}
             <div className="space-y-2 text-xs text-[#EDE0D0] leading-relaxed">
@@ -340,8 +333,7 @@ export function BrutalistGenresSection({ genreCounts }: BrutalistGenresSectionPr
                 <ExternalLink className="h-4 w-4" />
               </Link>
             </div>
-          </div>
-        </div>
+        </ExpedienteModal>
       )}
 
     </section>
