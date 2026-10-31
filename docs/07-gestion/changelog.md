@@ -17,6 +17,23 @@
 
 ---
 
+## [1.1.0] - 2026-10-31 (Reorganización Canónica de 7 Secciones & Informes Periciales)
+
+### Añadido
+- Nueva ruta y módulo **EXP. 03: Informes Periciales** (`/informes` y `/informes/[id]`) con catálogo biográfico pericial, códigos `INF-NNNN`, sellos de verificación (`[FUENTE PRIMARIA]`, `[FUENTE SECUNDARIA]`, `[SIN VERIFICAR]`) y tablas automáticas de agrupaciones, grabaciones de sesión y composiciones.
+- Nueva ruta y módulo **LEGAJO** (`/legajo`) con Acta Fundacional, Equipo de Peritaje, Normas de Catalogación, Solicitud de Rectificación y Canales Oficiales.
+- Redirección automática HTTP permanente desde `/nosotros` hacia `/legajo`.
+- Rediseño de **EXP. 02: Genealogía** (`/genealogia`) estructurado en 3 carpetas archivadoras: Agrupaciones con etapas históricas (`AGR-001`), Árbol recursivo de versiones (`VER-000`) y Grafo relacional de sesionistas (`SES-000`).
+- Nueva vitrina curatorial de 4 puntos y archivo histórico en **EXP. 05: Radar** (`/radar`).
+- Formalización de la Planilla de Mezcla sin reproducción de audio en **EXP. 04: Match BPM** (`/match-bpm`).
+- Rediseño de la cabecera en **dos niveles editoriales** (`BrutalistNavbar`) para garantizar contención geométrica y eliminar el desbordamiento horizontal en todas las resoluciones.
+
+### Cambiado
+- Actualización integral de [`pantallas.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/pantallas.md) reflejando el nuevo mapa canónico de navegación de 7 expedientes.
+- Aislamiento completo del panel `/admin` eliminando accesos públicos en Home, TopBar y Footer.
+
+---
+
 ## [1.0.0] - 2026-10-31 (Adopción de Sistema Documental Canónico)
 
 ### Añadido
