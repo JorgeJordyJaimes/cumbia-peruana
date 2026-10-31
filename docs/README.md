@@ -37,7 +37,8 @@ docs/
 │   └── decisiones.md                   # Registro de decisiones arquitectónicas DEC-001 a DEC-007
 ├── 04-diseno/                          # Identidad visual, tokens CSS y especificación de pantallas
 │   ├── sistema-visual.md               # Tokens de diseño, tipografía, colores y accesibilidad
-│   └── pantallas.md                    # Wireframes textuales, regiones y estados por vista
+│   ├── pantallas.md                    # Wireframes textuales, regiones y estados por vista pública
+│   └── panel-admin.md                  # Arquitectura, módulos, pestañas y pipeline WebP del panel /admin
 ├── 05-entorno-y-operacion/             # Puesta en marcha, dependencias e infraestructura
 │   ├── instalacion-y-entorno.md        # Instalación en máquina limpia, variables y resolución de fallos
 │   └── despliegue.md                   # Despliegue en Vercel, configuración de Supabase y respaldos
@@ -70,6 +71,7 @@ docs/
 | ¿Por qué no usamos Sharp en el servidor o por qué no alojamos archivos MP3? | [03-arquitectura/decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md) |
 | ¿Cuáles son los colores hexadecimales, tipografías y sombras permitidas? | [04-diseno/sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md) |
 | ¿Cómo está estructurada visualmente la pantalla de detalle de álbum? | [04-diseno/pantallas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/pantallas.md) |
+| ¿Cómo está construido y ordenado el panel de administración (/admin)? | [04-diseno/panel-admin.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/panel-admin.md) |
 | ¿Cómo instalo el proyecto en una máquina limpia desde cero? | [05-entorno-y-operacion/instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md) |
 | ¿Qué variables requiere Vercel en producción y cómo se hace un rollback? | [05-entorno-y-operacion/despliegue.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/despliegue.md) |
 | ¿Qué comandos debo ejecutar antes de hacer commit? | [06-calidad/pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md) |
