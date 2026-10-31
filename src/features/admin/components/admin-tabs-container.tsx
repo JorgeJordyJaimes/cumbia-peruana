@@ -9,11 +9,13 @@ import {
   type AdminPersonItem,
   type AdminLabelItem,
 } from "./admin-media-manager";
-import { AdminBlogManager } from "./admin-blog-manager";
+import { AdminDashboardResumen } from "./admin-dashboard-resumen";
+import { AdminMesaRedaccion } from "./admin-mesa-redaccion";
 import { AdminHomeConfig } from "./admin-home-config";
 import {
-  Images,
-  BookOpen,
+  BarChart3,
+  Archive,
+  FileText,
   Sliders,
 } from "lucide-react";
 import type { Articulo, ConfiguracionHome } from "@/types/blog";
@@ -27,7 +29,7 @@ interface AdminTabsContainerProps {
   initialHomeConfig: ConfiguracionHome;
 }
 
-type MainTab = "catalogo" | "blog" | "home";
+export type MainTab = "resumen" | "archivo" | "redaccion" | "portada";
 
 export function AdminTabsContainer({
   initialAlbums,
@@ -37,71 +39,97 @@ export function AdminTabsContainer({
   initialArticles,
   initialHomeConfig,
 }: AdminTabsContainerProps) {
-  const [activeTab, setActiveTab] = useState<MainTab>("catalogo");
+  const [activeTab, setActiveTab] = useState<MainTab>("resumen");
 
   return (
-    <div className="space-y-8">
-      {/* Barra de Navegación por Pestañas Principales */}
-      <GlassCard className="p-2 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2">
+    <div className="space-y-8 font-mono">
+      {/* ============================================================ */}
+      {/* BARRA DE NAVEGACIÓN EN 4 PESTAÑAS CANÓNICAS                  */}
+      {/* ============================================================ */}
+      <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-2 flex flex-wrap items-center justify-between gap-2 shadow-[4px_4px_0px_#1F1305]">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          {/* Pestaña 1: RESUMEN */}
           <button
             type="button"
-            onClick={() => setActiveTab("catalogo")}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-semibold transition-all ${
-              activeTab === "catalogo"
-                ? "bg-amber-500 text-neutral-950 shadow-md shadow-amber-500/20"
-                : "text-neutral-400 hover:text-white hover:bg-white/5"
+            onClick={() => setActiveTab("resumen")}
+            className={`flex items-center gap-2 border-2 border-[#1F1305] px-3.5 sm:px-4 py-2 font-mono text-xs font-black transition-all ${
+              activeTab === "resumen"
+                ? "bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000] -translate-y-0.5"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
             }`}
           >
-            <Images className="h-4 w-4" />
-            <span>Catálogo & Fotos</span>
+            <BarChart3 className="h-4 w-4 text-[#F8C800]" />
+            <span>01 · RESUMEN</span>
           </button>
 
+          {/* Pestaña 2: ARCHIVO */}
           <button
             type="button"
-            onClick={() => setActiveTab("blog")}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-semibold transition-all ${
-              activeTab === "blog"
-                ? "bg-amber-500 text-neutral-950 shadow-md shadow-amber-500/20"
-                : "text-neutral-400 hover:text-white hover:bg-white/5"
+            onClick={() => setActiveTab("archivo")}
+            className={`flex items-center gap-2 border-2 border-[#1F1305] px-3.5 sm:px-4 py-2 font-mono text-xs font-black transition-all ${
+              activeTab === "archivo"
+                ? "bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000] -translate-y-0.5"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
             }`}
           >
-            <BookOpen className="h-4 w-4" />
-            <span>Blog & Crónicas</span>
+            <Archive className="h-4 w-4 text-[#F1730C]" />
+            <span>02 · ARCHIVO</span>
+          </button>
+
+          {/* Pestaña 3: REDACCIÓN */}
+          <button
+            type="button"
+            onClick={() => setActiveTab("redaccion")}
+            className={`flex items-center gap-2 border-2 border-[#1F1305] px-3.5 sm:px-4 py-2 font-mono text-xs font-black transition-all ${
+              activeTab === "redaccion"
+                ? "bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000] -translate-y-0.5"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+            }`}
+          >
+            <FileText className="h-4 w-4 text-[#E80000]" />
+            <span>03 · REDACCIÓN</span>
             {initialArticles.length > 0 && (
-              <span
-                className={`rounded-full px-1.5 py-0.2 text-[10px] ${
-                  activeTab === "blog"
-                    ? "bg-neutral-950/30 text-neutral-950"
-                    : "bg-white/10 text-neutral-300"
-                }`}
-              >
+              <span className="border border-current px-1.5 py-0.2 text-[10px] bg-[#E80000] text-white">
                 {initialArticles.length}
               </span>
             )}
           </button>
 
+          {/* Pestaña 4: PORTADA */}
           <button
             type="button"
-            onClick={() => setActiveTab("home")}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-semibold transition-all ${
-              activeTab === "home"
-                ? "bg-amber-500 text-neutral-950 shadow-md shadow-amber-500/20"
-                : "text-neutral-400 hover:text-white hover:bg-white/5"
+            onClick={() => setActiveTab("portada")}
+            className={`flex items-center gap-2 border-2 border-[#1F1305] px-3.5 sm:px-4 py-2 font-mono text-xs font-black transition-all ${
+              activeTab === "portada"
+                ? "bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000] -translate-y-0.5"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
             }`}
           >
-            <Sliders className="h-4 w-4" />
-            <span>Personalizar Inicio</span>
+            <Sliders className="h-4 w-4 text-[#10B981]" />
+            <span>04 · PORTADA</span>
           </button>
         </div>
 
-        <div className="px-3 py-1 font-mono text-[11px] text-neutral-500 hidden sm:block">
-          Modo CMS Activo
+        <div className="px-3 py-1 font-mono text-[11px] text-[#5A5245] font-bold hidden md:block">
+          MODO CMS ACTIVO // 4 MÓDULOS
         </div>
-      </GlassCard>
+      </div>
 
-      {/* Renderizado de la pestaña activa */}
-      {activeTab === "catalogo" && (
+      {/* ============================================================ */}
+      {/* RENDERIZADO DEL MÓDULO ACTIVO                                */}
+      {/* ============================================================ */}
+      {activeTab === "resumen" && (
+        <AdminDashboardResumen
+          albums={initialAlbums}
+          groups={initialGroups}
+          persons={initialPersons}
+          labels={initialLabels}
+          articles={initialArticles}
+          onNavigateTab={(tab) => setActiveTab(tab)}
+        />
+      )}
+
+      {activeTab === "archivo" && (
         <AdminMediaManager
           initialAlbums={initialAlbums}
           initialGroups={initialGroups}
@@ -110,11 +138,15 @@ export function AdminTabsContainer({
         />
       )}
 
-      {activeTab === "blog" && (
-        <AdminBlogManager initialArticles={initialArticles} />
+      {activeTab === "redaccion" && (
+        <AdminMesaRedaccion
+          groups={initialGroups}
+          persons={initialPersons}
+          articles={initialArticles}
+        />
       )}
 
-      {activeTab === "home" && (
+      {activeTab === "portada" && (
         <AdminHomeConfig
           initialConfig={initialHomeConfig}
           allAlbums={initialAlbums}

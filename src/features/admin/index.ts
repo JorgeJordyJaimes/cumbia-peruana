@@ -3,3 +3,7 @@ export * from './components/admin-blog-manager';
 export * from './components/admin-home-config';
 export * from './components/admin-tabs-container';
 export * from './components/admin-group-detail';
+export * from './components/editor-pericial';
+export * from './components/admin-dashboard-resumen';
+export * from './components/admin-mesa-redaccion';
+export * from './components/admin-person-detail';

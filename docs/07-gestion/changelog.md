@@ -17,6 +17,23 @@
 
 ---
 
+## [1.2.0] - 2026-10-31 (Rediseño del Panel Admin · Módulo de Redacción Editorial y Editor Pericial)
+
+### Añadido
+- **Nueva estructura de navegación en 4 pestañas canónicas** en el panel `/admin`: `01 · RESUMEN`, `02 · ARCHIVO`, `03 · REDACCIÓN` y `04 · PORTADA`.
+- **Nuevo Dashboard RESUMEN (`AdminDashboardResumen`):** KPIs cruzados de custodia fotográfica de medios y de salud de redacción editorial (informes publicados/borradores, agrupaciones con historia, notas de investigación y estado del Radar mensual).
+- **Nuevo Centro de Redacción (`AdminMesaRedaccion`):** Mesa de redacción unificada con filtros cruzados por tipo y estado, más 5 sub-vistas operativas (Informes, Agrupaciones, Notas, Radar y Legajo).
+- **Editor Pericial Reutilizable (`EditorPericial`):** Barra Markdown, vista previa fiel dividida en vivo, cálculo dinámico de tiempo de lectura por conteo de palabras, panel de fuentes estructuradas (primarias/secundarias), selector con validación de sello pericial (`[FUENTE PRIMARIA]`, `[FUENTE SECUNDARIA]`, `[SIN VERIFICAR]`) y autoguardado en `localStorage`.
+- **Nueva ruta `/admin/persona/[id]` (`AdminPersonDetail`):** Ficha pericial de músico con 5 pestañas: Datos biográficos, Retrato WebP, Informe pericial, Participación fonográfica (solo lectura) y Vista previa fiel con `InformeDetailView`.
+- **Ampliación de `/admin/grupo/[id]` (`AdminGroupDetail`):** 3 pestañas especializadas que añaden Historia general y Etapas cronológicas estructuradas (orden, fechas, título, directores y vocalistas referenciando personas en BD, y reseñas narrativas).
+- **Migración SQL DDL (`supabase/migrations/20261031120000_modulo_redaccion_editorial.sql`):** Creación de tablas editoriales (`informes_personas`, `grupo_historias`, `grupo_etapas`, `radar_hallazgos`, `legajo_bloques`, extensiones en `articulos`) y políticas RLS con filtrado `estado = 'publicado'` y `publish_at <= now()`.
+- **Mejoras al gestor de Notas (`AdminBlogManager`):** Categorías canónicas editoriales y cálculo automático de minutos de lectura.
+
+### Cambiado
+- Actualización de [`panel-admin.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/panel-admin.md) con la arquitectura completa de 4 pestañas y flujos editoriales.
+
+---
+
 ## [1.1.0] - 2026-10-31 (Reorganización Canónica de 7 Secciones & Informes Periciales)
 
 ### Añadido

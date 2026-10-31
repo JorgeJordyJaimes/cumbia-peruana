@@ -663,6 +663,230 @@ export interface Database {
         }
         Relationships: []
       }
+      informes_personas: {
+        Row: {
+          id_persona: number
+          contenido_md: string
+          sello_verificacion: string
+          fuentes: Json
+          estado: string
+          publish_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id_persona: number
+          contenido_md?: string
+          sello_verificacion?: string
+          fuentes?: Json
+          estado?: string
+          publish_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id_persona?: number
+          contenido_md?: string
+          sello_verificacion?: string
+          fuentes?: Json
+          estado?: string
+          publish_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "informes_personas_id_persona_fkey"
+            columns: ["id_persona"]
+            isOneToOne: true
+            referencedRelation: "personas"
+            referencedColumns: ["id_persona"]
+          }
+        ]
+      }
+      grupo_historias: {
+        Row: {
+          id_grupo: number
+          contenido_md: string
+          fuentes: Json
+          estado: string
+          updated_at: string | null
+        }
+        Insert: {
+          id_grupo: number
+          contenido_md?: string
+          fuentes?: Json
+          estado?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id_grupo?: number
+          contenido_md?: string
+          fuentes?: Json
+          estado?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_historias_id_grupo_fkey"
+            columns: ["id_grupo"]
+            isOneToOne: true
+            referencedRelation: "grupos"
+            referencedColumns: ["id_grupo"]
+          }
+        ]
+      }
+      grupo_etapas: {
+        Row: {
+          id_etapa: number
+          id_grupo: number
+          orden: number
+          fecha_inicio: string | null
+          fecha_fin: string | null
+          titulo: string
+          id_director: number | null
+          id_vocalista: number | null
+          estilo: string | null
+          texto_md: string
+          created_at: string | null
+        }
+        Insert: {
+          id_etapa?: number
+          id_grupo: number
+          orden?: number
+          fecha_inicio?: string | null
+          fecha_fin?: string | null
+          titulo: string
+          id_director?: number | null
+          id_vocalista?: number | null
+          estilo?: string | null
+          texto_md?: string
+          created_at?: string | null
+        }
+        Update: {
+          id_etapa?: number
+          id_grupo?: number
+          orden?: number
+          fecha_inicio?: string | null
+          fecha_fin?: string | null
+          titulo?: string
+          id_director?: number | null
+          id_vocalista?: number | null
+          estilo?: string | null
+          texto_md?: string
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_etapas_id_grupo_fkey"
+            columns: ["id_grupo"]
+            isOneToOne: false
+            referencedRelation: "grupos"
+            referencedColumns: ["id_grupo"]
+          },
+          {
+            foreignKeyName: "grupo_etapas_id_director_fkey"
+            columns: ["id_director"]
+            isOneToOne: false
+            referencedRelation: "personas"
+            referencedColumns: ["id_persona"]
+          },
+          {
+            foreignKeyName: "grupo_etapas_id_vocalista_fkey"
+            columns: ["id_vocalista"]
+            isOneToOne: false
+            referencedRelation: "personas"
+            referencedColumns: ["id_persona"]
+          }
+        ]
+      }
+      radar_hallazgos: {
+        Row: {
+          mes: string
+          año: number
+          nombre_mes: string
+          categoria: string
+          titulo: string
+          subtitulo: string | null
+          artista: string
+          año_grabacion: number | null
+          sello: string | null
+          por_que_importa_md: string
+          portada_url: string | null
+          url_youtube: string | null
+          url_spotify: string | null
+          destino_tipo: string
+          destino_id: number | null
+          estado: string
+          publish_at: string | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          mes: string
+          año: number
+          nombre_mes: string
+          categoria: string
+          titulo: string
+          subtitulo?: string | null
+          artista: string
+          año_grabacion?: number | null
+          sello?: string | null
+          por_que_importa_md: string
+          portada_url?: string | null
+          url_youtube?: string | null
+          url_spotify?: string | null
+          destino_tipo?: string
+          destino_id?: number | null
+          estado?: string
+          publish_at?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          mes?: string
+          año?: number
+          nombre_mes?: string
+          categoria?: string
+          titulo?: string
+          subtitulo?: string | null
+          artista?: string
+          año_grabacion?: number | null
+          sello?: string | null
+          por_que_importa_md?: string
+          portada_url?: string | null
+          url_youtube?: string | null
+          url_spotify?: string | null
+          destino_tipo?: string
+          destino_id?: number | null
+          estado?: string
+          publish_at?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      legajo_bloques: {
+        Row: {
+          clave: string
+          titulo: string
+          contenido_md: string
+          orden: number
+          updated_at: string | null
+        }
+        Insert: {
+          clave: string
+          titulo: string
+          contenido_md?: string
+          orden?: number
+          updated_at?: string | null
+        }
+        Update: {
+          clave?: string
+          titulo?: string
+          contenido_md?: string
+          orden?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

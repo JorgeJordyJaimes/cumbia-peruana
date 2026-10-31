@@ -9,6 +9,9 @@ import {
   type GroupDetailAlbum,
   type GroupSummaryItem,
   type GroupDetailTrack,
+  type GrupoHistoriaRow,
+  type GrupoEtapaItem,
+  type PersonOptionItem,
 } from "@/features/admin/components/admin-group-detail";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 
@@ -66,11 +69,14 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
     redirect("/admin/login");
   }
 
-  // 2. Consulta paralela: datos del grupo, sus álbumes y catálogo de grupos
+  // 2. Consulta paralela: datos del grupo, álbumes, catálogo de grupos, personas, historia y etapas
   const [
     { data: rawGroup, error: groupError },
-    { data: rawAlbums, error: albumsError },
+    { data: rawAlbums },
     { data: rawAllGroups },
+    { data: rawAllPersons },
+    { data: rawHistoria },
+    { data: rawEtapas },
   ] = await Promise.all([
     supabase
       .from("grupos")
@@ -115,6 +121,23 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
       .from("grupos")
       .select("id_grupo, nombre_grupo")
       .order("nombre_grupo", { ascending: true }),
+
+    supabase
+      .from("personas")
+      .select("id_persona, nombre, apodo")
+      .order("nombre", { ascending: true }),
+
+    supabase
+      .from("grupo_historias")
+      .select("*")
+      .eq("id_grupo", groupId)
+      .maybeSingle(),
+
+    supabase
+      .from("grupo_etapas")
+      .select("*")
+      .eq("id_grupo", groupId)
+      .order("orden", { ascending: true }),
   ]);
 
   if (groupError || !rawGroup) {
@@ -124,6 +147,7 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
   const typedGroup = rawGroup as unknown as RawGroupQuery;
   const typedAlbums = (rawAlbums as unknown as RawAlbumQuery[]) || [];
   const typedAllGroups = (rawAllGroups as unknown as Array<{ id_grupo: number; nombre_grupo: string }>) || [];
+  const typedAllPersons = (rawAllPersons as unknown as Array<{ id_persona: number; nombre: string; apodo: string | null }>) || [];
 
   // Mapear datos del grupo
   const groupData: GroupDetailData = {
@@ -183,6 +207,15 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
     name: g.nombre_grupo,
   }));
 
+  const allPersonsList: PersonOptionItem[] = typedAllPersons.map((p) => ({
+    id: p.id_persona,
+    name: p.nombre,
+    nickname: p.apodo,
+  }));
+
+  const initialHistoria = rawHistoria as unknown as GrupoHistoriaRow | null;
+  const initialEtapas = (rawEtapas as unknown as GrupoEtapaItem[]) || [];
+
   return (
     <div className="relative min-h-screen bg-[#0a0a0c] text-white selection:bg-amber-500 selection:text-black">
       <AmbientGlow variant="warm-solar" className="top-0 right-0" />
@@ -202,14 +235,14 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-bold text-white tracking-tight">
-                  Gestión Visual: {groupData.name}
+                  Expediente de Agrupación: {groupData.name}
                 </h1>
                 <span className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400">
                   <ShieldCheck className="h-3 w-3" /> Admin
                 </span>
               </div>
               <p className="font-mono text-[11px] text-neutral-400">
-                Archivo Fotográfico y Discográfico de la Agrupación
+                Archivo Fotográfico, Discografía, Historia y Línea de Tiempo
               </p>
             </div>
           </div>
@@ -233,6 +266,9 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
           group={groupData}
           initialAlbums={groupAlbums}
           allGroups={allGroupsList}
+          initialHistoria={initialHistoria}
+          initialEtapas={initialEtapas}
+          allPersons={allPersonsList}
         />
       </main>
     </div>

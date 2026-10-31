@@ -51,7 +51,7 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
       slug: "",
       resumen: "",
       contenido: "",
-      categoria: "Historia & Orígenes",
+      categoria: "Crónica de Época",
       tiempo_lectura: "5 min de lectura",
       autor_nombre: "Kumbia Sound // Archivo Histórico",
       publicado: true,
@@ -413,7 +413,16 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                     id="blog-content-textarea"
                     rows={16}
                     value={activeArticle.contenido || ""}
-                    onChange={(e) => setActiveArticle({ ...activeArticle, contenido: e.target.value })}
+                    onChange={(e) => {
+                      const newContent = e.target.value;
+                      const words = newContent.trim().split(/\s+/).filter(Boolean).length;
+                      const autoRead = `${Math.max(1, Math.ceil(words / 200))} min de lectura`;
+                      setActiveArticle({
+                        ...activeArticle,
+                        contenido: newContent,
+                        tiempo_lectura: autoRead,
+                      });
+                    }}
                     placeholder="Escribe aquí el contenido de la crónica... Puedes usar formato Markdown (## subtítulos, **negritas**, > citas históricas, etc.)."
                     className="w-full rounded-xl border border-white/10 bg-neutral-900/90 p-4 font-mono text-sm text-neutral-200 placeholder-neutral-600 focus:border-amber-500/60 focus:outline-none leading-relaxed"
                   />
@@ -472,11 +481,11 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                     onChange={(e) => setActiveArticle({ ...activeArticle, categoria: e.target.value })}
                     className="w-full rounded-xl border border-white/10 bg-neutral-900 px-3 py-2 font-mono text-xs text-neutral-200 focus:outline-none"
                   >
-                    <option value="Historia & Orígenes">Historia & Orígenes</option>
+                    <option value="Crónica de Época">Crónica de Época</option>
                     <option value="Pioneros de la Cumbia">Pioneros de la Cumbia</option>
-                    <option value="Tornamesismo & Vinilos">Tornamesismo & Vinilos</option>
-                    <option value="Reseña Discográfica">Reseña Discográfica</option>
-                    <option value="Análisis Musical DJ">Análisis Musical DJ</option>
+                    <option value="Sellos Discográficos">Sellos Discográficos</option>
+                    <option value="Prensajes y Matrices">Prensajes y Matrices</option>
+                    <option value="Metodología Pericial">Metodología Pericial</option>
                   </select>
                 </div>
 

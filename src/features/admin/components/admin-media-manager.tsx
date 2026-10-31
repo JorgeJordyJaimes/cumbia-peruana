@@ -8,7 +8,6 @@ import { ImageUploader } from "@/features/storage/components/image-uploader";
 import {
   Search,
   Disc3,
-  Disc,
   Users,
   User,
   Building2,
@@ -18,8 +17,6 @@ import {
   ArrowRight,
   X,
   Sparkles,
-  Radio,
-  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AlbumCoverSlider } from "@/features/albumes";
@@ -740,6 +737,16 @@ export function AdminMediaManager({
                   label="Fotografía del Músico / Compositor"
                   onUploaded={(url) => handleUpdatePersonPhoto(person.id, url)}
                 />
+
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+                  <Link
+                    href={`/admin/persona/${person.id}`}
+                    className="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 py-1.5 font-mono text-xs font-bold text-amber-300 hover:bg-amber-500/20 transition-colors"
+                  >
+                    <span>Ficha Pericial & Redacción</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
               </GlassCard>
             ))}
           </div>
