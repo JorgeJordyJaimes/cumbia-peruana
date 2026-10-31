@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+
 interface BrutalistTopBarProps {
   totalAlbumes?: number | null;
   totalSellos?: number | null;
@@ -30,7 +33,7 @@ export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarPr
           <span>CUSTODIA: PATRIMONIAL</span>
         </div>
 
-        {/* Derecha: Conteo de evidencias */}
+        {/* Derecha: Conteo de evidencias y acceso al Panel de Admin */}
         <div className="flex items-center gap-2.5 whitespace-nowrap ml-auto sm:ml-0">
           <div className="flex items-center gap-1.5 font-bold text-[#1F1305]">
             <span className="text-[#E80000] font-black">★</span>
@@ -41,6 +44,14 @@ export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarPr
           <span className="hidden sm:inline border border-[#1F1305] bg-white px-1.5 py-0.2 font-black text-[#10B981] text-[10px] shadow-[1px_1px_0px_#1F1305]">
             ● ACTIVO
           </span>
+          <Link
+            href="/admin"
+            className="border-2 border-[#1F1305] bg-white hover:bg-[#E80000] hover:text-white px-2 py-0.5 font-black text-[10px] shadow-[1.5px_1.5px_0px_#1F1305] transition-all inline-flex items-center gap-1"
+            title="Acceso al Panel de Administración y Redacción"
+          >
+            <span>PANEL [SYS]</span>
+            <ArrowUpRight className="h-3 w-3" />
+          </Link>
         </div>
       </div>
     </div>

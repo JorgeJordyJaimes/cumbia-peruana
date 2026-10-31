@@ -205,6 +205,15 @@ export function BrutalistFooter() {
               <a href="mailto:soundkumbia@gmail.com" className="hover:text-white transition-colors">
                 Solicitud de Rectificación
               </a>
+              <span>•</span>
+              <Link
+                href="/admin"
+                className="text-[#E80000] hover:text-white font-bold transition-colors flex items-center gap-1 hover:underline"
+                title="Acceso al Panel de Administración"
+              >
+                <span>[PANEL ADMIN]</span>
+                <ArrowUpRight className="h-3 w-3" />
+              </Link>
             </div>
           </div>
 
