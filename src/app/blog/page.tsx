@@ -8,7 +8,7 @@ import type { Articulo } from "@/types/blog";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Crónicas & Archivo Sonoro | Kumbia Sound",
+  title: "EXP. 06: Notas de Investigación & Ensayos Fonográficos | Kumbia Sound",
   description:
     "Ensayos, biografías de pioneros e investigación histórica sobre los vinilos y la era dorada de la cumbia peruana (1968–2005).",
 };
@@ -40,7 +40,7 @@ export default async function BlogIndexPage() {
 
             <div className="flex items-center gap-2 border border-[#1F1305] bg-white px-2.5 py-1 text-[#1F1305] font-bold shadow-[2px_2px_0px_#1F1305]">
               <BookOpen className="h-3.5 w-3.5 text-[#F1730C]" />
-              <span>04 / CRÓNICAS & INVESTIGACIÓN</span>
+              <span>EXP. 06 / NOTAS DE INVESTIGACIÓN</span>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export default async function BlogIndexPage() {
             <div className="max-w-3xl space-y-5 relative z-10">
               <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#F1730C] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <BookOpen className="h-3.5 w-3.5" />
-                <span>INVESTIGACIÓN HISTÓRICA & ENSAYOS DE ARCHIVO</span>
+                <span>EXPEDIENTE 06 · NOTAS DE INVESTIGACIÓN & ENSAYOS DE ARCHIVO</span>
               </div>
 
               <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">

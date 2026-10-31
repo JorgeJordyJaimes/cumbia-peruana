@@ -3,12 +3,12 @@ import { ArrowUpRight } from "lucide-react";
 
 export function BrutalistTriptych() {
   const servicios = [
-    { num: "EXP. 01", nombre: "ÁRBOL DE GUITARRISTAS DE SESIÓN", url: "/genealogia" },
-    { num: "EXP. 02", nombre: "SINCRONIZADOR CAMELOT PARA DJS", url: "/match-bpm" },
-    { num: "EXP. 03", nombre: "PRENSAJES RAROS EN 45 RPM", url: "/radar" },
-    { num: "EXP. 04", nombre: "INFORMES DE CAMPO & CRÓNICAS", url: "/blog" },
-    { num: "EXP. 05", nombre: "MANIFIESTO & EQUIPO DE CUSTODIA", url: "/nosotros" },
-    { num: "EXP. 06", nombre: "BÓVEDA DE 719+ EVIDENCIAS", url: "/vinilos" },
+    { num: "EXP. 01", nombre: "BÓVEDA DE ARCHIVO DE VINILOS", url: "/vinilos" },
+    { num: "EXP. 02", nombre: "ÁRBOL GENEALÓGICO & VERSIONES", url: "/genealogia" },
+    { num: "EXP. 03", nombre: "INFORMES PERICIALES DE MÚSICOS", url: "/informes" },
+    { num: "EXP. 04", nombre: "CONSOLA DJ & MATCH BPM", url: "/match-bpm" },
+    { num: "EXP. 05", nombre: "RADAR SONORO & HALLAZGOS", url: "/radar" },
+    { num: "EXP. 06", nombre: "NOTAS DE INVESTIGACIÓN", url: "/blog" },
   ];
 
   const techSpecs = [
@@ -84,10 +84,10 @@ export function BrutalistTriptych() {
 
           <div className="pt-8 relative z-10">
             <Link
-              href="/nosotros"
+              href="/legajo"
               className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] px-5 py-2.5 text-xs font-bold text-white shadow-[3px_3px_0px_#EDE0D0] hover:bg-[#E80000] hover:text-white transition-all"
             >
-              <span>LEER LEGAJO COMPLETO</span>
+              <span>LEER LEGAJO INSTITUCIONAL</span>
               <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -120,6 +120,13 @@ export function BrutalistTriptych() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="pt-4 border-t-2 border-[#1F1305] flex items-center justify-between text-[11px] text-[#665D4F]">
+            <span>AUDITORÍA FONOGRÁFICA</span>
+            <Link href="/legajo" className="text-[#E80000] font-black hover:underline">
+              NORMAS DE CATALOGACIÓN →
+            </Link>
           </div>
         </div>
 

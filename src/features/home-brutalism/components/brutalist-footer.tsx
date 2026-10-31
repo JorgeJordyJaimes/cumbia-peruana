@@ -91,12 +91,10 @@ export function BrutalistFooter() {
 
                 <div className="pt-3 border-t border-[#3E2C1B]">
                   <Link
-                    href="/admin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 border-2 border-[#E80000] bg-transparent hover:bg-[#E80000] text-[#E80000] hover:text-white px-3 py-1.5 font-mono text-xs font-bold transition-all shadow-[2px_2px_0px_#1F1305]"
+                    href="/legajo"
+                    className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-transparent hover:bg-[#EDE0D0] text-[#EDE0D0] hover:text-[#1F1305] px-3 py-1.5 font-mono text-xs font-bold transition-all shadow-[2px_2px_0px_#3E2C1B]"
                   >
-                    <span>PANEL DE ADMINISTRACIÓN</span>
+                    <span>LEGAJO INSTITUCIONAL</span>
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
@@ -117,18 +115,34 @@ export function BrutalistFooter() {
 
               <div className="space-y-2">
                 <Link
+                  href="/vinilos"
+                  className="block text-[#F1730C] hover:text-white transition-colors font-bold"
+                >
+                  <span className="text-white font-black mr-1.5">EXP. 01:</span>
+                  <span>Archivo de Vinilos</span>
+                </Link>
+
+                <Link
                   href="/genealogia"
                   className="block text-[#B8AFA6] hover:text-[#E80000] transition-colors"
                 >
-                  <span className="text-[#E80000] font-black mr-1.5">EXP. 01:</span>
-                  <span>Explorador Genealógico</span>
+                  <span className="text-[#E80000] font-black mr-1.5">EXP. 02:</span>
+                  <span>Genealogía &amp; Versiones</span>
+                </Link>
+
+                <Link
+                  href="/informes"
+                  className="block text-[#B8AFA6] hover:text-[#E80000] transition-colors"
+                >
+                  <span className="text-[#E80000] font-black mr-1.5">EXP. 03:</span>
+                  <span>Informes de Músicos</span>
                 </Link>
 
                 <Link
                   href="/match-bpm"
-                  className="block text-[#B8AFA6] hover:text-[#E80000] transition-colors"
+                  className="block text-[#B8AFA6] hover:text-[#F1730C] transition-colors"
                 >
-                  <span className="text-[#E80000] font-black mr-1.5">EXP. 02:</span>
+                  <span className="text-[#F1730C] font-black mr-1.5">EXP. 04:</span>
                   <span>Consola Match BPM DJ</span>
                 </Link>
 
@@ -136,32 +150,24 @@ export function BrutalistFooter() {
                   href="/radar"
                   className="block text-[#B8AFA6] hover:text-[#F1730C] transition-colors"
                 >
-                  <span className="text-[#F1730C] font-black mr-1.5">EXP. 03:</span>
-                  <span>El Radar Sonoro 45 RPM</span>
+                  <span className="text-[#F1730C] font-black mr-1.5">EXP. 05:</span>
+                  <span>El Radar Sonoro</span>
                 </Link>
 
                 <Link
                   href="/blog"
                   className="block text-[#B8AFA6] hover:text-white transition-colors"
                 >
-                  <span className="text-[#665D4F] font-black mr-1.5">EXP. 04:</span>
-                  <span>Informes &amp; Crónicas</span>
+                  <span className="text-[#665D4F] font-black mr-1.5">EXP. 06:</span>
+                  <span>Notas de Investigación</span>
                 </Link>
 
                 <Link
-                  href="/nosotros"
-                  className="block text-[#B8AFA6] hover:text-[#E80000] transition-colors"
+                  href="/legajo"
+                  className="block text-[#B8AFA6] hover:text-[#E80000] transition-colors border-t border-[#3E2C1B] pt-2"
                 >
-                  <span className="text-[#665D4F] font-black mr-1.5">EXP. 05:</span>
+                  <span className="text-[#F8C800] font-black mr-1.5">ACTA:</span>
                   <span>Legajo &amp; Manifiesto</span>
-                </Link>
-
-                <Link
-                  href="/vinilos"
-                  className="block text-[#F1730C] hover:text-white transition-colors font-bold"
-                >
-                  <span className="text-white font-black mr-1.5">EXP. 06:</span>
-                  <span>Bóveda de Evidencias en Vinilo</span>
                 </Link>
               </div>
             </div>
@@ -180,29 +186,25 @@ export function BrutalistFooter() {
                 />
               </div>
               <div>
-                <span className="font-bold text-white">KUMBIA SOUND ARCHIVE</span>
-                <span className="text-[#665D4F] ml-2 text-[11px] hidden sm:inline">
-                  — ARCHIVO NACIONAL DESCLASIFICADO 1968–2005
-                </span>
+                <span className="font-bold text-white uppercase tracking-wider">KUMBIA SOUND</span>
+                <p className="text-[11px] text-[#665D4F]">
+                  ARCHIVO HISTÓRICO Y MUSICAL DE LA CUMBIA PERUANA // 1968–2005
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-[11px]">
-              <Link
-                href="/admin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#E80000] hover:text-white font-bold transition-colors flex items-center gap-1 hover:underline"
-              >
-                <span>[PANEL ADMIN]</span>
-                <ArrowUpRight className="h-3 w-3" />
+            <div className="flex flex-wrap items-center gap-4 text-[11px]">
+              <Link href="/legajo" className="hover:text-white transition-colors">
+                Normas de Catalogación
               </Link>
               <span>•</span>
-              <span className="text-[#F8C800] font-bold">
-                POSTGRES SUPABASE REGISTRY
-              </span>
+              <Link href="/legajo" className="hover:text-white transition-colors">
+                Acta Fundacional
+              </Link>
               <span>•</span>
-              <span>BUCARAMANGA, COLOMBIA</span>
+              <a href="mailto:soundkumbia@gmail.com" className="hover:text-white transition-colors">
+                Solicitud de Rectificación
+              </a>
             </div>
           </div>
 

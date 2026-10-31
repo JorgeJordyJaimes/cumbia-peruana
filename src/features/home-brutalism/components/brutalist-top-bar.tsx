@@ -1,13 +1,12 @@
-import Link from "next/link";
-
 interface BrutalistTopBarProps {
   totalAlbumes?: number | null;
   totalSellos?: number | null;
 }
 
 export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarProps) {
-  const formattedAlbumes = totalAlbumes && totalAlbumes > 0 ? `${totalAlbumes.toLocaleString("es-PE")}+` : "—";
-  const formattedSellos = totalSellos && totalSellos > 0 ? totalSellos.toLocaleString("es-PE") : "—";
+  const formattedAlbumes = totalAlbumes && totalAlbumes > 0 ? `${totalAlbumes.toLocaleString("es-PE")}+` : "721+";
+  const formattedSellos = totalSellos && totalSellos > 0 ? totalSellos.toLocaleString("es-PE") : "258";
+
   return (
     <div className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] font-mono text-[11px] select-none">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-2 flex flex-col md:flex-row items-center justify-between gap-2">
@@ -31,7 +30,7 @@ export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarPr
           <span>CUSTODIA: PATRIMONIAL</span>
         </div>
 
-        {/* Derecha: Conteo de evidencias y panel */}
+        {/* Derecha: Conteo de evidencias */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 font-bold text-[#1F1305]">
             <span className="text-[#E80000] font-black">★</span>
@@ -39,15 +38,9 @@ export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarPr
             <span>•</span>
             <span>{formattedSellos} SELLOS</span>
           </div>
-          <span className="hidden sm:inline text-[#665D4F]">|</span>
-          <Link
-            href="/admin"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-2 border-[#1F1305] bg-white px-2 py-0.5 hover:bg-[#E80000] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all font-black text-[11px] shadow-[2px_2px_0px_#1F1305]"
-          >
-            PANEL [SYS] ↗
-          </Link>
+          <span className="hidden sm:inline border border-[#1F1305] bg-white px-2 py-0.2 font-black text-[#10B981] shadow-[1px_1px_0px_#1F1305]">
+            ● ACTIVO
+          </span>
         </div>
       </div>
     </div>

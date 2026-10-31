@@ -1,26 +1,51 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft, Sparkles, GitFork, Building2, Users } from "lucide-react";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
-import { GenealogyExplorer } from "@/features/home-retro";
-import { ArbolGenealogicoViewer } from "@/features/genealogia";
+import { GenealogiaContainer, type GrupoItem } from "@/features/genealogia";
 import { getArbolGenealogicoServer } from "@/features/genealogia/server";
 import { createClient } from "@/lib/supabase/server";
-import { JsonLd, buildPersonJsonLd, buildMusicGroupJsonLd } from "@/components/seo/json-ld";
-import Link from "next/link";
-import { ArrowLeft, GitFork, Sparkles, Building2, Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Explorador Genealógico & Músicos de Sesión | Kumbia Sound",
+  title: "EXP. 02: Genealogía, Agrupaciones & Red de Sesión | Kumbia Sound",
   description:
-    "Descubre los cruces de guitarristas, directores y músicos de sesión entre las agrupaciones y sellos históricos de la cumbia peruana (1968–2005).",
+    "Inspecciona la genealogía fonográfica: evolución de agrupaciones y directores, árbol jerárquico de versiones de canciones y red relacional de músicos de sesión.",
 };
+
+interface GrupoDbRow {
+  id_grupo: number;
+  nombre_grupo: string;
+  region: string | null;
+  fecha_formacion: string | null;
+  url_foto: string | null;
+  director: {
+    id_persona: number;
+    nombre: string;
+    apodo: string | null;
+  } | null;
+}
 
 export default async function GenealogiaPage() {
   const supabase = await createClient();
 
-  // Consultar músicos pioneros indexados en la base de datos
+  // 1. Consultar agrupaciones históricas con sus directores
+  const { data: gruposData } = await supabase
+    .from("grupos")
+    .select(`
+      id_grupo,
+      nombre_grupo,
+      region,
+      fecha_formacion,
+      url_foto,
+      director:personas!grupos_id_director_fkey(id_persona, nombre, apodo)
+    `)
+    .order("id_grupo", { ascending: true })
+    .limit(40);
+
+  // 2. Consultar músicos pioneros indexados en la base de datos
   const { data: pioneros } = await supabase
     .from("personas")
     .select("id_persona, nombre, apodo")
@@ -29,48 +54,28 @@ export default async function GenealogiaPage() {
 
   const initialMusicoId = pioneros?.[0]?.id_persona ?? 1;
 
-  // Pre-cargar mediante función RPC en PostgreSQL el árbol genealógico del pionero inicial
+  // 3. Pre-cargar el árbol inicial del primer músico
   const initialArbol = await getArbolGenealogicoServer(initialMusicoId);
 
-  // Generar datos estructurados Schema.org (JSON-LD) para SEO patrimonial
-  const structuredDataList: Array<Record<string, unknown>> = [];
-
-  if (initialArbol?.persona) {
-    structuredDataList.push(
-      buildPersonJsonLd({
-        id: initialArbol.persona.id_persona,
-        name: initialArbol.persona.nombre,
-        pseudonym: initialArbol.persona.apodo,
-        birthDate: initialArbol.persona.fecha_nacimiento,
-        birthPlace: initialArbol.persona.lugar_nacimiento,
-        biography: initialArbol.persona.biografia,
-        imageUrl: initialArbol.persona.url_foto,
-        roles: ["Director Musical", "Guitarrista", "Compositor"],
-        groups: initialArbol.agrupaciones.map((a) => a.nombre_grupo),
-      })
-    );
-
-    // Schema.org para agrupaciones asociadas
-    initialArbol.agrupaciones.forEach((agrup) => {
-      structuredDataList.push(
-        buildMusicGroupJsonLd({
-          id: agrup.id_grupo,
-          name: agrup.nombre_grupo,
-          region: agrup.region,
-          imageUrl: agrup.url_foto,
-          directorName: agrup.rol === "Director Musical" ? initialArbol.persona?.nombre : undefined,
-        })
-      );
-    });
-  }
+  // Mapeo seguro de grupos tipados
+  const typedGruposData = (gruposData || []) as unknown as GrupoDbRow[];
+  const grupos: GrupoItem[] = typedGruposData.map((g) => ({
+    id_grupo: g.id_grupo,
+    nombre_grupo: g.nombre_grupo,
+    region: g.region,
+    fecha_formacion: g.fecha_formacion,
+    url_foto: g.url_foto,
+    director: g.director ? {
+      id_persona: g.director.id_persona,
+      nombre: g.director.nombre,
+      apodo: g.director.apodo,
+    } : null,
+  }));
 
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
-      {/* Schema.org JSON-LD para motores de búsqueda */}
-      {structuredDataList.length > 0 ? <JsonLd data={structuredDataList} /> : null}
-
       <BrutalistCoordinator>
-        <main id="contenido" className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-12">
+        <main id="contenido" className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20 space-y-10">
           {/* Breadcrumb / Retorno al Home */}
           <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-4 font-mono text-xs">
             <Link
@@ -83,7 +88,7 @@ export default async function GenealogiaPage() {
 
             <div className="flex items-center gap-2 border border-[#1F1305] bg-white px-2.5 py-1 text-[#E80000] font-bold shadow-[2px_2px_0px_#1F1305]">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>01 / ARCHIVO GENEALÓGICO</span>
+              <span>EXP. 02 / GENEALOGÍA & RELACIONES</span>
             </div>
           </div>
 
@@ -92,7 +97,7 @@ export default async function GenealogiaPage() {
             <div className="max-w-3xl space-y-5 relative z-10">
               <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#F1730C] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <GitFork className="h-3.5 w-3.5" />
-                <span>ARCHIVO DE MÚSICOS DE SESIÓN • 1968–2005</span>
+                <span>EXPEDIENTE 02 · RELACIONES, ETAPAS & CRUCES DE SESIÓN</span>
               </div>
 
               <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
@@ -100,50 +105,34 @@ export default async function GenealogiaPage() {
               </h1>
 
               <p className="font-sans text-sm sm:text-base text-[#EDE0D0]/80 leading-relaxed max-w-2xl">
-                En el Perú de los años 70 y 80, los estudios de grabación de la Av. Abancay y el Rímac
-                eran un hervidero creativo. Esta herramienta documenta qué guitarristas grabaron los
-                punteos solistas, en qué sellos publicaron y cómo las agrupaciones se nutrieron entre
-                sí mediante consultas directas de base de datos en PostgreSQL.
+                Genealogía no es un archivo de fichas biográficas aisladas, sino el mapa de
+                relaciones del patrimonio sonoro: la evolución y etapas de las orquestas, el árbol
+                recursivo de versiones y covers de un tema, y la red de sesionistas compartidos.
               </p>
 
               <div className="pt-2 flex flex-wrap gap-4 font-mono text-xs">
                 <span className="flex items-center gap-2 border border-[#EDE0D0]/30 bg-white/10 px-3 py-1 font-bold text-[#F8C800]">
-                  <Users className="h-4 w-4 text-[#F8C800]" /> {pioneros?.length || 0}+ Músicos Indexados
+                  <Building2 className="h-4 w-4 text-[#F8C800]" /> {grupos.length} Agrupaciones Documentadas
                 </span>
                 <span className="flex items-center gap-2 border border-[#EDE0D0]/30 bg-white/10 px-3 py-1 font-bold text-white">
-                  <Building2 className="h-4 w-4 text-[#F1730C]" /> Conexiones Relacionales Postgres RPC
+                  <Users className="h-4 w-4 text-[#F1730C]" /> Conexiones Relacionales Postgres RPC
                 </span>
               </div>
             </div>
 
-            {/* Sello decorativo sutil en segundo plano */}
+            {/* Sello de fondo */}
             <div className="absolute -bottom-8 -right-6 text-white/[0.04] font-anton text-[220px] font-black pointer-events-none select-none leading-none">
               GEN
             </div>
           </div>
 
-          {/* Visualizador Dinámico de Grafo (PostgreSQL RPC get_arbol_genealogico) */}
-          <div className="space-y-4">
-            <div className="border-b-2 border-[#1F1305] pb-3">
-              <span className="font-mono text-xs font-black uppercase tracking-wider text-[#E80000]">
-                MÓDULO 01 • CONSULTA EN VIVO DEL GRAFO DE SESIÓN
-              </span>
-              <h2 className="font-cooper text-2xl sm:text-3xl font-black text-[#1F1305]">
-                Expediente Fonográfico de Músicos & Linajes
-              </h2>
-            </div>
-
-            <ArbolGenealogicoViewer
-              initialMusicos={pioneros || []}
-              initialMusicoId={initialMusicoId}
-              initialArbolData={initialArbol}
-            />
-          </div>
-
-          {/* Sección de Biografías Cruzadas y Hitos */}
-          <div className="border-t-2 border-[#1F1305] pt-12">
-            <GenealogyExplorer />
-          </div>
+          {/* Coordinador de 3 Carpetas (Agrupaciones, Versiones, Red de Músicos) */}
+          <GenealogiaContainer
+            grupos={grupos}
+            pioneros={pioneros || []}
+            initialMusicoId={initialMusicoId}
+            initialArbolData={initialArbol}
+          />
         </main>
       </BrutalistCoordinator>
 

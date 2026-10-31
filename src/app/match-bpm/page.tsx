@@ -4,16 +4,16 @@ import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism
 import { MatchBpmWidget, type TemaDJ } from "@/features/home-retro";
 import { CamelotSelector, CreaTuMix, type TrackDJItem } from "@/features/dj-tools";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, SlidersHorizontal, Disc3, Layers } from "lucide-react";
+import { ArrowLeft, Sparkles, SlidersHorizontal, Disc3 } from "lucide-react";
 import type { CamelotCode } from "@/types/domain";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Consola Match BPM & Crea Tu Mix a Dos Tornamesas | Kumbia Sound",
+  title: "EXP. 04: Match BPM & Planilla de Mezcla DJ | Kumbia Sound",
   description:
-    "Herramienta técnica para DJs de vinilo y tornamesistas. Sincronización armónica, tempo match y secuenciador a dos tornamesas para cumbia peruana patrimonial.",
+    "Herramienta técnica para DJs y coleccionistas. Planilla de mezcla armónica, tempo match por rueda Camelot y secuenciador a dos tornamesas para exportar setlists sin audio.",
 };
 
 interface RawTemaRow {
@@ -232,7 +232,7 @@ export default async function MatchBpmPage() {
 
             <div className="flex items-center gap-2 border border-[#1F1305] bg-white px-2.5 py-1 text-[#E80000] font-bold shadow-[2px_2px_0px_#1F1305]">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>02 / CONSOLA TÉCNICA DJ</span>
+              <span>EXP. 04 / MATCH BPM & PLANILLA DE MEZCLA</span>
             </div>
           </div>
 
@@ -241,7 +241,7 @@ export default async function MatchBpmPage() {
             <div className="max-w-3xl space-y-5 relative z-10">
               <div className="inline-flex items-center gap-2 border-2 border-[#EDE0D0] bg-[#E80000] px-3.5 py-1 font-mono text-xs font-bold text-white shadow-[2px_2px_0px_#EDE0D0]">
                 <SlidersHorizontal className="h-3.5 w-3.5" />
-                <span>CABINA TÉCNICA PARA TORNAMESISTAS & SESIONES EN VIVO</span>
+                <span>EXPEDIENTE 04 · CABINA TÉCNICA DJ & PLANILLA DE MEZCLA</span>
               </div>
 
               <h1 className="font-cooper text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">

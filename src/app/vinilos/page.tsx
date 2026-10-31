@@ -6,13 +6,13 @@ import { VinilosCatalogExplorer, type AlbumItem } from "@/features/albumes";
 import type { TrackItem } from "@/features/temas";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, Disc, Radio, Layers, Building2, Music } from "lucide-react";
+import { ArrowLeft, Disc, Radio, Layers, Building2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Bóveda de Vinilos & Prensajes Originales (1968–2005) | Kumbia Sound",
+  title: "EXP. 01: Bóveda de Vinilos & Prensajes Originales (1968–2005) | Kumbia Sound",
   description:
     "Catálogo fonográfico y buscador de discos en vinilo de la cumbia peruana. Filtra LPs de 33 RPM y singles de 45 RPM por sellos históricos, agrupaciones y décadas.",
 };
@@ -281,7 +281,7 @@ export default async function VinilosPage() {
             </Link>
 
             <div className="flex items-center gap-2 border-2 border-[#1F1305] bg-white px-2.5 py-1 text-[#1F1305] font-bold shadow-[2px_2px_0px_#1F1305]">
-              <span className="text-[#E80000] font-black">EXP. 06 //</span>
+              <span className="text-[#E80000] font-black">EXP. 01 //</span>
               <span>BÓVEDA DE CUSTODIA &amp; EVIDENCIAS EN VINILO</span>
             </div>
           </div>

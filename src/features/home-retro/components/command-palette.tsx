@@ -184,7 +184,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                 <button
                   type="button"
                   onClick={() => {
-                    router.push("/nosotros");
+                    router.push("/legajo");
                     onClose();
                   }}
                   className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
