@@ -1,8 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { AmbientGlow } from "@/components/ui/ambient-glow";
-import { GlassCard } from "@/components/ui/glass-card";
 import { LogoutButton } from "@/features/auth";
 import {
   AdminTabsContainer,
@@ -252,31 +250,28 @@ export default async function AdminPage() {
   const labelsWithLogo = labels.filter((l) => l.logoUrl).length;
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0c] text-white selection:bg-amber-500 selection:text-black">
-      <AmbientGlow variant="warm-solar" className="top-0 right-0" />
-      <AmbientGlow variant="chicha-psychedelic" className="bottom-0 left-0" />
-
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-neutral-950/80 backdrop-blur-xl">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 max-w-7xl">
+    <div className="min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#E80000] selection:text-white font-mono">
+      {/* Top Navbar Neo-Brutalista */}
+      <header className="sticky top-0 z-40 border-b-2 border-[#1F1305] bg-[#FAF8F5] p-3 shadow-[0_2px_0px_#1F1305]">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4 max-w-7xl">
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="rounded-xl border border-white/10 bg-white/5 p-2 text-neutral-400 hover:text-white transition-colors"
+              className="border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] hover:bg-[#EDE0D0] transition-colors shadow-[2px_2px_0px_#1F1305]"
               title="Volver al Catálogo Público"
             >
               <ArrowLeft className="h-4 w-4" />
             </Link>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-bold text-white tracking-tight">
+                <h1 className="text-base font-black text-[#1F1305] tracking-tight font-cooper">
                   Panel de Administración
                 </h1>
-                <span className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400">
+                <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#10B981] text-white px-2 py-0.5 font-mono text-[10px] font-black uppercase shadow-[1px_1px_0px_#1F1305]">
                   <ShieldCheck className="h-3 w-3" /> Autenticado
                 </span>
               </div>
-              <p className="font-mono text-[11px] text-neutral-400 truncate">
+              <p className="font-mono text-[11px] text-[#5A5245] font-bold truncate">
                 {user.email}
               </p>
             </div>
@@ -286,7 +281,7 @@ export default async function AdminPage() {
             <Link
               href="/"
               target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-neutral-300 hover:text-white transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 border-2 border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0] transition-colors"
             >
               <span>Ver Web en Vivo</span>
             </Link>
@@ -297,94 +292,94 @@ export default async function AdminPage() {
 
       {/* Main Admin Content */}
       <main id="contenido" className="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 space-y-8">
-        {/* Banner de Estado y Estadísticas */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <GlassCard className="p-4">
-            <div className="flex items-center justify-between text-neutral-400 font-mono text-xs mb-1">
+        {/* Banner de Estado y Estadísticas Neo-Brutalista */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="border-2 border-[#1F1305] bg-white p-4 shadow-[4px_4px_0px_#1F1305] space-y-2">
+            <div className="flex items-center justify-between text-[#5A5245] font-mono text-xs font-bold uppercase mb-1">
               <span>Portadas Álbum</span>
-              <ImageIcon className="h-3.5 w-3.5 text-amber-400" />
+              <ImageIcon className="h-4 w-4 text-[#F1730C]" />
             </div>
-            <div className="font-mono text-xl sm:text-2xl font-bold text-white">
+            <div className="font-mono text-2xl font-black text-[#1F1305]">
               {albumsWithCover}{" "}
-              <span className="text-xs text-neutral-500 font-normal">
+              <span className="text-xs text-[#5A5245] font-bold">
                 / {albums.length}
               </span>
             </div>
-            <div className="mt-2 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 w-full bg-[#EDE0D0] border border-[#1F1305] overflow-hidden">
               <div
-                className="h-full bg-amber-400 rounded-full"
+                className="h-full bg-[#F1730C]"
                 style={{ width: `${(albumsWithCover / (albums.length || 1)) * 100}%` }}
               />
             </div>
-          </GlassCard>
+          </div>
 
-          <GlassCard className="p-4">
-            <div className="flex items-center justify-between text-neutral-400 font-mono text-xs mb-1">
+          <div className="border-2 border-[#1F1305] bg-white p-4 shadow-[4px_4px_0px_#1F1305] space-y-2">
+            <div className="flex items-center justify-between text-[#5A5245] font-mono text-xs font-bold uppercase mb-1">
               <span>Fotos Grupos</span>
-              <ImageIcon className="h-3.5 w-3.5 text-rose-400" />
+              <ImageIcon className="h-4 w-4 text-[#E80000]" />
             </div>
-            <div className="font-mono text-xl sm:text-2xl font-bold text-white">
+            <div className="font-mono text-2xl font-black text-[#1F1305]">
               {groupsWithPhoto}{" "}
-              <span className="text-xs text-neutral-500 font-normal">
+              <span className="text-xs text-[#5A5245] font-bold">
                 / {groups.length}
               </span>
             </div>
-            <div className="mt-2 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 w-full bg-[#EDE0D0] border border-[#1F1305] overflow-hidden">
               <div
-                className="h-full bg-rose-400 rounded-full"
+                className="h-full bg-[#E80000]"
                 style={{ width: `${(groupsWithPhoto / (groups.length || 1)) * 100}%` }}
               />
             </div>
-          </GlassCard>
+          </div>
 
-          <GlassCard className="p-4">
-            <div className="flex items-center justify-between text-neutral-400 font-mono text-xs mb-1">
+          <div className="border-2 border-[#1F1305] bg-white p-4 shadow-[4px_4px_0px_#1F1305] space-y-2">
+            <div className="flex items-center justify-between text-[#5A5245] font-mono text-xs font-bold uppercase mb-1">
               <span>Fotos Personas</span>
-              <ImageIcon className="h-3.5 w-3.5 text-cyan-400" />
+              <ImageIcon className="h-4 w-4 text-[#10B981]" />
             </div>
-            <div className="font-mono text-xl sm:text-2xl font-bold text-white">
+            <div className="font-mono text-2xl font-black text-[#1F1305]">
               {personsWithPhoto}{" "}
-              <span className="text-xs text-neutral-500 font-normal">
+              <span className="text-xs text-[#5A5245] font-bold">
                 / {persons.length}
               </span>
             </div>
-            <div className="mt-2 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 w-full bg-[#EDE0D0] border border-[#1F1305] overflow-hidden">
               <div
-                className="h-full bg-cyan-400 rounded-full"
+                className="h-full bg-[#10B981]"
                 style={{ width: `${(personsWithPhoto / (persons.length || 1)) * 100}%` }}
               />
             </div>
-          </GlassCard>
+          </div>
 
-          <GlassCard className="p-4">
-            <div className="flex items-center justify-between text-neutral-400 font-mono text-xs mb-1">
+          <div className="border-2 border-[#1F1305] bg-white p-4 shadow-[4px_4px_0px_#1F1305] space-y-2">
+            <div className="flex items-center justify-between text-[#5A5245] font-mono text-xs font-bold uppercase mb-1">
               <span>Logos Sellos</span>
-              <ImageIcon className="h-3.5 w-3.5 text-emerald-400" />
+              <ImageIcon className="h-4 w-4 text-[#2563EB]" />
             </div>
-            <div className="font-mono text-xl sm:text-2xl font-bold text-white">
+            <div className="font-mono text-2xl font-black text-[#1F1305]">
               {labelsWithLogo}{" "}
-              <span className="text-xs text-neutral-500 font-normal">
+              <span className="text-xs text-[#5A5245] font-bold">
                 / {labels.length}
               </span>
             </div>
-            <div className="mt-2 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 w-full bg-[#EDE0D0] border border-[#1F1305] overflow-hidden">
               <div
-                className="h-full bg-emerald-400 rounded-full"
+                className="h-full bg-[#2563EB]"
                 style={{ width: `${(labelsWithLogo / (labels.length || 1)) * 100}%` }}
               />
             </div>
-          </GlassCard>
+          </div>
         </div>
 
-        {/* Guía Rápida */}
-        <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-amber-200/90">
+        {/* Guía Rápida Neo-Brutalista */}
+        <div className="border-2 border-[#1F1305] bg-[#FAF8F5] p-4 shadow-[3px_3px_0px_#1F1305] flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs text-[#1F1305]">
           <div className="flex items-center gap-2">
-            <Database className="h-4 w-4 text-amber-400 shrink-0" />
+            <Database className="h-4 w-4 text-[#E80000] shrink-0" />
             <span>
-              Las imágenes subidas se alojan en el bucket <strong>media</strong> de Supabase Storage y actualizan la base de datos física en tiempo real.
+              Las imágenes subidas se alojan en el bucket <strong className="font-black">media</strong> de Supabase Storage y actualizan la base de datos física en tiempo real.
             </span>
           </div>
-          <span className="text-[11px] text-amber-400/70">
+          <span className="border border-[#1F1305] bg-[#F8C800] px-2 py-0.5 text-[10px] font-black text-[#1F1305] shrink-0">
             Conversión automática a WebP en el navegador
           </span>
         </div>

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { GlassCard } from "@/components/ui/glass-card";
 import { Lock, Mail, Disc3, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 
 export function LoginForm() {
@@ -43,57 +42,57 @@ export function LoginForm() {
   };
 
   return (
-    <GlassCard variant="editorial" className="p-8 sm:p-10 w-full max-w-md mx-auto shadow-2xl">
+    <div className="border-2 border-[#1F1305] bg-white p-8 sm:p-10 w-full max-w-md mx-auto shadow-[8px_8px_0px_#1F1305]">
       <div className="text-center space-y-2 mb-8">
-        <div className="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-950/50 mb-4">
-          <Disc3 className="h-7 w-7 text-black animate-spin-slow" />
+        <div className="mx-auto h-12 w-12 border-2 border-[#1F1305] bg-[#F1730C] flex items-center justify-center shadow-[3px_3px_0px_#1F1305] mb-4">
+          <Disc3 className="h-7 w-7 text-[#1F1305]" />
         </div>
-        <h2 className="text-2xl font-extrabold text-white tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-black font-cooper text-[#1F1305] tracking-tight">
           Acceso Administrativo
         </h2>
-        <p className="font-mono text-xs text-neutral-400">
-          Kumbia Sound // Gestión de Catálogo & Multimedia
+        <p className="font-mono text-xs text-[#5A5245] font-bold">
+          Kumbia Sound // Gestión de Catálogo &amp; Multimedia
         </p>
       </div>
 
       {errorMessage && (
-        <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-3.5 flex items-center gap-3 text-red-300 text-xs font-mono">
-          <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
+        <div className="mb-6 border-2 border-[#1F1305] bg-[#FEE2E2] p-3.5 flex items-center gap-3 text-[#991B1B] text-xs font-mono font-bold shadow-[2px_2px_0px_#1F1305]">
+          <AlertCircle className="h-4 w-4 shrink-0 text-[#991B1B]" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-mono text-xs text-neutral-300 uppercase tracking-wider mb-2">
+          <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase tracking-wider mb-2">
             Correo Electrónico
           </label>
           <div className="relative">
-            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
+            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A5245]" />
             <input
               type="email"
               required
               placeholder="soundkumbia@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/50 py-3 pl-10 pr-4 text-sm text-white placeholder-neutral-500 focus:border-amber-400 focus:bg-black/70 focus:outline-none transition-all font-mono"
+              className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] py-3 pl-10 pr-4 text-sm text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000] transition-all font-mono"
             />
           </div>
         </div>
 
         <div>
-          <label className="block font-mono text-xs text-neutral-300 uppercase tracking-wider mb-2">
+          <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase tracking-wider mb-2">
             Contraseña Maestra
           </label>
           <div className="relative">
-            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
+            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A5245]" />
             <input
               type="password"
               required
               placeholder="••••••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/50 py-3 pl-10 pr-4 text-sm text-white placeholder-neutral-500 focus:border-amber-400 focus:bg-black/70 focus:outline-none transition-all font-mono"
+              className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] py-3 pl-10 pr-4 text-sm text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000] transition-all font-mono"
             />
           </div>
         </div>
@@ -101,21 +100,21 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full mt-6 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 py-3 px-4 font-mono text-xs font-bold uppercase tracking-wider text-black shadow-lg shadow-amber-500/25 hover:from-amber-400 hover:to-orange-500 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+          className="w-full mt-6 border-2 border-[#1F1305] bg-[#E80000] py-3 px-4 font-mono text-xs font-black uppercase tracking-wider text-white shadow-[4px_4px_0px_#1F1305] hover:bg-[#1F1305] transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
         >
           {loading ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin text-black" />
+              <Loader2 className="h-4 w-4 animate-spin text-white" />
               <span>Verificando Credenciales...</span>
             </>
           ) : (
             <>
               <span>Iniciar Sesión</span>
-              <ArrowRight className="h-4 w-4 text-black" />
+              <ArrowRight className="h-4 w-4 text-white" />
             </>
           )}
         </button>
       </form>
-    </GlassCard>
+    </div>
   );
 }

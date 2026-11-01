@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { GlassCard } from "@/components/ui/glass-card";
 import {
   AdminMediaManager,
   type AdminAlbumItem,

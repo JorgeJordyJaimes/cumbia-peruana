@@ -1,4 +1,3 @@
-import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { LoginForm } from "@/features/auth/components/login-form";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -10,18 +9,15 @@ export const metadata = {
 
 export default function AdminLoginPage() {
   return (
-    <div className="relative min-h-screen flex flex-col justify-between bg-[#0a0a0c] text-white selection:bg-amber-500 selection:text-black p-6">
-      <AmbientGlow variant="warm-solar" className="top-0 left-0" />
-      <AmbientGlow variant="chicha-psychedelic" className="bottom-0 right-0" />
-
+    <div className="min-h-screen flex flex-col justify-between bg-[#EDE0D0] text-[#1F1305] selection:bg-[#E80000] selection:text-white p-6 font-mono">
       {/* Barra superior con volver al catálogo */}
       <div className="container mx-auto max-w-5xl">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] hover:bg-[#FAF8F5] shadow-[2px_2px_0px_#1F1305] transition-colors"
         >
-          <ArrowLeft className="h-4 w-4" />
-          Volver al Catálogo Público
+          <ArrowLeft className="h-4 w-4 text-[#E80000]" />
+          <span>← Volver al Catálogo Público</span>
         </Link>
       </div>
 
@@ -31,8 +27,8 @@ export default function AdminLoginPage() {
       </div>
 
       {/* Pie de página */}
-      <div className="text-center font-mono text-[11px] text-neutral-500">
-        Kumbia Sound © {new Date().getFullYear()} — Sistema de Gestión Restringido
+      <div className="text-center font-mono text-xs text-[#5A5245] font-bold">
+        Kumbia Sound © {new Date().getFullYear()} — Sistema de Gestión y Peritaje Fonográfico
       </div>
     </div>
   );

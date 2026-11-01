@@ -1,7 +1,6 @@
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { LogoutButton } from "@/features/auth";
 import {
   AdminGroupDetail,
@@ -217,31 +216,28 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
   const initialEtapas = (rawEtapas as unknown as GrupoEtapaItem[]) || [];
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0c] text-white selection:bg-amber-500 selection:text-black">
-      <AmbientGlow variant="warm-solar" className="top-0 right-0" />
-      <AmbientGlow variant="chicha-psychedelic" className="bottom-0 left-0" />
-
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-neutral-950/80 backdrop-blur-xl">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 max-w-7xl">
+    <div className="min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#E80000] selection:text-white font-mono">
+      {/* Top Navbar Neo-Brutalista */}
+      <header className="sticky top-0 z-40 border-b-2 border-[#1F1305] bg-[#FAF8F5] p-3 shadow-[0_2px_0px_#1F1305]">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4 max-w-7xl">
           <div className="flex items-center gap-3">
             <Link
               href="/admin"
-              className="rounded-xl border border-white/10 bg-white/5 p-2 text-neutral-400 hover:text-white transition-colors"
+              className="border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] hover:bg-[#EDE0D0] transition-colors shadow-[2px_2px_0px_#1F1305]"
               title="Volver al Panel Administrativo"
             >
               <ArrowLeft className="h-4 w-4" />
             </Link>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-bold text-white tracking-tight">
+                <h1 className="text-base font-black text-[#1F1305] tracking-tight font-cooper">
                   Expediente de Agrupación: {groupData.name}
                 </h1>
-                <span className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400">
+                <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#10B981] text-white px-1.5 py-0.5 text-[10px] font-black uppercase shadow-[1px_1px_0px_#1F1305]">
                   <ShieldCheck className="h-3 w-3" /> Admin
                 </span>
               </div>
-              <p className="font-mono text-[11px] text-neutral-400">
+              <p className="font-mono text-[11px] text-[#5A5245] font-bold">
                 Archivo Fotográfico, Discografía, Historia y Línea de Tiempo
               </p>
             </div>
@@ -251,7 +247,7 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
             <Link
               href={`/vinilos?grupo=${groupData.id}`}
               target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-neutral-300 hover:text-white transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 border-2 border-[#1F1305] bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0] transition-colors"
             >
               <span>Ver en Catálogo Público</span>
             </Link>

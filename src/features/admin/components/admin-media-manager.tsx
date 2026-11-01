@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { GlassCard } from "@/components/ui/glass-card";
 import { ImageUploader } from "@/features/storage/components/image-uploader";
 import {
   Search,
@@ -73,7 +72,7 @@ interface AdminMediaManagerProps {
 }
 
 type TabType = "albumes" | "grupos" | "personas" | "sellos";
-type FilterStatus = "all" | "with-image" | "without-image" | "both-sides" | "with-discography";
+type FilterImageStatus = "all" | "with-image" | "without-image" | "both-sides" | "with-discography";
 
 export function AdminMediaManager({
   initialAlbums,
@@ -83,149 +82,193 @@ export function AdminMediaManager({
 }: AdminMediaManagerProps) {
   const [activeTab, setActiveTab] = useState<TabType>("albumes");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterImageStatus, setFilterImageStatus] = useState<FilterStatus>("all");
+  const [filterImageStatus, setFilterImageStatus] = useState<FilterImageStatus>("all");
+  const [notification, setNotification] = useState<string | null>(null);
 
-  // Estados locales para reflejar cambios en tiempo real
   const [albums, setAlbums] = useState<AdminAlbumItem[]>(initialAlbums);
   const [groups, setGroups] = useState<AdminGroupItem[]>(initialGroups);
   const [persons, setPersons] = useState<AdminPersonItem[]>(initialPersons);
   const [labels, setLabels] = useState<AdminLabelItem[]>(initialLabels);
 
-  const [notification, setNotification] = useState<string | null>(null);
+  const supabase = createClient();
 
-  const showSuccess = (msg: string) => {
+  const showNotification = (msg: string) => {
     setNotification(msg);
-    setTimeout(() => setNotification(null), 4000);
+    setTimeout(() => setNotification(null), 3000);
   };
 
-  // 1. Actualizar Álbum (Portada o Contraportada)
-  const handleUpdateAlbumCover = async (
-    id: number,
-    url: string,
-    field: "url_portada" | "url_contraportada" | "url_etiqueta"
-  ) => {
-    const supabase = createClient();
-    const payload =
-      field === "url_portada"
-        ? { url_portada: url }
-        : field === "url_contraportada"
-        ? { url_contraportada: url }
-        : { url_etiqueta: url };
-
+  // Handlers para Álbumes
+  const handleUpdateAlbumCover = async (albumId: number, url: string, field: "url_portada" | "url_contraportada") => {
+    const updatePayload = field === "url_portada" ? { url_portada: url } : { url_contraportada: url };
     const { error } = await supabase
       .from("albumes")
-      .update(payload)
-      .eq("id_album", id);
+      .update(updatePayload)
+      .eq("id_album", albumId);
 
     if (error) {
-      throw new Error(`Error al actualizar álbum: ${error.message}`);
-    }
-
-    setAlbums((prev) =>
-      prev.map((a) =>
-        a.id === id
-          ? {
-              ...a,
-              coverUrl: field === "url_portada" ? url : a.coverUrl,
-              backCoverUrl: field === "url_contraportada" ? url : a.backCoverUrl,
-              vinylLabelUrl: field === "url_etiqueta" ? url : a.vinylLabelUrl,
-            }
-          : a
-      )
-    );
-    const sideName =
-      field === "url_portada"
-        ? "Portada / Cara A"
-        : field === "url_contraportada"
-        ? "Contraportada / Cara B"
-        : "Galleta Central";
-    showSuccess(`${sideName} del álbum #${id} actualizada exitosamente.`);
-  };
-
-  const handleClearAlbumImage = async (
-    id: number,
-    field: "url_portada" | "url_contraportada",
-    sideLabel: string
-  ) => {
-    if (!confirm(`¿Deseas desvincular ${sideLabel} de este álbum?`)) return;
-    const supabase = createClient();
-    const updatePayload =
-      field === "url_portada" ? { url_portada: null } : { url_contraportada: null };
-    const { error } = await supabase.from("albumes").update(updatePayload).eq("id_album", id);
-    if (error) {
-      alert(`Error al desvincular: ${error.message}`);
+      alert(`Error al actualizar carátula: ${error.message}`);
       return;
     }
+
     setAlbums((prev) =>
       prev.map((a) =>
-        a.id === id
+        a.id === albumId
           ? {
               ...a,
-              coverUrl: field === "url_portada" ? null : a.coverUrl,
-              backCoverUrl: field === "url_contraportada" ? null : a.backCoverUrl,
+              ...(field === "url_portada" ? { coverUrl: url } : { backCoverUrl: url }),
             }
           : a
       )
     );
-    showSuccess(`${sideLabel} de álbum #${id} eliminada.`);
+    showNotification(`Carátula guardada correctamente para el álbum #${albumId}`);
   };
 
-  // 2. Actualizar Grupo
-  const handleUpdateGroupPhoto = async (id: number, url: string) => {
-    const supabase = createClient();
-    const { error } = await supabase.from("grupos").update({ url_foto: url }).eq("id_grupo", id);
-    if (error) throw new Error(error.message);
-    setGroups((prev) => prev.map((g) => (g.id === id ? { ...g, photoUrl: url } : g)));
-    showSuccess(`Fotografía de grupo #${id} actualizada.`);
+  const handleClearAlbumImage = async (albumId: number, field: "url_portada" | "url_contraportada", label: string) => {
+    if (!confirm(`¿Estás seguro de desvincular la ${label} del álbum #${albumId}? La imagen física permanecerá en el bucket hasta que se sobrescriba.`)) {
+      return;
+    }
+
+    const clearPayload = field === "url_portada" ? { url_portada: null } : { url_contraportada: null };
+    const { error } = await supabase
+      .from("albumes")
+      .update(clearPayload)
+      .eq("id_album", albumId);
+
+    if (error) {
+      alert(`Error al eliminar carátula: ${error.message}`);
+      return;
+    }
+
+    setAlbums((prev) =>
+      prev.map((a) =>
+        a.id === albumId
+          ? {
+              ...a,
+              ...(field === "url_portada" ? { coverUrl: null } : { backCoverUrl: null }),
+            }
+          : a
+      )
+    );
+    showNotification(`${label} desvinculada exitosamente.`);
   };
 
-  const handleClearGroupPhoto = async (id: number) => {
-    if (!confirm("¿Deseas desvincular la foto del grupo?")) return;
-    const supabase = createClient();
-    await supabase.from("grupos").update({ url_foto: null }).eq("id_grupo", id);
-    setGroups((prev) => prev.map((g) => (g.id === id ? { ...g, photoUrl: null } : g)));
-    showSuccess(`Foto de grupo #${id} eliminada.`);
+  // Handlers para Grupos
+  const handleUpdateGroupPhoto = async (groupId: number, url: string) => {
+    const { error } = await supabase
+      .from("grupos")
+      .update({ url_foto: url })
+      .eq("id_grupo", groupId);
+
+    if (error) {
+      alert(`Error al actualizar foto: ${error.message}`);
+      return;
+    }
+
+    setGroups((prev) =>
+      prev.map((g) => (g.id === groupId ? { ...g, photoUrl: url } : g))
+    );
+    showNotification(`Foto oficial guardada para la agrupación #${groupId}`);
   };
 
-  // 3. Actualizar Persona
-  const handleUpdatePersonPhoto = async (id: number, url: string) => {
-    const supabase = createClient();
-    const { error } = await supabase.from("personas").update({ url_foto: url }).eq("id_persona", id);
-    if (error) throw new Error(error.message);
-    setPersons((prev) => prev.map((p) => (p.id === id ? { ...p, photoUrl: url } : p)));
-    showSuccess(`Fotografía de compositor/artista #${id} actualizada.`);
+  const handleClearGroupPhoto = async (groupId: number) => {
+    if (!confirm(`¿Estás seguro de desvincular la foto del grupo #${groupId}?`)) return;
+
+    const { error } = await supabase
+      .from("grupos")
+      .update({ url_foto: null })
+      .eq("id_grupo", groupId);
+
+    if (error) {
+      alert(`Error al eliminar foto: ${error.message}`);
+      return;
+    }
+
+    setGroups((prev) =>
+      prev.map((g) => (g.id === groupId ? { ...g, photoUrl: null } : g))
+    );
+    showNotification("Foto de agrupación desvinculada.");
   };
 
-  const handleClearPersonPhoto = async (id: number) => {
-    if (!confirm("¿Deseas desvincular la foto de la persona?")) return;
-    const supabase = createClient();
-    await supabase.from("personas").update({ url_foto: null }).eq("id_persona", id);
-    setPersons((prev) => prev.map((p) => (p.id === id ? { ...p, photoUrl: null } : p)));
-    showSuccess(`Foto de persona #${id} eliminada.`);
+  // Handlers para Personas
+  const handleUpdatePersonPhoto = async (personId: number, url: string) => {
+    const { error } = await supabase
+      .from("personas")
+      .update({ url_foto: url })
+      .eq("id_persona", personId);
+
+    if (error) {
+      alert(`Error al actualizar foto: ${error.message}`);
+      return;
+    }
+
+    setPersons((prev) =>
+      prev.map((p) => (p.id === personId ? { ...p, photoUrl: url } : p))
+    );
+    showNotification(`Foto guardada para persona #${personId}`);
   };
 
-  // 4. Actualizar Sello
-  const handleUpdateLabelLogo = async (id: number, url: string) => {
-    const supabase = createClient();
-    const { error } = await supabase.from("sellos_discograficos").update({ url_logo: url }).eq("id_sello", id);
-    if (error) throw new Error(error.message);
-    setLabels((prev) => prev.map((l) => (l.id === id ? { ...l, logoUrl: url } : l)));
-    showSuccess(`Logotipo de sello #${id} actualizado.`);
+  const handleClearPersonPhoto = async (personId: number) => {
+    if (!confirm(`¿Estás seguro de desvincular la foto de la persona #${personId}?`)) return;
+
+    const { error } = await supabase
+      .from("personas")
+      .update({ url_foto: null })
+      .eq("id_persona", personId);
+
+    if (error) {
+      alert(`Error al eliminar foto: ${error.message}`);
+      return;
+    }
+
+    setPersons((prev) =>
+      prev.map((p) => (p.id === personId ? { ...p, photoUrl: null } : p))
+    );
+    showNotification("Foto de persona desvinculada.");
   };
 
-  const handleClearLabelLogo = async (id: number) => {
-    if (!confirm("¿Deseas desvincular el logotipo del sello?")) return;
-    const supabase = createClient();
-    await supabase.from("sellos_discograficos").update({ url_logo: null }).eq("id_sello", id);
-    setLabels((prev) => prev.map((l) => (l.id === id ? { ...l, logoUrl: null } : l)));
-    showSuccess(`Logotipo de sello #${id} eliminado.`);
+  // Handlers para Sellos
+  const handleUpdateLabelLogo = async (labelId: number, url: string) => {
+    const { error } = await supabase
+      .from("sellos_discograficos")
+      .update({ url_logo: url })
+      .eq("id_sello", labelId);
+
+    if (error) {
+      alert(`Error al actualizar logo: ${error.message}`);
+      return;
+    }
+
+    setLabels((prev) =>
+      prev.map((l) => (l.id === labelId ? { ...l, logoUrl: url } : l))
+    );
+    showNotification(`Logo guardado para el sello #${labelId}`);
   };
 
-  // Filtrado de elementos
+  const handleClearLabelLogo = async (labelId: number) => {
+    if (!confirm(`¿Estás seguro de desvincular el logotipo del sello #${labelId}?`)) return;
+
+    const { error } = await supabase
+      .from("sellos_discograficos")
+      .update({ url_logo: null })
+      .eq("id_sello", labelId);
+
+    if (error) {
+      alert(`Error al eliminar logo: ${error.message}`);
+      return;
+    }
+
+    setLabels((prev) =>
+      prev.map((l) => (l.id === labelId ? { ...l, logoUrl: null } : l))
+    );
+    showNotification("Logotipo de sello desvinculado.");
+  };
+
+  // Filtros de búsqueda
   const filteredAlbums = useMemo(() => {
     return albums.filter((a) => {
-      const hasAny = Boolean(a.coverUrl || a.backCoverUrl);
       const hasBoth = Boolean(a.coverUrl && a.backCoverUrl);
+      const hasAny = Boolean(a.coverUrl || a.backCoverUrl);
+
       if (filterImageStatus === "with-image" && !hasAny) return false;
       if (filterImageStatus === "without-image" && hasAny) return false;
       if (filterImageStatus === "both-sides" && !hasBoth) return false;
@@ -278,17 +321,17 @@ export function AdminMediaManager({
   }, [labels, searchTerm, filterImageStatus]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono text-xs">
       {/* Toast Notification */}
       {notification && (
-        <div className="fixed bottom-6 right-6 z-50 rounded-2xl border border-emerald-500/40 bg-neutral-900/95 px-4 py-3 font-mono text-xs text-emerald-300 shadow-2xl backdrop-blur flex items-center gap-2">
-          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+        <div className="fixed bottom-6 right-6 z-50 border-2 border-[#1F1305] bg-[#10B981] text-white px-4 py-3 font-mono text-xs font-black shadow-[4px_4px_0px_#1F1305] flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4" />
           <span>{notification}</span>
         </div>
       )}
 
-      {/* Tabs Navigation */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 pb-4">
+      {/* Tabs Navigation Neo-Brutalista */}
+      <div className="flex flex-wrap items-center gap-2 border-b-2 border-[#1F1305] pb-4">
         {[
           { id: "albumes", label: `Álbumes (${albums.length})`, icon: Disc3 },
           { id: "grupos", label: `Agrupaciones (${groups.length})`, icon: Users },
@@ -305,13 +348,13 @@ export function AdminMediaManager({
                 setSearchTerm("");
               }}
               className={cn(
-                "flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-semibold transition-all cursor-pointer",
+                "flex items-center gap-2 border-2 border-[#1F1305] px-4 py-2 font-mono text-xs font-black transition-all cursor-pointer shadow-[2px_2px_0px_#1F1305]",
                 isActive
-                  ? "bg-amber-500 text-black shadow-lg shadow-amber-500/20"
-                  : "border border-white/10 bg-white/5 text-neutral-300 hover:border-white/20 hover:bg-white/10"
+                  ? "bg-[#1F1305] text-[#EDE0D0] shadow-[2px_2px_0px_#E80000]"
+                  : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className={cn("h-4 w-4", isActive ? "text-[#F8C800]" : "text-[#E80000]")} />
               <span>{tab.label}</span>
             </button>
           );
@@ -319,9 +362,9 @@ export function AdminMediaManager({
       </div>
 
       {/* Barra de Búsqueda y Filtros de Estado */}
-      <GlassCard className="p-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="border-2 border-[#1F1305] bg-white p-4 shadow-[4px_4px_0px_#1F1305] flex flex-wrap items-center justify-between gap-4">
         <div className="relative flex-1 min-w-[260px]">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#1F1305]/60" />
           <input
             type="text"
             placeholder={
@@ -331,12 +374,12 @@ export function AdminMediaManager({
             }
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/50 py-2.5 pl-10 pr-9 font-mono text-xs text-white placeholder-neutral-500 focus:border-amber-400 focus:outline-none"
+            className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] py-2.5 pl-10 pr-9 font-mono text-xs text-[#1F1305] placeholder-[#5A5245]/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
           />
           {searchTerm && (
             <button
               onClick={() => setSearchTerm("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5A5245] hover:text-[#E80000] cursor-pointer"
               title="Limpiar búsqueda"
             >
               <X className="h-4 w-4" />
@@ -345,7 +388,7 @@ export function AdminMediaManager({
         </div>
 
         <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
-          <span className="text-neutral-400 text-[11px] hidden sm:inline">Filtrar:</span>
+          <span className="text-[#5A5245] font-bold text-[11px] hidden sm:inline">Filtrar:</span>
           {(activeTab === "grupos"
             ? [
                 { id: "all" as const, label: "Todos" },
@@ -370,22 +413,22 @@ export function AdminMediaManager({
               key={f.id}
               onClick={() => setFilterImageStatus(f.id)}
               className={cn(
-                "rounded-lg px-2.5 py-1 text-xs transition-colors cursor-pointer",
+                "border border-[#1F1305] px-2.5 py-1 text-xs font-bold font-mono transition-colors cursor-pointer",
                 filterImageStatus === f.id
-                  ? "bg-white/20 text-white font-semibold shadow-xs"
-                  : "text-neutral-400 hover:text-white"
+                  ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#1F1305]"
+                  : "bg-[#EDE0D0] text-[#1F1305] hover:bg-white"
               )}
             >
               {f.label}
             </button>
           ))}
         </div>
-      </GlassCard>
+      </div>
 
       {/* Lista de Álbumes */}
       {activeTab === "albumes" && (
         <div className="space-y-4">
-          <div className="font-mono text-xs text-neutral-400">
+          <div className="font-mono text-xs font-bold text-[#5A5245]">
             Mostrando {filteredAlbums.length} álbumes
           </div>
 
@@ -402,24 +445,24 @@ export function AdminMediaManager({
               const hasAny = Boolean(album.coverUrl || album.backCoverUrl);
 
               return (
-                <GlassCard key={album.id} className="p-5 flex flex-col justify-between gap-4 border border-white/10 bg-black/40">
+                <div key={album.id} className="border-2 border-[#1F1305] bg-white p-5 flex flex-col justify-between gap-4 shadow-[4px_4px_0px_#1F1305]">
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                        <span className="text-amber-400 font-bold">#{album.id}</span>
-                        <span className="text-neutral-500">•</span>
-                        <span className="text-neutral-300 font-semibold">{album.label || "Sin Sello"}</span>
+                        <span className="border border-[#1F1305] bg-[#F8C800] text-[#1F1305] px-1.5 py-0.2 font-black">#{album.id}</span>
+                        <span className="text-[#5A5245]">•</span>
+                        <span className="text-[#1F1305] font-bold">{album.label || "Sin Sello"}</span>
                         {album.catalogNumber && (
-                          <span className="text-neutral-400">({album.catalogNumber})</span>
+                          <span className="text-[#5A5245] font-bold">({album.catalogNumber})</span>
                         )}
-                        <span className="border border-white/15 bg-white/5 px-2 py-0.2 rounded text-[10px] text-amber-300 font-mono">
+                        <span className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.2 text-[10px] text-[#1F1305] font-black font-mono">
                           {album.format || (isSingle ? "Single 45 RPM" : "LP 33 RPM")}
                         </span>
                       </div>
-                      <h4 className="text-base font-bold text-white tracking-tight">
+                      <h4 className="text-xl font-bold font-cooper text-[#1F1305] tracking-tight mt-1">
                         {album.title}
                       </h4>
-                      <p className="text-xs text-neutral-300 font-medium">
+                      <p className="text-xs text-[#5A5245] font-bold font-mono">
                         {album.artist} {album.year ? `(${album.year})` : ""}
                       </p>
                     </div>
@@ -427,15 +470,15 @@ export function AdminMediaManager({
                     {/* Badge de estado de fotos */}
                     <div className="shrink-0 text-right">
                       {hasBoth ? (
-                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-black text-white border border-[#1F1305] bg-[#10B981] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                           <CheckCircle2 className="h-3 w-3" /> 2/2 Caras
                         </span>
                       ) : hasAny ? (
-                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-black text-[#1F1305] border border-[#1F1305] bg-[#F8C800] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                           1/2 Caras
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-neutral-400 border border-white/10 bg-white/5 px-2 py-0.5 rounded-full">
+                        <span className="inline-flex items-center gap-1 font-mono text-[10px] font-black text-[#5A5245] border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
                           Sin fotos
                         </span>
                       )}
@@ -443,12 +486,12 @@ export function AdminMediaManager({
                   </div>
 
                   {/* Zonas de Carga Dual (Cara A / Portada + Cara B / Contraportada) */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-3 border-t border-white/10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-3 border-t-2 border-[#1F1305]/15">
                     {/* Cara A / Portada */}
-                    <div className="space-y-2 p-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <div className="space-y-2 p-3 border border-[#1F1305] bg-[#FAF8F5]">
                       <div className="flex items-center justify-between text-xs font-mono font-bold">
-                        <span className="text-white flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#E80000]" />
+                        <span className="text-[#1F1305] flex items-center gap-1.5 font-black">
+                          <span className="w-2.5 h-2.5 border border-[#1F1305] bg-[#E80000]" />
                           {frontLabel}
                         </span>
                         {album.coverUrl && (
@@ -457,7 +500,7 @@ export function AdminMediaManager({
                               href={album.coverUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="rounded border border-white/10 bg-white/5 p-1 text-neutral-400 hover:text-amber-400 transition-colors"
+                              className="border border-[#1F1305] bg-[#EDE0D0] p-1 text-[#1F1305] hover:bg-white transition-colors"
                               title={`Abrir ${frontLabel}`}
                             >
                               <ExternalLink className="h-3 w-3" />
@@ -465,7 +508,7 @@ export function AdminMediaManager({
                             <button
                               type="button"
                               onClick={() => handleClearAlbumImage(album.id, "url_portada", frontLabel)}
-                              className="rounded border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                              className="border border-[#1F1305] bg-[#FEE2E2] p-1 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                               title={`Eliminar ${frontLabel}`}
                             >
                               <Trash2 className="h-3 w-3" />
@@ -485,10 +528,10 @@ export function AdminMediaManager({
                     </div>
 
                     {/* Cara B / Contraportada */}
-                    <div className="space-y-2 p-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <div className="space-y-2 p-3 border border-[#1F1305] bg-[#FAF8F5]">
                       <div className="flex items-center justify-between text-xs font-mono font-bold">
-                        <span className="text-white flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#F1730C]" />
+                        <span className="text-[#1F1305] flex items-center gap-1.5 font-black">
+                          <span className="w-2.5 h-2.5 border border-[#1F1305] bg-[#F1730C]" />
                           {backLabel}
                         </span>
                         {album.backCoverUrl && (
@@ -497,7 +540,7 @@ export function AdminMediaManager({
                               href={album.backCoverUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="rounded border border-white/10 bg-white/5 p-1 text-neutral-400 hover:text-amber-400 transition-colors"
+                              className="border border-[#1F1305] bg-[#EDE0D0] p-1 text-[#1F1305] hover:bg-white transition-colors"
                               title={`Abrir ${backLabel}`}
                             >
                               <ExternalLink className="h-3 w-3" />
@@ -505,7 +548,7 @@ export function AdminMediaManager({
                             <button
                               type="button"
                               onClick={() => handleClearAlbumImage(album.id, "url_contraportada", backLabel)}
-                              className="rounded border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                              className="border border-[#1F1305] bg-[#FEE2E2] p-1 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                               title={`Eliminar ${backLabel}`}
                             >
                               <Trash2 className="h-3 w-3" />
@@ -527,11 +570,11 @@ export function AdminMediaManager({
 
                   {/* Vista Previa Interactiva Deslizable si hay fotos */}
                   {hasBoth && (
-                    <div className="pt-2 border-t border-white/10">
+                    <div className="pt-2 border-t-2 border-[#1F1305]/15">
                       <details className="group/preview">
-                        <summary className="font-mono text-[11px] text-amber-400 hover:text-amber-300 cursor-pointer list-none flex items-center justify-between py-1">
+                        <summary className="font-mono text-[11px] font-black text-[#E80000] hover:text-[#1F1305] cursor-pointer list-none flex items-center justify-between py-1">
                           <span>🔍 Probar Visor Deslizable ({frontLabel} ↔ {backLabel})</span>
-                          <span className="text-neutral-500 group-open/preview:rotate-180 transition-transform">▼</span>
+                          <span className="text-[#5A5245] group-open/preview:rotate-180 transition-transform">▼</span>
                         </summary>
                         <div className="pt-3 max-w-xs mx-auto">
                           <AlbumCoverSlider
@@ -547,7 +590,7 @@ export function AdminMediaManager({
                       </details>
                     </div>
                   )}
-                </GlassCard>
+                </div>
               );
             })}
           </div>
@@ -557,9 +600,9 @@ export function AdminMediaManager({
       {/* Lista de Grupos */}
       {activeTab === "grupos" && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between font-mono text-xs text-neutral-400">
+          <div className="flex items-center justify-between font-mono text-xs font-bold text-[#5A5245]">
             <span>Mostrando {filteredGroups.length} agrupaciones</span>
-            <span className="text-[11px] text-neutral-500">Haz clic en &quot;Entrar a fotos&quot; para ver la discografía completa</span>
+            <span className="text-[11px]">Haz clic en &quot;Entrar a fotos&quot; para ver la discografía completa</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -567,26 +610,26 @@ export function AdminMediaManager({
               const hasDiscography = Boolean(group.totalAlbums && group.totalAlbums > 0);
 
               return (
-                <GlassCard
+                <div
                   key={group.id}
-                  className="p-5 flex flex-col justify-between gap-4 border border-white/10 bg-black/40 hover:border-white/20 transition-all"
+                  className="border-2 border-[#1F1305] bg-white p-5 flex flex-col justify-between gap-4 shadow-[4px_4px_0px_#1F1305] transition-all"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="space-y-1 flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[11px] text-amber-400 font-bold">#{group.id}</span>
+                        <span className="border border-[#1F1305] bg-[#F8C800] text-[#1F1305] px-1.5 py-0.2 font-mono text-[11px] font-black">#{group.id}</span>
                         {group.region && (
-                          <span className="font-mono text-[11px] text-neutral-400">
+                          <span className="font-mono text-[11px] text-[#5A5245] font-bold">
                             • {group.region}
                           </span>
                         )}
                         {group.directorName && (
-                          <span className="font-mono text-[11px] text-neutral-400">
+                          <span className="font-mono text-[11px] text-[#5A5245] font-bold">
                             • Dir: {group.directorName}
                           </span>
                         )}
                       </div>
-                      <h4 className="text-lg font-bold text-white tracking-tight truncate">
+                      <h4 className="text-xl font-bold font-cooper text-[#1F1305] tracking-tight mt-1 truncate">
                         {group.name}
                       </h4>
 
@@ -594,38 +637,38 @@ export function AdminMediaManager({
                       <div className="pt-1 flex flex-wrap items-center gap-1.5 font-mono text-xs">
                         {hasDiscography ? (
                           <>
-                            <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-bold text-amber-300">
-                              <Disc3 className="h-3 w-3" />
+                            <span className="inline-flex items-center gap-1 border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[11px] font-black text-[#1F1305]">
+                              <Disc3 className="h-3 w-3 text-[#E80000]" />
                               {group.totalAlbums} {group.totalAlbums === 1 ? "lanzamiento" : "lanzamientos"}
                             </span>
                             {Boolean(group.lpsCount) && (
-                              <span className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] text-neutral-300">
+                              <span className="border border-[#1F1305] bg-white px-1.5 py-0.5 text-[10px] font-bold text-[#1F1305]">
                                 {group.lpsCount} LPs
                               </span>
                             )}
                             {Boolean(group.singlesCount) && (
-                              <span className="rounded border border-cyan-500/20 bg-cyan-500/10 px-1.5 py-0.5 text-[10px] text-cyan-300">
+                              <span className="border border-[#1F1305] bg-[#FAF8F5] px-1.5 py-0.5 text-[10px] font-bold text-[#1F1305]">
                                 {group.singlesCount} Singles 45s
                               </span>
                             )}
                             {Boolean(group.casetesCount) && (
-                              <span className="rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-300">
+                              <span className="border border-[#1F1305] bg-[#FAF8F5] px-1.5 py-0.5 text-[10px] font-bold text-[#1F1305]">
                                 {group.casetesCount} Casetes
                               </span>
                             )}
                             {Boolean(group.epsCount) && (
-                              <span className="rounded border border-purple-500/20 bg-purple-500/10 px-1.5 py-0.5 text-[10px] text-purple-300">
+                              <span className="border border-[#1F1305] bg-[#FAF8F5] px-1.5 py-0.5 text-[10px] font-bold text-[#1F1305]">
                                 {group.epsCount} EPs
                               </span>
                             )}
                             {Boolean(group.cdsCount) && (
-                              <span className="rounded border border-rose-500/20 bg-rose-500/10 px-1.5 py-0.5 text-[10px] text-rose-300">
+                              <span className="border border-[#1F1305] bg-[#FAF8F5] px-1.5 py-0.5 text-[10px] font-bold text-[#1F1305]">
                                 {group.cdsCount} CDs
                               </span>
                             )}
                           </>
                         ) : (
-                          <span className="text-[11px] text-neutral-500">
+                          <span className="text-[11px] text-[#5A5245] font-bold">
                             Sin lanzamientos catalogados
                           </span>
                         )}
@@ -638,14 +681,14 @@ export function AdminMediaManager({
                           href={group.photoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-lg border border-white/10 bg-white/5 p-1.5 text-neutral-400 hover:text-amber-400 transition-colors"
+                          className="border border-[#1F1305] bg-[#EDE0D0] p-1.5 text-[#1F1305] hover:bg-white transition-colors"
                           title="Abrir foto oficial"
                         >
                           <ExternalLink className="h-4 w-4" />
                         </a>
                         <button
                           onClick={() => handleClearGroupPhoto(group.id)}
-                          className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                          className="border border-[#1F1305] bg-[#FEE2E2] p-1.5 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                           title="Desvincular foto oficial"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -657,17 +700,17 @@ export function AdminMediaManager({
                   {/* Botón de Entrada a la Subpágina del Grupo */}
                   <Link
                     href={`/admin/grupo/${group.id}`}
-                    className="w-full inline-flex items-center justify-between gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 font-mono text-xs font-bold text-amber-300 hover:bg-amber-500 hover:text-neutral-950 transition-all shadow-md group/btn"
+                    className="w-full inline-flex items-center justify-between gap-2 border-2 border-[#1F1305] bg-[#F8C800] px-4 py-2.5 font-mono text-xs font-black text-[#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] transition-all shadow-[2px_2px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 group/btn"
                   >
                     <span className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-amber-400 group-hover/btn:text-neutral-950 transition-colors" />
+                      <Sparkles className="h-4 w-4 text-[#E80000] group-hover/btn:text-[#F8C800] transition-colors" />
                       <span>Entrar a gestionar fotos de discografía ({group.totalAlbums || 0})</span>
                     </span>
                     <ArrowRight className="h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
                   </Link>
 
                   {/* Uploader Rápido de Foto del Grupo */}
-                  <div className="pt-2 border-t border-white/5">
+                  <div className="pt-2 border-t-2 border-[#1F1305]/15">
                     <ImageUploader
                       folderPath="grupos"
                       fileId={group.id}
@@ -677,7 +720,7 @@ export function AdminMediaManager({
                       onUploaded={(url) => handleUpdateGroupPhoto(group.id, url)}
                     />
                   </div>
-                </GlassCard>
+                </div>
               );
             })}
           </div>
@@ -687,21 +730,21 @@ export function AdminMediaManager({
       {/* Lista de Personas */}
       {activeTab === "personas" && (
         <div className="space-y-4">
-          <div className="font-mono text-xs text-neutral-400">
+          <div className="font-mono text-xs font-bold text-[#5A5245]">
             Mostrando {filteredPersons.length} personas
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {filteredPersons.slice(0, 40).map((person) => (
-              <GlassCard key={person.id} className="p-5 flex flex-col justify-between gap-4">
+              <div key={person.id} className="border-2 border-[#1F1305] bg-white p-5 flex flex-col justify-between gap-4 shadow-[4px_4px_0px_#1F1305]">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="font-mono text-[11px] text-amber-400">#{person.id}</span>
-                    <h4 className="text-base font-bold text-white tracking-tight mt-0.5">
+                    <span className="border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.2 font-mono text-[11px] font-black text-[#1F1305]">#{person.id}</span>
+                    <h4 className="text-xl font-bold font-cooper text-[#1F1305] tracking-tight mt-1">
                       {person.name}
                     </h4>
                     {person.nickname && (
-                      <p className="text-xs text-amber-400/90 italic">
+                      <p className="text-xs text-[#E80000] font-bold font-mono">
                         &quot;{person.nickname}&quot;
                       </p>
                     )}
@@ -713,14 +756,14 @@ export function AdminMediaManager({
                         href={person.photoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-lg border border-white/10 bg-white/5 p-1.5 text-neutral-400 hover:text-amber-400 transition-colors"
+                        className="border border-[#1F1305] bg-[#EDE0D0] p-1.5 text-[#1F1305] hover:bg-white transition-colors"
                         title="Abrir foto"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
                       <button
                         onClick={() => handleClearPersonPhoto(person.id)}
-                        className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                        className="border border-[#1F1305] bg-[#FEE2E2] p-1.5 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                         title="Desvincular foto"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -738,16 +781,16 @@ export function AdminMediaManager({
                   onUploaded={(url) => handleUpdatePersonPhoto(person.id, url)}
                 />
 
-                <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+                <div className="pt-2 border-t-2 border-[#1F1305]/15 flex items-center justify-between gap-2">
                   <Link
                     href={`/admin/persona/${person.id}`}
-                    className="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 py-1.5 font-mono text-xs font-bold text-amber-300 hover:bg-amber-500/20 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 border-2 border-[#1F1305] bg-[#EDE0D0] py-2 font-mono text-xs font-black text-[#1F1305] hover:bg-[#1F1305] hover:text-white transition-all shadow-[2px_2px_0px_#1F1305]"
                   >
-                    <span>Ficha Pericial & Redacción</span>
+                    <span>Ficha Pericial &amp; Redacción</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
-              </GlassCard>
+              </div>
             ))}
           </div>
         </div>
@@ -756,20 +799,20 @@ export function AdminMediaManager({
       {/* Lista de Sellos */}
       {activeTab === "sellos" && (
         <div className="space-y-4">
-          <div className="font-mono text-xs text-neutral-400">
+          <div className="font-mono text-xs font-bold text-[#5A5245]">
             Mostrando {filteredLabels.length} sellos discográficos
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {filteredLabels.slice(0, 40).map((label) => (
-              <GlassCard key={label.id} className="p-5 flex flex-col justify-between gap-4">
+              <div key={label.id} className="border-2 border-[#1F1305] bg-white p-5 flex flex-col justify-between gap-4 shadow-[4px_4px_0px_#1F1305]">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="font-mono text-[11px] text-amber-400">#{label.id}</span>
-                    <h4 className="text-base font-bold text-white tracking-tight mt-0.5">
+                    <span className="border border-[#1F1305] bg-[#EDE0D0] px-1.5 py-0.2 font-mono text-[11px] font-black text-[#1F1305]">#{label.id}</span>
+                    <h4 className="text-xl font-bold font-cooper text-[#1F1305] tracking-tight mt-1">
                       {label.name}
                     </h4>
-                    <p className="text-xs text-neutral-400">
+                    <p className="text-xs text-[#5A5245] font-bold font-mono">
                       País: {label.country || "Perú"}
                     </p>
                   </div>
@@ -780,14 +823,14 @@ export function AdminMediaManager({
                         href={label.logoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-lg border border-white/10 bg-white/5 p-1.5 text-neutral-400 hover:text-amber-400 transition-colors"
+                        className="border border-[#1F1305] bg-[#EDE0D0] p-1.5 text-[#1F1305] hover:bg-white transition-colors"
                         title="Abrir logo"
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
                       <button
                         onClick={() => handleClearLabelLogo(label.id)}
-                        className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                        className="border border-[#1F1305] bg-[#FEE2E2] p-1.5 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                         title="Desvincular logotipo"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -804,7 +847,7 @@ export function AdminMediaManager({
                   label="Logotipo del Sello Discográfico"
                   onUploaded={(url) => handleUpdateLabelLogo(label.id, url)}
                 />
-              </GlassCard>
+              </div>
             ))}
           </div>
         </div>

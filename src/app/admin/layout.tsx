@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0c",
-  colorScheme: "dark",
+  themeColor: "#EDE0D0",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#0a0a0c] text-zinc-100 dark">
+    <div className="min-h-screen bg-[#EDE0D0] text-[#1F1305]">
       {children}
     </div>
   );

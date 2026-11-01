@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Upload, Check, Loader2, Image as ImageIcon, AlertCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -111,9 +111,11 @@ export function ImageUploader({
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentUrl || null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  useEffect(() => {
+  const [prevCurrentUrl, setPrevCurrentUrl] = useState(currentUrl);
+  if (currentUrl !== prevCurrentUrl) {
+    setPrevCurrentUrl(currentUrl);
     setPreviewUrl(currentUrl || null);
-  }, [currentUrl]);
+  }
 
   const isBusy = phase === "converting" || phase === "uploading";
 
@@ -183,19 +185,19 @@ export function ImageUploader({
   return (
     <div className={cn("space-y-2", className)}>
       <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-xs text-neutral-400 font-medium">
+        <span className="font-mono text-xs text-[#1F1305] font-black uppercase">
           {label}
         </span>
         {previewUrl && (
-          <span className="font-mono text-[10px] text-emerald-400 flex items-center gap-1 font-bold">
-            <Check className="h-3 w-3" /> Imagen WebP activa
+          <span className="border border-[#1F1305] bg-[#10B981] text-white px-1.5 py-0.2 font-mono text-[10px] font-black flex items-center gap-1 shadow-[1px_1px_0px_#1F1305]">
+            <Check className="h-3 w-3" /> WebP Activa
           </span>
         )}
       </div>
 
       <div className="flex items-center gap-3">
         {/* Thumbnail Preview */}
-        <div className="relative h-16 w-16 rounded-xl border border-white/10 bg-black/60 overflow-hidden flex items-center justify-center shrink-0 shadow-inner">
+        <div className="relative h-16 w-16 border-2 border-[#1F1305] bg-[#FAF8F5] overflow-hidden flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#1F1305]">
           {previewUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -204,11 +206,11 @@ export function ImageUploader({
               className="h-full w-full object-cover"
             />
           ) : (
-            <ImageIcon className="h-6 w-6 text-neutral-600" />
+            <ImageIcon className="h-6 w-6 text-[#5A5245]" />
           )}
           {isBusy && (
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-xs flex items-center justify-center">
-              <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
+            <div className="absolute inset-0 bg-[#1F1305]/75 flex items-center justify-center">
+              <Loader2 className="h-5 w-5 text-white animate-spin" />
             </div>
           )}
         </div>
@@ -229,31 +231,31 @@ export function ImageUploader({
             onClick={() => fileInputRef.current?.click()}
             disabled={isBusy}
             className={cn(
-              "inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 font-mono text-xs font-bold transition-all cursor-pointer",
+              "inline-flex items-center gap-2 border-2 border-[#1F1305] px-3.5 py-1.5 font-mono text-xs font-black shadow-[2px_2px_0px_#1F1305] transition-all cursor-pointer active:translate-x-0.5 active:translate-y-0.5",
               phase === "success"
-                ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
-                : "border-white/15 bg-white/5 text-neutral-200 hover:border-amber-400 hover:bg-white/10 hover:text-white",
+                ? "bg-[#10B981] text-white"
+                : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]",
               isBusy && "opacity-60 cursor-not-allowed"
             )}
           >
             {phase === "converting" ? (
               <>
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-400" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-[#E80000]" />
                 <span>Transformando a WebP (Canvas)...</span>
               </>
             ) : phase === "uploading" ? (
               <>
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-amber-400" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-[#E80000]" />
                 <span>Subiendo al Storage...</span>
               </>
             ) : phase === "success" ? (
               <>
-                <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <Check className="h-3.5 w-3.5 text-white" />
                 <span>¡Procesada y guardada en WebP!</span>
               </>
             ) : (
               <>
-                <Upload className="h-3.5 w-3.5 text-amber-400" />
+                <Upload className="h-3.5 w-3.5 text-[#E80000]" />
                 <span>{previewUrl ? "Reemplazar Imagen (JPG/PNG/WebP)" : "Subir Imagen (JPG/PNG/WebP)"}</span>
               </>
             )}
@@ -261,15 +263,15 @@ export function ImageUploader({
 
           {/* Estadísticas de compresión en tiempo real */}
           {stats ? (
-            <div className="inline-flex items-center gap-1.5 font-mono text-[10px] bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded text-emerald-300">
-              <Sparkles className="h-3 w-3 text-emerald-400 shrink-0" />
+            <div className="inline-flex items-center gap-1.5 font-mono text-[10px] bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5 text-[#1F1305] font-bold shadow-[1px_1px_0px_#1F1305]">
+              <Sparkles className="h-3 w-3 text-[#E80000] shrink-0" />
               <span>
                 {stats.originalFormat} ({stats.originalSizeKb} KB) → WebP ({stats.compressedSizeKb} KB)
                 {stats.reductionPercentage > 0 ? ` [−${stats.reductionPercentage}%]` : ""}
               </span>
             </div>
           ) : (
-            <p className="font-mono text-[10px] text-neutral-400">
+            <p className="font-mono text-[10px] text-[#5A5245]">
               Sube JPG, PNG o WebP. Se convertirá y comprimirá automáticamente a WebP de alta fidelidad.
             </p>
           )}
@@ -277,8 +279,8 @@ export function ImageUploader({
       </div>
 
       {errorMsg && (
-        <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-2 flex items-center gap-2 text-red-300 font-mono text-[11px]">
-          <AlertCircle className="h-3.5 w-3.5 shrink-0 text-red-400" />
+        <div className="border-2 border-[#1F1305] bg-[#FEE2E2] p-2 flex items-center gap-2 text-[#991B1B] font-mono text-[11px] font-bold shadow-[2px_2px_0px_#1F1305]">
+          <AlertCircle className="h-3.5 w-3.5 shrink-0 text-[#991B1B]" />
           <span className="truncate">{errorMsg}</span>
         </div>
       )}

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { GlassCard } from "@/components/ui/glass-card";
 import { ImageUploader } from "@/features/storage/components/image-uploader";
 import { MarkdownRenderer } from "@/features/blog";
 import {
@@ -213,14 +212,14 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono text-xs">
       {/* Notificación de Feedback */}
       {feedback && (
         <div
-          className={`flex items-center gap-2 rounded-xl p-4 font-mono text-xs ${
+          className={`flex items-center gap-2 border-2 border-[#1F1305] p-4 font-mono text-xs font-bold shadow-[4px_4px_0px_#1F1305] ${
             feedback.type === "success"
-              ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-300"
-              : "bg-red-500/10 border border-red-500/30 text-red-300"
+              ? "bg-[#10B981] text-white"
+              : "bg-[#FEE2E2] text-[#991B1B]"
           }`}
         >
           {feedback.type === "success" ? (
@@ -234,22 +233,22 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
 
       {/* MODO EDICIÓN O CREACIÓN */}
       {isEditing && activeArticle ? (
-        <GlassCard variant="elevated" className="p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-8 space-y-6 shadow-[6px_6px_0px_#1F1305]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#1F1305] pb-4">
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={handleCancel}
-                className="rounded-lg border border-white/10 bg-white/5 p-2 text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="border-2 border-[#1F1305] bg-white p-2 text-[#1F1305] hover:bg-[#EDE0D0] transition-colors shadow-[2px_2px_0px_#1F1305]"
                 title="Volver al listado"
               >
                 <ArrowLeft className="h-4 w-4" />
               </button>
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                <h3 className="font-cooper text-xl sm:text-2xl font-black text-[#1F1305]">
                   {activeArticle.id ? "Editar Crónica / Artículo" : "Nueva Crónica / Artículo"}
                 </h3>
-                <p className="font-mono text-xs text-neutral-400">
+                <p className="font-mono text-xs text-[#5A5245] font-bold">
                   {activeArticle.id ? `ID: ${activeArticle.id}` : "Redacta un nuevo ensayo para el blog"}
                 </p>
               </div>
@@ -259,7 +258,7 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="rounded-xl border border-white/10 px-4 py-2 font-mono text-xs text-neutral-300 hover:bg-white/5 transition-colors"
+                className="border-2 border-[#1F1305] bg-white px-4 py-2 font-mono text-xs font-bold text-[#1F1305] hover:bg-[#EDE0D0] transition-colors shadow-[2px_2px_0px_#1F1305]"
               >
                 Cancelar
               </button>
@@ -267,7 +266,7 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                 type="button"
                 onClick={handleSave}
                 disabled={isSaving}
-                className="rounded-xl bg-amber-500 px-5 py-2 font-mono text-xs font-bold text-neutral-950 hover:bg-amber-400 transition-all disabled:opacity-50"
+                className="border-2 border-[#1F1305] bg-[#E80000] px-5 py-2 font-mono text-xs font-black text-white hover:bg-[#1F1305] transition-all shadow-[3px_3px_0px_#1F1305] disabled:opacity-50 cursor-pointer"
               >
                 {isSaving ? "Guardando..." : activeArticle.id ? "Guardar Cambios" : "Publicar Ahora"}
               </button>
@@ -279,37 +278,37 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
             <div className="lg:col-span-8 space-y-5">
               {/* Título */}
               <div className="space-y-1.5">
-                <label className="block font-mono text-xs text-neutral-300">
-                  Título del Artículo <span className="text-amber-400">*</span>
+                <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase">
+                  Título del Artículo <span className="text-[#E80000]">*</span>
                 </label>
                 <input
                   type="text"
                   value={activeArticle.titulo || ""}
                   onChange={(e) => handleTitleChange(e.target.value)}
                   placeholder="Ej: La Revolución de la Guitarra Eléctrica en la Selva"
-                  className="w-full rounded-xl border border-white/10 bg-neutral-900/90 px-4 py-2.5 font-serif text-lg text-white placeholder-neutral-600 focus:border-amber-500/60 focus:outline-none"
+                  className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-4 py-2.5 font-cooper text-lg font-bold text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000]"
                 />
               </div>
 
               {/* Slug URL */}
               <div className="space-y-1.5">
-                <label className="block font-mono text-xs text-neutral-400">
+                <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase">
                   Ruta URL amigable (/blog/[slug])
                 </label>
-                <div className="flex items-center rounded-xl border border-white/10 bg-neutral-950 px-3 py-2 font-mono text-xs text-neutral-400">
-                  <span className="text-neutral-500">https://kumbiasound.pe/blog/</span>
+                <div className="flex items-center border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 font-mono text-xs text-[#1F1305]">
+                  <span className="text-[#5A5245]">https://kumbiasound.pe/blog/</span>
                   <input
                     type="text"
                     value={activeArticle.slug || ""}
                     onChange={(e) => setActiveArticle({ ...activeArticle, slug: e.target.value })}
-                    className="flex-1 bg-transparent text-amber-300 focus:outline-none ml-1"
+                    className="flex-1 bg-transparent text-[#E80000] font-bold focus:outline-none ml-1"
                   />
                 </div>
               </div>
 
               {/* Resumen / Bajada */}
               <div className="space-y-1.5">
-                <label className="block font-mono text-xs text-neutral-300">
+                <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase">
                   Resumen o Bajada Editorial (aparece en la tarjeta del blog y vista previa)
                 </label>
                 <textarea
@@ -317,22 +316,22 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                   value={activeArticle.resumen || ""}
                   onChange={(e) => setActiveArticle({ ...activeArticle, resumen: e.target.value })}
                   placeholder="Breve sinopsis del artículo en 1 o 2 oraciones..."
-                  className="w-full rounded-xl border border-white/10 bg-neutral-900/90 px-4 py-2 font-sans text-sm text-neutral-200 placeholder-neutral-600 focus:border-amber-500/60 focus:outline-none"
+                  className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-4 py-2 font-sans text-xs text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000]"
                 />
               </div>
 
               {/* Barra de Herramientas de Formato y Selector de Modo */}
               <div className="space-y-2">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#1F1305] pb-2">
                   {/* Selector Escribir / Vista Previa */}
-                  <div className="flex items-center rounded-lg border border-white/10 bg-neutral-950 p-1">
+                  <div className="flex items-center gap-1">
                     <button
                       type="button"
                       onClick={() => setEditorMode("write")}
-                      className={`flex items-center gap-1.5 rounded-md px-3 py-1 font-mono text-xs transition-colors ${
+                      className={`flex items-center gap-1.5 border-2 border-[#1F1305] px-3 py-1 font-mono text-xs font-bold transition-colors cursor-pointer ${
                         editorMode === "write"
-                          ? "bg-amber-500 text-neutral-950 font-bold"
-                          : "text-neutral-400 hover:text-white"
+                          ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
+                          : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
                       }`}
                     >
                       <Edit3 className="h-3.5 w-3.5" />
@@ -341,10 +340,10 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                     <button
                       type="button"
                       onClick={() => setEditorMode("preview")}
-                      className={`flex items-center gap-1.5 rounded-md px-3 py-1 font-mono text-xs transition-colors ${
+                      className={`flex items-center gap-1.5 border-2 border-[#1F1305] px-3 py-1 font-mono text-xs font-bold transition-colors cursor-pointer ${
                         editorMode === "preview"
-                          ? "bg-amber-500 text-neutral-950 font-bold"
-                          : "text-neutral-400 hover:text-white"
+                          ? "bg-[#1F1305] text-[#EDE0D0] shadow-[1px_1px_0px_#E80000]"
+                          : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
                       }`}
                     >
                       <Eye className="h-3.5 w-3.5" />
@@ -354,27 +353,27 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
 
                   {/* Botones de Formato Rápido */}
                   {editorMode === "write" && (
-                    <div className="flex flex-wrap items-center gap-1 text-xs font-mono text-neutral-400">
+                    <div className="flex flex-wrap items-center gap-1 text-xs font-mono">
                       <button
                         type="button"
                         onClick={() => handleInsertFormatting("## ")}
-                        className="rounded px-2 py-1 hover:bg-white/10 hover:text-amber-400 transition-colors"
-                        title="Subtítulo"
+                        className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[#1F1305] font-bold hover:bg-white"
+                        title="Subtítulo H2"
                       >
                         H2
                       </button>
                       <button
                         type="button"
                         onClick={() => handleInsertFormatting("### ")}
-                        className="rounded px-2 py-1 hover:bg-white/10 hover:text-amber-400 transition-colors"
-                        title="Sección"
+                        className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[#1F1305] font-bold hover:bg-white"
+                        title="Subtítulo H3"
                       >
                         H3
                       </button>
                       <button
                         type="button"
                         onClick={() => handleInsertFormatting("**", "**")}
-                        className="rounded px-2 py-1 font-bold hover:bg-white/10 hover:text-amber-400 transition-colors"
+                        className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[#1F1305] font-bold hover:bg-white"
                         title="Negrita"
                       >
                         B
@@ -382,7 +381,7 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                       <button
                         type="button"
                         onClick={() => handleInsertFormatting("*", "*")}
-                        className="rounded px-2 py-1 italic hover:bg-white/10 hover:text-amber-400 transition-colors"
+                        className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[#1F1305] font-bold hover:bg-white"
                         title="Cursiva"
                       >
                         I
@@ -390,15 +389,15 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                       <button
                         type="button"
                         onClick={() => handleInsertFormatting("> ")}
-                        className="rounded px-2 py-1 hover:bg-white/10 hover:text-amber-400 transition-colors"
-                        title="Cita en bloque"
+                        className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[#1F1305] font-bold hover:bg-white"
+                        title="Cita"
                       >
-                        “Cita”
+                        &ldquo; Cita
                       </button>
                       <button
                         type="button"
                         onClick={() => handleInsertFormatting("- ")}
-                        className="rounded px-2 py-1 hover:bg-white/10 hover:text-amber-400 transition-colors"
+                        className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-0.5 text-[#1F1305] font-bold hover:bg-white"
                         title="Lista"
                       >
                         • Lista
@@ -424,10 +423,10 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                       });
                     }}
                     placeholder="Escribe aquí el contenido de la crónica... Puedes usar formato Markdown (## subtítulos, **negritas**, > citas históricas, etc.)."
-                    className="w-full rounded-xl border border-white/10 bg-neutral-900/90 p-4 font-mono text-sm text-neutral-200 placeholder-neutral-600 focus:border-amber-500/60 focus:outline-none leading-relaxed"
+                    className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] p-4 font-mono text-xs text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000] leading-relaxed"
                   />
                 ) : (
-                  <div className="rounded-xl border border-white/10 bg-neutral-950/80 p-6 min-h-[380px]">
+                  <div className="border-2 border-[#1F1305] bg-white p-6 min-h-[380px] text-[#1F1305]">
                     <MarkdownRenderer content={activeArticle.contenido || "*No hay contenido escrito aún.*"} />
                   </div>
                 )}
@@ -437,18 +436,18 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
             {/* Columna Lateral: Estado, Categoría y Portada WebP */}
             <div className="lg:col-span-4 space-y-6">
               {/* Estado de Publicación */}
-              <GlassCard className="p-4 space-y-3">
-                <label className="block font-mono text-xs text-neutral-300 font-semibold">
+              <div className="border-2 border-[#1F1305] bg-[#FAF8F5] p-4 space-y-3 shadow-[3px_3px_0px_#1F1305]">
+                <label className="block font-mono text-xs text-[#1F1305] font-black uppercase">
                   Estado de Publicación
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setActiveArticle({ ...activeArticle, publicado: false })}
-                    className={`rounded-xl border p-2.5 text-center font-mono text-xs transition-all ${
+                    className={`border-2 border-[#1F1305] p-2.5 text-center font-mono text-xs font-black transition-all cursor-pointer ${
                       !activeArticle.publicado
-                        ? "border-amber-500 bg-amber-500/20 text-amber-300 font-bold"
-                        : "border-white/10 bg-neutral-900 text-neutral-400 hover:text-white"
+                        ? "bg-[#F1730C] text-white shadow-[2px_2px_0px_#1F1305]"
+                        : "bg-white text-[#5A5245] hover:bg-[#EDE0D0]"
                     }`}
                   >
                     Borrador
@@ -456,30 +455,30 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                   <button
                     type="button"
                     onClick={() => setActiveArticle({ ...activeArticle, publicado: true })}
-                    className={`rounded-xl border p-2.5 text-center font-mono text-xs transition-all ${
+                    className={`border-2 border-[#1F1305] p-2.5 text-center font-mono text-xs font-black transition-all cursor-pointer ${
                       activeArticle.publicado
-                        ? "border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold"
-                        : "border-white/10 bg-neutral-900 text-neutral-400 hover:text-white"
+                        ? "bg-[#10B981] text-white shadow-[2px_2px_0px_#1F1305]"
+                        : "bg-white text-[#5A5245] hover:bg-[#EDE0D0]"
                     }`}
                   >
                     Público
                   </button>
                 </div>
-                <p className="font-mono text-[11px] text-neutral-400">
+                <p className="font-mono text-[11px] text-[#5A5245]">
                   {activeArticle.publicado
                     ? "Visible para todos los visitantes en /blog."
                     : "Solo visible para ti dentro del panel de administración."}
                 </p>
-              </GlassCard>
+              </div>
 
               {/* Categoría y Tiempo de Lectura */}
-              <GlassCard className="p-4 space-y-4">
+              <div className="border-2 border-[#1F1305] bg-[#FAF8F5] p-4 space-y-4 shadow-[3px_3px_0px_#1F1305]">
                 <div className="space-y-1.5">
-                  <label className="block font-mono text-xs text-neutral-300">Categoría</label>
+                  <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase">Categoría</label>
                   <select
                     value={activeArticle.categoria || "Historia & Orígenes"}
                     onChange={(e) => setActiveArticle({ ...activeArticle, categoria: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-neutral-900 px-3 py-2 font-mono text-xs text-neutral-200 focus:outline-none"
+                    className="w-full border-2 border-[#1F1305] bg-white px-3 py-2 font-mono text-xs font-bold text-[#1F1305] focus:outline-none"
                   >
                     <option value="Crónica de Época">Crónica de Época</option>
                     <option value="Pioneros de la Cumbia">Pioneros de la Cumbia</option>
@@ -490,36 +489,36 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block font-mono text-xs text-neutral-300">Tiempo de Lectura</label>
+                  <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase">Tiempo de Lectura</label>
                   <input
                     type="text"
                     value={activeArticle.tiempo_lectura || ""}
                     onChange={(e) => setActiveArticle({ ...activeArticle, tiempo_lectura: e.target.value })}
                     placeholder="Ej: 5 min de lectura"
-                    className="w-full rounded-xl border border-white/10 bg-neutral-900 px-3 py-2 font-mono text-xs text-neutral-200 focus:outline-none"
+                    className="w-full border-2 border-[#1F1305] bg-white px-3 py-2 font-mono text-xs font-bold text-[#1F1305] focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block font-mono text-xs text-neutral-300">Firma del Autor</label>
+                  <label className="block font-mono text-xs text-[#5A5245] font-bold uppercase">Firma del Autor</label>
                   <input
                     type="text"
                     value={activeArticle.autor_nombre || ""}
                     onChange={(e) => setActiveArticle({ ...activeArticle, autor_nombre: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-neutral-900 px-3 py-2 font-mono text-xs text-neutral-200 focus:outline-none"
+                    className="w-full border-2 border-[#1F1305] bg-white px-3 py-2 font-mono text-xs font-bold text-[#1F1305] focus:outline-none"
                   />
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Portada WebP */}
-              <GlassCard className="p-4 space-y-3">
-                <label className="block font-mono text-xs text-neutral-300 font-semibold">
+              <div className="border-2 border-[#1F1305] bg-[#FAF8F5] p-4 space-y-3 shadow-[3px_3px_0px_#1F1305]">
+                <label className="block font-mono text-xs text-[#1F1305] font-black uppercase">
                   Foto de Portada (Solo .webp)
                 </label>
 
                 {activeArticle.imagen_portada_url && (
                   <div className="space-y-2">
-                    <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden border border-white/10 bg-neutral-900">
+                    <div className="relative aspect-[16/9] w-full border-2 border-[#1F1305] bg-white overflow-hidden shadow-[2px_2px_0px_#1F1305]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={activeArticle.imagen_portada_url}
@@ -530,7 +529,7 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                     <button
                       type="button"
                       onClick={() => setActiveArticle({ ...activeArticle, imagen_portada_url: null })}
-                      className="text-[11px] font-mono text-red-400 hover:underline"
+                      className="text-[11px] font-mono text-[#E80000] font-bold hover:underline cursor-pointer"
                     >
                       Remover portada
                     </button>
@@ -546,28 +545,28 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                     setActiveArticle({ ...activeArticle, imagen_portada_url: url });
                   }}
                 />
-              </GlassCard>
+              </div>
             </div>
           </div>
-        </GlassCard>
+        </div>
       ) : (
         /* MODO LISTADO DE ARTÍCULOS */
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="font-serif text-2xl font-bold text-white flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-amber-400" />
-                Gestor de Crónicas & Ensayos
+          <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-6 shadow-[6px_6px_0px_#1F1305] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h3 className="font-cooper text-2xl font-black text-[#1F1305] flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-[#E80000]" />
+                Gestor de Crónicas &amp; Ensayos
               </h3>
-              <p className="font-mono text-xs text-neutral-400">
-                Redacta, publica y edita los artículos que aparecen en la sección pública de blog.
+              <p className="font-sans text-xs text-[#5A5245]">
+                Redacta, publica y edita los artículos que aparecen en la sección pública del blog.
               </p>
             </div>
 
             <button
               type="button"
               onClick={handleStartCreate}
-              className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-2.5 font-mono text-xs font-bold text-neutral-950 transition-all hover:bg-amber-400 shadow-lg shadow-amber-500/10"
+              className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] text-white px-5 py-2.5 font-mono text-xs font-black shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] transition-all cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
             >
               <Plus className="h-4 w-4" />
               <span>Nueva Crónica</span>
@@ -578,55 +577,55 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
           {articles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {articles.map((item) => (
-                <GlassCard
+                <div
                   key={item.id}
-                  className="p-5 flex flex-col justify-between space-y-4 hover:border-amber-500/30 transition-colors"
+                  className="border-2 border-[#1F1305] bg-white p-5 flex flex-col justify-between space-y-4 shadow-[4px_4px_0px_#1F1305]"
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-[11px] text-amber-400 font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
+                      <span className="border border-[#1F1305] bg-[#EDE0D0] font-mono text-[11px] text-[#1F1305] font-black px-2 py-0.5">
                         {item.categoria}
                       </span>
                       <span
-                        className={`font-mono text-[10px] px-2 py-0.5 rounded-full border ${
+                        className={`font-mono text-[10px] px-2 py-0.5 border border-[#1F1305] font-black uppercase ${
                           item.publicado
-                            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                            : "bg-amber-500/10 border-amber-500/30 text-amber-400"
+                            ? "bg-[#10B981] text-white"
+                            : "bg-[#F1730C] text-white"
                         }`}
                       >
                         {item.publicado ? "Publicado" : "Borrador"}
                       </span>
                     </div>
 
-                    <h4 className="font-serif text-lg font-bold text-white line-clamp-2">
+                    <h4 className="font-cooper text-lg font-bold text-[#1F1305] line-clamp-2">
                       {item.titulo}
                     </h4>
 
                     {item.resumen && (
-                      <p className="font-sans text-xs text-neutral-400 line-clamp-2 leading-relaxed">
+                      <p className="font-sans text-xs text-[#5A5245] line-clamp-2 leading-relaxed">
                         {item.resumen}
                       </p>
                     )}
 
-                    <div className="flex items-center gap-3 font-mono text-[11px] text-neutral-500 pt-1">
+                    <div className="flex items-center gap-3 font-mono text-[11px] text-[#5A5245] font-bold pt-1">
                       <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
+                        <Clock className="h-3 w-3 text-[#2563EB]" />
                         {item.tiempo_lectura}
                       </span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
+                        <Calendar className="h-3 w-3 text-[#F1730C]" />
                         {new Date(item.fecha_publicacion).toLocaleDateString("es-PE")}
                       </span>
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                  <div className="pt-3 border-t-2 border-[#1F1305]/15 flex items-center justify-between">
                     <a
                       href={`/blog/${item.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-mono text-xs text-neutral-400 hover:text-amber-400 transition-colors"
+                      className="inline-flex items-center gap-1 font-mono text-xs font-bold text-[#5A5245] hover:text-[#E80000] transition-colors"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                       <span>Ver en la web</span>
@@ -636,7 +635,7 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                       <button
                         type="button"
                         onClick={() => handleStartEdit(item)}
-                        className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-neutral-200 hover:border-amber-500/40 hover:text-amber-400 transition-colors"
+                        className="inline-flex items-center gap-1 border-2 border-[#1F1305] bg-[#EDE0D0] px-3 py-1 font-mono text-xs font-black text-[#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors cursor-pointer shadow-[1px_1px_0px_#1F1305]"
                       >
                         <Edit3 className="h-3.5 w-3.5" />
                         <span>Editar</span>
@@ -644,24 +643,24 @@ export function AdminBlogManager({ initialArticles }: AdminBlogManagerProps) {
                       <button
                         type="button"
                         onClick={() => handleDelete(item.id, item.titulo)}
-                        className="rounded-lg border border-red-500/20 bg-red-500/10 p-1.5 text-red-400 hover:bg-red-500/20 transition-colors"
+                        className="border-2 border-[#1F1305] bg-[#FEE2E2] p-1 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer shadow-[1px_1px_0px_#1F1305]"
                         title="Eliminar artículo"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </div>
                   </div>
-                </GlassCard>
+                </div>
               ))}
             </div>
           ) : (
-            <GlassCard className="p-12 text-center space-y-3">
-              <Sparkles className="h-8 w-8 text-amber-400 mx-auto" />
-              <h4 className="font-serif text-lg font-bold text-white">No tienes crónicas redactadas</h4>
-              <p className="font-mono text-xs text-neutral-400 max-w-sm mx-auto">
+            <div className="border-2 border-[#1F1305] bg-white p-12 text-center space-y-3 shadow-[4px_4px_0px_#1F1305]">
+              <Sparkles className="h-8 w-8 text-[#E80000] mx-auto" />
+              <h4 className="font-cooper text-xl font-bold text-[#1F1305]">No tienes crónicas redactadas</h4>
+              <p className="font-sans text-xs text-[#5A5245] max-w-sm mx-auto">
                 Haz clic en &quot;Nueva Crónica&quot; para escribir tu primer artículo histórico sobre la cumbia peruana.
               </p>
-            </GlassCard>
+            </div>
           )}
         </div>
       )}

@@ -49,7 +49,22 @@ flowchart TD
 
 ---
 
-## 3. Arquitectura de Pantallas y Componentes
+## 3. Sistema Visual Unificado (Neo-Brutalismo Cartulina)
+
+Todo el panel administrativo (`/admin`, `/admin/login`, `/admin/grupo/[id]`, `/admin/persona/[id]`) opera bajo el sistema visual **Neo-Brutalista Patrimonial**, eliminando completamente el *dark glassmorphism* heredado para garantizar máxima legibilidad y coherencia con la identidad del proyecto:
+
+1. **Lienzo y Fondos:** Fondo base en cartulina manila `#EDE0D0`, cabeceras en `#FAF8F5` y tarjetas de contenido en blanco puro `bg-white`.
+2. **Contraste y Bordes:** Tinta negra fonográfica `#1F1305` con bordes estructurales `border-2 border-[#1F1305]` y sombras proyectadas duras `shadow-[4px_4px_0px_#1F1305]`.
+3. **Tipografía:** Encabezados y títulos en `font-cooper` (Cooper Black vintage), cuerpos de texto, tablas, badges y métricas en `font-mono` de alta legibilidad.
+4. **Paleta Semántica Funcional:**
+   - Rojo Picantería (`#E80000`): Acciones prioritarias, alertas de error, botones críticos.
+   - Amarillo Galleta (`#F8C800`): Badges de catálogo, estados destacados y botones de acción secundaria.
+   - Verde Selva / Vinilo (`#10B981`): Confirmaciones de autenticación, sellos periciales aprobados y progreso completado.
+   - Naranja Amazónico (`#F1730C`): Formatos especiales (45 RPM, splits) e insignias.
+
+---
+
+## 4. Arquitectura de Pantallas y Componentes
 
 ### 3.1 Consola Central (`/admin`)
 Coordinada por `AdminTabsContainer` con **4 pestañas canónicas**:

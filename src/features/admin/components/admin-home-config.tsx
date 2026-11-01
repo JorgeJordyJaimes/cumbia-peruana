@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { GlassCard } from "@/components/ui/glass-card";
 import {
   Sliders,
   CheckCircle2,
@@ -112,14 +111,14 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 font-mono text-xs">
       {/* Notificación de Feedback */}
       {feedback && (
         <div
-          className={`flex items-center gap-2 rounded-xl p-4 font-mono text-xs ${
+          className={`flex items-center gap-2 border-2 border-[#1F1305] p-4 font-mono text-xs font-black shadow-[4px_4px_0px_#1F1305] ${
             feedback.type === "success"
-              ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-300"
-              : "bg-red-500/10 border border-red-500/30 text-red-300"
+              ? "bg-[#10B981] text-white"
+              : "bg-[#FEE2E2] text-[#991B1B]"
           }`}
         >
           {feedback.type === "success" ? (
@@ -132,13 +131,13 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
       )}
 
       {/* Cabecera del Personalizador */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
-        <div>
-          <h3 className="font-serif text-2xl font-bold text-white flex items-center gap-2">
-            <Sliders className="h-5 w-5 text-amber-400" />
+      <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-6 shadow-[6px_6px_0px_#1F1305] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <h3 className="font-cooper text-2xl sm:text-3xl font-black text-[#1F1305] flex items-center gap-2">
+            <Sliders className="h-6 w-6 text-[#E80000]" />
             Personalizador de la Portada / Home
           </h3>
-          <p className="font-mono text-xs text-neutral-400">
+          <p className="font-mono text-xs text-[#5A5245] font-bold">
             Modifica los textos principales, el cintillo de novedades y selecciona qué vinilos destacar.
           </p>
         </div>
@@ -147,7 +146,7 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-6 py-2.5 font-mono text-xs font-bold text-neutral-950 transition-all hover:bg-amber-400 shadow-lg shadow-amber-500/20 disabled:opacity-50"
+          className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#F8C800] px-6 py-2.5 font-mono text-xs font-black text-[#1F1305] transition-all hover:bg-[#1F1305] hover:text-[#EDE0D0] shadow-[3px_3px_0px_#1F1305] active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-50 cursor-pointer"
         >
           <Sparkles className="h-4 w-4" />
           <span>{isSaving ? "Guardando..." : "Guardar Cambios"}</span>
@@ -156,15 +155,15 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* BLOQUE 1: Textos del Hero Principal */}
-        <GlassCard variant="elevated" className="p-6 space-y-5">
-          <div className="flex items-center gap-2 border-b border-white/10 pb-3">
-            <LayoutTemplate className="h-4 w-4 text-amber-400" />
-            <h4 className="font-serif text-lg font-bold text-white">Hero Principal</h4>
+        <div className="border-2 border-[#1F1305] bg-white p-6 space-y-5 shadow-[4px_4px_0px_#1F1305]">
+          <div className="flex items-center gap-2 border-b-2 border-[#1F1305] pb-3">
+            <LayoutTemplate className="h-4 w-4 text-[#E80000]" />
+            <h4 className="font-cooper text-xl font-black text-[#1F1305]">Hero Principal</h4>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <label className="block font-mono text-xs text-neutral-300">
+              <label className="block font-mono text-xs font-bold text-[#5A5245]">
                 Insignia / Etiqueta Superior
               </label>
               <input
@@ -172,12 +171,12 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                 value={config.hero_insignia}
                 onChange={(e) => setConfig({ ...config, hero_insignia: e.target.value })}
                 placeholder="Ej: Archivo & Curaduría de Vinilos"
-                className="w-full rounded-xl border border-white/10 bg-neutral-900/90 px-3.5 py-2 font-mono text-xs text-amber-300 focus:border-amber-500/60 focus:outline-none"
+                className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3.5 py-2 font-mono text-xs font-bold text-[#F1730C] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="block font-mono text-xs text-neutral-300">
+              <label className="block font-mono text-xs font-bold text-[#5A5245]">
                 Título Principal de la Web
               </label>
               <input
@@ -185,12 +184,12 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                 value={config.hero_titulo}
                 onChange={(e) => setConfig({ ...config, hero_titulo: e.target.value })}
                 placeholder="Ej: El Sonido Inmortal de la Cumbia Peruana"
-                className="w-full rounded-xl border border-white/10 bg-neutral-900/90 px-3.5 py-2 font-serif text-base font-bold text-white focus:border-amber-500/60 focus:outline-none"
+                className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3.5 py-2 font-cooper text-base font-black text-[#1F1305] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="block font-mono text-xs text-neutral-300">
+              <label className="block font-mono text-xs font-bold text-[#5A5245]">
                 Subtítulo / Manifiesto Editorial
               </label>
               <textarea
@@ -198,25 +197,25 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                 value={config.hero_subtitulo}
                 onChange={(e) => setConfig({ ...config, hero_subtitulo: e.target.value })}
                 placeholder="Descripción del archivo discográfico..."
-                className="w-full rounded-xl border border-white/10 bg-neutral-900/90 p-3 font-sans text-xs text-neutral-300 leading-relaxed focus:border-amber-500/60 focus:outline-none"
+                className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] p-3 font-mono text-xs text-[#1F1305] leading-relaxed focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <label className="block font-mono text-xs text-neutral-300">
+                <label className="block font-mono text-xs font-bold text-[#5A5245]">
                   Texto del Botón CTA
                 </label>
                 <input
                   type="text"
                   value={config.hero_boton_texto}
                   onChange={(e) => setConfig({ ...config, hero_boton_texto: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-neutral-900/90 px-3 py-2 font-mono text-xs text-neutral-200 focus:outline-none"
+                  className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 font-mono text-xs font-bold text-[#1F1305] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="block font-mono text-xs text-neutral-300">
+                <label className="block font-mono text-xs font-bold text-[#5A5245]">
                   Enlace del Botón
                 </label>
                 <input
@@ -224,21 +223,21 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                   value={config.hero_boton_url}
                   onChange={(e) => setConfig({ ...config, hero_boton_url: e.target.value })}
                   placeholder="#catalogo o /blog"
-                  className="w-full rounded-xl border border-white/10 bg-neutral-900/90 px-3 py-2 font-mono text-xs text-neutral-200 focus:outline-none"
+                  className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 font-mono text-xs font-bold text-[#1F1305] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
                 />
               </div>
             </div>
           </div>
-        </GlassCard>
+        </div>
 
         {/* BLOQUE 2: Cintillo Superior & Módulos */}
         <div className="space-y-6">
           {/* Cintillo Superior */}
-          <GlassCard variant="elevated" className="p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="border-2 border-[#1F1305] bg-white p-6 space-y-4 shadow-[4px_4px_0px_#1F1305]">
+            <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
               <div className="flex items-center gap-2">
-                <Megaphone className="h-4 w-4 text-amber-400" />
-                <h4 className="font-serif text-lg font-bold text-white">Cintillo Superior de Avisos</h4>
+                <Megaphone className="h-4 w-4 text-[#F1730C]" />
+                <h4 className="font-cooper text-xl font-black text-[#1F1305]">Cintillo Superior de Avisos</h4>
               </div>
 
               <label className="relative inline-flex items-center cursor-pointer">
@@ -248,15 +247,15 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                   onChange={(e) => setConfig({ ...config, cintillo_activo: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-10 h-5 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
-                <span className="ml-2 font-mono text-xs text-neutral-400">
+                <div className="w-11 h-6 bg-[#EDE0D0] border-2 border-[#1F1305] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-[#1F1305] after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-white after:border-2 after:border-[#1F1305] after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
+                <span className="ml-2 font-mono text-xs font-bold text-[#1F1305]">
                   {config.cintillo_activo ? "Visible" : "Oculto"}
                 </span>
               </label>
             </div>
 
             <div className="space-y-1.5">
-              <label className="block font-mono text-xs text-neutral-300">
+              <label className="block font-mono text-xs font-bold text-[#5A5245]">
                 Texto del Mensaje Rotativo
               </label>
               <textarea
@@ -264,19 +263,19 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                 value={config.cintillo_texto}
                 onChange={(e) => setConfig({ ...config, cintillo_texto: e.target.value })}
                 placeholder="Ej: CATÁLOGO HISTÓRICO // EDICIONES DE COLECCIÓN..."
-                className="w-full rounded-xl border border-white/10 bg-neutral-900/90 p-3 font-mono text-xs text-neutral-200 focus:border-amber-500/60 focus:outline-none"
+                className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] p-3 font-mono text-xs font-bold text-[#1F1305] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
               />
             </div>
-          </GlassCard>
+          </div>
 
           {/* Módulo de Blog en Home */}
-          <GlassCard variant="elevated" className="p-6 space-y-4">
+          <div className="border-2 border-[#1F1305] bg-white p-6 space-y-4 shadow-[4px_4px_0px_#1F1305]">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-serif text-lg font-bold text-white">
+                <h4 className="font-cooper text-xl font-black text-[#1F1305]">
                   Sección de Crónicas en el Home
                 </h4>
-                <p className="font-mono text-xs text-neutral-400">
+                <p className="font-mono text-xs text-[#5A5245] font-bold">
                   Muestra las últimas notas históricas publicadas del blog directamente en la portada.
                 </p>
               </div>
@@ -288,27 +287,27 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                   onChange={(e) => setConfig({ ...config, seccion_blog_activa: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-10 h-5 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
+                <div className="w-11 h-6 bg-[#EDE0D0] border-2 border-[#1F1305] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-[#1F1305] after:content-[''] after:absolute after:top-[3px] after:left-[3px] after:bg-white after:border-2 after:border-[#1F1305] after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#10B981]"></div>
               </label>
             </div>
-          </GlassCard>
+          </div>
         </div>
       </div>
 
       {/* BLOQUE 3: Curaduría de Vinilos Destacados (Vitrina) */}
-      <GlassCard variant="elevated" className="p-6 sm:p-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-8 space-y-6 shadow-[4px_4px_0px_#1F1305]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#1F1305] pb-4">
           <div>
-            <h4 className="font-serif text-xl font-bold text-white flex items-center gap-2">
-              <Disc3 className="h-5 w-5 text-amber-400" />
+            <h4 className="font-cooper text-2xl font-black text-[#1F1305] flex items-center gap-2">
+              <Disc3 className="h-5 w-5 text-[#E80000]" />
               Vitrina de Vinilos Destacados
             </h4>
-            <p className="font-mono text-xs text-neutral-400">
+            <p className="font-mono text-xs text-[#5A5245] font-bold">
               Selecciona hasta 6 vinilos de tu colección para que aparezcan en los primeros lugares destacados del Home.
             </p>
           </div>
 
-          <span className="font-mono text-xs text-amber-400 font-semibold px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30">
+          <span className="font-mono text-xs font-black px-3 py-1 border border-[#1F1305] bg-[#F8C800] text-[#1F1305] shadow-[2px_2px_0px_#1F1305]">
             {selectedAlbums.length} / 6 seleccionados
           </span>
         </div>
@@ -316,38 +315,38 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
         {/* Buscador de Vinilos para Destacar */}
         <div className="space-y-3">
           <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#1F1305]/60" />
             <input
               type="text"
               value={albumSearch}
               onChange={(e) => setAlbumSearch(e.target.value)}
               placeholder="Buscar por título, grupo o sello para agregar a la vitrina..."
-              className="w-full rounded-xl border border-white/10 bg-neutral-900/90 pl-10 pr-4 py-2.5 font-mono text-xs text-white placeholder-neutral-500 focus:border-amber-500/60 focus:outline-none"
+              className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] pl-10 pr-4 py-2.5 font-mono text-xs text-[#1F1305] placeholder-[#5A5245]/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E80000]"
             />
           </div>
 
           {/* Resultados de Búsqueda Flotantes */}
           {filteredAlbums.length > 0 && (
-            <div className="rounded-xl border border-white/10 bg-neutral-950 p-2 space-y-1 max-h-60 overflow-y-auto shadow-2xl">
+            <div className="border-2 border-[#1F1305] bg-[#FAF8F5] p-2 space-y-1 max-h-60 overflow-y-auto shadow-[4px_4px_0px_#1F1305]">
               {filteredAlbums.map((item) => {
                 const isAlreadySelected = config.albumes_destacados_ids.includes(item.id);
                 return (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors font-mono text-xs"
+                    className="flex items-center justify-between p-2 hover:bg-[#EDE0D0] transition-colors font-mono text-xs border-b border-[#1F1305]/10"
                   >
                     <div className="flex items-center gap-3 truncate">
-                      <div className="h-8 w-8 rounded bg-neutral-900 border border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                      <div className="h-9 w-9 border border-[#1F1305] bg-white shrink-0 overflow-hidden flex items-center justify-center">
                         {item.coverUrl ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={item.coverUrl} alt="" className="h-full w-full object-cover" />
                         ) : (
-                          <Disc3 className="h-4 w-4 text-neutral-600" />
+                          <Disc3 className="h-4 w-4 text-[#5A5245]" />
                         )}
                       </div>
                       <div className="truncate">
-                        <p className="text-white font-serif truncate">{item.title}</p>
-                        <p className="text-[11px] text-neutral-400">{item.artist} {item.year ? `(${item.year})` : ""}</p>
+                        <p className="text-[#1F1305] font-bold truncate">{item.title}</p>
+                        <p className="text-[11px] text-[#5A5245]">{item.artist} {item.year ? `(${item.year})` : ""}</p>
                       </div>
                     </div>
 
@@ -355,10 +354,10 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
                       type="button"
                       onClick={() => handleAddFeaturedAlbum(item.id)}
                       disabled={isAlreadySelected}
-                      className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-[11px] transition-colors ${
+                      className={`inline-flex items-center gap-1 border border-[#1F1305] px-2.5 py-1 text-[11px] font-bold font-mono transition-colors shadow-[1px_1px_0px_#1F1305] cursor-pointer ${
                         isAlreadySelected
-                          ? "bg-white/5 text-neutral-500 cursor-not-allowed"
-                          : "bg-amber-500 text-neutral-950 font-bold hover:bg-amber-400"
+                          ? "bg-[#EDE0D0] text-[#5A5245] cursor-not-allowed shadow-none"
+                          : "bg-[#10B981] text-white hover:bg-[#1F1305]"
                       }`}
                     >
                       <Plus className="h-3 w-3" />
@@ -376,27 +375,27 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
           {selectedAlbums.map((album) => (
             <div
               key={album.id}
-              className="flex items-center justify-between p-3 rounded-xl border border-amber-500/20 bg-amber-500/5 font-mono text-xs"
+              className="flex items-center justify-between p-3 border-2 border-[#1F1305] bg-[#FAF8F5] font-mono text-xs shadow-[2px_2px_0px_#1F1305]"
             >
               <div className="flex items-center gap-3 truncate">
-                <div className="h-10 w-10 rounded-lg bg-neutral-900 border border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+                <div className="h-10 w-10 border border-[#1F1305] bg-white shrink-0 overflow-hidden flex items-center justify-center">
                   {album.coverUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={album.coverUrl} alt="" className="h-full w-full object-cover" />
                   ) : (
-                    <Disc3 className="h-5 w-5 text-amber-500/40" />
+                    <Disc3 className="h-5 w-5 text-[#E80000]" />
                   )}
                 </div>
                 <div className="truncate">
-                  <p className="font-serif font-bold text-white truncate">{album.title}</p>
-                  <p className="text-[11px] text-neutral-400 truncate">{album.artist}</p>
+                  <p className="font-bold text-[#1F1305] truncate">{album.title}</p>
+                  <p className="text-[11px] text-[#5A5245] truncate">{album.artist}</p>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={() => handleRemoveFeaturedAlbum(album.id)}
-                className="rounded-lg p-1.5 text-neutral-400 hover:text-red-400 hover:bg-red-500/10 transition-colors shrink-0 ml-2"
+                className="border border-[#1F1305] bg-[#FEE2E2] p-1.5 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors shrink-0 ml-2 cursor-pointer shadow-[1px_1px_0px_#1F1305]"
                 title="Quitar de destacados"
               >
                 <Trash2 className="h-4 w-4" />
@@ -404,7 +403,7 @@ export function AdminHomeConfig({ initialConfig, allAlbums }: AdminHomeConfigPro
             </div>
           ))}
         </div>
-      </GlassCard>
+      </div>
     </div>
   );
 }

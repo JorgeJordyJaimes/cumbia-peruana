@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { GlassCard } from "@/components/ui/glass-card";
 import { ImageUploader } from "@/features/storage/components/image-uploader";
 import { AlbumCoverSlider } from "@/features/albumes";
 import {
@@ -441,34 +440,34 @@ export function AdminGroupDetail({
   }, [albums, formatFilter, photoFilter, searchTerm]);
 
   return (
-    <div className="space-y-8 font-mono">
+    <div className="space-y-8 font-mono text-xs">
       {/* Toast Notification */}
       {notification && (
-        <div className="fixed bottom-6 right-6 z-50 rounded-2xl border border-emerald-500/40 bg-neutral-900/95 px-4 py-3 font-mono text-xs text-emerald-300 shadow-2xl backdrop-blur flex items-center gap-2">
-          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+        <div className="fixed bottom-6 right-6 z-50 border-2 border-[#1F1305] bg-[#10B981] text-white px-4 py-3 font-mono text-xs font-black shadow-[4px_4px_0px_#1F1305] flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4" />
           <span>{notification}</span>
         </div>
       )}
 
       {/* Barra de Navegación Superior y Selector Rápido */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#1F1305] pb-4">
         <div className="flex items-center gap-3">
           <Link
             href="/admin"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 font-mono text-xs text-neutral-300 hover:text-white hover:bg-white/10 transition-colors"
+            className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-white px-3 py-2 font-mono text-xs font-bold text-[#1F1305] hover:bg-[#EDE0D0] transition-colors shadow-[2px_2px_0px_#1F1305]"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Volver a Agrupaciones</span>
           </Link>
-          <span className="text-neutral-600">/</span>
-          <span className="font-mono text-xs text-amber-400 font-bold truncate max-w-[200px] sm:max-w-xs">
+          <span className="text-[#5A5245] font-bold">/</span>
+          <span className="border border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] px-2 py-0.5 font-black truncate max-w-[200px] sm:max-w-xs">
             {group.name}
           </span>
         </div>
 
         {/* Quick Group Switcher Dropdown */}
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-neutral-400 hidden md:inline">Cambiar a otro grupo:</span>
+          <span className="font-mono text-xs text-[#5A5245] font-bold hidden md:inline">Cambiar a otro grupo:</span>
           <div className="relative">
             <select
               value={group.id}
@@ -476,24 +475,24 @@ export function AdminGroupDetail({
                 const newId = e.target.value;
                 if (newId) router.push(`/admin/grupo/${newId}`);
               }}
-              className="appearance-none rounded-xl border border-white/15 bg-black/70 py-1.5 pl-3 pr-8 font-mono text-xs text-white hover:border-amber-400 focus:border-amber-400 focus:outline-none cursor-pointer"
+              className="appearance-none border-2 border-[#1F1305] bg-white py-1.5 pl-3 pr-8 font-mono text-xs font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#EDE0D0] focus:outline-none cursor-pointer"
             >
               {allGroups.map((g) => (
-                <option key={g.id} value={g.id} className="bg-neutral-900 text-white">
+                <option key={g.id} value={g.id}>
                   {g.name}
                 </option>
               ))}
             </select>
-            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-400 pointer-events-none" />
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#1F1305] pointer-events-none" />
           </div>
         </div>
       </div>
 
-      {/* Tarjeta Principal de la Agrupación */}
-      <GlassCard className="p-6 relative overflow-hidden border border-white/10 bg-gradient-to-br from-neutral-950 via-black to-neutral-950">
+      {/* Tarjeta Principal de la Agrupación Neo-Brutalista */}
+      <div className="border-2 border-[#1F1305] bg-white p-6 shadow-[6px_6px_0px_#1F1305]">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <div className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-2xl border-2 border-amber-500/30 bg-black/60 overflow-hidden flex items-center justify-center shrink-0 shadow-xl group/photo">
+            <div className="relative h-24 w-24 sm:h-28 sm:w-28 border-2 border-[#1F1305] bg-[#FAF8F5] overflow-hidden flex items-center justify-center shrink-0 shadow-[3px_3px_0px_#1F1305] group/photo">
               {group.photoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -502,25 +501,25 @@ export function AdminGroupDetail({
                   className="h-full w-full object-cover group-hover/photo:scale-105 transition-transform duration-300"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-neutral-600 gap-1">
+                <div className="flex flex-col items-center justify-center text-[#5A5245] gap-1">
                   <ImageIcon className="h-8 w-8" />
-                  <span className="font-mono text-[9px] uppercase">Sin Foto</span>
+                  <span className="font-mono text-[9px] uppercase font-bold">Sin Foto</span>
                 </div>
               )}
               {group.photoUrl && (
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/photo:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <div className="absolute inset-0 bg-[#1F1305]/75 opacity-0 group-hover/photo:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <a
                     href={group.photoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-white/20 text-white hover:text-amber-400 transition-colors"
+                    className="p-1.5 border border-white bg-white/20 text-white hover:bg-white hover:text-[#1F1305] transition-colors"
                     title="Ver en tamaño completo"
                   >
                     <ExternalLink className="h-4 w-4" />
                   </a>
                   <button
                     onClick={handleClearGroupPhoto}
-                    className="p-1.5 rounded-lg bg-red-500/20 text-red-300 hover:bg-red-500/40 transition-colors cursor-pointer"
+                    className="p-1.5 border border-white bg-[#E80000] text-white hover:bg-black transition-colors cursor-pointer"
                     title="Eliminar foto del grupo"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -531,40 +530,40 @@ export function AdminGroupDetail({
 
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-xs font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-md">
+                <span className="font-mono text-xs font-black text-[#1F1305] bg-[#EDE0D0] border border-[#1F1305] px-2 py-0.5">
                   Grupo #{group.id}
                 </span>
                 {group.region && (
-                  <span className="font-mono text-xs text-neutral-400">
-                    • Región: <strong className="text-neutral-200">{group.region}</strong>
+                  <span className="font-mono text-xs text-[#5A5245] font-bold">
+                    • Región: <strong className="text-[#1F1305]">{group.region}</strong>
                   </span>
                 )}
                 {group.directorName && (
-                  <span className="font-mono text-xs text-neutral-400">
-                    • Director: <strong className="text-neutral-200">{group.directorName}</strong>
+                  <span className="font-mono text-xs text-[#5A5245] font-bold">
+                    • Director: <strong className="text-[#1F1305]">{group.directorName}</strong>
                   </span>
                 )}
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-black font-cooper text-[#1F1305] tracking-tight">
                 {group.name}
               </h2>
 
-              <p className="font-mono text-xs text-neutral-400 flex items-center gap-2">
+              <p className="font-mono text-xs text-[#5A5245] font-bold flex items-center gap-2">
                 <span>{albums.length} lanzamientos catalogados</span>
                 <span>•</span>
-                <span className="text-emerald-400">
+                <span className="text-[#10B981]">
                   {photosProgress.uploadedSides} / {photosProgress.totalRequiredSides} caras con foto
                 </span>
                 <span>•</span>
-                <span className="text-amber-400">
+                <span className="text-[#F1730C]">
                   {etapas.length} etapas cronológicas
                 </span>
               </p>
             </div>
           </div>
 
-          <div className="w-full lg:w-80 shrink-0 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+          <div className="w-full lg:w-80 shrink-0 p-4 border-2 border-[#1F1305] bg-[#FAF8F5] shadow-[3px_3px_0px_#1F1305]">
             <ImageUploader
               folderPath="grupos"
               fileId={group.id}
@@ -577,29 +576,29 @@ export function AdminGroupDetail({
         </div>
 
         {/* Barra de Progreso */}
-        <div className="mt-6 pt-5 border-t border-white/10 space-y-2">
-          <div className="flex items-center justify-between font-mono text-xs">
-            <span className="text-neutral-400 flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+        <div className="mt-6 pt-5 border-t-2 border-[#1F1305]/15 space-y-2">
+          <div className="flex items-center justify-between font-mono text-xs font-bold">
+            <span className="text-[#5A5245] flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-[#F1730C]" />
               Progreso visual del archivo de {group.name}
             </span>
-            <span className="text-amber-300 font-bold">
+            <span className="text-[#1F1305]">
               {photosProgress.uploadedSides} de {photosProgress.totalRequiredSides} imágenes ({photosProgress.percentage}%)
             </span>
           </div>
-          <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+          <div className="h-2.5 w-full bg-[#EDE0D0] border border-[#1F1305] overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-amber-500 via-rose-500 to-emerald-400 rounded-full transition-all duration-500"
+              className="h-full bg-[#F1730C] transition-all duration-500"
               style={{ width: `${photosProgress.percentage}%` }}
             />
           </div>
         </div>
-      </GlassCard>
+      </div>
 
       {/* ============================================================ */}
       {/* SELECTOR DE PESTAÑAS DE LA AGRUPACIÓN (3 PESTAÑAS)            */}
       {/* ============================================================ */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 pb-3">
+      <div className="flex flex-wrap items-center gap-2 border-b-2 border-[#1F1305] pb-3">
         {[
           { id: "discografia" as GroupTabType, label: "01 · Discografía y Fotos", icon: Disc3, count: albums.length },
           { id: "historia" as GroupTabType, label: "02 · Historia y Relato", icon: BookOpen, badge: historiaEstado },
@@ -612,19 +611,19 @@ export function AdminGroupDetail({
               key={tab.id}
               onClick={() => setActiveGroupTab(tab.id)}
               className={cn(
-                "flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-bold transition-all cursor-pointer",
+                "flex items-center gap-2 border-2 border-[#1F1305] px-4 py-2 font-mono text-xs font-black transition-all cursor-pointer shadow-[2px_2px_0px_#1F1305]",
                 isActive
-                  ? "bg-amber-500 text-neutral-950 shadow-lg shadow-amber-500/20"
-                  : "border border-white/10 bg-white/5 text-neutral-300 hover:border-white/20 hover:bg-white/10"
+                  ? "bg-[#1F1305] text-[#EDE0D0] shadow-[2px_2px_0px_#E80000]"
+                  : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className={cn("h-4 w-4", isActive ? "text-[#F8C800]" : "text-[#E80000]")} />
               <span>{tab.label}</span>
               {tab.count !== undefined && (
                 <span
                   className={cn(
-                    "px-1.5 py-0.2 rounded text-[10px] font-mono",
-                    isActive ? "bg-black text-amber-300" : "bg-white/10 text-neutral-400"
+                    "px-1.5 py-0.2 border border-current text-[10px] font-mono",
+                    isActive ? "bg-[#E80000] text-white" : "bg-[#EDE0D0] text-[#1F1305]"
                   )}
                 >
                   {tab.count}
@@ -633,8 +632,8 @@ export function AdminGroupDetail({
               {tab.badge && (
                 <span
                   className={cn(
-                    "px-1.5 py-0.2 rounded text-[10px] font-mono uppercase font-black",
-                    tab.badge === "publicado" ? "bg-emerald-500 text-black" : "bg-amber-600 text-white"
+                    "px-1.5 py-0.2 border border-current text-[10px] font-mono uppercase font-black",
+                    tab.badge === "publicado" ? "bg-[#10B981] text-white" : "bg-[#F1730C] text-white"
                   )}
                 >
                   {tab.badge}
@@ -655,11 +654,11 @@ export function AdminGroupDetail({
             <div className="flex flex-wrap items-center gap-2">
               {[
                 { id: "all" as const, label: `Todos (${formatCounts.all})`, icon: Layers },
-                { id: "lp" as const, label: `LPs (${formatCounts.lp})`, icon: Disc3, activeColor: "bg-amber-500 text-neutral-950" },
-                { id: "45" as const, label: `Singles 45s (${formatCounts["45"]})`, icon: Disc, activeColor: "bg-cyan-500 text-neutral-950" },
-                { id: "casete" as const, label: `Casetes (${formatCounts.casete})`, icon: Radio, activeColor: "bg-emerald-500 text-neutral-950" },
-                { id: "ep" as const, label: `EPs (${formatCounts.ep})`, icon: Disc, activeColor: "bg-purple-500 text-neutral-950" },
-                { id: "cd" as const, label: `CDs (${formatCounts.cd})`, icon: Disc, activeColor: "bg-rose-500 text-neutral-950" },
+                { id: "lp" as const, label: `LPs (${formatCounts.lp})`, icon: Disc3 },
+                { id: "45" as const, label: `Singles 45s (${formatCounts["45"]})`, icon: Disc },
+                { id: "casete" as const, label: `Casetes (${formatCounts.casete})`, icon: Radio },
+                { id: "ep" as const, label: `EPs (${formatCounts.ep})`, icon: Disc },
+                { id: "cd" as const, label: `CDs (${formatCounts.cd})`, icon: Disc },
               ].map((tab) => {
                 const Icon = tab.icon;
                 const isActive = formatFilter === tab.id;
@@ -668,10 +667,10 @@ export function AdminGroupDetail({
                     key={tab.id}
                     onClick={() => setFormatFilter(tab.id)}
                     className={cn(
-                      "flex items-center gap-2 rounded-xl px-3.5 py-2 font-mono text-xs font-semibold transition-all cursor-pointer",
+                      "flex items-center gap-2 border-2 border-[#1F1305] px-3.5 py-1.5 font-mono text-xs font-black transition-all cursor-pointer shadow-[2px_2px_0px_#1F1305]",
                       isActive
-                        ? tab.activeColor || "bg-amber-500 text-neutral-950 shadow-md shadow-amber-500/20"
-                        : "border border-white/10 bg-white/5 text-neutral-300 hover:border-white/20 hover:bg-white/10"
+                        ? "bg-[#1F1305] text-white shadow-[2px_2px_0px_#E80000]"
+                        : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -682,20 +681,20 @@ export function AdminGroupDetail({
             </div>
 
             {/* Buscador y Filtro de Fotos */}
-            <GlassCard className="p-3.5 flex flex-wrap items-center justify-between gap-3">
+            <div className="border-2 border-[#1F1305] bg-white p-3.5 shadow-[4px_4px_0px_#1F1305] flex flex-wrap items-center justify-between gap-3 font-mono">
               <div className="relative flex-1 min-w-[260px]">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A5245]" />
                 <input
                   type="text"
                   placeholder={`Buscar en discografía de ${group.name} (canción, catálogo, título, sello, año)...`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-black/50 py-2.5 pl-10 pr-9 font-mono text-xs text-white placeholder-neutral-500 focus:border-amber-400 focus:outline-none"
+                  className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] py-2 pl-10 pr-9 font-mono text-xs text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000]"
                 />
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5A5245] hover:text-[#1F1305] cursor-pointer"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -703,7 +702,7 @@ export function AdminGroupDetail({
               </div>
 
               <div className="flex items-center gap-1.5 font-mono text-xs">
-                <span className="text-neutral-400 text-[11px] hidden sm:inline">Fotos:</span>
+                <span className="text-[#5A5245] font-bold text-[11px] hidden sm:inline">Fotos:</span>
                 {[
                   { id: "all" as const, label: "Todos" },
                   { id: "missing" as const, label: "Faltan Fotos" },
@@ -713,38 +712,38 @@ export function AdminGroupDetail({
                     key={f.id}
                     onClick={() => setPhotoFilter(f.id)}
                     className={cn(
-                      "rounded-lg px-2.5 py-1 text-xs transition-colors cursor-pointer",
+                      "border px-2.5 py-1 text-xs font-bold font-mono transition-colors cursor-pointer",
                       photoFilter === f.id
-                        ? "bg-white/20 text-white font-semibold"
-                        : "text-neutral-400 hover:text-white"
+                        ? "bg-[#1F1305] text-white border-[#1F1305] shadow-[1px_1px_0px_#1F1305]"
+                        : "bg-[#EDE0D0] text-[#1F1305] border-[#1F1305] hover:bg-white"
                     )}
                   >
                     {f.label}
                   </button>
                 ))}
               </div>
-            </GlassCard>
+            </div>
           </div>
 
           {/* Listado de Lanzamientos del Grupo */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between font-mono text-xs text-neutral-400 px-1">
+            <div className="flex items-center justify-between font-mono text-xs font-bold text-[#5A5245] px-1">
               <span>
                 Mostrando {filteredAlbums.length} de {albums.length} lanzamientos
               </span>
-              <span className="text-[11px] text-neutral-500">
+              <span className="text-[11px]">
                 Pipeline WebP automático activo
               </span>
             </div>
 
             {filteredAlbums.length === 0 ? (
-              <GlassCard className="p-12 text-center space-y-3">
-                <Disc3 className="h-10 w-10 text-neutral-600 mx-auto" />
-                <p className="text-base font-bold text-white">No se encontraron lanzamientos</p>
-                <p className="font-mono text-xs text-neutral-400">
+              <div className="border-2 border-[#1F1305] bg-white p-12 text-center space-y-3 shadow-[4px_4px_0px_#1F1305]">
+                <Disc3 className="h-10 w-10 text-[#5A5245] mx-auto" />
+                <p className="font-cooper text-xl font-bold text-[#1F1305]">No se encontraron lanzamientos</p>
+                <p className="font-sans text-xs text-[#5A5245]">
                   Prueba cambiando el filtro de formato o limpiando la barra de búsqueda.
                 </p>
-              </GlassCard>
+              </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 {filteredAlbums.map((album) => {
@@ -760,59 +759,62 @@ export function AdminGroupDetail({
                   const hasAny = Boolean(album.coverUrl || album.backCoverUrl);
 
                   return (
-                    <GlassCard key={album.id} className="p-5 flex flex-col justify-between gap-5 border border-white/10">
+                    <div key={album.id} className="border-2 border-[#1F1305] bg-white p-5 flex flex-col justify-between gap-5 shadow-[4px_4px_0px_#1F1305]">
                       <div>
                         <div className="flex items-start justify-between gap-3">
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
                               <span
                                 className={cn(
-                                  "font-mono text-[10px] font-bold px-2 py-0.5 rounded uppercase",
+                                  "font-mono text-[10px] font-black px-2 py-0.5 border border-[#1F1305] uppercase",
                                   isSingle
-                                    ? "bg-cyan-500/10 text-cyan-300 border border-cyan-500/20"
-                                    : "bg-amber-500/10 text-amber-300 border border-amber-500/20"
+                                    ? "bg-[#EDE0D0] text-[#1F1305]"
+                                    : "bg-[#F8C800] text-[#1F1305]"
                                 )}
                               >
                                 {album.formatName}
                               </span>
                               {album.catalogNumber && (
-                                <span className="font-mono text-[11px] text-neutral-400">
+                                <span className="font-mono text-[11px] text-[#5A5245] font-bold">
                                   Cat: <strong>{album.catalogNumber}</strong>
                                 </span>
                               )}
                               {album.year && (
-                                <span className="font-mono text-[11px] text-neutral-400">
+                                <span className="font-mono text-[11px] text-[#5A5245] font-bold">
                                   • {album.year}
                                 </span>
                               )}
                             </div>
 
-                            <h3 className="text-base font-bold text-white tracking-tight line-clamp-2">
+                            <h3 className="font-cooper text-xl font-bold text-[#1F1305] tracking-tight line-clamp-2">
                               {album.title}
                             </h3>
 
                             {album.label && (
-                              <p className="font-mono text-xs text-neutral-400">
+                              <p className="font-mono text-xs text-[#5A5245] font-bold">
                                 Sello: {album.label}
                               </p>
                             )}
                           </div>
 
                           <div className="flex items-center gap-2 shrink-0">
-                            <span
-                              className={cn(
-                                "h-2 w-2 rounded-full",
-                                hasBoth
-                                  ? "bg-emerald-400 shadow-sm shadow-emerald-400"
-                                  : hasAny
-                                  ? "bg-amber-400 shadow-sm shadow-amber-400"
-                                  : "bg-neutral-600"
-                              )}
-                            />
+                            {hasBoth ? (
+                              <span className="inline-flex items-center gap-1 font-mono text-[10px] font-black text-white bg-[#10B981] border border-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
+                                Completo
+                              </span>
+                            ) : hasAny ? (
+                              <span className="inline-flex items-center gap-1 font-mono text-[10px] font-black text-[#1F1305] bg-[#F8C800] border border-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
+                                1 Cara
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 font-mono text-[10px] font-black text-white bg-[#5A5245] border border-[#1F1305] px-2 py-0.5 shadow-[1px_1px_0px_#1F1305]">
+                                Sin Foto
+                              </span>
+                            )}
                             <Link
                               href={`/album/${album.id}`}
                               target="_blank"
-                              className="p-1.5 rounded-lg border border-white/10 bg-white/5 text-neutral-400 hover:text-white transition-colors"
+                              className="p-1.5 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] hover:bg-white transition-colors"
                               title="Ver en vista pública"
                             >
                               <ExternalLink className="h-3.5 w-3.5" />
@@ -822,25 +824,27 @@ export function AdminGroupDetail({
                       </div>
 
                       {/* Uploaders de Cara A y Cara B */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-white/10">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t-2 border-[#1F1305]/15">
                         {/* Cara A */}
-                        <div className="space-y-2 p-3 rounded-xl border border-white/10 bg-black/40">
+                        <div className="space-y-2 p-3 border-2 border-[#1F1305] bg-[#FAF8F5] shadow-[2px_2px_0px_#1F1305]">
                           <div className="flex items-center justify-between font-mono text-[11px]">
-                            <span className="font-bold text-amber-400">{frontLabel}</span>
+                            <span className="font-black text-[#1F1305] flex items-center gap-1">
+                              <span className="h-2 w-2 rounded-full bg-[#E80000]" /> {frontLabel}
+                            </span>
                             {album.coverUrl && (
                               <div className="flex items-center gap-1.5">
                                 <a
                                   href={album.coverUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="rounded border border-white/10 bg-white/5 p-1 text-neutral-400 hover:text-amber-400 transition-colors"
+                                  className="border border-[#1F1305] bg-white p-1 text-[#1F1305] hover:bg-[#EDE0D0] transition-colors"
                                 >
                                   <ExternalLink className="h-3 w-3" />
                                 </a>
                                 <button
                                   type="button"
                                   onClick={() => handleClearAlbumImage(album.id, "url_portada", frontLabel)}
-                                  className="rounded border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                                  className="border border-[#1F1305] bg-[#FEE2E2] p-1 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                                 >
                                   <Trash2 className="h-3 w-3" />
                                 </button>
@@ -858,23 +862,25 @@ export function AdminGroupDetail({
                         </div>
 
                         {/* Cara B */}
-                        <div className="space-y-2 p-3 rounded-xl border border-white/10 bg-black/40">
+                        <div className="space-y-2 p-3 border-2 border-[#1F1305] bg-[#FAF8F5] shadow-[2px_2px_0px_#1F1305]">
                           <div className="flex items-center justify-between font-mono text-[11px]">
-                            <span className="font-bold text-cyan-400">{backLabel}</span>
+                            <span className="font-black text-[#1F1305] flex items-center gap-1">
+                              <span className="h-2 w-2 rounded-full bg-[#F1730C]" /> {backLabel}
+                            </span>
                             {album.backCoverUrl && (
                               <div className="flex items-center gap-1.5">
                                 <a
                                   href={album.backCoverUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="rounded border border-white/10 bg-white/5 p-1 text-neutral-400 hover:text-cyan-400 transition-colors"
+                                  className="border border-[#1F1305] bg-white p-1 text-[#1F1305] hover:bg-[#EDE0D0] transition-colors"
                                 >
                                   <ExternalLink className="h-3 w-3" />
                                 </a>
                                 <button
                                   type="button"
                                   onClick={() => handleClearAlbumImage(album.id, "url_contraportada", backLabel)}
-                                  className="rounded border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                                  className="border border-[#1F1305] bg-[#FEE2E2] p-1 text-[#991B1B] hover:bg-[#E80000] hover:text-white transition-colors cursor-pointer"
                                 >
                                   <Trash2 className="h-3 w-3" />
                                 </button>
@@ -894,11 +900,11 @@ export function AdminGroupDetail({
 
                       {/* Slider Preview */}
                       {hasBoth && (
-                        <div className="pt-2 border-t border-white/10">
+                        <div className="pt-2 border-t-2 border-[#1F1305]/15">
                           <details className="group/preview">
-                            <summary className="font-mono text-[11px] text-amber-400 hover:text-amber-300 cursor-pointer list-none flex items-center justify-between py-1">
+                            <summary className="font-mono text-[11px] font-bold text-[#E80000] hover:text-[#1F1305] cursor-pointer list-none flex items-center justify-between py-1">
                               <span>🔍 Probar Visor Deslizable ({frontLabel} ↔ {backLabel})</span>
-                              <span className="text-neutral-500 group-open/preview:rotate-180 transition-transform">▼</span>
+                              <span className="text-[#5A5245] group-open/preview:rotate-180 transition-transform">▼</span>
                             </summary>
                             <div className="pt-3 max-w-xs mx-auto">
                               <AlbumCoverSlider
@@ -914,7 +920,7 @@ export function AdminGroupDetail({
                           </details>
                         </div>
                       )}
-                    </GlassCard>
+                    </div>
                   );
                 })}
               </div>
@@ -928,19 +934,19 @@ export function AdminGroupDetail({
       {/* ============================================================ */}
       {activeGroupTab === "historia" && (
         <div className="space-y-4">
-          <div className="border border-white/10 bg-white/[0.02] p-4 rounded-xl flex items-center justify-between">
+          <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-4 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="font-cooper text-xl font-bold text-[#1F1305]">
                 Historia y Crónica General: {group.name}
               </h3>
-              <p className="font-mono text-xs text-neutral-400 mt-0.5">
+              <p className="font-sans text-xs text-[#5A5245] mt-0.5">
                 Relato histórico estructurado, fuentes de investigación y estado de publicación en Genealogía.
               </p>
             </div>
             <Link
               href={`/genealogia?grupo=${group.id}`}
               target="_blank"
-              className="border border-white/15 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg text-xs font-mono text-neutral-300 flex items-center gap-1.5"
+              className="border-2 border-[#1F1305] bg-white hover:bg-[#EDE0D0] px-3 py-1.5 font-bold text-xs font-mono text-[#1F1305] flex items-center gap-1.5 shadow-[2px_2px_0px_#1F1305]"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               <span>Ver en Genealogía Pública</span>
@@ -965,13 +971,13 @@ export function AdminGroupDetail({
       {/* ============================================================ */}
       {activeGroupTab === "etapas" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-white/10 bg-white/[0.02] p-4 rounded-xl">
+          <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-4 shadow-[4px_4px_0px_#1F1305] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <GitFork className="h-4 w-4 text-amber-400" />
+              <h3 className="font-cooper text-xl font-bold text-[#1F1305] flex items-center gap-2">
+                <GitFork className="h-5 w-5 text-[#E80000]" />
                 Línea de Tiempo y Etapas Cronológicas ({etapas.length})
               </h3>
-              <p className="font-mono text-xs text-neutral-400 mt-0.5">
+              <p className="font-sans text-xs text-[#5A5245] mt-0.5">
                 Estructura canónica de la agrupación: directores, vocalistas y estilo por período histórico.
               </p>
             </div>
@@ -990,7 +996,7 @@ export function AdminGroupDetail({
                   texto_md: "",
                 })
               }
-              className="flex items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/20 px-3.5 py-2 font-mono text-xs font-bold text-amber-300 hover:bg-amber-500/30 transition-colors"
+              className="flex items-center gap-1.5 border-2 border-[#1F1305] bg-[#E80000] text-white px-4 py-2 font-mono text-xs font-black shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] transition-all cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
             >
               <Plus className="h-4 w-4" />
               <span>+ Añadir Nueva Etapa</span>
@@ -999,16 +1005,16 @@ export function AdminGroupDetail({
 
           {/* Formulario Modal / En Línea para Crear o Editar Etapa */}
           {editingEtapa && (
-            <GlassCard className="p-6 border border-amber-500/30 bg-neutral-950/90 space-y-5">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h4 className="text-sm font-bold text-amber-400 flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
+            <div className="border-2 border-[#1F1305] bg-white p-6 shadow-[6px_6px_0px_#1F1305] space-y-5">
+              <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
+                <h4 className="font-cooper text-lg font-bold text-[#1F1305] flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-[#E80000]" />
                   {editingEtapa.id_etapa ? "Editar Etapa Cronológica" : "Nueva Etapa Cronológica"}
                 </h4>
                 <button
                   type="button"
                   onClick={() => setEditingEtapa(null)}
-                  className="text-neutral-400 hover:text-white"
+                  className="border border-[#1F1305] bg-[#EDE0D0] p-1 text-[#1F1305] hover:bg-white cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -1017,7 +1023,7 @@ export function AdminGroupDetail({
               <form onSubmit={handleSaveEtapa} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold">
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase">
                       Orden Cronológico:
                     </label>
                     <input
@@ -1026,12 +1032,12 @@ export function AdminGroupDetail({
                       onChange={(e) => setEditingEtapa({ ...editingEtapa, orden: Number(e.target.value) })}
                       min={1}
                       required
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
+                      className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 text-xs font-mono text-[#1F1305] font-bold focus:bg-white focus:outline-none"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold">
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase">
                       Año / Fecha Inicio:
                     </label>
                     <input
@@ -1039,12 +1045,12 @@ export function AdminGroupDetail({
                       placeholder="Ej. 1968"
                       value={editingEtapa.fecha_inicio || ""}
                       onChange={(e) => setEditingEtapa({ ...editingEtapa, fecha_inicio: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
+                      className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 text-xs font-mono text-[#1F1305] focus:bg-white focus:outline-none"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold">
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase">
                       Año / Fecha Fin:
                     </label>
                     <input
@@ -1052,14 +1058,14 @@ export function AdminGroupDetail({
                       placeholder="Ej. 1974 o Presente"
                       value={editingEtapa.fecha_fin || ""}
                       onChange={(e) => setEditingEtapa({ ...editingEtapa, fecha_fin: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
+                      className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 text-xs font-mono text-[#1F1305] focus:bg-white focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold">
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase">
                       Título Canónico de la Etapa:
                     </label>
                     <input
@@ -1068,12 +1074,12 @@ export function AdminGroupDetail({
                       value={editingEtapa.titulo || ""}
                       onChange={(e) => setEditingEtapa({ ...editingEtapa, titulo: e.target.value })}
                       required
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none font-bold"
+                      className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 text-xs font-mono text-[#1F1305] focus:bg-white focus:outline-none font-bold"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold">
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase">
                       Estilo / Subgénero Característico:
                     </label>
                     <input
@@ -1081,16 +1087,15 @@ export function AdminGroupDetail({
                       placeholder="Ej. Cumbia Costeña / Psicodélica"
                       value={editingEtapa.estilo || ""}
                       onChange={(e) => setEditingEtapa({ ...editingEtapa, estilo: e.target.value })}
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
+                      className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] px-3 py-2 text-xs font-mono text-[#1F1305] focus:bg-white focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Selector de Director (referencia a personas) */}
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold flex items-center gap-1.5">
-                      <User className="h-3 w-3 text-amber-400" /> Director Musical (Registrado en BD):
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase flex items-center gap-1.5">
+                      <User className="h-3 w-3 text-[#E80000]" /> Director Musical:
                     </label>
                     <select
                       value={editingEtapa.id_director || ""}
@@ -1100,7 +1105,7 @@ export function AdminGroupDetail({
                           id_director: e.target.value ? Number(e.target.value) : null,
                         })
                       }
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
+                      className="w-full border-2 border-[#1F1305] bg-white px-3 py-2 text-xs font-mono text-[#1F1305] focus:outline-none"
                     >
                       <option value="">(Sin director registrado)</option>
                       {allPersons.map((p) => (
@@ -1111,10 +1116,9 @@ export function AdminGroupDetail({
                     </select>
                   </div>
 
-                  {/* Selector de Vocalista (referencia a personas) */}
                   <div className="space-y-1">
-                    <label className="font-mono text-[11px] text-neutral-300 font-bold flex items-center gap-1.5">
-                      <Music className="h-3 w-3 text-cyan-400" /> Vocalista Principal (Registrado en BD):
+                    <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase flex items-center gap-1.5">
+                      <Music className="h-3 w-3 text-[#2563EB]" /> Vocalista Principal:
                     </label>
                     <select
                       value={editingEtapa.id_vocalista || ""}
@@ -1124,7 +1128,7 @@ export function AdminGroupDetail({
                           id_vocalista: e.target.value ? Number(e.target.value) : null,
                         })
                       }
-                      className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
+                      className="w-full border-2 border-[#1F1305] bg-white px-3 py-2 text-xs font-mono text-[#1F1305] focus:outline-none"
                     >
                       <option value="">(Instrumental o sin vocalista registrado)</option>
                       {allPersons.map((p) => (
@@ -1137,7 +1141,7 @@ export function AdminGroupDetail({
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-mono text-[11px] text-neutral-300 font-bold">
+                  <label className="font-mono text-[11px] text-[#5A5245] font-bold uppercase">
                     Reseña Narrativa de la Etapa:
                   </label>
                   <textarea
@@ -1145,40 +1149,40 @@ export function AdminGroupDetail({
                     placeholder="Descripción pericial de los acontecimientos, grabaciones cumbre y cambios de sonido..."
                     value={editingEtapa.texto_md || ""}
                     onChange={(e) => setEditingEtapa({ ...editingEtapa, texto_md: e.target.value })}
-                    className="w-full rounded-xl border border-white/15 bg-black/60 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none font-mono"
+                    className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] p-3 text-xs text-[#1F1305] focus:bg-white focus:outline-none font-mono"
                   />
                 </div>
 
-                <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+                <div className="flex items-center justify-end gap-2 pt-2 border-t-2 border-[#1F1305]/15">
                   <button
                     type="button"
                     onClick={() => setEditingEtapa(null)}
-                    className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 font-mono text-xs text-neutral-300 hover:text-white"
+                    className="border-2 border-[#1F1305] bg-white px-4 py-2 font-mono text-xs font-bold text-[#1F1305] hover:bg-[#EDE0D0]"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
                     disabled={isSavingEtapa}
-                    className="flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-2 font-mono text-xs font-bold text-neutral-950 hover:bg-amber-400 disabled:opacity-50 transition-colors"
+                    className="flex items-center gap-2 border-2 border-[#1F1305] bg-[#E80000] text-white px-5 py-2 font-mono text-xs font-black shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] disabled:opacity-50 transition-colors cursor-pointer"
                   >
                     <Save className="h-4 w-4" />
                     <span>{isSavingEtapa ? "Guardando..." : "Guardar Etapa"}</span>
                   </button>
                 </div>
               </form>
-            </GlassCard>
+            </div>
           )}
 
           {/* Listado Visual de Etapas */}
           {etapas.length === 0 ? (
-            <GlassCard className="p-8 text-center space-y-2 border border-white/10">
-              <Clock className="h-8 w-8 text-neutral-600 mx-auto" />
-              <p className="text-white font-bold text-sm">Sin etapas cronológicas catalogadas aún</p>
-              <p className="text-neutral-400 font-mono text-xs">
+            <div className="border-2 border-[#1F1305] bg-white p-8 text-center space-y-2 shadow-[4px_4px_0px_#1F1305]">
+              <Clock className="h-8 w-8 text-[#5A5245] mx-auto" />
+              <p className="font-cooper text-base font-bold text-[#1F1305]">Sin etapas cronológicas catalogadas aún</p>
+              <p className="text-[#5A5245] font-sans text-xs">
                 Registra la primera etapa para estructurar la línea de tiempo de {group.name}.
               </p>
-            </GlassCard>
+            </div>
           ) : (
             <div className="space-y-4">
               {etapas.map((etapa) => {
@@ -1186,17 +1190,17 @@ export function AdminGroupDetail({
                 const vocalista = allPersons.find((p) => p.id === etapa.id_vocalista);
 
                 return (
-                  <GlassCard key={etapa.id_etapa || etapa.orden} className="p-5 border border-white/10 space-y-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+                  <div key={etapa.id_etapa || etapa.orden} className="border-2 border-[#1F1305] bg-white p-5 space-y-3 shadow-[4px_4px_0px_#1F1305]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-[#1F1305]/15 pb-3">
                       <div className="flex items-center gap-3">
-                        <span className="h-7 w-7 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center font-mono text-xs font-bold text-amber-400">
+                        <span className="h-7 w-7 border border-[#1F1305] bg-[#F8C800] text-[#1F1305] flex items-center justify-center font-mono text-xs font-black shadow-[1px_1px_0px_#1F1305]">
                           #{etapa.orden}
                         </span>
                         <div>
-                          <h4 className="text-base font-bold text-white tracking-tight">
+                          <h4 className="font-cooper text-lg font-bold text-[#1F1305] tracking-tight">
                             {etapa.titulo}
                           </h4>
-                          <span className="font-mono text-xs text-neutral-400">
+                          <span className="font-mono text-xs text-[#5A5245] font-bold">
                             {etapa.fecha_inicio || "¿?"} – {etapa.fecha_fin || "Presente"}
                           </span>
                         </div>
@@ -1206,7 +1210,7 @@ export function AdminGroupDetail({
                         <button
                           type="button"
                           onClick={() => setEditingEtapa(etapa)}
-                          className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-neutral-300 hover:text-white hover:bg-white/10"
+                          className="border border-[#1F1305] bg-[#EDE0D0] px-2.5 py-1 font-mono text-xs font-bold text-[#1F1305] hover:bg-white shadow-[1px_1px_0px_#1F1305]"
                         >
                           Editar
                         </button>
@@ -1214,7 +1218,7 @@ export function AdminGroupDetail({
                           <button
                             type="button"
                             onClick={() => handleDeleteEtapa(etapa.id_etapa!, etapa.titulo)}
-                            className="rounded-lg border border-red-500/20 bg-red-500/10 p-1 text-red-400 hover:bg-red-500/20"
+                            className="border border-[#1F1305] bg-[#FEE2E2] p-1 text-[#991B1B] hover:bg-[#E80000] hover:text-white shadow-[1px_1px_0px_#1F1305]"
                             title="Eliminar etapa"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -1224,30 +1228,30 @@ export function AdminGroupDetail({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
-                      <div className="p-2.5 rounded-lg border border-white/5 bg-white/[0.02]">
-                        <span className="text-neutral-500 text-[10px] block uppercase">Estilo</span>
-                        <span className="font-bold text-neutral-200">{etapa.estilo || "—"}</span>
+                      <div className="p-2.5 border border-[#1F1305] bg-[#FAF8F5]">
+                        <span className="text-[#5A5245] text-[10px] block uppercase font-bold">Estilo</span>
+                        <span className="font-bold text-[#1F1305]">{etapa.estilo || "—"}</span>
                       </div>
-                      <div className="p-2.5 rounded-lg border border-white/5 bg-white/[0.02]">
-                        <span className="text-neutral-500 text-[10px] block uppercase">Director</span>
-                        <span className="font-bold text-amber-300">
+                      <div className="p-2.5 border border-[#1F1305] bg-[#FAF8F5]">
+                        <span className="text-[#5A5245] text-[10px] block uppercase font-bold">Director</span>
+                        <span className="font-bold text-[#1F1305]">
                           {director ? `${director.name}${director.nickname ? ` «${director.nickname}»` : ""}` : "—"}
                         </span>
                       </div>
-                      <div className="p-2.5 rounded-lg border border-white/5 bg-white/[0.02]">
-                        <span className="text-neutral-500 text-[10px] block uppercase">Vocalista</span>
-                        <span className="font-bold text-cyan-300">
+                      <div className="p-2.5 border border-[#1F1305] bg-[#FAF8F5]">
+                        <span className="text-[#5A5245] text-[10px] block uppercase font-bold">Vocalista</span>
+                        <span className="font-bold text-[#E80000]">
                           {vocalista ? `${vocalista.name}${vocalista.nickname ? ` «${vocalista.nickname}»` : ""}` : "Instrumental"}
                         </span>
                       </div>
                     </div>
 
                     {etapa.texto_md && (
-                      <p className="font-mono text-xs text-neutral-300 pt-2 border-t border-white/5 leading-relaxed">
+                      <p className="font-mono text-xs text-[#1F1305] pt-2 border-t-2 border-[#1F1305]/15 leading-relaxed">
                         {etapa.texto_md}
                       </p>
                     )}
-                  </GlassCard>
+                  </div>
                 );
               })}
             </div>
