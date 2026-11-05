@@ -167,7 +167,7 @@ flowchart TD
 * **5 Apartados Obligatorios:**
   1. **Acta Fundacional:** Manifiesto patrimonial con la declaración explícita de que el colectivo de investigación y coleccionismo precede al desarrollo de la web.
   2. **Equipo de Peritaje:** Nómina de peritos fonográficos, digitalizadores de matrices y catalogadores.
-  3. **Normas de Catalogación:** Las 6 reglas estrictas del archivo (Lados A/B, tratamiento de mosaicos, aislamiento de la columna VOZ, notación Camelot pura, duraciones a segundos enteros, prevalencia de fuentes primarias).
+  3. **Criterios de Catalogación:** Los 6 criterios documentales del archivo (preservación del formato físico Lados A/B, identificación de mosaicos, distinción rigurosa de voz y composición, análisis armónico Camelot, precisión de cronometraje y tempo BPM, prevalencia de fuentes primarias).
   4. **Solicitud de Rectificación:** Procedimiento riguroso de cotejo pericial en 3 pasos (solicitud fundamentada con foto de galleta matriz o registro notarial).
   5. **Contacto & Canales Oficiales:** Correo de peritaje y enlaces a la Fonoteca Oficial en YouTube y Master en Spotify.
 

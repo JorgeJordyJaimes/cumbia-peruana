@@ -194,8 +194,8 @@ export function BrutalistFooter() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 text-[11px]">
-              <Link href="/legajo" className="hover:text-white transition-colors">
-                Normas de Catalogación
+              <Link href="/legajo#normas" className="hover:text-white transition-colors">
+                Criterios de Catalogación
               </Link>
               <span>•</span>
               <Link href="/legajo" className="hover:text-white transition-colors">

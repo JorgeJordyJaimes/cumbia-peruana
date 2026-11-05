@@ -52,7 +52,7 @@ export function AdminMesaRedaccion({
   const [bloquesLegajo, setBloquesLegajo] = useState<{ [key: string]: string }>({
     acta_fundacional: "El colectivo Kumbia Sound nace como iniciativa de coleccionistas e investigadores fonográficos con anterioridad a la creación de este archivo digital...",
     equipo_peritaje: "Peritos fonográficos, transcriptores y digitalizadores de matrices en vinilo de 33 y 45 RPM.",
-    normas_catalogacion: "1. Lados A/B estrictos. 2. Aislamiento de la columna VOZ. 3. Notación Camelot exclusiva. 4. Duraciones a segundos enteros.",
+    normas_catalogacion: "1. Preservación del formato físico (Lados A/B). 2. Distinción rigurosa de voz y composición. 3. Notación Camelot armónica. 4. Precisión en cronometraje y tempo.",
     solicitud_rectificacion: "Procedimiento pericial formal aportando fotografías de galletas matrices o registros notariales de época.",
     contacto_canales: "Fonoteca oficial en YouTube y Spotify Master.",
   });

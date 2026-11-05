@@ -116,7 +116,7 @@ export function HallazgoDelMes({ item }: HallazgoDelMesProps) {
               4. EXPLÓRALO EN KUMBIA SOUND
             </div>
             <p className="font-sans text-xs text-[#5A5245]">
-              Consulta la ficha técnica del prensaje o el informe pericial del músico en nuestra base de datos relacional:
+              Consulta la ficha técnica del prensaje o el informe pericial del músico en nuestro archivo fonográfico:
             </p>
             <Link
               href={item.enlaceExpediente.url}

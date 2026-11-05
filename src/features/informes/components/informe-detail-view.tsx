@@ -229,7 +229,7 @@ export function InformeDetailView({ arbol }: InformeDetailViewProps) {
           </div>
         ) : (
           <div className="border border-[#1F1305] bg-white p-6 font-mono text-xs text-[#5A5245]">
-            No registra agrupaciones formales como integrante de planta en la base de datos (participaciones principalmente como sesionista o compositor).
+            No registra agrupaciones formales como integrante de planta en el archivo (participaciones principalmente como sesionista o compositor).
           </div>
         )}
       </section>

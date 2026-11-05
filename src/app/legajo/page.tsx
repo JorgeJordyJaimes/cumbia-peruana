@@ -90,7 +90,7 @@ export default function LegajoPage() {
                   href="#normas"
                   className="border-2 border-white bg-white/10 hover:bg-white hover:text-[#1F1305] text-white px-3 py-1.5 transition-colors font-bold shadow-[2px_2px_0px_#1F1305]"
                 >
-                  05 / Normas de Catalogación
+                  05 / Criterios de Catalogación
                 </a>
                 <a
                   href="#rectificacion"
@@ -435,7 +435,7 @@ export default function LegajoPage() {
           </section>
 
           {/* ============================================================ */}
-          {/* APARTADO 5: NORMAS DE CATALOGACIÓN FONOGRÁFICA */}
+          {/* APARTADO 5: CRITERIOS DE CATALOGACIÓN FONOGRÁFICA */}
           {/* ============================================================ */}
           <section id="normas" className="scroll-mt-24 space-y-6">
             <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-12 shadow-[6px_6px_0px_#1F1305] space-y-6">
@@ -445,57 +445,57 @@ export default function LegajoPage() {
                     APARTADO 05
                   </span>
                   <h2 className="font-cooper text-2xl sm:text-4xl font-bold text-[#1F1305]">
-                    Normas de Catalogación &amp; Criterios Técnicos
+                    Criterios de Catalogación &amp; Preservación
                   </h2>
                 </div>
-                <span className="text-xs text-[#665D4F] font-bold hidden sm:inline">PROTOCOLO ESTRICTO</span>
+                <span className="text-xs text-[#665D4F] font-bold hidden sm:inline">METODOLOGÍA DOCUMENTAL</span>
               </div>
 
               <div className="space-y-4 font-sans text-sm text-[#1F1305]">
                 <p>
-                  Todo dato ingresado a la base de datos de Kumbia Sound debe superar los siguientes 6 filtros de verificación documental:
+                  Cada registro incorporado al archivo de Kumbia Sound responde a una metodología rigurosa de preservación e investigación fonográfica:
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs">
                   <div className="border-2 border-[#1F1305] bg-[#F8F3EA] p-4 space-y-2">
-                    <span className="font-bold text-[#E80000] block">01 / DUALIDAD LADO A &amp; LADO B</span>
-                    <p className="font-sans text-xs text-[#5A5245]">
-                      Solo se admiten caras A y B para vinilos y casetes en el período 1968–2005. No existen lados C o D; compilatorios dobles se catalogan como álbumes independientes con números de catálogo propios.
+                    <span className="font-bold text-[#E80000] block">01 / PRESERVACIÓN DEL FORMATO FÍSICO</span>
+                    <p className="font-sans text-xs text-[#5A5245] leading-relaxed">
+                      Se respeta la estructura original de los prensajes en vinilo y casetes de dos caras (Lado A y Lado B) del período 1968–2005. Las producciones dobles o recopilatorios de varios discos se documentan como volúmenes independientes para reflejar con exactitud sus ediciones y números de catálogo históricos.
                     </p>
                   </div>
 
                   <div className="border-2 border-[#1F1305] bg-[#F8F3EA] p-4 space-y-2">
-                    <span className="font-bold text-[#E80000] block">02 / MOSAICOS Y SURCOS COMPUESTOS</span>
-                    <p className="font-sans text-xs text-[#5A5245]">
-                      Un surco continuo en vinilo que contiene múltiples temas se etiqueta con bandera booleana <code className="bg-white px-1">es_mosaico = TRUE</code> y se desglosa internamente en la tabla <code className="bg-white px-1">Mosaicos_Temas</code> para respetar la autoría sin falsear el conteo de pistas físicas.
+                    <span className="font-bold text-[#E80000] block">02 / DOCUMENTACIÓN DE MOSAICOS Y POPURRÍS</span>
+                    <p className="font-sans text-xs text-[#5A5245] leading-relaxed">
+                      Cuando un surco físico de vinilo contiene varias canciones interpretadas de manera continua, se identifican, desglosan y acreditan individualmente todas las obras y compositores que lo integran, garantizando el reconocimiento a cada autor sin alterar el conteo de pistas del disco.
                     </p>
                   </div>
 
                   <div className="border-2 border-[#1F1305] bg-[#F8F3EA] p-4 space-y-2">
-                    <span className="font-bold text-[#E80000] block">03 / AISLAMIENTO DE LA COLUMNA VOZ</span>
-                    <p className="font-sans text-xs text-[#5A5245]">
-                      La voz principal se asocia estrictamente al cantante con instrumento &apos;Voz&apos; y <code className="bg-white px-1">credito_como = NULL</code>. El seudónimo en galleta pertenece al compositor y nunca debe contaminar al intérprete vocal.
+                    <span className="font-bold text-[#E80000] block">03 / DISTINCIÓN ENTRE INTÉRPRETE Y COMPOSITOR</span>
+                    <p className="font-sans text-xs text-[#5A5245] leading-relaxed">
+                      Se investiga y visibiliza la identidad real de quien puso la voz en cada tema, diferenciándola con precisión de los compositores y de los seudónimos que figuran en las etiquetas del disco. De este modo, quien canta recibe el crédito biográfico que le corresponde.
                     </p>
                   </div>
 
                   <div className="border-2 border-[#1F1305] bg-[#F8F3EA] p-4 space-y-2">
-                    <span className="font-bold text-[#E80000] block">04 / NOTACIÓN CAMELOT EXCLUSIVA</span>
-                    <p className="font-sans text-xs text-[#5A5245]">
-                      Se almacena única y exclusivamente la notación de la Rueda Camelot (1A a 12B). La notación clásica del círculo de quintas ha sido formalmente retirada de la base de datos para garantizar compatibilidad directa DJ.
+                    <span className="font-bold text-[#E80000] block">04 / COMPATIBILIDAD ARMÓNICA (RUEDA CAMELOT)</span>
+                    <p className="font-sans text-xs text-[#5A5245] leading-relaxed">
+                      Cada grabación cuenta con su tono clasificado mediante la Rueda Camelot (1A a 12B). Este sistema permite a coleccionistas, melómanos y DJs comprender la estructura tonal de las obras y realizar transiciones y mezclas armónicas fluidas en la pista de baile.
                     </p>
                   </div>
 
                   <div className="border-2 border-[#1F1305] bg-[#F8F3EA] p-4 space-y-2">
-                    <span className="font-bold text-[#E80000] block">05 / DURACIÓN EN SEGUNDOS ENTEROS</span>
-                    <p className="font-sans text-xs text-[#5A5245]">
-                      Todas las duraciones se normalizan matemáticamente a segundos totales enteros: <code className="bg-white px-1">(minutos * 60) + segundos</code>. Queda prohibido el uso de strings de tiempo o decimales.
+                    <span className="font-bold text-[#E80000] block">05 / PRECISIÓN EN CRONOMETRAJE Y RITMO (BPM)</span>
+                    <p className="font-sans text-xs text-[#5A5245] leading-relaxed">
+                      Las duraciones y el tempo (pulsaciones por minuto o BPM) de cada tema se auditan directamente a partir de las grabaciones originales, ofreciendo una referencia contrastada y confiable tanto para el estudio musical como para la sesión de escucha.
                     </p>
                   </div>
 
                   <div className="border-2 border-[#1F1305] bg-[#F8F3EA] p-4 space-y-2">
-                    <span className="font-bold text-[#E80000] block">06 / FUENTES PRIMARIAS VERIFICADAS</span>
-                    <p className="font-sans text-xs text-[#5A5245]">
-                      Prevalece la lectura directa del vinilo físico prensado, su galleta central y el surco muerto (matriz estampada), contrastada con contratos originales y testimonios directos.
+                    <span className="font-bold text-[#E80000] block">06 / FUENTES PRIMARIAS Y EVIDENCIA FÍSICA</span>
+                    <p className="font-sans text-xs text-[#5A5245] leading-relaxed">
+                      Toda información se sustenta en la consulta directa del vinilo físico, su galleta central y los códigos de matriz grabados en el surco muerto, complementados con catálogos discográficos de época, contratos y testimonios directos de los protagonistas.
                     </p>
                   </div>
                 </div>
@@ -528,7 +528,7 @@ export default function LegajoPage() {
                       ¿CÓMO REPORTAR UN ERROR O APORTAR UN DATO DE SESIÓN?
                     </p>
                     <p className="text-[#5A5245]">
-                      Kumbia Sound <strong>no es una wiki abierta editable</strong>. Toda corrección de autoría, voz o fecha de prensaje debe ser sometida a peritaje por el archivo antes de su inserción en la base de datos oficial.
+                      Kumbia Sound <strong>no es una wiki abierta editable</strong>. Toda corrección de autoría, voz o fecha de prensaje es sometida a peritaje documental por el equipo del archivo antes de ser incorporada al catálogo oficial.
                     </p>
                     <p className="text-[#5A5245]">
                       Si eres coleccionista, familiar de un músico o posees un disco de vinilo cuya galleta o matriz aporte información contradictoria con lo publicado, sigue este procedimiento:

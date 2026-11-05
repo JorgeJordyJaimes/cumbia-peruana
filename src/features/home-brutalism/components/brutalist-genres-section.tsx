@@ -62,7 +62,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     descripcionCorta:
       "Psicodelia pura y distorsión analógica en la primera guitarra, heredera directa del rock de garaje peruano.",
     descripcionLarga:
-      "Con 75 registros en la base de datos, la Cumbia Fuzz es el testimonio sonoro de la confluencia entre la psicodelia y el punteo tropical. El uso prominente de pedales de distorsión fuzz en las guitarras eléctricas aportó una textura ácida, saturada y electrizante que definió la personalidad instrumental de las producciones de Discos Horóscopo.",
+      "Con 75 piezas documentadas en el archivo, la Cumbia Fuzz es el testimonio sonoro de la confluencia entre la psicodelia y el punteo tropical. El uso prominente de pedales de distorsión fuzz en las guitarras eléctricas aportó una textura ácida, saturada y electrizante que definió la personalidad instrumental de las producciones de Discos Horóscopo.",
   },
   {
     id: 3,
@@ -96,7 +96,7 @@ export const GENEROS_VERTIENTES: GeneroVertiente[] = [
     descripcionCorta:
       "Variante bailable sincopada con acento en el contratiempo y cortes rápidos de percusión para pista.",
     descripcionLarga:
-      "Registrada en 41 temas de la base de datos, la Cumbia Chey es una variante rítmica bailable catalogada formalmente en las galletas y matrices de la época. Se distingue por su acentuación rítmica rápida en contratiempo, donde el diálogo entre el cencerro y el timbal genera una base bailable inconfundible de finales de los años 70.",
+      "Documentada en 41 grabaciones del archivo, la Cumbia Chey es una variante rítmica bailable catalogada formalmente en las galletas y matrices de la época. Se distingue por su acentuación rítmica rápida en contratiempo, donde el diálogo entre el cencerro y el timbal genera una base bailable inconfundible de finales de los años 70.",
   },
   {
     id: 5,

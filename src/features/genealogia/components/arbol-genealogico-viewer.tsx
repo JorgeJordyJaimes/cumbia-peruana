@@ -200,7 +200,7 @@ export function ArbolGenealogicoViewer({
 
             {arbolData.agrupaciones.length === 0 ? (
               <p className="font-sans text-xs text-[#5A5245] italic">
-                No tiene agrupaciones directas registradas en la base de datos.
+                No registra agrupaciones directas documentadas en el archivo.
               </p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

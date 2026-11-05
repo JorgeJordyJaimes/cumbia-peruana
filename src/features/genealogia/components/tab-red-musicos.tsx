@@ -171,7 +171,7 @@ export function TabRedMusicos({
               </div>
             ) : (
               <div className="border border-[#1F1305] bg-white p-6 font-mono text-xs text-[#5A5245]">
-                No tiene agrupaciones como integrante fijo en la base de datos (participaciones principalmente como sesionista en estudios).
+                No registra agrupaciones como integrante de planta en el archivo (participaciones principalmente como sesionista en estudios).
               </div>
             )}
           </div>
