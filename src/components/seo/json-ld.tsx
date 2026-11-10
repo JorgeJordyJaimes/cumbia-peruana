@@ -6,14 +6,19 @@ export interface JsonLdProps {
 
 /**
  * Componente seguro para inyectar datos estructurados Schema.org (JSON-LD)
- * en Server Components de Next.js sin errores de hidratación.
+ * en Server Components de Next.js sin errores de hidratación y protegido
+ * contra inyección de scripts HTML (Stored XSS).
  */
 export function JsonLd({ data }: JsonLdProps) {
+  const jsonString = JSON.stringify(data, null, process.env.NODE_ENV === "development" ? 2 : 0);
+  // Escapar caracteres '<' para prevenir breakout del tag <script>
+  const safeJson = jsonString.replace(/</g, "\\u003c");
+
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data, null, process.env.NODE_ENV === "development" ? 2 : 0),
+        __html: safeJson,
       }}
     />
   );

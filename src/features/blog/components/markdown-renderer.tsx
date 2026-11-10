@@ -7,6 +7,25 @@ const LIST_ITEM_PREFIX_REGEX = /^[-*]\s+/;
 const INLINE_TOKENS_REGEX = /(\*\*.*?\*\*|\*.*?\*|`.*?`|\[.*?\]\(.*?\))/g;
 const LINK_PARSE_REGEX = /^\[(.*?)\]\((.*?)\)$/;
 
+/**
+ * Valida que una URL use protocolos seguros (http, https, mailto, tel) o rutas relativas.
+ * Previene ataques de Stored XSS mediante esquemas peligrosos como javascript: o data:.
+ */
+function isSafeUrl(url: string): boolean {
+  const trimmed = url.trim();
+  if (!trimmed) return false;
+  // Permitir rutas relativas seguras y anclas locales (evitando esquemas protocol-relative //)
+  if (trimmed.startsWith("/") || trimmed.startsWith("#") || trimmed.startsWith("mailto:") || trimmed.startsWith("tel:")) {
+    return !trimmed.startsWith("//");
+  }
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 interface MarkdownRendererProps {
   content: string;
   className?: string;
@@ -157,11 +176,12 @@ function renderInline(text: string): React.ReactNode[] {
     const linkMatch = part.match(LINK_PARSE_REGEX);
     if (linkMatch) {
       const [, linkText, linkUrl] = linkMatch;
-      const isExternal = linkUrl.startsWith("http");
+      const safeUrl = isSafeUrl(linkUrl) ? linkUrl : "#";
+      const isExternal = safeUrl.startsWith("http");
       return (
         <a
           key={index}
-          href={linkUrl}
+          href={safeUrl}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noopener noreferrer" : undefined}
           className="text-[#E80000] font-bold underline decoration-[#E80000]/60 underline-offset-4 hover:text-[#F1730C] transition-colors"

@@ -5,6 +5,10 @@ import { createClient } from "@/lib/supabase/client";
 import { Upload, Check, Loader2, Image as ImageIcon, AlertCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const ALLOWED_EXTENSIONS = /\.(jpe?g|png|webp)$/i;
+const MAX_FILE_SIZE_BYTES = 15 * 1024 * 1024; // 15 MB
+
 interface ImageUploaderProps {
   bucketName?: string;
   folderPath: string; // e.g. "albumes", "grupos", "personas", "sellos"
@@ -126,10 +130,18 @@ export function ImageUploader({
     setErrorMsg(null);
     setStats(null);
 
-    // Validación de tipo de imagen
-    const isImage = file.type.startsWith("image/") || /\.(jpe?g|png|webp)$/i.test(file.name);
-    if (!isImage) {
-      setErrorMsg("Formato no compatible. Por favor sube una imagen JPG, PNG o WebP.");
+    // 1. Verificación de tamaño máximo en cliente (evitar DoS de memoria en Canvas)
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      setErrorMsg("El archivo supera el tamaño máximo permitido de 15 MB.");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+
+    // 2. Validación estricta de tipo MIME y extensión (bloqueando SVG y formatos no admitidos)
+    const isValidMime = ALLOWED_MIME_TYPES.includes(file.type);
+    const isValidExt = ALLOWED_EXTENSIONS.test(file.name);
+    if (!isValidMime || !isValidExt) {
+      setErrorMsg("Formato no compatible. Por favor sube una imagen JPG, PNG o WebP válida.");
       if (fileInputRef.current) fileInputRef.current.value = "";
       return;
     }
@@ -140,14 +152,18 @@ export function ImageUploader({
       const { blob: webpBlob, stats: compStats } = await convertToWebP(file);
       setStats(compStats);
 
-      // 2. Subir el WebP procesado al Storage de Supabase
+      // 2. Subir el WebP procesado al Storage de Supabase (sanitizando componentes de ruta)
       setPhase("uploading");
       const timestamp = Date.now();
-      const storagePath = `${folderPath}/${fileId}-${suffix}-${timestamp}.webp`;
+      const sanitizedFolder = folderPath.replace(/[^a-zA-Z0-9_\-\/]/g, "").replace(/\.\./g, "").replace(/^\/+|\/+$/g, "");
+      const sanitizedFileId = String(fileId).replace(/[^a-zA-Z0-9_\-]/g, "");
+      const sanitizedSuffix = suffix.replace(/[^a-zA-Z0-9_\-]/g, "");
+      const sanitizedBucket = bucketName.replace(/[^a-zA-Z0-9_\-]/g, "");
+      const storagePath = `${sanitizedFolder}/${sanitizedFileId}-${sanitizedSuffix}-${timestamp}.webp`;
 
       const supabase = createClient();
       const { error: uploadError } = await supabase.storage
-        .from(bucketName)
+        .from(sanitizedBucket)
         .upload(storagePath, webpBlob, {
           contentType: "image/webp",
           upsert: true,
@@ -160,7 +176,7 @@ export function ImageUploader({
       // 3. Obtener URL pública directa
       const {
         data: { publicUrl },
-      } = supabase.storage.from(bucketName).getPublicUrl(storagePath);
+      } = supabase.storage.from(sanitizedBucket).getPublicUrl(storagePath);
 
       setPreviewUrl(publicUrl);
 
