@@ -96,7 +96,26 @@ Si se sospecha la filtración de una clave o compromiso de cuenta:
 
 ---
 
-## 6. Actualizar Cuando
+## 6. Endurecimiento en Capa Web y Frontend (Hardening)
+
+1. **Mitigación de Stored XSS en JSON-LD (`src/components/seo/json-ld.tsx`):**
+   - Serialización segura de datos estructurados Schema.org escapando `<` a `\u003c` para neutralizar el cierre prematuro del tag `<script>` mediante inyecciones en títulos o comentarios periciales.
+2. **Validación de Protocolos en Renderizador de Markdown (`src/features/blog/components/markdown-renderer.tsx`):**
+   - Filtro estricto `isSafeUrl` que restringe enlaces a esquemas seguros (`http:`, `https:`, `mailto:`, `tel:` y rutas relativas), neutralizando vectores de ejecución como `javascript:` o `data:`.
+3. **Cabeceras HTTP de Seguridad (`next.config.ts`):**
+   - `X-Frame-Options: DENY` (prevención de ataques de clickjacking).
+   - `X-Content-Type-Options: nosniff` (prevención de confusión y sniffing de tipo MIME).
+   - `Referrer-Policy: strict-origin-when-cross-origin` (protección contra fuga de URLs referenciales).
+   - `Permissions-Policy: camera=(), microphone=(), geolocation=()` (restricción de capacidades de hardware innecesarias).
+   - `poweredByHeader: false` (eliminación de la cabecera `X-Powered-By: Next.js` para evitar perfilado del framework).
+4. **Validación y Sanitización en Pipeline de Imágenes (`src/features/storage/components/image-uploader.tsx`):**
+   - Restricción estricta de tipos MIME a formatos ráster seguros (`image/jpeg`, `image/png`, `image/webp`), bloqueando archivos SVG ejecutables.
+   - Límite de tamaño en memoria a 15 MB antes de procesamiento en Canvas API para prevenir caídas por agotamiento de recursos (DoS en cliente).
+   - Sanitización de rutas y nombres de archivo eliminando secuencias de cruce de directorios (`../`) y caracteres no alfanuméricos.
+
+---
+
+## 7. Actualizar Cuando
 
 - Se modifiquen o creen nuevas políticas RLS en Supabase.
 - Se agregue un nuevo bucket de almacenamiento.
