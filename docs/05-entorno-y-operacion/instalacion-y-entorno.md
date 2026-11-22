@@ -8,14 +8,14 @@
 > - ¿Cómo se resuelven los errores frecuentes de conexión, compilación o políticas de storage?
 > **Fuente principal de:** Pasos de instalación local, configuración de `.env.local`, comandos de ciclo de vida (`npm run ...`) y tabla de resolución de problemas.
 > **No contiene (ver):**
-> - Configuración de despliegue en producción en Vercel → [despliegue.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/despliegue.md)
-> - Comandos de la puerta de verificación previa a commit → [pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md)
-> - Políticas RLS y autenticación administrativa → [seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md)
+> - Configuración de despliegue en producción en Vercel → [despliegue.md](./despliegue.md)
+> - Comandos de la puerta de verificación previa a commit → [pruebas.md](../06-calidad/pruebas.md)
+> - Políticas RLS y autenticación administrativa → [seguridad-y-datos.md](../06-calidad/seguridad-y-datos.md)
 > **Depende de:**
-> - [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
-> - [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
+> - [arquitectura.md](../03-arquitectura/arquitectura.md)
+> - [modelo-de-datos.md](../03-arquitectura/modelo-de-datos.md)
 > **Entregar a otra IA para:** Configurar un contenedor de desarrollo (Docker/DevContainer), automatizar pipelines de CI o resolver incidencias de instalación en nuevos entornos.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -42,13 +42,14 @@
 
 ## 3. Variables de Entorno y Configuración Local
 
-El proyecto requiere un archivo `.env.local` en la raíz del repositorio (`cumbia-peruana/.env.local`).
+El proyecto requiere un archivo `.env.local` en la raíz del repositorio (`.env.local`).
 
 | Variable de Entorno | Obligatoria | Entorno | Valor Ejemplo (Sin Secretos) | Propósito y Lectura en Código |
 | :--- | :--- | :--- | :--- | :--- |
 | `NEXT_PUBLIC_SUPABASE_URL` | Sí | Local / Prod | `https://xyzcompany.supabase.co` | URL base del proyecto Supabase. Leída en `src/lib/supabase/client.ts` y `server.ts`. |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sí | Local / Prod | `eyJhbGciOiJIUzI1NiIsIn...` | Clave anónima pública con restricciones RLS. Leída en clientes Supabase. |
 | `SUPABASE_ACCESS_TOKEN` | Sí (scripts) | Local (Solo ingesta)| `sbp_0123456789abcdef...` | Token personal de acceso Supabase. Leído por `scripts/poblar-db.mjs`. |
+| `ADMIN_EMAIL` | Recomendada | Local / Prod | `correo@ejemplo.com` | Correo autorizado para `/admin`. Se evalúa solo en servidor mediante `src/lib/auth/admin.ts`. |
 
 ---
 
@@ -96,7 +97,7 @@ npm run dev
 | `npm run build` | Compila y optimiza la aplicación para producción (Turbopack). | ~25 s |
 | `npm run start` | Arranca el servidor de producción local tras un build previo. | ~1.0 s |
 | `npm run lint` | Ejecuta ESLint sobre todo el árbol de código en `src/`. | ~6 s |
-| `npm run db:poblar` | Ejecuta la ingesta secuencial de datos SQL hacia Supabase. | ~15 s |
+| `npm run db:poblar` | Ingesta secuencial. Si ya existen álbumes, se detiene para evitar duplicados; usar `--reset` o `--append` de forma consciente. | ~15 s |
 | `npx tsc --noEmit` | Verifica el tipado estricto de TypeScript sin generar archivos. | ~8 s |
 
 ---
@@ -106,7 +107,7 @@ npm run dev
 | Síntoma / Mensaje de Error | Causa Probable | Solución Paso a Paso |
 | :--- | :--- | :--- |
 | `Error: No se encontró SUPABASE_ACCESS_TOKEN` | El script `db:poblar` no detecta la variable en el entorno. | Agregue `SUPABASE_ACCESS_TOKEN` en `.env.local` con un token generado en Supabase Dashboard (`Account -> Access Tokens`). |
-| `Error: PostgREST 403 Forbidden on upload` | El bucket `portadas` no permite el tipo MIME del archivo enviado. | Asegúrese de utilizar el componente `ImageUploader` que convierte automáticamente la imagen a `image/webp`. |
+| `Error: PostgREST 403 Forbidden on upload` | El bucket `media` no permite el tipo MIME del archivo enviado o el usuario no es administrador. | Use `ImageUploader` (convierte a WebP) y verifique `public.is_admin()`. |
 | `Type error: Property 'musical_key' does not exist on type 'Tema'` | Código desactualizado intentando acceder a tonalidades de círculo de quintas. | Utilice exclusivamente `camelot_code` (`INV-004`). El campo `musical_key` fue eliminado en la migración `20261015000000`. |
 | `Hydration failed because the server rendered HTML didn't match client` | Diferencia entre Server Component y Client Component en renderizado de fechas. | Asegúrese de formatear fechas en utilidades puras o aislar componentes dependientes del huso horario del cliente. |
 

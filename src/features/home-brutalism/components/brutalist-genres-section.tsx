@@ -6,7 +6,6 @@ import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import {
   Disc,
   ArrowUpRight,
-  X,
   ExternalLink,
   MapPin,
   Sliders,
@@ -260,7 +259,7 @@ export function BrutalistGenresSection({ genreCounts }: BrutalistGenresSectionPr
           <div className="flex items-start justify-between border-b-2 border-[#3E2C1B] pb-4 pr-10">
             <div className="space-y-1">
               <span className="text-[11px] font-bold tracking-widest text-[#E80000] uppercase">
-                INFORME DE SUBGÉNERO NO. 0{selectedGenero.id} // LEGAJO PERICIAL
+                INFORME DE SUBGÉNERO NO. 0{selectedGenero.id} · LEGAJO PERICIAL
               </span>
               <h3 id="modal-genero-title" className="font-cooper text-2xl sm:text-3xl font-black text-white">
                 {selectedGenero.nombre}

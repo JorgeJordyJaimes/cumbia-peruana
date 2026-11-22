@@ -3,9 +3,8 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Music2, SlidersHorizontal, Disc3, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
+import { Music2, SlidersHorizontal, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { TrackCoverImage } from "@/features/dj-tools";
-import { temasDJMock } from "../data/cumbia-mock";
 
 import type { TemaDJ } from "../types";
 
@@ -90,15 +89,13 @@ function getGenreAffinity(prev: TemaDJ, cand: TemaDJ) {
 }
 
 export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetProps) {
-  const dataset = useMemo(() => {
-    return tracks && tracks.length > 0 ? tracks : temasDJMock;
-  }, [tracks]);
+  const dataset = useMemo(() => tracks ?? [], [tracks]);
 
   const [selectedTemaId, setSelectedTemaId] = useState<string>("");
 
   const currentTema = useMemo(() => {
     const found = dataset.find((t) => t.id === selectedTemaId);
-    return found || dataset[0] || temasDJMock[0];
+    return found || dataset[0];
   }, [dataset, selectedTemaId]);
 
   // Cálculo optimizado en un solo paso de canciones compatibles dentro de ±5% BPM ordenadas por afinidad de género y pitch
@@ -134,6 +131,25 @@ export function MatchBpmWidget({ isHighlight = false, tracks }: MatchBpmWidgetPr
       })
       .slice(0, 5);
   }, [dataset, currentTema]);
+
+  if (!currentTema) {
+    return (
+      <section id="match-bpm" className="scroll-mt-24 py-12 sm:py-16 border-t-2 border-[#1F1305]">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="border-2 border-[#1F1305] bg-white p-8 shadow-[4px_4px_0px_#1F1305] text-center space-y-3">
+            <Music2 className="h-10 w-10 text-[#F1730C] mx-auto" />
+            <h2 className="font-cooper text-2xl font-black text-[#1F1305]">
+              Sin temas con BPM registrado
+            </h2>
+            <p className="font-mono text-xs text-[#5A5245] max-w-lg mx-auto">
+              La consola se activará cuando el catálogo tenga pistas con tempo y tonalidad
+              Camelot verificados.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="match-bpm" className="scroll-mt-24 py-12 sm:py-16 border-t-2 border-[#1F1305]">

@@ -1,21 +1,3 @@
-export interface MusicoGenealogia {
-  id: string;
-  nombre: string;
-  apodo?: string;
-  rolPrincipal: string;
-  instrumentos: string[];
-  fotoUrl: string;
-  periodoActivo: string;
-  trayectoria: {
-    grupo: string;
-    anos: string;
-    rol: string;
-    sellos: string[];
-    temasClave: string[];
-  }[];
-  biografiaResumen: string;
-}
-
 export interface TemaDJ {
   id: string;
   titulo: string;
@@ -33,45 +15,4 @@ export interface TemaDJ {
   portadaUrl: string;
   format?: string;
   side?: string | null;
-}
-
-export interface RadarItem {
-  id: string;
-  tipo: "semana" | "mes" | "playlist";
-  titulo: string;
-  artista: string;
-  ano?: number;
-  sello?: string;
-  descripcion: string;
-  portadaUrl: string;
-  bpm?: number;
-  camelot?: string;
-  // Para Lite Embed:
-  mediaType: "youtube" | "spotify";
-  mediaId: string; // ID para armar embed cuando se presiona play
-  duracionTexto?: string;
-}
-
-export interface HistoriaFondo {
-  id: string;
-  titulo: string;
-  slug: string;
-  resumen: string;
-  categoria: string;
-  tiempoLectura: string;
-  fecha: string;
-  autor: string;
-  portadaUrl: string;
-}
-
-export interface MiembroEquipo {
-  id: string;
-  nombre: string;
-  rol: string;
-  fotoUrl: string;
-  bio: string;
-  redes: {
-    tipo: "instagram" | "twitter" | "spotify" | "github";
-    url: string;
-  }[];
 }

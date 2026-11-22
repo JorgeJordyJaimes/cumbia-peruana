@@ -1,12 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { cache } from "react";
-import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { MarkdownRenderer } from "@/features/blog";
+import { getArticleBySlug } from "@/features/blog/services/blog.server";
 import { ArrowLeft, BookOpen, Calendar, Clock, Disc3, Share2 } from "lucide-react";
-import type { Articulo } from "@/types/blog";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -15,19 +13,9 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Deduplicación per-request con React.cache() (server-cache-react)
-const getArticleBySlug = cache(async (slug: string) => {
-  const supabase = await createClient();
-  return supabase
-    .from("articulos")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-});
-
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const { data: articulo } = await getArticleBySlug(slug);
+  const articulo = await getArticleBySlug(slug);
 
   if (!articulo) {
     return {
@@ -43,13 +31,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const { data: rawArticle } = await getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
-  if (!rawArticle) {
+  if (!article) {
     notFound();
   }
-
-  const article: Articulo = rawArticle;
 
   const formattedDate = new Date(article.fecha_publicacion).toLocaleDateString("es-PE", {
     year: "numeric",

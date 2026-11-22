@@ -14,12 +14,10 @@ import {
   Table,
   Eye,
   Edit3,
-  Save,
   CheckCircle2,
   AlertTriangle,
   Plus,
   Trash2,
-  ExternalLink,
   ShieldCheck,
   Clock,
   Sparkles,
@@ -82,6 +80,7 @@ export function EditorPericial({
   const [activeMobileTab, setActiveMobileTab] = useState<"editor" | "preview">("editor");
   const [isSaving, setIsSaving] = useState(false);
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // Autoguardado local
   useEffect(() => {
@@ -140,7 +139,11 @@ export function EditorPericial({
     setFuentes(fuentes.filter((f) => f.id !== id));
   };
 
-  const handleUpdateFuente = (id: string, field: keyof FuentePericialItem, value: any) => {
+  const handleUpdateFuente = <K extends keyof FuentePericialItem>(
+    id: string,
+    field: K,
+    value: FuentePericialItem[K]
+  ) => {
     setFuentes(
       fuentes.map((f) => {
         if (f.id === id) {
@@ -154,6 +157,7 @@ export function EditorPericial({
   const handleSave = async (nuevoEstado?: EstadoEditorial) => {
     const estadoFinal = nuevoEstado || estado;
     setIsSaving(true);
+    setSaveError(null);
     try {
       await onSave({
         contenidoMd: content,
@@ -166,7 +170,9 @@ export function EditorPericial({
         new Date().toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit", second: "2-digit" })
       );
     } catch (err) {
+      const message = err instanceof Error ? err.message : "Error desconocido al guardar.";
       console.error("Error al guardar texto pericial:", err);
+      setSaveError(message);
     } finally {
       setIsSaving(false);
     }
@@ -224,6 +230,12 @@ export function EditorPericial({
           </button>
         </div>
       </div>
+
+      {saveError && (
+        <div className="border-b-2 border-[#E80000] bg-red-50 p-3 font-mono text-xs font-bold text-[#991B1B]">
+          No se pudo guardar: {saveError}
+        </div>
+      )}
 
       {/* ============================================================ */}
       {/* 2. SELECTOR DE SELLO Y ADVERTENCIA PERICIAL                  */}
@@ -495,7 +507,13 @@ export function EditorPericial({
                   <span className="text-[10px] font-bold text-[#5A5245] w-4">{idx + 1}.</span>
                   <select
                     value={f.tipo}
-                    onChange={(e) => handleUpdateFuente(f.id, "tipo", e.target.value)}
+                    onChange={(e) =>
+                      handleUpdateFuente(
+                        f.id,
+                        "tipo",
+                        e.target.value as FuentePericialItem["tipo"]
+                      )
+                    }
                     className="border border-[#1F1305] bg-[#EDE0D0] px-2 py-1 text-[11px] font-bold focus:outline-none"
                   >
                     <option value="PRIMARIA">Primaria (Galleta / Matriz / Partida)</option>

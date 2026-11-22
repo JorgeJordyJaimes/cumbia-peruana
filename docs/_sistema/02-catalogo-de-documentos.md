@@ -35,6 +35,7 @@
 | D71 | Roadmap | `docs/07-gestion/roadmap.md` | O |
 | D72 | Changelog | `docs/07-gestion/changelog.md` | O |
 | D73 | Problemas conocidos y pendientes | `docs/07-gestion/problemas-conocidos.md` | O |
+| D74 | Estado actual del archivo | `docs/07-gestion/estado-actual.md` | C |
 
 **Condiciones de los condicionales:** D13 si el dominio tiene reglas que no pueden violarse · D21 si hay usuarios interactuando por pasos · D32 si hay API, IPC, eventos o dos aplicaciones que se hablan · D40/D41 si hay interfaz gráfica · D51 si se despliega o distribuye · D61 si el rendimiento es un requisito o riesgo · D62 si se manejan datos personales, dinero, credenciales o archivos irrecuperables.
 
@@ -331,6 +332,16 @@
 - **Evitar:** quejas sin impacto ni propuesta; pendientes sin dueño.
 - **Calidad:** ningún `PEND` abierto sin pregunta clara; los resueltos migran a `decisiones.md`.
 - **Actualizar cuando:** se detecta, resuelve o reclasifica algo.
+
+---
+
+## D74 · `estado-actual.md`
+
+- **Propósito:** instantánea verificable del catálogo y del esquema remoto.
+- **Contenido mínimo:** conteos reales, cobertura (tracklists, portadas, BPM, Camelot, versiones), estado de migraciones, estado de seguridad y resultado de la puerta de calidad.
+- **Evitar:** duplicar conteos en otros documentos; aquí vive la métrica operativa.
+- **Calidad:** toda cifra debe indicar fecha y método de obtención.
+- **Actualizar cuando:** cambia la ingesta, se aplica una migración o se modifica el gate.
 
 ---
 

@@ -8,14 +8,14 @@
 > - ¿Qué archivos y secretos está terminantemente prohibido incluir en el staging de Git?
 > **Fuente principal de:** Reglas de versionado Git, formato de mensajes de commit, política de ramas y sincronización con documentación viva.
 > **No contiene (ver):**
-> - Puerta de verificación de calidad y pruebas → [pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md)
-> - Historial de versiones y lanzamientos → [changelog.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/changelog.md)
-> - Reglas operativas para agentes de IA → [AGENTS.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/AGENTS.md)
+> - Puerta de verificación de calidad y pruebas → [pruebas.md](../06-calidad/pruebas.md)
+> - Historial de versiones y lanzamientos → [changelog.md](./changelog.md)
+> - Reglas operativas para agentes de IA → [AGENTS.md](../../AGENTS.md)
 > **Depende de:**
-> - [instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md)
-> - [pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md)
+> - [instalacion-y-entorno.md](../05-entorno-y-operacion/instalacion-y-entorno.md)
+> - [pruebas.md](../06-calidad/pruebas.md)
 > **Entregar a otra IA para:** Configurar hooks de pre-commit (Husky/Lint-staged), auditar el historial de commits o automatizar releases semánticos.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 

@@ -8,14 +8,14 @@
 > - ¿Qué medidas legales y técnicas impiden la distribución no autorizada de fonogramas protegidos?
 > **Fuente principal de:** Políticas RLS de PostgreSQL, permisos de PostgREST, reglas de seguridad de Supabase Storage y protocolo de custodia de datos.
 > **No contiene (ver):**
-> - Estructura física y llaves de las tablas → [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
-> - Variables de entorno y despliegue → [despliegue.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/despliegue.md)
-> - Decisiones arquitectónicas sobre audio → [decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md)
+> - Estructura física y llaves de las tablas → [modelo-de-datos.md](../03-arquitectura/modelo-de-datos.md)
+> - Variables de entorno y despliegue → [despliegue.md](../05-entorno-y-operacion/despliegue.md)
+> - Decisiones arquitectónicas sobre audio → [decisiones.md](../03-arquitectura/decisiones.md)
 > **Depende de:**
-> - [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
-> - [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
+> - [arquitectura.md](../03-arquitectura/arquitectura.md)
+> - [dominio.md](../01-proyecto/dominio.md)
 > **Entregar a otra IA para:** Auditar vulnerabilidades en políticas RLS, verificar fugas de credenciales en commits o configurar roles de usuario en Supabase Auth.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -28,7 +28,7 @@
 | **`SUPABASE_ACCESS_TOKEN`** | Secreto Crítico | `.env.local` (Local admin) | Estrictamente privado. Prohibido en Vercel o en Git. |
 | **Contraseñas de Administrador** | Secreto Crítico | Supabase Auth (Vault) | Cifrado con algoritmo bcrypt/Argon2 en Supabase. |
 | **Metadatos Fonográficos** | Patrimonio Público | Tablas PostgreSQL | Lectura pública abierta para toda la comunidad. |
-| **Archivos de Audio Comercial** | Prohibido (`INV-005`) | Fuera del sistema | No se almacenan en el sistema bajo ninguna circunstancia. |
+| **Archivos de Audio Comercial** | Prohibido (`INV-011`, `DEC-006`) | Fuera del sistema | No se almacenan en el sistema bajo ninguna circunstancia. |
 
 ---
 
@@ -36,11 +36,13 @@
 
 El acceso a los recursos de Supabase se segmenta en tres roles principales:
 
-| Rol Supabase | Ámbito de Operación | Permisos en Tablas Fonográficas | Permisos en Bucket `portadas` |
+| Rol Supabase | Ámbito de Operación | Permisos en Tablas Fonográficas | Permisos en Bucket `media` |
 | :--- | :--- | :--- | :--- |
-| **`anon` (Visitante Web)** | Navegación pública, DJs, coleccionistas | `SELECT` en todas las tablas maestras y relacionales. | `SELECT` (lectura y descarga de portadas WebP vía CDN). |
-| **`authenticated` (Admin)**| Panel de catalogación (`/admin`) | `SELECT`, `INSERT`, `UPDATE`, `DELETE` en catálogo. | `INSERT`, `UPDATE`, `DELETE` (solo archivos `image/webp`). |
-| **`service_role` (Script)** | Scripts de ingesta masiva (`db:poblar`)| Bypass de RLS para mantenimiento y sincronización. | Control total administrativo. |
+| **`anon` (Visitante Web)** | Navegación pública, DJs, coleccionistas | Solo `SELECT` en tablas maestras y relacionales. Sin mutaciones. | Solo `SELECT` de portadas WebP vía CDN. |
+| **`authenticated` (Usuario)** | Cuenta creada en Supabase Auth | `SELECT`; las mutaciones dependen de `public.is_admin()`. | Sin mutaciones salvo que `public.is_admin()` sea verdadero. |
+| **`service_role` (Script)** | Scripts de ingesta masiva (`db:poblar`) | Bypass de RLS para mantenimiento y sincronización. | Control total administrativo. |
+
+> **Regla de oro:** `authenticated` no equivale a administrador. La migración `20261122000000_admin_rls_hardening.sql` introduce `public.is_admin()` y restringe todas las mutaciones al correo/rol autorizado.
 
 ---
 
@@ -54,31 +56,33 @@ El acceso a los recursos de Supabase se segmenta en tres roles principales:
   TO anon, authenticated
   USING (true);
   ```
-- **Modificación Protegida:** Las mutaciones (`INSERT`, `UPDATE`, `DELETE`) están estrictamente restringidas a sesiones autenticadas mediante Supabase Auth.
+- **Modificación Protegida:** Las mutaciones (`INSERT`, `UPDATE`, `DELETE`) están restringidas al administrador real:
   ```sql
-  CREATE POLICY "Solo administradores pueden mutar Albumes"
+  CREATE POLICY "Albumes solo admin"
   ON Albumes FOR ALL
   TO authenticated
-  USING (auth.role() = 'authenticated')
-  WITH CHECK (auth.role() = 'authenticated');
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
   ```
 
-### 3.2 Bucket de Almacenamiento (`portadas`)
+### 3.2 Bucket de Almacenamiento (`media`)
 - **Acceso Público:** Lectura pública de objetos permitida sin token para alimentar el CDN y la visualización de carátulas en el navegador.
-- **Inserción Filtrada por MIME:**
+- **Inserción Filtrada por MIME y administrador:**
   ```sql
-  CREATE POLICY "Permitir subida de WebP solo a administradores"
+  CREATE POLICY "Subida de archivos en media para admin"
   ON storage.objects FOR INSERT
   TO authenticated
   WITH CHECK (
-    bucket_id = 'portadas' AND
-    (storage.extension(name) = 'webp')
+    bucket_id = 'media' AND
+    public.is_admin()
   );
   ```
 
+> **Riesgo operativo pendiente:** el registro público de Supabase Auth está habilitado (`disable_signup: false`). Debe deshabilitarse en Authentication > Providers > Email. Aunque la migración RLS ya no concede escritura a cualquier usuario autenticado, cerrar el registro es una capa adicional obligatoria.
+
 ---
 
-## 4. Custodia Patrimonial y Propiedad Intelectual (`INV-005`)
+## 4. Custodia Patrimonial y Propiedad Intelectual (`INV-011`, `DEC-006`)
 
 Para proteger la viabilidad jurídica del proyecto y respetar la legislación peruana e internacional sobre derechos de autor y derechos conexos de los productores fonográficos:
 1. **Ausencia Absoluta de Streaming de Audio:** Kumbia Sound no aloja ni distribuye archivos de música digitalizada (`.mp3`, `.wav`, `.aac`).
@@ -108,7 +112,8 @@ Si se sospecha la filtración de una clave o compromiso de cuenta:
    - `Referrer-Policy: strict-origin-when-cross-origin` (protección contra fuga de URLs referenciales).
    - `Permissions-Policy: camera=(), microphone=(), geolocation=()` (restricción de capacidades de hardware innecesarias).
    - `poweredByHeader: false` (eliminación de la cabecera `X-Powered-By: Next.js` para evitar perfilado del framework).
-4. **Validación y Sanitización en Pipeline de Imágenes (`src/features/storage/components/image-uploader.tsx`):**
+4. **Sanitización de enlaces editoriales (`isSafeHref`):** Radar e Informes solo renderizan enlaces `http(s)` o rutas internas; valores `javascript:` o `data:` se degradan a texto o a `/vinilos`.
+5. **Validación y Sanitización en Pipeline de Imágenes (`src/features/storage/components/image-uploader.tsx`):**
    - Restricción estricta de tipos MIME a formatos ráster seguros (`image/jpeg`, `image/png`, `image/webp`), bloqueando archivos SVG ejecutables.
    - Límite de tamaño en memoria a 15 MB antes de procesamiento en Canvas API para prevenir caídas por agotamiento de recursos (DoS en cliente).
    - Sanitización de rutas y nombres de archivo eliminando secuencias de cruce de directorios (`../`) y caracteres no alfanuméricos.

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
-import { Disc, Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck, Copy } from "lucide-react";
+import { Calendar, Building2, Layers, ExternalLink, Activity, Clock, Music, UserCheck, Copy } from "lucide-react";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import { CopyField } from "@/components/ui/copy-field";

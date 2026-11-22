@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 interface BrutalistTopBarProps {
@@ -7,8 +6,14 @@ interface BrutalistTopBarProps {
 }
 
 export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarProps) {
-  const formattedAlbumes = totalAlbumes && totalAlbumes > 0 ? `${totalAlbumes.toLocaleString("es-PE")}+` : "721+";
-  const formattedSellos = totalSellos && totalSellos > 0 ? totalSellos.toLocaleString("es-PE") : "258";
+  const formattedAlbumes =
+    typeof totalAlbumes === "number" && totalAlbumes > 0
+      ? totalAlbumes.toLocaleString("es-PE")
+      : null;
+  const formattedSellos =
+    typeof totalSellos === "number" && totalSellos > 0
+      ? totalSellos.toLocaleString("es-PE")
+      : null;
 
   return (
     <div className="w-full border-b-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] font-mono text-[10px] sm:text-[11px] select-none">
@@ -37,21 +42,31 @@ export function BrutalistTopBar({ totalAlbumes, totalSellos }: BrutalistTopBarPr
         <div className="flex items-center gap-2.5 whitespace-nowrap ml-auto sm:ml-0">
           <div className="flex items-center gap-1.5 font-bold text-[#1F1305]">
             <span className="text-[#E80000] font-black">★</span>
-            <span>{formattedAlbumes} EVIDENCIAS EN CUSTODIA</span>
-            <span>•</span>
-            <span>{formattedSellos} SELLOS</span>
+            <span>
+              {formattedAlbumes
+                ? `${formattedAlbumes} EVIDENCIAS EN CUSTODIA`
+                : "ARCHIVO EN CONSULTA"}
+            </span>
+            {formattedSellos ? (
+              <>
+                <span>•</span>
+                <span>{formattedSellos} SELLOS</span>
+              </>
+            ) : null}
           </div>
           <span className="hidden sm:inline border border-[#1F1305] bg-white px-1.5 py-0.2 font-black text-[#10B981] text-[10px] shadow-[1px_1px_0px_#1F1305]">
             ● ACTIVO
           </span>
-          <Link
+          <a
             href="/admin"
+            target="_blank"
+            rel="noopener noreferrer"
             className="border-2 border-[#1F1305] bg-white hover:bg-[#E80000] hover:text-white px-2 py-0.5 font-black text-[10px] shadow-[1.5px_1.5px_0px_#1F1305] transition-all inline-flex items-center gap-1"
-            title="Acceso al Panel de Administración y Redacción"
+            title="Abrir el Panel de Administración y Redacción en una pestaña nueva"
           >
             <span>PANEL [SYS]</span>
             <ArrowUpRight className="h-3 w-3" />
-          </Link>
+          </a>
         </div>
       </div>
     </div>

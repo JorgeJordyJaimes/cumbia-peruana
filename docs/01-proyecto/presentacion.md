@@ -6,7 +6,7 @@
 > **No contiene (ver):** Términos del dominio → [glosario.md](glosario.md); reglas e invariantes del vinilo → [dominio.md](dominio.md); requisitos funcionales y no funcionales → [../02-requisitos/requisitos.md](../02-requisitos/requisitos.md); arquitectura técnica → [../03-arquitectura/arquitectura.md](../03-arquitectura/arquitectura.md).
 > **Depende de:** [glosario.md](glosario.md)
 > **Entregar a otra IA para:** Onboarding integral del proyecto, evaluación de alcance, redacción de contenidos editoriales y fundamentación de producto.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** 0.1.0 / commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 0.1.0 / 2026-11-22
 
 ---
 
@@ -79,8 +79,9 @@ Kumbia Sound no es un clon de Discogs: es una obra de rescate cultural especiali
 ## 6. Estado Actual del Proyecto
 
 * **Versión:** `0.1.0` (Fase de consolidación de catálogo histórico).
-* **Catálogo cargado:** Discografía completa de **Grupo Celeste** (37 sencillos de 45 RPM y 6 LPs de 33 RPM: 109 temas únicos, 136 pistas físicas, 101 créditos de voz, 13 segmentos de mosaico, 22 géneros y 16 roles).
-* **Infraestructura:** Supabase PostgreSQL con migraciones y RLS activo, Next.js 16 App Router con Turbopack desplegado en Vercel.
+* **Catálogo cargado:** 717 soportes físicos (377 singles de 45 RPM y 340 LPs), 278 temas, 320 surcos físicos y 54 segmentos de mosaico. La cobertura detallada de tracklists se concentra en Grupo Celeste, Cielo Gris y El Super Grupo.
+* **Infraestructura:** Supabase PostgreSQL con RLS, Next.js 16 App Router con Turbopack y despliegue en Vercel.
+* **Métricas verificadas:** consultar [../07-gestion/estado-actual.md](../07-gestion/estado-actual.md). Ese documento es la única fuente de conteos operativos.
 
 ---
 

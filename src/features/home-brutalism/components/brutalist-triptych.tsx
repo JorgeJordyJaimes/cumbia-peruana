@@ -16,7 +16,7 @@ export function BrutalistTriptych() {
     { label: "CURVA DE REPRODUCCIÓN", valor: "RIAA STANDARD", sello: "CALIBRADO" },
     { label: "AFINACIÓN DE SESIÓN", valor: "440 HZ EXACTO", sello: "CERTIFICADO" },
     { label: "SISTEMA ARMÓNICO", valor: "RUEDA CAMELOT", sello: "ANALIZADO" },
-    { label: "SELLOS CATALOGADOS", valor: "258 SELLOS", sello: "REGISTRADO" },
+    { label: "SELLOS CATALOGADOS", valor: "CATÁLOGO ABIERTO", sello: "REGISTRADO" },
     { label: "MATRICES MAESTRAS", valor: "MONO & ESTÉREO", sello: "PRESERVADO" },
     { label: "BASE DE DATOS", valor: "SUPABASE POSTGRES", sello: "ACTIVO" },
   ];

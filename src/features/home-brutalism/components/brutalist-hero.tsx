@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight, Disc, Music2, ShieldAlert, Stamp } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Disc } from "lucide-react";
 
 interface BrutalistHeroProps {
   totalAlbumes?: number | null;

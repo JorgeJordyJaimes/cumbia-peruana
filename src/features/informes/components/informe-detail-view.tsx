@@ -12,22 +12,48 @@ import {
   GitFork,
 } from "lucide-react";
 import type { ArbolGenealogicoResult } from "@/types/database";
+import { MarkdownRenderer } from "@/features/blog";
+import type { InformeEditorial } from "../services/informes.server";
 
 interface InformeDetailViewProps {
   arbol: ArbolGenealogicoResult;
+  informe?: InformeEditorial | null;
 }
 
-export function InformeDetailView({ arbol }: InformeDetailViewProps) {
+export function InformeDetailView({ arbol, informe = null }: InformeDetailViewProps) {
   const { persona, agrupaciones, grabaciones_sesion, composiciones } = arbol;
 
   if (!persona) return null;
 
   const codigoExpediente = `INF-${String(persona.id_persona).padStart(4, "0")}`;
+  const tieneInformeEditorial = Boolean(informe?.contenido_md.trim());
 
-  // Determinación de verificación documental pericial
+  // Determinación de verificación documental pericial. El informe editorial
+  // publicado prevalece sobre la heurística biográfica.
   const tieneBio = Boolean(persona.biografia && persona.biografia.length > 30);
   const tieneFoto = Boolean(persona.url_foto);
-  const estadoVerificacion = tieneBio && tieneFoto
+  const estadoVerificacion = tieneInformeEditorial
+    ? informe?.sello_verificacion === "PRIMARIA"
+      ? {
+          label: "FUENTE PRIMARIA",
+          detalle: "Informe editorial verificado contra galletas originales, matrices sonoras y registros notariales/fonográficos.",
+          bg: "bg-[#2E7D32]",
+          text: "text-white",
+        }
+      : informe?.sello_verificacion === "SECUNDARIA"
+      ? {
+          label: "FUENTE SECUNDARIA",
+          detalle: "Informe editorial reconstruido a partir de discografías secundarias, prensa de época y entrevistas orales.",
+          bg: "bg-[#F1730C]",
+          text: "text-white",
+        }
+      : {
+          label: "SIN VERIFICAR",
+          detalle: "Informe editorial publicado sin sello de verificación primaria.",
+          bg: "bg-[#5A5245]",
+          text: "text-white",
+        }
+    : tieneBio && tieneFoto
     ? {
         label: "FUENTE PRIMARIA",
         detalle: "Información verificada contra galletas originales, matrices sonoras y registros notariales/fonográficos.",
@@ -176,6 +202,59 @@ export function InformeDetailView({ arbol }: InformeDetailViewProps) {
             )}
           </div>
         </div>
+
+        {tieneInformeEditorial ? (
+          <div className="border-t-2 border-[#1F1305] pt-6 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2 font-mono text-xs font-black uppercase text-[#1F1305]">
+                <FileText className="h-4 w-4 text-[#E80000]" />
+                <span>INFORME EDITORIAL PUBLICADO</span>
+              </div>
+              {informe?.updated_at ? (
+                <span className="font-mono text-[11px] text-[#665D4F]">
+                  Actualizado:{" "}
+                  {new Date(informe.updated_at).toLocaleDateString("es-PE", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
+              ) : null}
+            </div>
+
+            <div className="border-l-4 border-[#E80000] pl-4">
+              <MarkdownRenderer content={informe?.contenido_md || ""} />
+            </div>
+
+            {informe && informe.fuentes.length > 0 ? (
+              <div className="border-2 border-[#1F1305] bg-[#EDE0D0] p-4 space-y-2 font-mono text-xs">
+                <span className="font-black uppercase text-[#E80000]">Fuentes consultadas</span>
+                <ul className="space-y-1">
+                  {informe.fuentes.map((fuente, index) => (
+                    <li key={fuente.id || `${fuente.referencia}-${index}`} className="text-[#5A5245]">
+                      <span className="font-bold text-[#1F1305]">
+                        [{fuente.tipo || "SIN TIPO"}]
+                      </span>{" "}
+                      {fuente.url && /^(https?:\/\/|\/)/.test(fuente.url) ? (
+                        <a
+                          href={fuente.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-[#E80000]"
+                        >
+                          {fuente.referencia || fuente.url}
+                        </a>
+                      ) : (
+                        fuente.referencia
+                      )}
+                      {fuente.fecha ? ` (${fuente.fecha})` : ""}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
 
       {/* SECCIÓN 1: AGRUPACIONES Y LINAJES */}

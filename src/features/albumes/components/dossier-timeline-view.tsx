@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, memo } from "react";
+import { useState, useMemo, memo } from "react";
 import { cn } from "@/lib/utils";
 import { BadgeFormat } from "@/components/ui/badge-format";
 import type { AlbumItem } from "@/features/albumes/components/album-card";
@@ -86,10 +86,13 @@ export function DossierTimelineViewComponent({
   const [photoOnly, setPhotoOnly] = useState<boolean>(false);
   const [visibleCount, setVisibleCount] = useState<number>(60);
 
-  // Resetear paginación por lotes de 60 al cambiar cualquier filtro
-  useEffect(() => {
+  // Reinicio de paginación sin efecto: cambio de filtros detectado en render.
+  const filterKey = `${searchTerm}|${selectedFormat}|${subFilter}|${selectedLabel}|${selectedDecade}|${selectedYear}|${photoOnly}`;
+  const [paginationKey, setPaginationKey] = useState(filterKey);
+  if (paginationKey !== filterKey) {
+    setPaginationKey(filterKey);
     setVisibleCount(60);
-  }, [searchTerm, selectedFormat, subFilter, selectedLabel, selectedDecade, selectedYear, photoOnly]);
+  }
 
   // Manejador de cambio de formato (reinicia sub-filtro)
   const handleFormatChange = (newFormat: string) => {
@@ -232,15 +235,10 @@ export function DossierTimelineViewComponent({
     return albumsWithSubFilter.length;
   }, [albumsWithSubFilter, selectedDecade]);
 
-  // Si el año seleccionado ya no existe en los resultados de la nueva búsqueda, resetearlo a "ALL"
-  useEffect(() => {
-    if (selectedYear !== "ALL") {
-      const exists = yearCounts.some((y) => y.year === selectedYear);
-      if (!exists) {
-        setSelectedYear("ALL");
-      }
-    }
-  }, [yearCounts, selectedYear]);
+  // Si el año seleccionado ya no existe en los resultados, se corrige en render.
+  if (selectedYear !== "ALL" && !yearCounts.some((y) => y.year === selectedYear)) {
+    setSelectedYear("ALL");
+  }
 
   // 6. Conteo de formatos ajustado a la búsqueda actual
   const formatCounts = useMemo(() => {
@@ -319,7 +317,7 @@ export function DossierTimelineViewComponent({
 
       return Array.from(groups.entries()).sort(([, a], [, b]) => b.length - a.length);
     }
-  }, [filteredAlbums, groupingMode]);
+  }, [paginatedAlbums, groupingMode]);
 
   const resetFilters = () => {
     setSearchTerm("");

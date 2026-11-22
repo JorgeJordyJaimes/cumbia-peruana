@@ -6,7 +6,7 @@
 > **No contiene (ver):** Requisitos normativos → [requisitos.md](requisitos.md); especificación de diseño de pantallas → [../04-diseno/pantallas.md](../04-diseno/pantallas.md).
 > **Depende de:** [requisitos.md](requisitos.md), [../01-proyecto/glosario.md](../01-proyecto/glosario.md).
 > **Entregar a otra IA para:** Diseño de pruebas de integración de extremo a extremo (E2E), auditoría de ergonomía y guiones de prueba manual.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** 0.1.0 / commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 0.1.0 / 2026-11-22
 
 ---
 

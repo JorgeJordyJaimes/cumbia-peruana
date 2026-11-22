@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
+import { MarkdownRenderer } from "@/features/blog";
+import { getLegajoBloques } from "@/features/legajo/services/legajo.server";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -21,7 +23,11 @@ export const metadata: Metadata = {
     "Manifiesto cultural, misión, visión, principios fundacionales y normas de catalogación del archivo histórico Kumbia Sound.",
 };
 
-export default function LegajoPage() {
+export const dynamic = "force-dynamic";
+
+export default async function LegajoPage() {
+  const bloques = await getLegajoBloques();
+
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305] font-mono">
       <BrutalistCoordinator>
@@ -591,6 +597,39 @@ export default function LegajoPage() {
               </div>
             </div>
           </section>
+
+          {bloques.length > 0 ? (
+            <section id="bloques-institucionales" className="scroll-mt-24 space-y-6">
+              <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-12 shadow-[6px_6px_0px_#1F1305] space-y-8">
+                <div className="flex items-center justify-between border-b-2 border-[#1F1305] pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="border border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] text-xs font-black px-2 py-0.5">
+                      BLOQUES EDITORIALES
+                    </span>
+                    <h2 className="font-cooper text-2xl sm:text-4xl font-bold text-[#1F1305]">
+                      Documentos institucionales
+                    </h2>
+                  </div>
+                  <span className="text-xs text-[#665D4F] font-bold hidden sm:inline">
+                    CONTENIDO PUBLICADO DESDE EL ARCHIVO
+                  </span>
+                </div>
+
+                <div className="space-y-8">
+                  {bloques.map((bloque) => (
+                    <article key={bloque.clave} className="space-y-3">
+                      <h3 className="font-cooper text-xl sm:text-2xl font-bold text-[#E80000]">
+                        {bloque.titulo}
+                      </h3>
+                      <div className="border-l-4 border-[#1F1305] pl-4">
+                        <MarkdownRenderer content={bloque.contenido_md} />
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ) : null}
 
         </main>
       </BrutalistCoordinator>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Disc, ChevronLeft, ChevronRight, ExternalLink, Image as ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -45,6 +45,14 @@ export function AlbumCoverSlider({
 
   // Si solo hay contraportada disponible, iniciar en back, sino en front
   const [activeSide, setActiveSide] = useState<"front" | "back">(hasFront ? "front" : hasBack ? "back" : "front");
+  const [urlSnapshot, setUrlSnapshot] = useState({ coverUrl, backCoverUrl });
+
+  // Ajuste de estado durante el render, sin efecto: si el padre carga otras
+  // imágenes para el mismo componente, la cara activa se recalcula.
+  if (urlSnapshot.coverUrl !== coverUrl || urlSnapshot.backCoverUrl !== backCoverUrl) {
+    setUrlSnapshot({ coverUrl, backCoverUrl });
+    setActiveSide(hasFront ? "front" : hasBack ? "back" : "front");
+  }
 
   const touchStartX = useRef<number | null>(null);
 
@@ -59,15 +67,6 @@ export function AlbumCoverSlider({
   const toggleSide = useCallback(() => {
     switchSide(activeSide === "front" ? "back" : "front");
   }, [activeSide, switchSide]);
-
-  // Sincronizar si cambian las URLs externas
-  useEffect(() => {
-    if (!hasFront && hasBack) {
-      setActiveSide("back");
-    } else if (hasFront) {
-      setActiveSide("front");
-    }
-  }, [hasFront, hasBack]);
 
   // Manejo de gestos táctiles (Swipe)
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -163,7 +162,7 @@ export function AlbumCoverSlider({
           <img
             key={currentImageUrl}
             src={currentImageUrl}
-            alt={`${title} - ${currentSideLabel}`}
+            alt={`${title}${artist ? ` — ${artist}` : ""} - ${currentSideLabel}`}
             className="h-full w-full object-cover transition-opacity duration-300 animate-fadeIn"
           />
         ) : (

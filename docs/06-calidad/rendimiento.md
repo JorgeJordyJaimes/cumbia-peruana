@@ -8,14 +8,14 @@
 > - ¿Qué cuellos de botella se han resuelto y qué aspectos quedan descartados de optimización prematura?
 > **Fuente principal de:** Escenarios de medición de rendimiento, resultados de auditorías de carga, optimizaciones aplicadas en RSC y límites de bundle.
 > **No contiene (ver):**
-> - Decisiones arquitectónicas fundacionales → [decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md)
-> - Reglas de compilación y scripts de entorno → [instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md)
-> - Estrategia de pruebas funcionales → [pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md)
+> - Decisiones arquitectónicas fundacionales → [decisiones.md](../03-arquitectura/decisiones.md)
+> - Reglas de compilación y scripts de entorno → [instalacion-y-entorno.md](../05-entorno-y-operacion/instalacion-y-entorno.md)
+> - Estrategia de pruebas funcionales → [pruebas.md](./pruebas.md)
 > **Depende de:**
-> - [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
+> - [arquitectura.md](../03-arquitectura/arquitectura.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
 > **Entregar a otra IA para:** Identificar regresiones de rendimiento en Server Components, optimizar pesos de bundle o analizar cuellos de botella de red hacia Supabase.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -33,9 +33,9 @@
 
 ## 2. Escala del Sistema: Volumen Real vs. Escala Objetivo
 
-- **Volumen Real Actual:** 721 producciones físicas prensadas, 109 obras musicales indexadas con metadatos DJ y 136 surcos físicos.
+- **Volumen Real Actual:** 717 soportes físicos, 278 obras musicales y 320 surcos físicos. Consultar [../07-gestion/estado-actual.md](../07-gestion/estado-actual.md) para la instantánea completa.
 - **Escala Objetivo de Archivo Completo:** 2,500 soportes físicos, 8,000 canciones analizadas y 12,000 surcos físicos catalogados.
-- **Impacto en Rendimiento:** Gracias a la paginación a nivel de base de datos en `/vinilos` (límite de 24 álbumes por vista) y la resolución por índices B-Tree y GIN, la latencia de consulta se mantiene plana $O(1)$ respecto al crecimiento del catálogo.
+- **Estrategia real actual:** `/` y `/vinilos` cargan el catálogo con `limit(1000)` y filtran/paginan en cliente. No existe todavía paginación a nivel de base de datos; es la principal deuda de escalabilidad antes de crecer al objetivo de 2,500 soportes.
 
 ---
 
@@ -47,7 +47,7 @@
 * **Resultado:** TTFB: 210 ms. LCP: 1.15 s. Renderizado completo sin bloqueos.
 
 ### `ESC-02` · Navegación en el Archivo de Vinilos (`/vinilos`)
-* **Pasos:** Cargar la grilla con 721 discos en base de datos paginados a 24 elementos.
+* **Pasos:** Cargar la grilla con 717 discos, filtrado y paginado en cliente sobre el conjunto cargado.
 * **Métrica Clave:** Tiempo de respuesta de PostgREST y renderizado del streaming con `Suspense`.
 * **Resultado:** Transmisión de HTML iniciada en 180 ms; esqueleto visual sustituido en 540 ms.
 
@@ -70,7 +70,7 @@
 
 ## 4. Optimizaciones de Arquitectura Aplicadas (Vercel Best Practices)
 
-Siguiendo el estándar [DEC-005](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-005):
+Siguiendo el estándar [DEC-005](../03-arquitectura/decisiones.md#dec-005):
 
 1. **Eliminación de Cascadas de Red (`async-parallel`):**
    - Se reemplazaron llamadas secuenciales `await` por `Promise.all` en `src/app/page.tsx`, `src/app/vinilos/page.tsx` y `src/app/album/[id]/page.tsx`.

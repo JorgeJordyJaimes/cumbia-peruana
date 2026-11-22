@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { ArticleCard } from "@/features/blog";
+import { getPublishedArticles } from "@/features/blog/services/blog.server";
 import { ArrowLeft, BookOpen, Sparkles } from "lucide-react";
-import type { Articulo } from "@/types/blog";
 
 export const dynamic = "force-dynamic";
 
@@ -14,15 +13,7 @@ export const metadata = {
 };
 
 export default async function BlogIndexPage() {
-  const supabase = await createClient();
-
-  const { data: articulos } = await supabase
-    .from("articulos")
-    .select("*")
-    .eq("publicado", true)
-    .order("fecha_publicacion", { ascending: false });
-
-  const articlesList: Articulo[] = articulos || [];
+  const articlesList = await getPublishedArticles();
 
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">

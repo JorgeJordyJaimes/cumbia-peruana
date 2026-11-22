@@ -5,26 +5,17 @@ import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { BadgeFormat } from "@/components/ui/badge-format";
-import { BadgeDJ } from "@/components/ui/badge-dj";
 import { CopyField } from "@/components/ui/copy-field";
 import { AlbumCoverSlider } from "@/features/albumes";
 import { AlbumTracklistTable } from "@/features/temas";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
-import { ArrowLeft, Disc, Calendar, Building2, Layers, Music, Clock, Activity, UserCheck } from "lucide-react";
+import { ArrowLeft, Calendar, Building2, Layers, Music, Clock, Activity, UserCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 interface AlbumPageProps {
   params: Promise<{ id: string }>;
-}
-
-interface AlbumMetadataRow {
-  nombre_album: string | null;
-  año_publicacion: number | null;
-  numero_catalogo: string | null;
-  grupos: { nombre_grupo: string } | null;
-  sellos_discograficos: { nombre_sello: string } | null;
 }
 
 interface AlbumDetailRow {

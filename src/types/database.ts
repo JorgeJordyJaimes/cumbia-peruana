@@ -813,7 +813,7 @@ export interface Database {
           url_youtube: string | null
           url_spotify: string | null
           destino_tipo: string
-          destino_id: number | null
+          destino_url: string | null
           estado: string
           publish_at: string | null
           created_at: string | null
@@ -834,7 +834,7 @@ export interface Database {
           url_youtube?: string | null
           url_spotify?: string | null
           destino_tipo?: string
-          destino_id?: number | null
+          destino_url?: string | null
           estado?: string
           publish_at?: string | null
           created_at?: string | null
@@ -855,7 +855,7 @@ export interface Database {
           url_youtube?: string | null
           url_spotify?: string | null
           destino_tipo?: string
-          destino_id?: number | null
+          destino_url?: string | null
           estado?: string
           publish_at?: string | null
           created_at?: string | null
@@ -868,21 +868,18 @@ export interface Database {
           clave: string
           titulo: string
           contenido_md: string
-          orden: number
           updated_at: string | null
         }
         Insert: {
           clave: string
           titulo: string
           contenido_md?: string
-          orden?: number
           updated_at?: string | null
         }
         Update: {
           clave?: string
           titulo?: string
           contenido_md?: string
-          orden?: number
           updated_at?: string | null
         }
         Relationships: []

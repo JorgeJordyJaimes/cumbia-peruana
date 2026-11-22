@@ -6,7 +6,7 @@
 > **No contiene (ver):** Visión y alcance estratégico → [../01-proyecto/presentacion.md](../01-proyecto/presentacion.md); invariantes fonográficas inviolables → [../01-proyecto/dominio.md](../01-proyecto/dominio.md); arquitectura técnica de implementación → [../03-arquitectura/arquitectura.md](../03-arquitectura/arquitectura.md).
 > **Depende de:** [../01-proyecto/glosario.md](../01-proyecto/glosario.md), [../01-proyecto/dominio.md](../01-proyecto/dominio.md).
 > **Entregar a otra IA para:** Estimación de esfuerzo, generación de casos de prueba, auditoría de cobertura funcional y validación de features.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** 0.1.0 / commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 0.1.0 / 2026-11-22
 
 ---
 
@@ -94,7 +94,8 @@
 ### RF-008 · Ingesta Idempotente desde Hoja Tabular
 * **Descripción:** Script de sincronización (`scripts/poblar-db.mjs`) que traduce la hoja `Datos BD.ods` a sentencias SQL normalizadas (`ingreso-temas.sql`, `generos.sql`, `personas.sql`, `roles.sql`) y puebla Supabase de forma limpia y reproducible.
 * **Actor:** Administrador / Agente IA.
-* **Prioridad:** Debe tener (`Must`) · **Estado:** `CONFIRMADA` · `IMPLEMENTADO`
+* **Prioridad:** Debe tener (`Must`) · **Estado:** `CONFIRMADA` · `IMPLEMENTADO CON GUARDIA`
+* **Criterio de seguridad:** Si ya existen álbumes, la carga completa se cancela salvo que se use `--reset` (recarga limpia) o `--append` (incremental consciente). Los archivos de álbumes no usan `ON CONFLICT`.
 
 ### RF-009 · Pipeline Multimedia WebP en Cliente (`Canvas API`)
 * **Descripción:** Interceptación y conversión de imágenes JPG/PNG a formato WebP optimizado en memoria antes de transmitirse a Supabase Storage.

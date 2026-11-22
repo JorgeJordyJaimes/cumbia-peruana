@@ -23,7 +23,6 @@ import {
   Save,
   CheckCircle2,
   ExternalLink,
-  ShieldCheck,
   Calendar,
   MapPin,
   Tag,

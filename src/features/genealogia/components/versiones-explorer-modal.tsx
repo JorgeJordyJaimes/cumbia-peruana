@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, GitFork, Disc, Music, Loader2, Calendar, User, ArrowDown } from "lucide-react";
+import { GitFork, Disc, Music, Loader2, Calendar, User, ArrowDown } from "lucide-react";
 import { getGenealogiaVersionesClient } from "../services/genealogia-service";
 import { ExpedienteModal } from "@/components/ui/expediente-modal";
 import type { GenealogiaVersionesResult, NodoGenealogiaVersion } from "@/types/database";

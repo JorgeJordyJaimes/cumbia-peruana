@@ -8,16 +8,16 @@
 > - ¿Qué restricciones arquitectónicas rigen el desarrollo y cómo se verifican para evitar regresiones?
 > **Fuente principal de:** Capas de software, componentes de `src/`, pipeline Canvas WebP, flujos de secuencia e invariantes técnicas de código.
 > **No contiene (ver):**
-> - Diccionario de tablas, campos y relaciones de base de datos → [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
-> - Contratos de funciones RPC y JSON-LD → [interfaces.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/interfaces.md)
-> - Decisiones de diseño y ADRs → [decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md)
-> - Guía de instalación y entorno local → [instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md)
+> - Diccionario de tablas, campos y relaciones de base de datos → [modelo-de-datos.md](./modelo-de-datos.md)
+> - Contratos de funciones RPC y JSON-LD → [interfaces.md](./interfaces.md)
+> - Decisiones de diseño y ADRs → [decisiones.md](./decisiones.md)
+> - Guía de instalación y entorno local → [instalacion-y-entorno.md](../05-entorno-y-operacion/instalacion-y-entorno.md)
 > **Depende de:**
-> - [glosario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/glosario.md)
-> - [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
+> - [glosario.md](../01-proyecto/glosario.md)
+> - [dominio.md](../01-proyecto/dominio.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
 > **Entregar a otra IA para:** Evaluar refactorizaciones arquitectónicas, auditar capas de Server vs. Client Components, revisar dependencias circulares o implementar nuevos módulos en `src/features/`.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -44,7 +44,7 @@ flowchart TD
         PostgREST["Motor PostgREST\n(Filtros HTTP REST, RLS, Grants para anon y authenticated)"]
         RelationalTables["Tablas Relacionales Fonográficas\n(Albumes, Temas, Albumes_Temas, Mosaicos_Temas)"]
         RPC["Funciones Almacenadas SQL (RPC)\n(get_arbol_genealogico, get_genealogia_versiones)"]
-        Storage["Bucket de Almacenamiento Supabase\n(portadas / solo archivos image/webp)"]
+        Storage["Bucket de Almacenamiento Supabase\n(media / solo archivos image/webp)"]
     end
 
     UI -->|"Consultas interactivas cliente"| BrowserSupabase
@@ -66,7 +66,7 @@ flowchart LR
     Client["Navegador Cliente\n(Desktop / Móvil)"]
     Vercel["Vercel Edge Network\n(CDN + Next.js 16 SSR/RSC)"]
     SupabaseDB["Supabase Managed PostgreSQL\n(AWS / PostgREST Engine)"]
-    SupabaseS3["Supabase Storage S3-compatible\n(Bucket: portadas)"]
+    SupabaseS3["Supabase Storage S3-compatible\n(Bucket: media)"]
 
     Client -->|"HTTPS / HTTP2 (HTML, CSS, JS, WebP)"| Vercel
     Vercel -->|"TLS Pooling (Transacciones SQL / PostgREST)"| SupabaseDB
@@ -80,13 +80,13 @@ flowchart LR
 
 | Capa / Tecnología | Versión Verificada | Justificación Técnica | Enlace a Decisión |
 | :--- | :--- | :--- | :--- |
-| **Next.js (App Router)** | `16.3.5` | Renderizado híbrido RSC + SSR para indexación SEO patrimonial masiva sin coste de cliente; optimización Turbopack. | [DEC-005](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-005) |
-| **React** | `19.2.8` | Soporte nativo para Server Actions, transiciones concurrentes y streaming de HTML con `Suspense`. | [DEC-005](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-005) |
-| **Tailwind CSS** | `^4.0.0` | Arquitectura de estilos CSS sin JavaScript en tiempo de ejecución, variables CSS nativas y renderizado ultrarrápido para diseño neo-brutalista. | [sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md) |
-| **TypeScript** | `^5` | Tipado estricto de entidades fonográficas derivadas de la base de datos para prevenir inconsistencias de catálogo. | [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md#rnf-005) |
-| **Supabase SSR** | `@supabase/ssr` `^0.5.2` | Manejo seguro de sesiones y cookies tanto en Server Components como en Client Components sin fugas de credenciales. | [seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md) |
-| **PostgreSQL (Supabase)** | `15+` | Integridad referencial con restricciones `CHECK`, disparadores de negocio y funciones PL/pgSQL recursivas para grafos. | [DEC-001](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-001), [DEC-003](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-003) |
-| **HTML5 Canvas API** | Nativo del navegador | Pipeline cliente de compresión WebP sin dependencias pesadas en Node.js (Sharp/Jimp) ni costos de cómputo en Vercel. | [DEC-004](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-004) |
+| **Next.js (App Router)** | `16.3.5` | Renderizado híbrido RSC + SSR para indexación SEO patrimonial masiva sin coste de cliente; optimización Turbopack. | [DEC-005](./decisiones.md#dec-005) |
+| **React** | `19.2.8` | Soporte nativo para Server Actions, transiciones concurrentes y streaming de HTML con `Suspense`. | [DEC-005](./decisiones.md#dec-005) |
+| **Tailwind CSS** | `^4.0.0` | Arquitectura de estilos CSS sin JavaScript en tiempo de ejecución, variables CSS nativas y renderizado ultrarrápido para diseño neo-brutalista. | [sistema-visual.md](../04-diseno/sistema-visual.md) |
+| **TypeScript** | `^5` | Tipado estricto de entidades fonográficas derivadas de la base de datos para prevenir inconsistencias de catálogo. | [requisitos.md](../02-requisitos/requisitos.md#rnf-005) |
+| **Supabase SSR** | `@supabase/ssr` `^0.5.2` | Manejo seguro de sesiones y cookies tanto en Server Components como en Client Components sin fugas de credenciales. | [seguridad-y-datos.md](../06-calidad/seguridad-y-datos.md) |
+| **PostgreSQL (Supabase)** | `15+` | Integridad referencial con restricciones `CHECK`, disparadores de negocio y funciones PL/pgSQL recursivas para grafos. | [DEC-001](./decisiones.md#dec-001), [DEC-003](./decisiones.md#dec-003) |
+| **HTML5 Canvas API** | Nativo del navegador | Pipeline cliente de compresión WebP sin dependencias pesadas en Node.js (Sharp/Jimp) ni costos de cómputo en Vercel. | [DEC-004](./decisiones.md#dec-004) |
 
 ---
 
@@ -94,13 +94,28 @@ flowchart LR
 
 | Componente / Módulo | Responsabilidad Principal | Depende de | Prohibido que dependa de | Ruta en el Código |
 | :--- | :--- | :--- | :--- | :--- |
-| **App Shell & Layout** | Estructura común, metadatos raíz, navbar brutalista y footer institucional. | `src/lib/utils.ts`, `globals.css` | Supabase Client directo (debe mantenerse agnóstico de sesión). | [`src/app/layout.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/layout.tsx) |
-| **Módulo Álbumes** | Vistas de detalle de LP/Single, tracklist de surcos A/B, visualizador de galletas y créditos. | `src/features/temas`, `@supabase/ssr` server | Componentes interactivos de DJ (`match-bpm`). | [`src/app/album/`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/album), [`src/features/albumes`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/albumes) |
-| **Módulo Match BPM** | Motor interactivo de mezcla armónica, rueda Camelot y filtrado de temas compatibles. | `src/features/camelot`, `src/types/domain.ts` | Lógica de mutación o escritura en base de datos. | [`src/app/match-bpm/`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/match-bpm), [`src/features/camelot`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/camelot) |
-| **Módulo Genealogía** | Renderizado del árbol de sesionistas, fundaciones y versiones recursivas mediante RPC. | `src/features/genealogia/services`, Supabase RPC | Manipulación directa del DOM o canvas externo. | [`src/app/genealogia/`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/genealogia), [`src/features/genealogia`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/genealogia) |
-| **Pipeline Storage** | Componente visual `ImageUploader` para redimensionar, comprimir a WebP y cargar a Supabase. | HTML5 Canvas API, `@supabase/ssr` browser | Librerías pesadas de Node.js o procesamiento en SSR. | [`src/features/storage/components/image-uploader.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/storage/components/image-uploader.tsx) |
-| **Panel Admin** | Interfaz de edición fonográfica para grupos, álbumes y pistas con protección de ruta. | `@supabase/ssr` browser, `src/features/storage` | Inyección de datos sin validar o scripts externos. | [`src/app/admin/`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin) |
-| **Generador SEO** | Inyección de schemas `MusicAlbum`, `MusicRecording` y `MusicGroup` en formato JSON-LD. | `src/types/domain.ts` | Estado de cliente o componentes con directiva `'use client'`. | [`src/components/seo/`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/components/seo) |
+| **App Shell & Layout** | Estructura común, metadatos raíz, navbar brutalista y footer institucional. | `src/lib/utils.ts`, `globals.css` | Supabase Client directo (debe mantenerse agnóstico de sesión). | [`src/app/layout.tsx`](../../src/app/layout.tsx) |
+| **Módulo Álbumes** | Vistas de detalle de LP/Single, tracklist de surcos A/B, visualizador de galletas y créditos. | `src/features/temas`, `@supabase/ssr` server | Componentes interactivos de DJ (`match-bpm`). | [`src/app/album/`](../../src/app/album), [`src/features/albumes`](../../src/features/albumes) |
+| **Módulo Match BPM** | Motor interactivo de mezcla armónica, rueda Camelot y filtrado de temas compatibles. | `src/features/dj-tools`, `src/types/domain.ts` | Lógica de mutación o escritura en base de datos. | [`src/app/match-bpm/`](../../src/app/match-bpm), [`src/features/dj-tools`](../../src/features/dj-tools) |
+| **Módulo Genealogía** | Renderizado del árbol de sesionistas, fundaciones y versiones recursivas mediante RPC. | `src/features/genealogia/services`, Supabase RPC | Manipulación directa del DOM o canvas externo. | [`src/app/genealogia/`](../../src/app/genealogia), [`src/features/genealogia`](../../src/features/genealogia) |
+| **Pipeline Storage** | Componente visual `ImageUploader` para redimensionar, comprimir a WebP y cargar a Supabase. | HTML5 Canvas API, `@supabase/ssr` browser | Librerías pesadas de Node.js o procesamiento en SSR. | [`src/features/storage/components/image-uploader.tsx`](../../src/features/storage/components/image-uploader.tsx) |
+| **Panel Admin** | Interfaz de edición fonográfica para grupos, álbumes y pistas con protección de ruta. | `@supabase/ssr` browser, `src/features/storage` | Inyección de datos sin validar o scripts externos. | [`src/app/admin/`](../../src/app/admin) |
+| **Generador SEO** | Inyección de schemas `MusicAlbum`, `MusicRecording` y `MusicGroup` en formato JSON-LD. | `src/types/domain.ts` | Estado de cliente o componentes con directiva `'use client'`. | [`src/components/seo/`](../../src/components/seo) |
+
+### 3.1 Servicios de lectura compartidos
+
+Para evitar que la portada y las subpáginas dupliquen consultas y mapeos, la aplicación centraliza las lecturas en servicios de servidor:
+
+| Servicio | Responsabilidad |
+| :--- | :--- |
+| `src/features/albumes/services/catalog.server.ts` | Consulta y mapeo único de álbumes, temas, surcos, géneros y `tracksMap`. Usado por `/` y `/vinilos`. |
+| `src/features/blog/services/blog.server.ts` | Artículos publicados y detalle por slug. Usado por `/`, `/blog` y `/blog/[slug]`. |
+| `src/features/informes/services/informes.server.ts` | Informe editorial publicado de un músico. Se combina con `get_arbol_genealogico`. |
+| `src/features/radar/services/radar.server.ts` | Hallazgo actual, historial y borrador editorial del Radar. |
+| `src/features/legajo/services/legajo.server.ts` | Bloques institucionales editables del Legajo. |
+| `src/lib/auth/admin.ts` | Guardia única `requireAdmin()` y correo autorizado vía `ADMIN_EMAIL`. |
+
+Todos usan `React.cache()` cuando aplica y degradan a un estado vacío explícito si una tabla editorial no está disponible.
 
 ---
 
@@ -143,7 +158,7 @@ sequenceDiagram
     participant Input as ImageUploader (Input File)
     participant Canvas as HTML5 Canvas en Memoria
     participant Client as Supabase Client Browser
-    participant Bucket as Supabase Storage Bucket ("portadas")
+    participant Bucket as Supabase Storage Bucket ("media")
 
     Admin->>Input: Selecciona imagen local (ej. portada_original.jpg, 12 MB)
     activate Input
@@ -155,9 +170,9 @@ sequenceDiagram
     Canvas->>Canvas: Ejecuta canvas.toBlob('image/webp', 0.90)
     Canvas-->>Input: Retorna Blob binario WebP optimizado (~180 KB)
     deactivate Canvas
-    Input->>Client: supabase.storage.from('portadas').upload(nombre_unico.webp, blob)
+    Input->>Client: supabase.storage.from('media').upload(nombre_unico.webp, blob)
     activate Client
-    Client->>Bucket: HTTP POST /storage/v1/object/portadas (MIME: image/webp)
+    Client->>Bucket: HTTP POST /storage/v1/object/media (MIME: image/webp)
     activate Bucket
     Bucket->>Bucket: Verifica política RLS y MIME estricto (image/webp)
     Bucket-->>Client: 201 Created (Key guardada)
@@ -201,7 +216,7 @@ sequenceDiagram
 La siguiente estructura refleja fielmente el árbol de directorios del proyecto en el commit `04ef58c`:
 
 ```text
-cumbia-peruana/
+kumbia-sound/
 ├── docs/                               # Sistema documental estricto (v1.0)
 │   ├── _sistema/                       # Metadocumentación e instrucciones maestras
 │   ├── 01-proyecto/                    # Glosario, presentación y dominio fonográfico
@@ -277,7 +292,7 @@ cumbia-peruana/
 
 | Tipo de Dato | Dónde Vive | Formato / Motor | Versión / Estrategia | Política de Respaldo |
 | :--- | :--- | :--- | :--- | :--- |
-| **Metadatos Fonográficos** | Supabase Cloud | Tablas relacionales PostgreSQL | Esquema estructural v1.0 ([estructural.sql](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/sql-referencia/estructural.sql)) | Copias diarias automáticas en Supabase y volcados DDL en git. |
+| **Metadatos Fonográficos** | Supabase Cloud | Tablas relacionales PostgreSQL | Esquema estructural v1.0 ([estructural.sql](../sql-referencia/estructural.sql)) | Copias diarias automáticas en Supabase y volcados DDL en git. |
 | **Arte Gráfico (Portadas)** | Supabase Storage | Archivos binarios `image/webp` | Compresión local (calidad 0.90, máx 1600 px) | Almacenamiento distribuido S3 con versionado de archivos. |
 | **Caché de Renderizado** | Vercel Edge / Node | Memoria de servidor RSC | Next.js Data Cache con revalidación bajo demanda | Volátil; se reconstituye automáticamente desde PostgreSQL. |
 | **Sesión Administrativa** | Navegador (Cookies) | JWT seguro (HttpOnly, Secure) | Supabase Auth sesión PKCE | Gestionada por tokens de refresco en Supabase Auth. |
@@ -310,10 +325,10 @@ cumbia-peruana/
 
 Todo cambio o extensión en el código debe acatar de manera estricta las siguientes reglas:
 
-1. **Restricción de Soporte Físico:** Ninguna consulta, mutación o interfaz admitirá lados distintos a `'A'` o `'B'` para discos de vinilo (`INV-001`, [DEC-001](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-001)).
-2. **Formato Exclusivo Multimedia:** Ninguna imagen puede ser subida al storage si su formato no es `image/webp` sanitizado ([DEC-004](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-004)).
-3. **Cero Dependencias de Audio Ilegal:** Queda terminantemente prohibido almacenar archivos de audio comercial (`.mp3`, `.wav`, `.flac`) en el servidor o en Supabase Storage (`INV-005`).
-4. **Separación de Lados y Mosaicos:** Todo surco continuo que contenga más de una composición debe modelarse como `es_mosaico = TRUE` y desglosarse en `Mosaicos_Temas` (`INV-002`, [DEC-002](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-002)).
+1. **Restricción de Soporte Físico:** Ninguna consulta, mutación o interfaz admitirá lados distintos a `'A'` o `'B'` para discos de vinilo (`INV-001`, [DEC-001](./decisiones.md#dec-001)).
+2. **Formato Exclusivo Multimedia:** Ninguna imagen puede ser subida al storage si su formato no es `image/webp` sanitizado ([DEC-004](./decisiones.md#dec-004)).
+3. **Cero Dependencias de Audio Ilegal:** Queda terminantemente prohibido almacenar archivos de audio comercial (`.mp3`, `.wav`, `.flac`) en el servidor o en Supabase Storage (`INV-011`, `DEC-006`).
+4. **Separación de Lados y Mosaicos:** Todo surco continuo que contenga más de una composición debe modelarse como `es_mosaico = TRUE` y desglosarse en `Mosaicos_Temas` (`INV-002`, [DEC-002](./decisiones.md#dec-002)).
 5. **Aislamiento de Clientes Supabase:** Los Server Components (`RSC`) deben utilizar exclusivamente el cliente de `src/lib/supabase/server.ts`; los Client Components deben utilizar exclusivamente `src/lib/supabase/client.ts`.
 
 ---

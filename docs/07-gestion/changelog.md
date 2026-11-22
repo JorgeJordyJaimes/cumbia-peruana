@@ -7,13 +7,40 @@
 > - ¿Cuándo se realizaron las optimizaciones de rendimiento y migraciones de esquema?
 > **Fuente principal de:** Bitácora histórica de lanzamientos y evolución del código.
 > **No contiene (ver):**
-> - Planes a futuro y tareas pendientes → [roadmap.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/roadmap.md)
-> - Registro de deudas y defectos abiertos → [problemas-conocidos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/problemas-conocidos.md)
+> - Planes a futuro y tareas pendientes → [roadmap.md](./roadmap.md)
+> - Registro de deudas y defectos abiertos → [problemas-conocidos.md](./problemas-conocidos.md)
 > **Depende de:**
-> - [decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md)
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
+> - [decisiones.md](../03-arquitectura/decisiones.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
 > **Entregar a otra IA para:** Generar notas de release, auditar cuándo se introdujo una regresión o revisar la evolución histórica del software.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
+
+---
+
+## [1.3.0] - 2026-11-22 (Endurecimiento de seguridad, servicios compartidos y limpieza de mocks)
+
+### Añadido
+- **Servicio único de catálogo** `src/features/albumes/services/catalog.server.ts`: centraliza consultas, mapeo de álbumes, `tracksMap` y conteo de géneros para `/` y `/vinilos`.
+- **Servicios de lectura editorial** para blog, informes, radar y legajo, con degradación explícita si una tabla no está disponible.
+- **Guardia única `requireAdmin()`** en `src/lib/auth/admin.ts`, usada por `/admin`, `/admin/grupo/[id]` y `/admin/persona/[id]`.
+- **Migración `20261122000000_admin_rls_hardening.sql`:** función `public.is_admin()` y RLS restringida al administrador real en catálogo, CMS y Storage.
+- **Migración `20261122000001_domain_constraints_and_voice_normalization.sql`:** CHECK de Lados A/B en splits, CHECK Camelot, rangos de BPM/duración, normalización de voz y trigger de `credito_como`.
+- **Documento [estado-actual.md](estado-actual.md):** instantánea única de métricas reales y estado del esquema.
+
+### Cambiado
+- La portada lee las crónicas reales de `articulos` y el buscador `⌘K` consulta el catálogo real (álbumes, temas, personas y artículos), sin dataset mock.
+- `/radar` y `/legajo` leen de `radar_hallazgos` y `legajo_bloques`; los editores de Radar y Legajo del admin ahora persisten y reportan errores reales.
+- `/informes/[id]` muestra el informe editorial publicado de `informes_personas` y usa su sello de verificación.
+- `match-bpm` ya no cae a datos mock si no hay pistas.
+- Los botones públicos de `PANEL [SYS]` y `[PANEL ADMIN]` abren `/admin` en una pestaña nueva.
+- El placeholder del correo administrativo es genérico (`correo@ejemplo.com`).
+- La ingesta completa se detiene si ya existen álbumes, salvo `--reset` o `--append`.
+- La documentación referencia el bucket real `media` y la invariante de audio `INV-011`.
+
+### Corregido
+- Errores de ESLint de React 19 (`set-state-in-effect`), `any` explícito y comentarios JSX.
+- Dependencias de hooks y advertencias de imports sin uso.
+- Tipos de `radar_hallazgos` y `legajo_bloques` alineados con el DDL real.
 
 ---
 
@@ -30,7 +57,7 @@
 - **Mejoras al gestor de Notas (`AdminBlogManager`):** Categorías canónicas editoriales y cálculo automático de minutos de lectura.
 
 ### Cambiado
-- Actualización de [`panel-admin.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/panel-admin.md) con la arquitectura completa de 4 pestañas y flujos editoriales.
+- Actualización de [`panel-admin.md`](../04-diseno/panel-admin.md) con la arquitectura completa de 4 pestañas y flujos editoriales.
 
 ---
 
@@ -46,7 +73,7 @@
 - Rediseño de la cabecera en **dos niveles editoriales** (`BrutalistNavbar`) para garantizar contención geométrica y eliminar el desbordamiento horizontal en todas las resoluciones.
 
 ### Cambiado
-- Actualización integral de [`pantallas.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/pantallas.md) reflejando el nuevo mapa canónico de navegación de 7 expedientes.
+- Actualización integral de [`pantallas.md`](../04-diseno/pantallas.md) reflejando el nuevo mapa canónico de navegación de 7 expedientes.
 - Aislamiento completo del panel `/admin` eliminando accesos públicos en Home, TopBar y Footer.
 
 ---
@@ -55,14 +82,14 @@
 
 ### Añadido
 - Implementación integral del sistema documental estándar v1.0 en `docs/` con carpetas normalizadas (`01-proyecto`, `02-requisitos`, `03-arquitectura`, `04-diseno`, `05-entorno-y-operacion`, `06-calidad`, `07-gestion`).
-- Redacción de [`glosario.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/glosario.md) con definiciones canónicas fonográficas, musicológicas y acústicas.
-- Redacción de [`dominio.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md) formalizando invariantes `INV-001` a `INV-010`.
-- Especificación formal de requisitos `RF-001` a `RF-010`, `RNF-001` a `RNF-006` y `RN-001` a `RN-004` en [`requisitos.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md).
-- Documentación de casos de uso `UC-001` a `UC-004` en [`flujos-de-usuario.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/flujos-de-usuario.md).
-- Creación de [`AGENTS.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/AGENTS.md) en la raíz como fuente de verdad operacional para asistentes de IA.
+- Redacción de [`glosario.md`](../01-proyecto/glosario.md) con definiciones canónicas fonográficas, musicológicas y acústicas.
+- Redacción de [`dominio.md`](../01-proyecto/dominio.md) formalizando invariantes `INV-001` a `INV-010`.
+- Especificación formal de requisitos `RF-001` a `RF-010`, `RNF-001` a `RNF-006` y `RN-001` a `RN-004` en [`requisitos.md`](../02-requisitos/requisitos.md).
+- Documentación de casos de uso `UC-001` a `UC-004` en [`flujos-de-usuario.md`](../02-requisitos/flujos-de-usuario.md).
+- Creación de [`AGENTS.md`](../../AGENTS.md) en la raíz como fuente de verdad operacional para asistentes de IA.
 
 ### Cambiado
-- Consolidación de decisiones arquitectónicas previas (`ADR-001` a `ADR-005`) en [`decisiones.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md) (`DEC-001` a `DEC-007`).
+- Consolidación de decisiones arquitectónicas previas (`ADR-001` a `ADR-005`) en [`decisiones.md`](../03-arquitectura/decisiones.md) (`DEC-001` a `DEC-007`).
 - Migración y depuración de directorios desestructurados antiguos (`docs/01-gobernanza...`, `docs/02-arquitectura...`, etc.).
 
 ---
@@ -88,7 +115,7 @@
 ## [0.3.0] - 2026-10-13 (Optimización de Rendimiento Frontend)
 
 ### Añadido
-- Adopción de directrices Vercel React Best Practices ([DEC-005](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-005)):
+- Adopción de directrices Vercel React Best Practices ([DEC-005](../03-arquitectura/decisiones.md#dec-005)):
   - Paralelización de consultas independientes en Server Components mediante `Promise.all`.
   - Deduplicación de peticiones por solicitud HTTP con `React.cache()`.
   - Carga diferida (`next/dynamic`) de modales interactivos para reducir el bundle JS inicial en 45 KB.
@@ -98,10 +125,10 @@
 ## [0.2.0] - 2026-10-07 (Modelo Fonográfico Avanzado y Pipeline WebP)
 
 ### Añadido
-- Creación de la tabla `Mosaicos_Temas` ([DEC-002](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-002)) para catalogación granular de popurrís en vinilo.
-- Procedimientos almacenados en PostgreSQL: `get_arbol_genealogico` y `get_genealogia_versiones` con recursión CTE ([DEC-003](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-003)).
-- Restricción DDL `chk_albumes_temas_lados_ab` forzando exclusivamente Lados A y B ([DEC-001](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-001)).
-- Componente `ImageUploader` con conversión en cliente a WebP mediante HTML5 Canvas API ([DEC-004](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md#dec-004)).
+- Creación de la tabla `Mosaicos_Temas` ([DEC-002](../03-arquitectura/decisiones.md#dec-002)) para catalogación granular de popurrís en vinilo.
+- Procedimientos almacenados en PostgreSQL: `get_arbol_genealogico` y `get_genealogia_versiones` con recursión CTE ([DEC-003](../03-arquitectura/decisiones.md#dec-003)).
+- Restricción DDL `chk_albumes_temas_lados_ab` forzando exclusivamente Lados A y B ([DEC-001](../03-arquitectura/decisiones.md#dec-001)).
+- Componente `ImageUploader` con conversión en cliente a WebP mediante HTML5 Canvas API ([DEC-004](../03-arquitectura/decisiones.md#dec-004)).
 
 ---
 

@@ -9,14 +9,14 @@
 > - ¿Cuáles son las decisiones explícitas de "no hacer algo" en el sistema?
 > **Fuente principal de:** Registro de decisiones de arquitectura `DEC-001` a `DEC-007`.
 > **No contiene (ver):**
-> - Estructura física actual de tablas → [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
-> - Capas de software y dependencias → [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
-> - Reglas de dominio inmutables → [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
+> - Estructura física actual de tablas → [modelo-de-datos.md](./modelo-de-datos.md)
+> - Capas de software y dependencias → [arquitectura.md](./arquitectura.md)
+> - Reglas de dominio inmutables → [dominio.md](../01-proyecto/dominio.md)
 > **Depende de:**
-> - [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
+> - [dominio.md](../01-proyecto/dominio.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
 > **Entregar a otra IA para:** Evaluar el impacto de cambios mayores, evitar reincidir en alternativas descartadas o auditar la consistencia del sistema frente a su visión original.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -47,7 +47,7 @@
   2. *Imponer restricción CHECK estricta a nivel DDL (`lado IN ('A', 'B')`):* Ventaja: blindaje absoluto del modelo fonográfico contra inconsistencias. Desventaja: no admite vinilos dobles de otros géneros (irrelevante para el alcance de este proyecto).
 * **Decisión:** Imponer la restricción `CHECK (lado IS NULL OR lado IN ('A', 'B'))` en `Albumes_Temas` y `Albumes_Grupos_Lados`. Prohibir que la lógica admita Lados C o D (`INV-001`).
 * **Consecuencias:** Garantiza que el 100 % de las fichas de vinilo y casete reflejen la realidad mecánica del prensaje peruano.
-* **Documentos Afectados:** [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md), [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md).
+* **Documentos Afectados:** [dominio.md](../01-proyecto/dominio.md), [modelo-de-datos.md](./modelo-de-datos.md).
 
 ---
 
@@ -63,7 +63,7 @@
   3. *Arquitectura desacoplada: bandera booleana `es_mosaico` en `Albumes_Temas` + tabla hija `Mosaicos_Temas`:* Seleccionada.
 * **Decisión:** Registrar el surco físico en `Albumes_Temas` con `es_mosaico = TRUE` y desglosar cada canción en `Mosaicos_Temas` vinculada a su respectivo `id_tema` canónico (`INV-002`).
 * **Consecuencias:** Se preserva la exactitud del surco físico y simultáneamente se mantiene la trazabilidad autoral individual y la conexión con el árbol genealógico.
-* **Documentos Afectados:** [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md), [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md).
+* **Documentos Afectados:** [dominio.md](../01-proyecto/dominio.md), [modelo-de-datos.md](./modelo-de-datos.md).
 
 ---
 
@@ -79,7 +79,7 @@
   3. *Procedimientos almacenados en PostgreSQL (`get_arbol_genealogico`, `get_genealogia_versiones` con `WITH RECURSIVE`):* Seleccionada.
 * **Decisión:** Implementar dos funciones RPC en PostgreSQL con retorno en formato JSON estructurado y protección de ciclo con arrays de camino `NOT (v.id_tema = ANY(av.camino))`.
 * **Consecuencias:** Reducción del tiempo de respuesta del modal genealógico de ~3,200 ms a < 150 ms en un único viaje de red.
-* **Documentos Afectados:** [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md), [interfaces.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/interfaces.md).
+* **Documentos Afectados:** [arquitectura.md](./arquitectura.md), [interfaces.md](./interfaces.md).
 
 ---
 
@@ -95,7 +95,7 @@
   3. *Compresión en navegador con HTML5 Canvas API en `ImageUploader`:* Seleccionada.
 * **Decisión:** Interceptar cualquier archivo de imagen en el cliente, redimensionar proporcionalmente a un máximo de 1600 px y exportar como Blob `image/webp` con factor de calidad 0.90 antes de transmitir por red.
 * **Consecuencias:** Carga instantánea, reducción de peso de ~90 %, cero costo de cómputo en backend y 100 % de cumplimiento de la política del bucket.
-* **Documentos Afectados:** [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md), [seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md).
+* **Documentos Afectados:** [arquitectura.md](./arquitectura.md), [seguridad-y-datos.md](../06-calidad/seguridad-y-datos.md).
 
 ---
 
@@ -110,7 +110,7 @@
   2. *Adopción estricta de Vercel React Best Practices (`Promise.all`, `React.cache()`, importaciones dinámicas `next/dynamic`):* Seleccionada.
 * **Decisión:** Envolver todas las lecturas por clave en `React.cache()`, paralelizar consultas independientes en Server Components mediante `Promise.all` y diferir la carga de modales interactivos con `dynamic()`.
 * **Consecuencias:** Eliminación total de consultas duplicadas en el servidor y reducción de 45 KB en el bundle JavaScript inicial de la portada.
-* **Documentos Afectados:** [rendimiento.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/rendimiento.md), [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md).
+* **Documentos Afectados:** [rendimiento.md](../06-calidad/rendimiento.md), [arquitectura.md](./arquitectura.md).
 
 ---
 
@@ -120,9 +120,9 @@
 * **Estado de Implementación:** `IMPLEMENTADO`
 * **Quién decidió:** Propietario del proyecto (Principio fundacional inmutable).
 * **Contexto:** El proyecto tiene naturaleza de investigación histórica y archivo patrimonial. Alojar archivos de audio digitalizados vulneraría los derechos conexos de fonogramas de casas discográficas peruanas (Infopesa, IEMPSA, Horóscopo) y expondría el proyecto a reclamaciones por infracción de propiedad intelectual.
-* **Decisión:** Se prohíbe terminantemente almacenar o reproducir archivos binarios de audio (`.mp3`, `.wav`, `.flac`) en el sistema. Kumbia Sound preserva únicamente metadatos técnicos (BPM, Camelot, duración, sesionistas) y enlaza opcionalmente a canales oficiales del autor en YouTube o Spotify (`INV-005`).
+* **Decisión:** Se prohíbe terminantemente almacenar o reproducir archivos binarios de audio (`.mp3`, `.wav`, `.flac`) en el sistema. Kumbia Sound preserva únicamente metadatos técnicos (BPM, Camelot, duración, sesionistas) y enlaza opcionalmente a canales oficiales del autor en YouTube o Spotify (`INV-011`, `DEC-006`).
 * **Consecuencias:** Inmunidad legal frente a demandas de derechos de reproducción fonográfica y costo cero de ancho de banda multimedia.
-* **Documentos Afectados:** [presentacion.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/presentacion.md), [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md).
+* **Documentos Afectados:** [presentacion.md](../01-proyecto/presentacion.md), [dominio.md](../01-proyecto/dominio.md).
 
 ---
 
@@ -134,7 +134,7 @@
 * **Contexto:** Evaluar si convenía levantar un microservicio en Docker o utilizar dependencias binarias en Node.js (Sharp, ImageMagick) para recortar y comprimir portadas.
 * **Decisión:** Descartar de plano servidores auxiliares o dependencias C++ en backend. El navegador del catalogador asume el 100 % del procesamiento mediante Canvas API.
 * **Consecuencias:** Infraestructura estática ultraligera, sin costos de VPS ni problemas de compilación multiplataforma entre Windows y Linux.
-* **Documentos Afectados:** [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md), [instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md).
+* **Documentos Afectados:** [arquitectura.md](./arquitectura.md), [instalacion-y-entorno.md](../05-entorno-y-operacion/instalacion-y-entorno.md).
 
 ---
 

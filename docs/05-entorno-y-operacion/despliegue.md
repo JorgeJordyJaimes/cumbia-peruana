@@ -8,14 +8,14 @@
 > - ¿Cómo se ejecuta una reversión rápida (rollback) si un despliegue presenta errores críticos?
 > **Fuente principal de:** Pipeline de CI/CD en Vercel, variables de entorno de producción, monitoreo y protocolo de recuperación ante desastres.
 > **No contiene (ver):**
-> - Instalación y configuración en máquina local → [instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md)
-> - Reglas de control de versiones y ramas de Git → [git.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/git.md)
-> - Políticas de seguridad RLS y permisos → [seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md)
+> - Instalación y configuración en máquina local → [instalacion-y-entorno.md](./instalacion-y-entorno.md)
+> - Reglas de control de versiones y ramas de Git → [git.md](../07-gestion/git.md)
+> - Políticas de seguridad RLS y permisos → [seguridad-y-datos.md](../06-calidad/seguridad-y-datos.md)
 > **Depende de:**
-> - [instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md)
-> - [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
+> - [instalacion-y-entorno.md](./instalacion-y-entorno.md)
+> - [arquitectura.md](../03-arquitectura/arquitectura.md)
 > **Entregar a otra IA para:** Configurar pipelines de GitHub Actions, diagnosticar errores de despliegue en Vercel o auditar costos de infraestructura en la nube.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -26,7 +26,7 @@ flowchart LR
     GitHub["Repositorio GitHub\n(Rama main)"]
     Vercel["Vercel Edge Network\n(Next.js 16 RSC / SSR)\nBuilds automáticos con Turbopack"]
     SupabaseDB["Supabase Cloud\n(PostgreSQL 15+)\nPostgREST + RPC + Auth"]
-    SupabaseStorage["Supabase Storage\n(Bucket: portadas)\nEntrega WebP vía CDN"]
+    SupabaseStorage["Supabase Storage\n(Bucket: media)\nEntrega WebP vía CDN"]
 
     GitHub -->|"Push a main (Webhook)"| Vercel
     Vercel -->|"Lectura pública / SSR"| SupabaseDB
@@ -47,6 +47,11 @@ En el panel de configuración de Vercel (*Project Settings -> Environment Variab
 
 > [!NOTE]
 > La variable `SUPABASE_ACCESS_TOKEN` **NO** se configura en Vercel. Solo se utiliza en la máquina local del administrador para ejecutar el script de catalogación e ingesta `npm run db:poblar`.
+>
+> `ADMIN_EMAIL` es una variable de servidor recomendada. Si no se define, el código usa el correo propietario histórico como fallback. No debe coincidir con el placeholder público del formulario.
+
+> [!IMPORTANT]
+> Antes de exponer producción, deshabilitar el registro público en Supabase Auth y aplicar la migración `20261122000000_admin_rls_hardening.sql`. Sin esos dos pasos, cualquier cuenta creada podría intentar mutar el catálogo.
 
 ---
 

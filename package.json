@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run build",
     "db:poblar": "node scripts/poblar-db.mjs",
-    "skills:install": "skills experimental_install",
-    "skills:list": "skills list"
+    "skills:install": "npx skills experimental_install",
+    "skills:list": "node scripts/list-skills.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

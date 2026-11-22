@@ -8,15 +8,15 @@
 > - ¿Cuál es el volumen actual de registros frente a la escala objetivo del archivo patrimonial?
 > **Fuente principal de:** Esquema relacional PostgreSQL, diccionario de campos, restricciones DDL, triggers de catálogo y correspondencias de ingestión.
 > **No contiene (ver):**
-> - Invariantes y reglas históricas del dominio → [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
-> - Capas de software y clientes Next.js → [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
-> - Firmas y ejemplos de ejecución de RPCs → [interfaces.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/interfaces.md)
-> - Historial de decisiones de esquema (Lado A/B, Mosaicos) → [decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md)
+> - Invariantes y reglas históricas del dominio → [dominio.md](../01-proyecto/dominio.md)
+> - Capas de software y clientes Next.js → [arquitectura.md](./arquitectura.md)
+> - Firmas y ejemplos de ejecución de RPCs → [interfaces.md](./interfaces.md)
+> - Historial de decisiones de esquema (Lado A/B, Mosaicos) → [decisiones.md](./decisiones.md)
 > **Depende de:**
-> - [glosario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/glosario.md)
-> - [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
+> - [glosario.md](../01-proyecto/glosario.md)
+> - [dominio.md](../01-proyecto/dominio.md)
 > **Entregar a otra IA para:** Diseñar scripts de migración DDL, escribir consultas analíticas SQL complejas, auditar integridad referencial o programar nuevos scripts de ingesta.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -77,7 +77,7 @@ Músicos de sesión, directores, compositores y cantantes del archivo fonográfi
 | `fecha_nacimiento` | `DATE` | No | `AAAA-MM-DD` | Fecha válida | Fecha de nacimiento para cronología patrimonial. |
 | `lugar_nacimiento` | `VARCHAR(100)` | No | Ciudad/Depto | Libre | Origen geográfico del músico. |
 | `biografia` | `TEXT` | No | Texto libre | Libre | Reseña biográfica documentada. |
-| `url_foto` | `VARCHAR(500)` | No | URL relativa WebP | Debe apuntar a bucket si existe | Retrato del artista (`portadas/personas/...`). |
+| `url_foto` | `VARCHAR(500)` | No | URL pública WebP | Debe apuntar al bucket `media` si existe | Retrato del artista (`media/personas/...`). |
 
 #### `Grupos`
 Orquestas, agrupaciones y conjuntos musicales.
@@ -230,7 +230,7 @@ Músicos de estudio que grabaron en la sesión física del tema.
 | `id_musico` | `INT` | Sí | Entero > 0 | `FK -> Personas(id_persona)` | Persona que ejecutó el instrumento o voz. |
 | `instrumento` | `VARCHAR(50)` | No | Texto | Libre | Denominación del instrumento (ej. "Voz", "Guitarra"). |
 | `id_rol` | `INT` | Sí | Entero > 0 | `FK -> Roles(id_rol)` | Rol canónico de la tabla `Roles` (`5` = Voz). |
-| `credito_como` | `VARCHAR(150)` | No | Texto | Libre | Seudónimo utilizado si grabó clandestinamente. |
+| `credito_como` | `VARCHAR(150)` | No | `NULL` obligatorio para `id_rol = 5` | `INV-008` | Crédito de voz: debe ser `NULL`; el alias de galleta pertenece al compositor en `Temas_Compositores.credito_como` y `Albumes_Temas.credito_galleta`. |
 
 #### `Versiones`
 Red genealógica de regrabaciones, reinterpretaciones y *covers*.
@@ -280,16 +280,21 @@ Red genealógica de regrabaciones, reinterpretaciones y *covers*.
 
 ## 5. Volumen y Escala del Sistema
 
-| Entidad | Registros Reales (Octubre 2026) | Escala Objetivo (Catálogo Integral) | Crecimiento Esperado |
-| :--- | :--- | :--- | :--- |
-| **Álbumes / Soportes** | 721 | 2,500 | +246 % (Ingesta de Los Destellos, Juaneco, Manzanita) |
-| **Obras Musicales (`Temas`)** | 109 | 8,000 | +7,200 % (Digitalización completa de repertorios) |
-| **Surcos Físicos (`Albumes_Temas`)**| 136 | 12,000 | +8,700 % (Reediciones, splits y recopilatorios) |
-| **Compositores Registrados** | 118 | 1,200 | +916 % (Autores peruanos y extranjeros adaptados) |
-| **Participaciones Vocales** | 101 | 3,500 | +3,365 % (Voz principal y coros de sesión) |
-| **Segmentos de Mosaico** | 13 | 450 | +3,360 % (Popurrís de fiesta de fin de año) |
-| **Géneros Musicales** | 22 | 35 | +59 % (Micro-vertientes regionales) |
-| **Roles Instrumentales** | 16 | 25 | +56 % (Instrumentos tradicionales y electrónicos) |
+| Entidad | Registros Reales (Noviembre 2026) | Escala Objetivo (Catálogo Integral) | Crecimiento Esperado |
+| :--- | ---: | ---: | :--- |
+| **Álbumes / Soportes** | 717 | 2,500 | +249 % (Ingesta de Los Destellos, Juaneco, Manzanita) |
+| **Obras Musicales (`Temas`)** | 278 | 8,000 | +2,778 % (Digitalización completa de repertorios) |
+| **Surcos Físicos (`Albumes_Temas`)** | 320 | 12,000 | +3,650 % (Reediciones, splits y recopilatorios) |
+| **Grupos** | 581 | 800 | +38 % |
+| **Personas** | 416 | 1,200 | +188 % |
+| **Sellos Discográficos** | 258 | 300 | +16 % |
+| **Créditos de Sesión (`Tema_Musicos`)** | 236 | 3,500 | +1,383 % |
+| **Segmentos de Mosaico** | 54 | 450 | +733 % |
+| **Géneros Musicales** | 31 | 35 | +13 % |
+| **Roles Instrumentales** | 16 | 25 | +56 % |
+| **Versiones registradas** | 0 | 1,500 | Pendiente de catalogación |
+
+> La instantánea operativa completa, incluida la cobertura de portadas y tracklists, vive en [../07-gestion/estado-actual.md](../07-gestion/estado-actual.md).
 
 ---
 

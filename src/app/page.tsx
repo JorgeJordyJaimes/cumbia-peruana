@@ -11,142 +11,26 @@ import {
   BrutalistStories,
   BrutalistFooter,
 } from "@/features/home-brutalism";
-import type { AlbumItem } from "@/features/albumes";
-import type { TrackItem } from "@/features/temas";
+import { getCatalogData } from "@/features/albumes/services/catalog.server";
+import { getPublishedArticles } from "@/features/blog/services/blog.server";
 import type { ConfiguracionHome } from "@/types/blog";
 import { JsonLd, buildMusicAlbumJsonLd } from "@/components/seo/json-ld";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-interface RawAlbumRow {
-  id_album: number;
-  nombre_album: string | null;
-  numero_catalogo: string | null;
-  año_publicacion: number | null;
-  url_portada: string | null;
-  url_contraportada: string | null;
-  es_recopilatorio: boolean | null;
-  es_varios_artistas: boolean | null;
-  es_disco_split: boolean | null;
-  es_reedicion: boolean | null;
-  incluido_en_lp: boolean | null;
-  extraido_de_lp: boolean | null;
-  solo_en_45: boolean | null;
-  lados_en_lp: string | null;
-  grupos: {
-    nombre_grupo: string;
-    personas: { nombre: string; apodo: string | null } | null;
-  } | null;
-  sellos_discograficos: { nombre_sello: string } | null;
-  tipos_album: { nombre_tipo: string } | null;
-}
-
-interface RawTemaRow {
-  id_tema: number;
-  titulo_tema: string;
-  duracion_segundos: number | null;
-  bpm: number | null;
-  camelot_code: string | null;
-  albumes_temas: Array<{
-    id_album: number;
-    numero_pista: number | null;
-    lado: string | null;
-    albumes: { nombre_album: string | null; año_publicacion: number | null } | null;
-  }> | null;
-  temas_grupos: Array<{
-    grupos: { nombre_grupo: string } | null;
-  }> | null;
-  temas_compositores: Array<{
-    credito_como?: string | null;
-    personas: { nombre: string; apodo: string | null } | null;
-  }> | null;
-  tema_musicos?: Array<{
-    instrumento: string | null;
-    credito_como: string | null;
-    roles: { nombre_rol: string } | null;
-    personas: { nombre: string; apodo: string | null } | null;
-  }> | null;
-  temas_generos?: Array<{
-    generos: { id_genero: number; nombre_genero: string } | null;
-  }> | null;
-}
-
 export default async function Home() {
   const supabase = await createClient();
 
   // Carga paralela sin cascadas (elimina waterfalls) según vercel-react-best-practices
-  const [
-    stats,
-    { data: rawAlbumes },
-    { data: rawTemas },
-    { data: rawHomeConfig },
-  ] = await Promise.all([
+  const [stats, catalog, { data: rawHomeConfig }, articles] = await Promise.all([
     getArchiveStats(),
-    supabase
-      .from("albumes")
-      .select(`
-        id_album,
-        nombre_album,
-        numero_catalogo,
-        año_publicacion,
-        url_portada,
-        url_contraportada,
-        es_recopilatorio,
-        es_varios_artistas,
-        es_disco_split,
-        es_reedicion,
-        incluido_en_lp,
-        extraido_de_lp,
-        solo_en_45,
-        lados_en_lp,
-        grupos (
-          nombre_grupo,
-          personas (nombre, apodo)
-        ),
-        sellos_discograficos (nombre_sello),
-        tipos_album (nombre_tipo)
-      `)
-      .order("año_publicacion", { ascending: true })
-      .limit(1000),
-    supabase
-      .from("temas")
-      .select(`
-        id_tema,
-        titulo_tema,
-        duracion_segundos,
-        bpm,
-        camelot_code,
-        albumes_temas (
-          id_album,
-          numero_pista,
-          lado,
-          albumes:albumes!albumes_temas_id_album_fkey (nombre_album, año_publicacion)
-        ),
-        temas_grupos (
-          grupos (nombre_grupo)
-        ),
-        temas_compositores (
-          credito_como,
-          personas (nombre, apodo)
-        ),
-        tema_musicos (
-          instrumento,
-          credito_como,
-          roles (nombre_rol),
-          personas (nombre, apodo)
-        ),
-        temas_generos (
-          generos (id_genero, nombre_genero)
-        )
-      `)
-      .limit(2500),
-    supabase
-      .from("configuracion_home")
-      .select("*")
-      .eq("id", 1)
-      .single(),
+    getCatalogData(),
+    supabase.from("configuracion_home").select("*").eq("id", 1).single(),
+    getPublishedArticles(3),
   ]);
+
+  const { albums, tracksMap, subgenreCounts } = catalog;
 
   const homeConfig: ConfiguracionHome = (rawHomeConfig as unknown as ConfiguracionHome) || {
     id: 1,
@@ -162,106 +46,6 @@ export default async function Home() {
     seccion_blog_activa: true,
     updated_at: new Date().toISOString(),
   };
-
-  // Mapear Álbumes
-  const rawAlbumsList = (rawAlbumes as unknown as RawAlbumRow[]) || [];
-  const albums: AlbumItem[] = rawAlbumsList.map((a) => ({
-    id: a.id_album,
-    title: a.nombre_album || "Sin Título Registrado",
-    artist: a.grupos?.nombre_grupo || "Varios Artistas",
-    directorName: a.grupos?.personas?.nombre || null,
-    year: a.año_publicacion,
-    catalogNumber: a.numero_catalogo,
-    label: a.sellos_discograficos?.nombre_sello || "Sello Particular",
-    format: a.tipos_album?.nombre_tipo === "45" ? "45" : a.tipos_album?.nombre_tipo || "LP",
-    coverUrl: a.url_portada,
-    backCoverUrl: a.url_contraportada,
-    isCompilation: a.es_recopilatorio ?? false,
-    isVariousArtists: a.es_varios_artistas ?? false,
-    isSplit: a.es_disco_split ?? false,
-    isReissue: a.es_reedicion ?? false,
-    includedInLp: a.incluido_en_lp ?? false,
-    extractedFromLp: a.extraido_de_lp ?? false,
-    onlyOn45: a.solo_en_45 ?? false,
-    sidesInLp: a.lados_en_lp ?? null,
-  }));
-
-  // Mapa de pistas por álbum para contraportadas
-  const rawTemasList = (rawTemas as unknown as RawTemaRow[]) || [];
-  const tracksMap: Record<number, TrackItem[]> = {};
-  rawTemasList.forEach((t) => {
-    // Autor real verificado
-    const realComposers = (t.temas_compositores || [])
-      .map((tc) => tc.personas?.nombre)
-      .filter(Boolean);
-    const composer = realComposers.length > 0 ? realComposers.join(", ") : null;
-
-    // Extraer vocalistas de tema_musicos
-    const vocalists = (t.tema_musicos || []).filter((tm) => {
-      const rol = tm.roles?.nombre_rol?.toLowerCase() || "";
-      const inst = tm.instrumento?.toLowerCase() || "";
-      return rol.includes("voz") || inst.includes("voz");
-    });
-    let vocalist = vocalists.map((v) => v.credito_como || v.personas?.nombre).filter(Boolean).join(", ");
-    const isInstrumental = (t.temas_generos || []).some(
-      (tg) => tg.generos?.nombre_genero?.toLowerCase() === "instrumental"
-    );
-    if (!vocalist && isInstrumental) {
-      vocalist = "Instrumental";
-    }
-
-    // Géneros musicales asociados
-    const genresList = (t.temas_generos || [])
-      .map((tg) => tg.generos?.nombre_genero)
-      .filter((g): g is string => Boolean(g));
-    const genre = genresList.length > 0 ? Array.from(new Set(genresList)).join(" / ") : null;
-
-    (t.albumes_temas || []).forEach((at) => {
-      if (!tracksMap[at.id_album]) {
-        tracksMap[at.id_album] = [];
-      }
-      tracksMap[at.id_album].push({
-        id: t.id_tema,
-        trackNumber: at.numero_pista,
-        side: at.lado,
-        title: t.titulo_tema,
-        durationSeconds: t.duracion_segundos,
-        composer,
-        vocalist: vocalist || null,
-        bpm: t.bpm,
-        camelot: t.camelot_code,
-        genre,
-      });
-    });
-  });
-
-  // Ordenación estricta de pistas por álbum: Lado A (1..N) y luego Lado B (1..N)
-  Object.keys(tracksMap).forEach((albumIdKey) => {
-    const albumId = Number(albumIdKey);
-    tracksMap[albumId].sort((a, b) => {
-      const sideA = (a.side || "").trim().toUpperCase();
-      const sideB = (b.side || "").trim().toUpperCase();
-      if (sideA !== sideB) {
-        if (!sideA) return 1;
-        if (!sideB) return -1;
-        return sideA.localeCompare(sideB);
-      }
-      const numA = typeof a.trackNumber === "number" ? a.trackNumber : 999;
-      const numB = typeof b.trackNumber === "number" ? b.trackNumber : 999;
-      return numA - numB;
-    });
-  });
-
-  // Conteo dinámico de subgéneros musicales desde la base de datos
-  const subgenreCounts: Record<string, number> = {};
-  for (const t of rawTemasList) {
-    for (const tg of t.temas_generos || []) {
-      const gName = tg.generos?.nombre_genero;
-      if (gName) {
-        subgenreCounts[gName] = (subgenreCounts[gName] || 0) + 1;
-      }
-    }
-  }
 
   // Generar datos estructurados Schema.org MusicAlbum para el catálogo fonográfico
   const catalogJsonLd = albums.slice(0, 15).map((a) =>
@@ -310,7 +94,7 @@ export default async function Home() {
           {/* LEGAJOS CLASIFICADOS DE INVESTIGACIÓN (EXP. 01, EXP. 02, EXP. 03) */}
           <BrutalistSelectedWork />
 
-          {/* BÓVEDA CENTRAL DE EVIDENCIA FONOGRÁFICA (719+ Piezas en Custodia) */}
+          {/* BÓVEDA CENTRAL DE EVIDENCIA FONOGRÁFICA */}
           <BrutalistCatalogSection albums={albums} tracksMap={tracksMap} />
 
           {/* ZONAS TERRITORIALES & MAPA DE OPERACIONES SONORAS (6 Zonas) */}
@@ -323,7 +107,7 @@ export default async function Home() {
           <BrutalistTriptych />
 
           {/* INFORMES DE CAMPO & EXPEDIENTES DE INVESTIGACIÓN FONOGRÁFICA (Blog) */}
-          {homeConfig.seccion_blog_activa ? <BrutalistStories /> : null}
+          {homeConfig.seccion_blog_activa ? <BrutalistStories articles={articles} /> : null}
         </main>
       </BrutalistCoordinator>
 

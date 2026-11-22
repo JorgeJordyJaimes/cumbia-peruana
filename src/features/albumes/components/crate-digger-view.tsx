@@ -16,9 +16,6 @@ import {
   ExternalLink,
   Layers,
   Music2,
-  Clock,
-  Sparkles,
-  Sliders,
 } from "lucide-react";
 
 interface CrateDiggerViewProps {
@@ -41,32 +38,30 @@ export function CrateDiggerViewComponent({
   onSelectAlbum,
   className,
 }: CrateDiggerViewProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndexState, setCurrentIndexState] = useState(0);
   const [showBackSide, setShowBackSide] = useState(false);
   const scrubberRef = useRef<HTMLDivElement>(null);
 
-  // Asegurar índice válido si la lista filtrada cambia
-  useEffect(() => {
-    if (currentIndex >= albums.length) {
-      setCurrentIndex(Math.max(0, albums.length - 1));
-    }
-  }, [albums.length, currentIndex]);
+  // Índice derivado: si la lista filtrada se reduce, nunca queda fuera de rango.
+  const currentIndex = albums.length > 0 ? Math.min(currentIndexState, albums.length - 1) : 0;
 
-  // Resetear a Cara A al cambiar de disco
-  useEffect(() => {
+  // Al cambiar de disco se vuelve a Cara A sin efecto adicional.
+  const [sideIndex, setSideIndex] = useState(currentIndex);
+  if (sideIndex !== currentIndex) {
+    setSideIndex(currentIndex);
     setShowBackSide(false);
-  }, [currentIndex]);
+  }
 
   const activeAlbum = albums[currentIndex] as AlbumItem | undefined;
   const activeTracks = activeAlbum ? tracksMap[activeAlbum.id] || [] : [];
 
   // Navegación
   const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev < albums.length - 1 ? prev + 1 : prev));
+    setCurrentIndexState((prev) => (prev < albums.length - 1 ? prev + 1 : prev));
   }, [albums.length]);
 
   const goToPrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    setCurrentIndexState((prev) => (prev > 0 ? prev - 1 : prev));
   }, []);
 
   const goToRandom = useCallback(() => {
@@ -75,7 +70,7 @@ export function CrateDiggerViewComponent({
     if (nextIdx === currentIndex) {
       nextIdx = (nextIdx + 1) % albums.length;
     }
-    setCurrentIndex(nextIdx);
+    setCurrentIndexState(nextIdx);
   }, [albums.length, currentIndex]);
 
   // Atajos de teclado (ArrowLeft, ArrowRight)
@@ -185,7 +180,7 @@ export function CrateDiggerViewComponent({
             {/* Disco -2 (Extremo Izquierdo) */}
             {currentIndex >= 2 && (
               <div
-                onClick={() => setCurrentIndex(currentIndex - 2)}
+                onClick={() => setCurrentIndexState(currentIndex - 2)}
                 className="absolute left-2 w-48 aspect-square rounded-sm border-2 border-[#1F1305] bg-[#140D04] opacity-25 scale-75 -rotate-12 translate-y-6 shadow-xl cursor-pointer hover:opacity-50 transition-all duration-300 z-0 hidden sm:block overflow-hidden"
               >
                 {albums[currentIndex - 2]?.coverUrl && (
@@ -202,7 +197,7 @@ export function CrateDiggerViewComponent({
             {/* Disco -1 (Izquierda Inclinado) */}
             {currentIndex >= 1 && (
               <div
-                onClick={() => setCurrentIndex(currentIndex - 1)}
+                onClick={() => setCurrentIndexState(currentIndex - 1)}
                 className="absolute left-6 sm:left-10 w-64 sm:w-72 aspect-square rounded-sm border-2 border-[#1F1305] bg-[#140D04] opacity-60 scale-85 -rotate-6 translate-y-3 shadow-2xl cursor-pointer hover:opacity-90 hover:-translate-x-2 transition-all duration-300 z-10 overflow-hidden"
               >
                 {albums[currentIndex - 1]?.coverUrl && (
@@ -222,7 +217,7 @@ export function CrateDiggerViewComponent({
             {/* Disco +2 (Extremo Derecho) */}
             {currentIndex <= albums.length - 3 && (
               <div
-                onClick={() => setCurrentIndex(currentIndex + 2)}
+                onClick={() => setCurrentIndexState(currentIndex + 2)}
                 className="absolute right-2 w-48 aspect-square rounded-sm border-2 border-[#1F1305] bg-[#140D04] opacity-25 scale-75 rotate-12 translate-y-6 shadow-xl cursor-pointer hover:opacity-50 transition-all duration-300 z-0 hidden sm:block overflow-hidden"
               >
                 {albums[currentIndex + 2]?.coverUrl && (
@@ -239,7 +234,7 @@ export function CrateDiggerViewComponent({
             {/* Disco +1 (Derecha Inclinado) */}
             {currentIndex <= albums.length - 2 && (
               <div
-                onClick={() => setCurrentIndex(currentIndex + 1)}
+                onClick={() => setCurrentIndexState(currentIndex + 1)}
                 className="absolute right-6 sm:right-10 w-64 sm:w-72 aspect-square rounded-sm border-2 border-[#1F1305] bg-[#140D04] opacity-60 scale-85 rotate-6 translate-y-3 shadow-2xl cursor-pointer hover:opacity-90 hover:translate-x-2 transition-all duration-300 z-10 overflow-hidden"
               >
                 {albums[currentIndex + 1]?.coverUrl && (
@@ -368,7 +363,7 @@ export function CrateDiggerViewComponent({
                   <button
                     key={album.id}
                     type="button"
-                    onClick={() => setCurrentIndex(idx)}
+                    onClick={() => setCurrentIndexState(idx)}
                     className={cn(
                       "shrink-0 w-14 aspect-square rounded-sm border-2 transition-all relative overflow-hidden cursor-pointer",
                       isSelected

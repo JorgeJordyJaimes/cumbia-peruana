@@ -2,83 +2,75 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { GitFork, Disc, Music, Loader2, Calendar, User, ArrowDown, Activity, Sparkles } from "lucide-react";
-import { getGenealogiaVersionesClient } from "../services/genealogia-service";
+import { GitFork, Disc, Loader2 } from "lucide-react";
+import {
+  getGenealogiaVersionesClient,
+  getTemasConVersionesClient,
+  type TemaVersionOption,
+} from "../services/genealogia-service";
 import type { GenealogiaVersionesResult, NodoGenealogiaVersion } from "@/types/database";
 
-interface TemaVersionPredefinido {
-  id_tema: number;
-  titulo: string;
-  autor: string;
-  añoOriginal: number;
-  descripcion: string;
-}
-
-const TEMAS_VERSIONADOS_CANONICOS: TemaVersionPredefinido[] = [
-  {
-    id_tema: 1,
-    titulo: "Elsa",
-    autor: "Enrique Delgado Montes",
-    añoOriginal: 1970,
-    descripcion: "Himno fundacional de la cumbia peruana grabado originalmente por Los Destellos (Odeón) y re-versionado por decenas de agrupaciones en vinilo.",
-  },
-  {
-    id_tema: 12,
-    titulo: "La Danza de Los Mirlos",
-    autor: "Jorge Rodríguez Grández",
-    añoOriginal: 1973,
-    descripcion: "Cumbia amazónica instrumental emblemática de Los Mirlos. Adoptada continentalmente como 'Cumbia de los Pajaritos' en Colombia y México.",
-  },
-  {
-    id_tema: 24,
-    titulo: "Cariñito",
-    autor: "Ángel Aníbal Rosado",
-    añoOriginal: 1979,
-    descripcion: "Composición de Ángel Aníbal para Los Hijos del Sol. Clásico absoluto del cancionero popular con múltiples variantes de ritmo y tempo.",
-  },
-  {
-    id_tema: 45,
-    titulo: "Colegiala",
-    autor: "Walter León Aguilar",
-    añoOriginal: 1975,
-    descripcion: "Grabada originalmente por Los Ilusionistas. Traspasó fronteras hasta convertirse en éxito continental con Rodolfo Aicardi.",
-  },
-];
-
 export function TabVersiones() {
-  const [selectedTemaId, setSelectedTemaId] = useState<number>(TEMAS_VERSIONADOS_CANONICOS[0].id_tema);
+  const [temas, setTemas] = useState<TemaVersionOption[]>([]);
+  const [loadingTemas, setLoadingTemas] = useState<boolean>(true);
+  const [selectedTemaId, setSelectedTemaId] = useState<number>(0);
   const [data, setData] = useState<GenealogiaVersionesResult | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
-    setLoading(true);
-    setError(null);
 
-    getGenealogiaVersionesClient(selectedTemaId)
-      .then((res) => {
+    const loadTemas = async () => {
+      const res = await getTemasConVersionesClient();
+      if (!isMounted) return;
+      setTemas(res);
+      if (res.length > 0) {
+        setSelectedTemaId((current) => (current > 0 ? current : res[0].id_tema));
+      }
+      setLoadingTemas(false);
+    };
+
+    void loadTemas();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (selectedTemaId <= 0) return;
+
+    let isMounted = true;
+
+    const load = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const res = await getGenealogiaVersionesClient(selectedTemaId);
         if (!isMounted) return;
         if (!res) {
           setError("No se hallaron ramificaciones registradas en la tabla de versiones para este tema.");
         } else {
           setData(res);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         if (!isMounted) return;
         setError(err instanceof Error ? err.message : "Error al consultar árbol de versiones.");
-      })
-      .finally(() => {
+      } finally {
         if (isMounted) setLoading(false);
-      });
+      }
+    };
+
+    void load();
 
     return () => {
       isMounted = false;
     };
   }, [selectedTemaId]);
 
-  const temaSeleccionado = TEMAS_VERSIONADOS_CANONICOS.find((t) => t.id_tema === selectedTemaId) || TEMAS_VERSIONADOS_CANONICOS[0];
+  const temaSeleccionado = temas.find((t) => t.id_tema === selectedTemaId) ?? null;
 
   return (
     <div className="space-y-8">
@@ -91,47 +83,65 @@ export function TabVersiones() {
           <span className="text-[#5A5245]">Consultas SQL relacionales</span>
         </div>
 
-        <div className="flex flex-wrap gap-2.5 font-mono text-xs">
-          {TEMAS_VERSIONADOS_CANONICOS.map((t) => {
-            const isSelected = t.id_tema === selectedTemaId;
-            return (
-              <button
-                key={t.id_tema}
-                type="button"
-                onClick={() => setSelectedTemaId(t.id_tema)}
-                className={`border-2 border-[#1F1305] px-4 py-2 font-bold transition-all cursor-pointer ${
-                  isSelected
-                    ? "bg-[#1F1305] text-[#EDE0D0] shadow-[2px_2px_0px_#E80000]"
-                    : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
-                }`}
-              >
-                🎵 {t.titulo} ({t.añoOriginal}) · {t.autor}
-              </button>
-            );
-          })}
-        </div>
+        {loadingTemas ? (
+          <div className="border border-[#1F1305] bg-[#EDE0D0]/20 p-6 text-center font-mono text-xs text-[#5A5245]">
+            Consultando temas con versiones registradas...
+          </div>
+        ) : temas.length === 0 ? (
+          <div className="border border-[#1F1305] bg-[#EDE0D0]/20 p-6 text-center font-mono text-xs text-[#5A5245]">
+            No hay versiones registradas en la base de datos. El selector se activará cuando
+            se catalogue la primera relación en `Versiones`.
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2.5 font-mono text-xs">
+            {temas.map((t) => {
+              const isSelected = t.id_tema === selectedTemaId;
+              return (
+                <button
+                  key={t.id_tema}
+                  type="button"
+                  onClick={() => setSelectedTemaId(t.id_tema)}
+                  className={`border-2 border-[#1F1305] px-4 py-2 font-bold transition-all cursor-pointer ${
+                    isSelected
+                      ? "bg-[#1F1305] text-[#EDE0D0] shadow-[2px_2px_0px_#E80000]"
+                      : "bg-white text-[#1F1305] hover:bg-[#EDE0D0]"
+                  }`}
+                >
+                  🎵 {t.titulo_tema}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Panel del Árbol de Versiones */}
+      {temaSeleccionado ? (
       <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-10 shadow-[6px_6px_0px_#1F1305] space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-start gap-4 border-b-2 border-[#1F1305] pb-6">
           <div className="space-y-2 max-w-2xl">
             <span className="font-mono text-xs font-black uppercase text-[#E80000]">
-              ÁRBOL DE COVERS, REGISTRACIONES & MUTACIONES ORQUESTALES
+              ÁRBOL DE COVERS, REGRABACIONES & MUTACIONES ORQUESTALES
             </span>
             <h2 className="font-cooper text-3xl sm:text-4xl font-black text-[#1F1305]">
-              {temaSeleccionado.titulo}
+              {temaSeleccionado.titulo_tema}
             </h2>
             <p className="font-sans text-sm text-[#5A5245] leading-relaxed">
-              {temaSeleccionado.descripcion}
+              Jerarquía recursiva de grabaciones y versiones registradas en la base de datos.
             </p>
           </div>
 
           <div className="shrink-0 font-mono text-xs border-2 border-[#1F1305] bg-[#EDE0D0] p-3 shadow-[2px_2px_0px_#1F1305] space-y-1">
-            <div className="font-black text-[#1F1305]">Autor: {temaSeleccionado.autor}</div>
-            <div className="text-[#5A5245]">Registro Original: {temaSeleccionado.añoOriginal}</div>
+            <div className="font-black text-[#1F1305]">EXP. 02 · VERSIONES</div>
+            <div className="text-[#5A5245]">Consulta RPC recursiva</div>
           </div>
         </div>
+
+        {error && (
+          <div className="border-2 border-[#E80000] bg-red-50 p-3 font-mono text-xs font-bold text-[#991B1B]">
+            {error}
+          </div>
+        )}
 
         {/* Estado de Carga */}
         {loading && (
@@ -246,7 +256,7 @@ export function TabVersiones() {
         ) : !loading ? (
           <div className="border border-[#1F1305] bg-[#EDE0D0]/20 p-8 text-center font-mono text-xs text-[#5A5245] space-y-2">
             <p>
-              El tema <strong>«{temaSeleccionado.titulo}»</strong> está catalogado como matriz sonora.
+              El tema <strong>«{temaSeleccionado.titulo_tema}»</strong> está catalogado como matriz sonora.
             </p>
             <p className="text-[11px]">
               Las relaciones de versiones secundarias están en proceso de verificación fonográfica conforme se completan los ingresos de discografías.
@@ -254,6 +264,7 @@ export function TabVersiones() {
           </div>
         ) : null}
       </div>
+      ) : null}
     </div>
   );
 }

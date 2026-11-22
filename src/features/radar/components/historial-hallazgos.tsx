@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, ArrowRight, Archive } from "lucide-react";
+import { isSafeHref } from "@/lib/utils";
 import type { HallazgoRadarItem } from "../types";
 
 interface HistorialHallazgosProps {
@@ -42,13 +42,21 @@ export function HistorialHallazgos({ items }: HistorialHallazgosProps) {
               </div>
 
               <div className="relative aspect-[16/10] w-full border border-[#1F1305] bg-[#EDE0D0] overflow-hidden">
-                <Image
-                  src={item.portadaUrl}
-                  alt={item.titulo}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 300px"
-                  className="object-cover grayscale contrast-125 hover:grayscale-0 transition-all"
-                />
+                {item.portadaUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={item.portadaUrl}
+                    alt={item.titulo}
+                    className="absolute inset-0 h-full w-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-[#5A5245]">
+                    <Archive className="h-7 w-7 text-[#F1730C]" />
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest">
+                      Sin portada
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-1">
@@ -66,7 +74,7 @@ export function HistorialHallazgos({ items }: HistorialHallazgosProps) {
 
             <div className="mt-4 pt-3 border-t border-[#1F1305]/20 space-y-2 font-mono text-xs">
               <div className="flex items-center justify-between text-[11px]">
-                {item.youtubeUrl && (
+                {isSafeHref(item.youtubeUrl) && (
                   <a
                     href={item.youtubeUrl}
                     target="_blank"
@@ -77,7 +85,7 @@ export function HistorialHallazgos({ items }: HistorialHallazgosProps) {
                     <ExternalLink className="h-2.5 w-2.5" />
                   </a>
                 )}
-                {item.spotifyUrl && (
+                {isSafeHref(item.spotifyUrl) && (
                   <a
                     href={item.spotifyUrl}
                     target="_blank"
@@ -91,7 +99,11 @@ export function HistorialHallazgos({ items }: HistorialHallazgosProps) {
               </div>
 
               <Link
-                href={item.enlaceExpediente.url}
+                href={
+                  isSafeHref(item.enlaceExpediente.url)
+                    ? item.enlaceExpediente.url
+                    : "/vinilos"
+                }
                 className="w-full flex items-center justify-between border border-[#1F1305] bg-[#EDE0D0] px-3 py-1.5 font-black text-[#1F1305] hover:bg-[#1F1305] hover:text-white transition-colors"
               >
                 <span>{item.enlaceExpediente.label}</span>

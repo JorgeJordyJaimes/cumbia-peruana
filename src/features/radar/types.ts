@@ -4,6 +4,10 @@ export type CategoriaHallazgo =
   | "Agrupación Olvidada"
   | "Subgénero a Descubrir";
 
+export interface RadarDraft extends HallazgoRadarItem {
+  periodo: string;
+}
+
 export interface HallazgoRadarItem {
   id: string;
   mes: string;
@@ -15,7 +19,7 @@ export interface HallazgoRadarItem {
   añoGrabacion?: number;
   sello?: string;
   porQueImporta: string;
-  portadaUrl: string;
+  portadaUrl?: string | null;
   youtubeUrl?: string;
   youtubeId?: string;
   spotifyUrl?: string;

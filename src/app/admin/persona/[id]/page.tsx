@@ -1,6 +1,6 @@
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/admin";
 import { getArbolGenealogicoServer } from "@/features/genealogia/server";
 import { LogoutButton } from "@/features/auth";
 import {
@@ -23,18 +23,9 @@ export default async function AdminPersonPage({ params }: AdminPersonPageProps) 
     notFound();
   }
 
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
 
-  // 1. Verificación de Autenticación
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user || user.email !== "soundkumbia@gmail.com") {
-    redirect("/admin/login");
-  }
-
-  // 2. Consulta paralela: árbol genealógico completo y fila de informe editorial
+  // Consulta paralela: árbol genealógico completo y fila de informe editorial
   const [arbol, informeResult] = await Promise.all([
     getArbolGenealogicoServer(personaId),
     supabase

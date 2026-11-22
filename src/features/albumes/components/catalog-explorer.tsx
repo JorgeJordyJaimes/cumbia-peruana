@@ -40,9 +40,21 @@ function CatalogExplorerInner({ initialAlbums, tracksMap = {} }: CatalogExplorer
   const [selectedFormat, setSelectedFormat] = useState<string>(() => searchParams.get("formato") || "ALL");
   const [selectedLabel, setSelectedLabel] = useState<string>(() => searchParams.get("sello") || "ALL");
   const [selectedYear, setSelectedYear] = useState<string>(() => searchParams.get("decada") || "ALL");
-  const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(null);
+  const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(() => {
+    const albumIdParam = searchParams.get("album");
+    const id = albumIdParam ? parseInt(albumIdParam, 10) : NaN;
+    return Number.isNaN(id) ? null : initialAlbums.find((album) => album.id === id) ?? null;
+  });
   const [visibleCount, setVisibleCount] = useState<number>(24);
   const [viewMode, setViewMode] = useState<"crate" | "grid">(() => (searchParams.get("vista") as "crate" | "grid") || "crate");
+
+  // Reinicio de paginación sin efecto: se detecta el cambio de filtros durante el render.
+  const filterKey = `${deferredSearchTerm}|${selectedFormat}|${selectedLabel}|${selectedYear}`;
+  const [paginationKey, setPaginationKey] = useState(filterKey);
+  if (paginationKey !== filterKey) {
+    setPaginationKey(filterKey);
+    setVisibleCount(24);
+  }
 
   // Conteo de formatos dinámico
   const formatCounts = useMemo(() => {
@@ -70,25 +82,6 @@ function CatalogExplorerInner({ initialAlbums, tracksMap = {} }: CatalogExplorer
       CD: cd,
     };
   }, [initialAlbums]);
-
-  // Sincronizar álbum con ?album=ID de la URL
-  useEffect(() => {
-    const albumIdParam = searchParams.get("album");
-    if (albumIdParam) {
-      const idNum = parseInt(albumIdParam, 10);
-      const found = initialAlbums.find((a) => a.id === idNum);
-      if (found) {
-        setSelectedAlbum(found);
-      }
-    } else {
-      setSelectedAlbum(null);
-    }
-  }, [searchParams, initialAlbums]);
-
-  // Restablecer paginación visible cuando cambie cualquier filtro
-  useEffect(() => {
-    setVisibleCount(24);
-  }, [deferredSearchTerm, selectedFormat, selectedLabel, selectedYear]);
 
   // Sincronizar filtros a la URL con debounce
   useEffect(() => {

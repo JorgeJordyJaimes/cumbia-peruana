@@ -4,7 +4,6 @@ import { useState, useMemo, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { BadgeDJ } from "@/components/ui/badge-dj";
 import {
-  CAMELOT_WHEEL,
   getHarmonicTransitions,
   isHarmonicallyCompatible,
 } from "@/features/dj-tools/camelot-utils";
@@ -13,22 +12,17 @@ import { TrackCoverImage } from "./track-cover-image";
 import type { TrackDJItem } from "./camelot-selector";
 import {
   Disc3,
-  SlidersHorizontal,
   Sparkles,
   Plus,
   Trash2,
   Copy,
   Check,
   RotateCcw,
-  ArrowRight,
   Search,
   Play,
   Pause,
   X,
   Layers,
-  Activity,
-  CheckCircle2,
-  AlertCircle,
   HelpCircle,
   MoveRight,
 } from "lucide-react";

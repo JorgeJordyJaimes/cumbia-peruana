@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/admin";
 import { LogoutButton } from "@/features/auth";
 import {
   AdminTabsContainer,
@@ -10,6 +9,8 @@ import {
   type AdminLabelItem,
 } from "@/features/admin";
 import type { Articulo, ConfiguracionHome } from "@/types/blog";
+import { getRadarDraftForAdmin } from "@/features/radar/services/radar.server";
+import { getLegajoBloques } from "@/features/legajo/services/legajo.server";
 import { ArrowLeft, ShieldCheck, Image as ImageIcon, Database } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -52,18 +53,9 @@ interface RawAdminLabel {
 }
 
 export default async function AdminPage() {
-  const supabase = await createClient();
+  const { supabase, user } = await requireAdmin();
 
-  // 1. Verificación de Autenticación
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user || user.email !== "soundkumbia@gmail.com") {
-    redirect("/admin/login");
-  }
-
-  // 2. Carga paralela de datos de las entidades, artículos y configuración
+  // Carga paralela de datos de las entidades, artículos y configuración
   const [
     { data: rawAlbumes },
     { data: rawGrupos },
@@ -71,6 +63,8 @@ export default async function AdminPage() {
     { data: rawSellos },
     { data: rawArticles },
     { data: rawHomeConfig },
+    radarDraft,
+    legajoBloques,
   ] = await Promise.all([
     supabase
       .from("albumes")
@@ -131,6 +125,8 @@ export default async function AdminPage() {
       .select("*")
       .eq("id", 1)
       .single(),
+    getRadarDraftForAdmin(),
+    getLegajoBloques(),
   ]);
 
   const articles: Articulo[] = (rawArticles as unknown as Articulo[]) || [];
@@ -140,7 +136,7 @@ export default async function AdminPage() {
     cintillo_activo: true,
     hero_insignia: "Archivo & Curaduría de Vinilos",
     hero_titulo: "El Sonido Inmortal de la Cumbia Peruana",
-    hero_subtitulo: "Explora 719+ vinilos originales, la genealogía de sus pioneros y el motor de compatibilidad armónica Camelot.",
+    hero_subtitulo: "Explora el archivo de vinilos originales, la genealogía de sus pioneros y el motor de compatibilidad armónica Camelot.",
     hero_boton_texto: "Explorar Archivo",
     hero_boton_url: "#catalogo",
     albumes_destacados_ids: [1, 2, 3],
@@ -392,6 +388,8 @@ export default async function AdminPage() {
           initialLabels={labels}
           initialArticles={articles}
           initialHomeConfig={homeConfig}
+          initialRadarDraft={radarDraft}
+          initialLegajoBloques={legajoBloques}
         />
       </main>
     </div>

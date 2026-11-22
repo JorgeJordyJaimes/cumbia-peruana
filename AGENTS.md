@@ -1,8 +1,8 @@
 # Directivas Operativas e Inviolables para Agentes de IA · Kumbia Sound
 
 > **Ámbito de Aplicación:** Todos los agentes autónomos de Inteligencia Artificial (Antigravity, Cursor, Claude Code, Codex, GitHub Copilot y otros entornos LLM) que operen en este repositorio.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
-> **Fuente de Verdad Documental:** [docs/README.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/README.md)
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
+> **Fuente de Verdad Documental:** [docs/README.md](./docs/README.md)
 
 ---
 
@@ -11,7 +11,7 @@
 El agente actúa como ingeniero de software y catalogador técnico del archivo histórico **Kumbia Sound** (preservación patrimonial de la cumbia peruana 1968–2005).
 
 ### Prohibiciones Absolutas del Proyecto
-1. **Cero Distribución de Audio Ilegal (`INV-005`, `DEC-006`):** Queda terminantemente prohibido incorporar reproductores de archivos locales (`.mp3`, `.wav`, `.flac`), endpoints de descarga o almacenar binarios de audio en el servidor o en Supabase Storage.
+1. **Cero Distribución de Audio Ilegal (`INV-011`, `DEC-006`):** Queda terminantemente prohibido incorporar reproductores de archivos locales (`.mp3`, `.wav`, `.flac`), endpoints de descarga o almacenar binarios de audio en el servidor o en Supabase Storage.
 2. **Restricción Estricta de Soportes a Lados A y B (`INV-001`, `DEC-001`):** Ninguna interfaz, consulta o esquema admitirá lados C o D para vinilos y casetes.
 3. **No Placeholders ni Código Incompleto:** Queda prohibido el uso de comentarios elisivos (`// ... resto del código`), marcadores `TODO`, `TBD`, `lorem ipsum` o implementaciones simuladas.
 4. **Respeto a las Directrices Globales de Usuario:** Siempre que se presenten cambios grandes o rediseños, se debe generar la "Guía de comprobación visual directa" estructurada con contraste "Antes vs Ahora".
@@ -20,9 +20,9 @@ El agente actúa como ingeniero de software y catalogador técnico del archivo h
 
 ## 2. Las 11 Reglas Mandatorias de Catalogación Fonográfica e Ingesta a SQL
 
-Antes de generar o modificar sentencias en `supabase/data/` a partir de [`docs/datos-investigacion/Datos BD.ods`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/datos-investigacion/Datos%20BD.ods):
+Antes de generar o modificar sentencias en `supabase/data/` a partir de [`docs/datos-investigacion/Datos BD.ods`](./docs/datos-investigacion/Datos%20BD.ods):
 
-1. **Consulta Previa Obligatoria:** Consultar las directivas de dominio en [`docs/01-proyecto/dominio.md`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md).
+1. **Consulta Previa Obligatoria:** Consultar las directivas de dominio en [`docs/01-proyecto/dominio.md`](./docs/01-proyecto/dominio.md).
 2. **Duraciones a Segundos Enteros (`duracion_segundos`):** Convertir siempre el tiempo en formato `MM:SS` a segundos totales enteros:
    $$\text{duracion\_segundos} = (\text{minutos} \times 60) + \text{segundos}$$
    *Prohibido insertar strings de tiempo o decimales.*
@@ -80,4 +80,4 @@ Una vez verificada la puerta de calidad:
 ## 5. Protocolo de Documentación Continua (Living Docs)
 
 Si un cambio de código altera rutas, componentes, modelos o reglas de negocio, el agente **debe actualizar en el mismo turno el archivo Markdown correspondiente dentro de `docs/`**.
-Consulte [docs/README.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/README.md) para ubicar el documento responsable.
+Consulte [docs/README.md](./docs/README.md) para ubicar el documento responsable.

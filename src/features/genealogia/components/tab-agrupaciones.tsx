@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Building2, Calendar, MapPin, Users, Disc, UserCheck, ArrowRight, GitBranch } from "lucide-react";
+import { Building2, MapPin, Disc, GitBranch } from "lucide-react";
 
 export interface GrupoItem {
   id_grupo: number;

@@ -8,14 +8,14 @@
 > - ¿Cómo está implementado el sistema de tokens en `globals.css` y qué se requiere para migrar de estilo visual?
 > **Fuente principal de:** Tokens de diseño (color, tipografía, bordes, sombras), recetas de componentes UI, reglas de contraste y accesibilidad.
 > **No contiene (ver):**
-> - Estructura de regiones y comportamiento por pantalla → [pantallas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/pantallas.md)
-> - Requisitos funcionales asociados a la interfaz → [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
-> - Capas de software y clientes Next.js → [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
+> - Estructura de regiones y comportamiento por pantalla → [pantallas.md](./pantallas.md)
+> - Requisitos funcionales asociados a la interfaz → [requisitos.md](../02-requisitos/requisitos.md)
+> - Capas de software y clientes Next.js → [arquitectura.md](../03-arquitectura/arquitectura.md)
 > **Depende de:**
-> - [glosario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/glosario.md)
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
+> - [glosario.md](../01-proyecto/glosario.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
 > **Entregar a otra IA para:** Rediseñar la interfaz, auditar contrastes WCAG, migrar a un nuevo tema visual o programar nuevos componentes UI consistentes.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -47,7 +47,7 @@ La identidad estética responde a la metáfora de un **Archivo Pericial Nacional
 
 ## 2. Tokens Canónicos de Diseño
 
-Valores exactos extraídos y sincronizados con [`src/app/globals.css`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/globals.css):
+Valores exactos extraídos y sincronizados con [`src/app/globals.css`](../../src/app/globals.css):
 
 ### 2.1 Tokens de Color
 

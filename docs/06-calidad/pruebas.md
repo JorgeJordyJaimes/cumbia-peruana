@@ -8,14 +8,14 @@
 > - ¿Cuál es la deuda técnica actual respecto a pruebas unitarias y de integración automatizadas?
 > **Fuente principal de:** Puerta de verificación técnica previa a commit, guiones de prueba manual paso a paso y criterios de completitud de código.
 > **No contiene (ver):**
-> - Requisitos funcionales y criterios de aceptación formales → [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
-> - Flujos de usuario de negocio → [flujos-de-usuario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/flujos-de-usuario.md)
-> - Métricas y auditorías de velocidad y renderizado → [rendimiento.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/rendimiento.md)
+> - Requisitos funcionales y criterios de aceptación formales → [requisitos.md](../02-requisitos/requisitos.md)
+> - Flujos de usuario de negocio → [flujos-de-usuario.md](../02-requisitos/flujos-de-usuario.md)
+> - Métricas y auditorías de velocidad y renderizado → [rendimiento.md](./rendimiento.md)
 > **Depende de:**
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
-> - [flujos-de-usuario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/flujos-de-usuario.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
+> - [flujos-de-usuario.md](../02-requisitos/flujos-de-usuario.md)
 > **Entregar a otra IA para:** Escribir suites de pruebas automatizadas (Playwright / Vitest), auditar la cobertura de requisitos o ejecutar revisiones de regresión.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -24,13 +24,12 @@
 Todo agente o desarrollador que modifique archivos de código en el proyecto debe ejecutar de forma secuencial la siguiente lista exacta de comandos en su terminal local. Si alguno de los tres comandos falla, el cambio **no puede ser confirmado en Git**:
 
 ```bash
-# Paso 1: Verificación estricta de tipos de TypeScript (sin emitir archivos)
-npx tsc --noEmit
+# Atajo equivalente: typecheck + lint + build
+npm run check
 
-# Paso 2: Análisis estático de código y reglas de Next.js
+# O por separado:
+npm run typecheck
 npm run lint
-
-# Paso 3: Compilación completa de producción (Turbopack)
 npm run build
 ```
 
@@ -85,7 +84,7 @@ Para cambios que afecten la interfaz gráfica o la lógica de negocio, se deben 
 
 ## 4. Deuda Técnica Conocida de Calidad (`TD-001`)
 
-- **`TD-001` (Ausencia de Tests Unitarios Automatizados):** Actualmente el proyecto confía en el tipado estricto de TypeScript (`tsc --noEmit`), el linter de Next.js y los constraints a nivel de base de datos PostgreSQL, complementados por guiones de prueba manuales. Se encuentra en el backlog implementar una suite de pruebas unitarias para el motor de compatibilidad Camelot (`src/features/camelot`) y pruebas de integración E2E con Playwright.
+- **`TD-001` (Ausencia de Tests Unitarios Automatizados):** Actualmente el proyecto confía en el tipado estricto de TypeScript (`tsc --noEmit`), el linter de Next.js y los constraints a nivel de base de datos PostgreSQL, complementados por guiones de prueba manuales. Se encuentra en el backlog implementar una suite de pruebas unitarias para el motor de compatibilidad Camelot (`src/features/dj-tools/camelot-utils.ts`) y pruebas de integración E2E con Playwright.
 
 ---
 

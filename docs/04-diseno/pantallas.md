@@ -8,15 +8,15 @@
 > - ¿Qué requisitos funcionales (`RF-NNN`) y casos de uso (`UC-NNN`) respaldan cada pantalla?
 > **Fuente principal de:** Estructura de vistas, wireframes textuales, estados de interacción por pantalla y mapas de navegación.
 > **No contiene (ver):**
-> - Tokens de color, tipografía y componentes base → [sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md)
-> - Requisitos funcionales y de negocio → [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
-> - Flujos paso a paso de tareas de usuario → [flujos-de-usuario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/flujos-de-usuario.md)
+> - Tokens de color, tipografía y componentes base → [sistema-visual.md](./sistema-visual.md)
+> - Requisitos funcionales y de negocio → [requisitos.md](../02-requisitos/requisitos.md)
+> - Flujos paso a paso de tareas de usuario → [flujos-de-usuario.md](../02-requisitos/flujos-de-usuario.md)
 > **Depende de:**
-> - [sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md)
-> - [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
-> - [requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md)
+> - [sistema-visual.md](./sistema-visual.md)
+> - [modelo-de-datos.md](../03-arquitectura/modelo-de-datos.md)
+> - [requisitos.md](../02-requisitos/requisitos.md)
 > **Entregar a otra IA para:** Rediseñar wireframes, implementar nuevas vistas de consulta o validar la consistencia de la experiencia de usuario.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** reorganización canónica de 7 secciones (rama feat/reorganizacion-secciones-expedientes)
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** reorganización canónica de 7 secciones (rama feat/reorganizacion-secciones-expedientes)
 
 ---
 
@@ -136,7 +136,7 @@ flowchart TD
 ### 2.6 EXP. 04: Match BPM & Planilla de Mezcla (`/match-bpm`)
 * **Ruta:** `/match-bpm`
 * **Propósito:** Consola técnica para DJs de vinilo y tornamesistas. Búsqueda por BPM y tonalidad armónica en la Rueda Camelot (`1A`–`12B`).
-* **Subfunción Planilla de Mezcla:** Secuenciador a dos tornamesas para planificar, reordenar y exportar setlists sin reproducir audio local (`INV-005`).
+* **Subfunción Planilla de Mezcla:** Secuenciador a dos tornamesas para planificar, reordenar y exportar setlists sin reproducir audio local (`INV-011`, `DEC-006`).
 * **Componentes:** `CreaTuMix`, `MatchBpmWidget`, `CamelotSelector`.
 
 ---
@@ -147,7 +147,7 @@ flowchart TD
 * **Estructura Fija de 4 Puntos:**
   1. **Qué es:** Categoría canónica (Álbum del Mes / Voz Rescatada / Agrupación Olvidada / Subgénero a Descubrir).
   2. **Por qué importa:** Ficha breve con el valor patrimonial e histórico.
-  3. **Escúchalo:** Enlaces oficiales externos a YouTube y Spotify (sin distribución de audio en servidor, respetando `INV-005`).
+  3. **Escúchalo:** Enlaces oficiales externos a YouTube y Spotify (sin distribución de audio en servidor, respetando `INV-011` y `DEC-006`).
   4. **Explóralo:** Vínculo al expediente del disco en `/vinilos` o al informe en `/informes`.
 * **Historial de Hallazgos:** Colección cronológica navegable de fichas de meses anteriores.
 * **Componentes:** `HallazgoDelMes`, `HistorialHallazgos`, `RadarSonoro`.

@@ -10,10 +10,10 @@
 > - ¿Cómo funciona la subida y optimización de carátulas fotográficas?
 > **Fuente principal de:** Estructura de vistas administrativas, formularios de catalogación, pipeline de medios, redacción editorial y configuración del CMS.
 > **No contiene (ver):**
-> - Vistas públicas y expedientes de usuario → [pantallas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/pantallas.md)
-> - Políticas RLS de base de datos → [seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md)
-> - Caso de uso detallado → [flujos-de-usuario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/flujos-de-usuario.md)
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31
+> - Vistas públicas y expedientes de usuario → [pantallas.md](./pantallas.md)
+> - Políticas RLS de base de datos → [seguridad-y-datos.md](../06-calidad/seguridad-y-datos.md)
+> - Caso de uso detallado → [flujos-de-usuario.md](../02-requisitos/flujos-de-usuario.md)
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22
 
 ---
 
@@ -28,7 +28,7 @@ flowchart TD
     GrupoDetail["/admin/grupo/[id]\n(Ficha de Agrupación:\nDiscografía · Historia · Etapas)"]
     PersonaDetail["/admin/persona/[id]\n(Ficha Pericial de Músico:\nDatos · Retrato · Informe · Participación · Vista Previa)"]
 
-    Login -->|"Autenticación Exitosa (soundkumbia@gmail.com)"| Admin
+    Login -->|"Autenticación Exitosa (ADMIN_EMAIL)"| Admin
     Admin -->|"Editar Agrupación"| GrupoDetail
     Admin -->|"Editar Músico"| PersonaDetail
     GrupoDetail -->|"← Volver al Panel"| Admin
@@ -40,10 +40,12 @@ flowchart TD
 ## 2. Seguridad y Reglas de Acceso
 
 1. **Rutas Protegidas:** `/admin`, `/admin/grupo/[id]` y `/admin/persona/[id]`.
-2. **Mecanismo de Guardia (`layout.tsx` / `page.tsx`):**
-   - Ejecuta en el servidor `supabase.auth.getUser()`.
-   - Si no existe sesión activa o el correo no coincide con el administrador autorizado (`soundkumbia@gmail.com`), redirige inmediatamente por HTTP 307 a `/admin/login`.
+2. **Mecanismo de Guardia (`src/lib/auth/admin.ts`):**
+   - `requireAdmin()` ejecuta en el servidor `supabase.auth.getUser()`.
+   - Si no existe sesión activa o el correo no coincide con `ADMIN_EMAIL`, redirige inmediatamente a `/admin/login`.
+   - Las tres rutas administrativas consumen la misma guardia para evitar divergencias.
 3. **Manejo de Sesión:** Cookies seguras HttpOnly gestionadas a través del paquete `@supabase/ssr`.
+4. **Persistencia editorial:** Radar y Legajo escriben en `radar_hallazgos` y `legajo_bloques`. Si esas tablas no existen, la UI muestra un error explícito y no simula un guardado. Estado verificado: [../07-gestion/estado-actual.md](../07-gestion/estado-actual.md).
 4. **Protección RLS contra Filtraciones:**
    - Para tablas editoriales con estados de borrador (`informes_personas`, `grupo_historias`, `grupo_etapas`, `radar_hallazgos`, `articulos`), las consultas anónimas del público filtran estrictamente `(estado = 'publicado' AND (publish_at IS NULL OR publish_at <= now()))`. Los borradores y publicaciones programadas son invisibles para visitantes no autenticados.
 
@@ -106,7 +108,7 @@ Configuración visual en tiempo real de la portada pública: cintillo superior, 
 ---
 
 ### 3.2 Ficha Pericial de Músico (`/admin/persona/[id]`)
-Implementada en [`src/app/admin/persona/[id]/page.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/persona/%5Bid%5D/page.tsx) y coordinada por `AdminPersonDetail` en **5 pestañas canónicas**:
+Implementada en [`src/app/admin/persona/[id]/page.tsx`](../../src/app/admin/persona/[id]/page.tsx) y coordinada por `AdminPersonDetail` en **5 pestañas canónicas**:
 
 1. **1. Datos Biográficos:** Nombre completo, apodo o seudónimo oficial, fecha/época de nacimiento y lugar de origen. Persiste en `personas`.
 2. **2. Retrato Oficial:** Pipeline `ImageUploader` WebP (calidad 85%, <100KB) con custodia fotográfica patrimonial.
@@ -120,7 +122,7 @@ Implementada en [`src/app/admin/persona/[id]/page.tsx`](file:///c:/Users/CACTU/D
 ---
 
 ### 3.3 Expediente de Agrupación (`/admin/grupo/[id]`)
-Implementada en [`src/app/admin/grupo/[id]/page.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/grupo/%5Bid%5D/page.tsx) y `AdminGroupDetail` con **3 pestañas de trabajo**:
+Implementada en [`src/app/admin/grupo/[id]/page.tsx`](../../src/app/admin/grupo/[id]/page.tsx) y `AdminGroupDetail` con **3 pestañas de trabajo**:
 
 1. **01 · Discografía y Fotos:** Catálogo completo de lanzamientos de la agrupación (LPs, singles de 45 RPM, casetes, EPs, CDs) con subida diferenciada de Portada (Cara A), Contraportada (Cara B) y Galleta central, además de visor interactivo deslizable `AlbumCoverSlider`.
 2. **02 · Historia y Relato:** Espacio de redacción pericial utilizando `EditorPericial` para documentar la historia general de la orquesta, respaldada por fuentes y publicada en `grupo_historias`.
@@ -138,7 +140,7 @@ Implementada en [`src/app/admin/grupo/[id]/page.tsx`](file:///c:/Users/CACTU/Dow
 
 ## 4. El Editor Pericial Reutilizable (`EditorPericial`)
 
-Componente central de redacción ubicado en [`src/features/admin/components/editor-pericial.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/editor-pericial.tsx):
+Componente central de redacción ubicado en [`src/features/admin/components/editor-pericial.tsx`](../../src/features/admin/components/editor-pericial.tsx):
 
 * **Barra de Formato Markdown:** Encabezados H2/H3, negrita, cursiva, tachado, citas de época (`>`), listas desordenadas y ordenadas, tablas ortogonales y enlaces canónicos.
 * **Métricas en Vivo:** Conteo dinámico de palabras y cálculo automático del tiempo estimado de lectura ($1\text{ min} \approx 200\text{ palabras}$).
@@ -180,19 +182,19 @@ sequenceDiagram
 
 | Archivo | Ruta | Responsabilidad |
 | :--- | :--- | :--- |
-| **Shell & Layout** | [`src/app/admin/layout.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/layout.tsx) | Envoltura de páginas administrativas. |
-| **Consola Principal** | [`src/app/admin/page.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/page.tsx) | Verificación de auth, carga paralela de catálogo, blog y configuración home. |
-| **Login** | [`src/app/admin/login/page.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/login/page.tsx) | Formulario de autenticación con Supabase Auth. |
-| **Ficha de Músico** | [`src/app/admin/persona/[id]/page.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/persona/%5Bid%5D/page.tsx) | Vista pericial de 5 pestañas para redacción de informes y retratos. |
-| **Detalle de Grupo** | [`src/app/admin/grupo/[id]/page.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/app/admin/grupo/%5Bid%5D/page.tsx) | Vista de 3 pestañas para discografía, historia y etapas cronológicas. |
-| **Contenedor Tabs** | [`src/features/admin/components/admin-tabs-container.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-tabs-container.tsx) | Selector canónico de las 4 pestañas: Resumen, Archivo, Redacción y Portada. |
-| **Dashboard Resumen** | [`src/features/admin/components/admin-dashboard-resumen.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-dashboard-resumen.tsx) | Métricas de custodia fotográfica y KPIs de redacción editorial. |
-| **Mesa de Redacción** | [`src/features/admin/components/admin-mesa-redaccion.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-mesa-redaccion.tsx) | Bandeja única de textos, Informes, Agrupaciones, Notas, Radar y Legajo. |
-| **Editor Pericial** | [`src/features/admin/components/editor-pericial.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/editor-pericial.tsx) | Editor Markdown reutilizable con sellos periciales, fuentes y autoguardado. |
-| **Detalle Persona** | [`src/features/admin/components/admin-person-detail.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-person-detail.tsx) | Ficha de 5 pestañas: Datos, Retrato WebP, Informe, Participación y Vista Previa. |
-| **Detalle Grupo** | [`src/features/admin/components/admin-group-detail.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-group-detail.tsx) | Ficha de 3 pestañas: Discografía & Fotos, Historia Editorial y Etapas. |
-| **Gestor de Medios** | [`src/features/admin/components/admin-media-manager.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-media-manager.tsx) | Filtros y asignación de imágenes a álbumes, grupos, personas y sellos. |
-| **Gestor de Blog** | [`src/features/admin/components/admin-blog-manager.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-blog-manager.tsx) | CRUD de artículos de investigación con lectura automática por palabras. |
-| **Configurador Home** | [`src/features/admin/components/admin-home-config.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/admin/components/admin-home-config.tsx) | Editor de textos, hero y destacados de la portada. |
-| **Uploader WebP** | [`src/features/storage/components/image-uploader.tsx`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/src/features/storage/components/image-uploader.tsx) | Pipeline Canvas API para compresión WebP en cliente. |
-| **Migración SQL** | [`supabase/migrations/20261031120000_modulo_redaccion_editorial.sql`](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/supabase/migrations/20261031120000_modulo_redaccion_editorial.sql) | Esquema DDL para tablas editoriales (`informes_personas`, `grupo_historias`, etc.) y RLS. |
+| **Shell & Layout** | [`src/app/admin/layout.tsx`](../../src/app/admin/layout.tsx) | Envoltura de páginas administrativas. |
+| **Consola Principal** | [`src/app/admin/page.tsx`](../../src/app/admin/page.tsx) | Verificación de auth, carga paralela de catálogo, blog y configuración home. |
+| **Login** | [`src/app/admin/login/page.tsx`](../../src/app/admin/login/page.tsx) | Formulario de autenticación con Supabase Auth. |
+| **Ficha de Músico** | [`src/app/admin/persona/[id]/page.tsx`](../../src/app/admin/persona/[id]/page.tsx) | Vista pericial de 5 pestañas para redacción de informes y retratos. |
+| **Detalle de Grupo** | [`src/app/admin/grupo/[id]/page.tsx`](../../src/app/admin/grupo/[id]/page.tsx) | Vista de 3 pestañas para discografía, historia y etapas cronológicas. |
+| **Contenedor Tabs** | [`src/features/admin/components/admin-tabs-container.tsx`](../../src/features/admin/components/admin-tabs-container.tsx) | Selector canónico de las 4 pestañas: Resumen, Archivo, Redacción y Portada. |
+| **Dashboard Resumen** | [`src/features/admin/components/admin-dashboard-resumen.tsx`](../../src/features/admin/components/admin-dashboard-resumen.tsx) | Métricas de custodia fotográfica y KPIs de redacción editorial. |
+| **Mesa de Redacción** | [`src/features/admin/components/admin-mesa-redaccion.tsx`](../../src/features/admin/components/admin-mesa-redaccion.tsx) | Bandeja única de textos, Informes, Agrupaciones, Notas, Radar y Legajo. |
+| **Editor Pericial** | [`src/features/admin/components/editor-pericial.tsx`](../../src/features/admin/components/editor-pericial.tsx) | Editor Markdown reutilizable con sellos periciales, fuentes y autoguardado. |
+| **Detalle Persona** | [`src/features/admin/components/admin-person-detail.tsx`](../../src/features/admin/components/admin-person-detail.tsx) | Ficha de 5 pestañas: Datos, Retrato WebP, Informe, Participación y Vista Previa. |
+| **Detalle Grupo** | [`src/features/admin/components/admin-group-detail.tsx`](../../src/features/admin/components/admin-group-detail.tsx) | Ficha de 3 pestañas: Discografía & Fotos, Historia Editorial y Etapas. |
+| **Gestor de Medios** | [`src/features/admin/components/admin-media-manager.tsx`](../../src/features/admin/components/admin-media-manager.tsx) | Filtros y asignación de imágenes a álbumes, grupos, personas y sellos. |
+| **Gestor de Blog** | [`src/features/admin/components/admin-blog-manager.tsx`](../../src/features/admin/components/admin-blog-manager.tsx) | CRUD de artículos de investigación con lectura automática por palabras. |
+| **Configurador Home** | [`src/features/admin/components/admin-home-config.tsx`](../../src/features/admin/components/admin-home-config.tsx) | Editor de textos, hero y destacados de la portada. |
+| **Uploader WebP** | [`src/features/storage/components/image-uploader.tsx`](../../src/features/storage/components/image-uploader.tsx) | Pipeline Canvas API para compresión WebP en cliente. |
+| **Migración SQL** | [`supabase/migrations/20261031120000_modulo_redaccion_editorial.sql`](../../supabase/migrations/20261031120000_modulo_redaccion_editorial.sql) | Esquema DDL para tablas editoriales (`informes_personas`, `grupo_historias`, etc.) y RLS. |

@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Radio, Sparkles, Disc3, Music } from "lucide-react";
+import { ArrowLeft, Radio, Sparkles, Disc3, Music, Archive } from "lucide-react";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
-import { RadarSonoro } from "@/features/home-retro";
-import {
-  HallazgoDelMes,
-  HistorialHallazgos,
-  HALLAZGO_DEL_MES_ACTUAL,
-  ARCHIVO_HISTORICO_HALLAZGOS,
-} from "@/features/radar";
+import { HallazgoDelMes, HistorialHallazgos } from "@/features/radar";
+import { getRadarData } from "@/features/radar/services/radar.server";
 
 export const metadata: Metadata = {
   title: "EXP. 05: Radar Sonoro // Hallazgo del Mes & Curaduría | Kumbia Sound",
@@ -16,7 +11,11 @@ export const metadata: Metadata = {
     "El hallazgo mensual y curaduría patrimonial de la cumbia peruana: álbum del mes, voces rescatadas, agrupaciones olvidadas y subgéneros con enlaces a fonotecas oficiales.",
 };
 
-export default function RadarPage() {
+export const dynamic = "force-dynamic";
+
+export default async function RadarPage() {
+  const { actual, historial } = await getRadarData();
+
   return (
     <div className="relative min-h-screen bg-[#EDE0D0] brutalist-dots-light text-[#1F1305] selection:bg-[#F1730C] selection:text-[#1F1305]">
       <BrutalistCoordinator>
@@ -73,16 +72,24 @@ export default function RadarPage() {
 
           {/* 1. HALLAZGO DEL MES (ESTRUCTURA FIJA DE 4 PASOS) */}
           <section className="space-y-3">
-            <HallazgoDelMes item={HALLAZGO_DEL_MES_ACTUAL} />
+            {actual ? (
+              <HallazgoDelMes item={actual} />
+            ) : (
+              <div className="border-2 border-[#1F1305] bg-white p-8 sm:p-12 shadow-[6px_6px_0px_#1F1305] text-center space-y-4">
+                <Archive className="h-12 w-12 text-[#F1730C] mx-auto" />
+                <h2 className="font-cooper text-2xl sm:text-3xl font-black text-[#1F1305]">
+                  Sin hallazgo publicado todavía
+                </h2>
+                <p className="font-mono text-xs text-[#5A5245] max-w-xl mx-auto leading-relaxed">
+                  El Radar se alimenta de la mesa de redacción del archivo. Cuando se publique
+                  el primer hallazgo mensual, aparecerá aquí con su ficha de cuatro puntos.
+                </p>
+              </div>
+            )}
           </section>
 
           {/* 2. HISTORIAL DE MESES ANTERIORES */}
-          <HistorialHallazgos items={ARCHIVO_HISTORICO_HALLAZGOS} />
-
-          {/* 3. CURADURÍA COMPLEMENTARIA & REPRODUCTORES LIGEROS */}
-          <section className="pt-6">
-            <RadarSonoro />
-          </section>
+          {historial.length > 0 ? <HistorialHallazgos items={historial} /> : null}
         </main>
       </BrutalistCoordinator>
 

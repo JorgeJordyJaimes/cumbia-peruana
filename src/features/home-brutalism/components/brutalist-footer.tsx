@@ -206,14 +206,16 @@ export function BrutalistFooter() {
                 Solicitud de Rectificación
               </a>
               <span>•</span>
-              <Link
+              <a
                 href="/admin"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[#E80000] hover:text-white font-bold transition-colors flex items-center gap-1 hover:underline"
-                title="Acceso al Panel de Administración"
+                title="Abrir el Panel de Administración en una pestaña nueva"
               >
                 <span>[PANEL ADMIN]</span>
                 <ArrowUpRight className="h-3 w-3" />
-              </Link>
+              </a>
             </div>
           </div>
 

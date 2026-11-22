@@ -1,6 +1,6 @@
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/admin";
 import { LogoutButton } from "@/features/auth";
 import {
   AdminGroupDetail,
@@ -57,18 +57,9 @@ export default async function AdminGroupPage({ params }: AdminGroupPageProps) {
     notFound();
   }
 
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
 
-  // 1. Verificación de Autenticación
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user || user.email !== "soundkumbia@gmail.com") {
-    redirect("/admin/login");
-  }
-
-  // 2. Consulta paralela: datos del grupo, álbumes, catálogo de grupos, personas, historia y etapas
+  // Consulta paralela: datos del grupo, álbumes, catálogo de grupos, personas, historia y etapas
   const [
     { data: rawGroup, error: groupError },
     { data: rawAlbums },

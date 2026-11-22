@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Disc3, CassetteTape, Disc, Music } from "lucide-react";
+import { Disc3, CassetteTape, Disc } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface TrackCoverImageProps {

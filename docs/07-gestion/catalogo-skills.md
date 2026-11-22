@@ -7,13 +7,13 @@
 > - ¿Cómo se garantiza la reproducibilidad de las directivas mediante `skills-lock.json`?
 > **Fuente principal de:** Inventario clasificado de skills, fuentes oficiales de instalación y recomendaciones de uso por agente.
 > **No contiene (ver):**
-> - Reglas operativas generales para agentes de IA → [AGENTS.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/AGENTS.md)
-> - Sistema de tokens visuales del proyecto → [sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md)
-> - Directrices de rendimiento de Vercel → [rendimiento.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/rendimiento.md)
+> - Reglas operativas generales para agentes de IA → [AGENTS.md](../../AGENTS.md)
+> - Sistema de tokens visuales del proyecto → [sistema-visual.md](../04-diseno/sistema-visual.md)
+> - Directrices de rendimiento de Vercel → [rendimiento.md](../06-calidad/rendimiento.md)
 > **Depende de:**
-> - [git.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/git.md)
+> - [git.md](./git.md)
 > **Entregar a otra IA para:** Evaluar qué skills utilizar ante una tarea de diseño, video, refactorización o depuración sistemática.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -27,14 +27,17 @@ Las skills expanden el contexto operativo de los modelos de lenguaje mediante di
 
 ## 2. Resumen Ejecutivo del Catálogo Instalado
 
-Actualmente se encuentran **28 skills instaladas** agrupadas por suite:
+Actualmente hay **38 directorios de skills en `.agents/skills/`**. De ellos, **37 están registrados en `skills-lock.json`** y **`impeccable` está instalada pero no bloqueada**. El conteo anterior de 28 era incorrecto.
 
-| Suite / Repositorio Fuente | Cantidad | Enfoque de Aplicación en Kumbia Sound |
+| Suite / Repositorio Fuente | Cantidad bloqueada | Enfoque de Aplicación en Kumbia Sound |
 | :--- | :---: | :--- |
-| **`heygen-com/hyperframes`** | 14 | Generación de video programático, motion graphics, bumpers y clips sincronizados. |
-| **`Leonxlnx/taste-skill`** | 11 | Dirección de arte UI/UX, interfaces brutalistas y minimalistas, layouts editoriales. |
+| **`heygen-com/hyperframes`** | 21 | Generación de video programático, motion graphics, bumpers y clips sincronizados. |
+| **`Leonxlnx/taste-skill`** | 13 | Dirección de arte UI/UX, interfaces brutalistas y minimalistas, layouts editoriales. |
 | **`obra/superpowers`** | 2 | Brainstorming estructurado y depuración sistemática de incidencias complejas. |
 | **`vercel-labs/agent-skills`** | 1 | Reglas de rendimiento extremo, optimización de React 19 y Next.js App Router. |
+| **Sin lock** | 1 | `impeccable` instalada localmente; falta registrar su fuente y hash en `skills-lock.json`. |
+
+> `npm run skills:list` ahora usa `scripts/list-skills.mjs` y no depende del binario global `skills`. Las skills ya presentes no se reinstalaron; este documento solo reporta su estado.
 
 ---
 

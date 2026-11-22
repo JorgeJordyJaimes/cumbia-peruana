@@ -72,7 +72,7 @@ export function LoginForm() {
             <input
               type="email"
               required
-              placeholder="soundkumbia@gmail.com"
+              placeholder="correo@ejemplo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] py-3 pl-10 pr-4 text-sm text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000] transition-all font-mono"

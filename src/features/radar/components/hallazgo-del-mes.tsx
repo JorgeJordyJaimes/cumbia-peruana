@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, ExternalLink, Disc, ArrowRight, Play } from "lucide-react";
+import { isSafeHref } from "@/lib/utils";
 import type { HallazgoRadarItem } from "../types";
 
 interface HallazgoDelMesProps {
@@ -8,6 +8,12 @@ interface HallazgoDelMesProps {
 }
 
 export function HallazgoDelMes({ item }: HallazgoDelMesProps) {
+  const youtubeUrl = isSafeHref(item.youtubeUrl) ? item.youtubeUrl : null;
+  const spotifyUrl = isSafeHref(item.spotifyUrl) ? item.spotifyUrl : null;
+  const expedienteUrl = isSafeHref(item.enlaceExpediente.url)
+    ? item.enlaceExpediente.url
+    : "/vinilos";
+
   return (
     <div className="border-2 border-[#1F1305] bg-white p-6 sm:p-10 shadow-[6px_6px_0px_#1F1305] space-y-8">
       {/* Encabezado del Hallazgo */}
@@ -31,14 +37,21 @@ export function HallazgoDelMes({ item }: HallazgoDelMesProps) {
         {/* Columna Izquierda: Imagen y Enlaces de Escucha Externa */}
         <div className="lg:col-span-5 space-y-4">
           <div className="relative aspect-square w-full border-2 border-[#1F1305] bg-[#EDE0D0] shadow-[4px_4px_0px_#1F1305] overflow-hidden">
-            <Image
-              src={item.portadaUrl}
-              alt={item.titulo}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 400px"
-              className="object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
-            />
+            {item.portadaUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={item.portadaUrl}
+                alt={item.titulo}
+                className="absolute inset-0 h-full w-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
+              />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-[#5A5245]">
+                <Disc className="h-12 w-12 text-[#F1730C]" />
+                <span className="font-mono text-[11px] font-bold uppercase tracking-widest">
+                  Sin portada catalogada
+                </span>
+              </div>
+            )}
             <div className="absolute top-3 left-3 border border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] px-2 py-0.5 font-mono text-[10px] font-bold">
               PRENSAJE MATRIZ
             </div>
@@ -53,9 +66,9 @@ export function HallazgoDelMes({ item }: HallazgoDelMesProps) {
               Consulta legal en las fonotecas asociadas (cero archivos locales en servidor):
             </p>
             <div className="flex flex-col sm:flex-row gap-2 pt-1">
-              {item.youtubeUrl && (
+              {youtubeUrl && (
                 <a
-                  href={item.youtubeUrl}
+                  href={youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-1.5 border border-[#1F1305] bg-[#E80000] text-white px-3 py-2 font-bold hover:bg-[#1F1305] transition-colors"
@@ -64,9 +77,9 @@ export function HallazgoDelMes({ item }: HallazgoDelMesProps) {
                   <ExternalLink className="h-3 w-3" />
                 </a>
               )}
-              {item.spotifyUrl && (
+              {spotifyUrl && (
                 <a
-                  href={item.spotifyUrl}
+                  href={spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-1.5 border border-[#1F1305] bg-[#10B981] text-white px-3 py-2 font-bold hover:bg-[#059669] transition-colors"
@@ -119,7 +132,7 @@ export function HallazgoDelMes({ item }: HallazgoDelMesProps) {
               Consulta la ficha técnica del prensaje o el informe pericial del músico en nuestro archivo fonográfico:
             </p>
             <Link
-              href={item.enlaceExpediente.url}
+              href={expedienteUrl}
               className="inline-flex items-center gap-2 border-2 border-[#1F1305] bg-[#1F1305] text-[#EDE0D0] px-5 py-2.5 font-mono text-xs font-black shadow-[3px_3px_0px_#E80000] hover:bg-[#E80000] transition-colors"
             >
               <Disc className="h-4 w-4" />

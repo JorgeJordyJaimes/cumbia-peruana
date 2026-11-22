@@ -1,4 +1,3 @@
-import { BrutalSkeleton } from "@/components/ui/brutal-skeleton";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 
 export default function AlbumLoading() {

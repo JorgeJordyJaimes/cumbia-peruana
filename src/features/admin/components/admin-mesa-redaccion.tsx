@@ -18,20 +18,71 @@ import { EditorPericial, type EstadoEditorial } from "./editor-pericial";
 import { AdminBlogManager } from "./admin-blog-manager";
 import type { AdminGroupItem, AdminPersonItem } from "./admin-media-manager";
 import type { Articulo } from "@/types/blog";
-import { HALLAZGO_DEL_MES_ACTUAL } from "@/features/radar";
+import { createClient } from "@/lib/supabase/client";
+import type { LegajoBloque } from "@/features/legajo/types";
+import type { RadarDraft } from "@/features/radar/types";
 
 interface AdminMesaRedaccionProps {
   groups: AdminGroupItem[];
   persons: AdminPersonItem[];
   articles: Articulo[];
+  initialRadarDraft: RadarDraft | null;
+  initialLegajoBloques: LegajoBloque[];
 }
 
 type SubSeccionRedaccion = "mesa" | "informes" | "agrupaciones" | "notas" | "radar" | "legajo";
+
+const LEGAJO_TITULOS: Record<string, string> = {
+  acta_fundacional: "Acta Fundacional",
+  equipo_peritaje: "Equipo de Peritaje",
+  normas_catalogacion: "Normas de Catalogación",
+  solicitud_rectificacion: "Solicitud de Rectificación",
+  contacto_canales: "Contacto y Canales",
+};
+
+function getDefaultPeriodo(): string {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function createEmptyRadarDraft(): RadarDraft {
+  const periodo = getDefaultPeriodo();
+  const year = Number(periodo.slice(0, 4));
+  return {
+    id: "",
+    periodo,
+    mes: "",
+    año: year,
+    categoria: "Álbum del Mes",
+    titulo: "",
+    subtitulo: "",
+    artista: "",
+    porQueImporta: "",
+    portadaUrl: null,
+    youtubeUrl: "",
+    spotifyUrl: "",
+    enlaceExpediente: {
+      tipo: "vinilo",
+      url: "/vinilos",
+      label: "Inspeccionar expediente en vinilos →",
+    },
+  };
+}
+
+function buildLegajoMap(bloques: LegajoBloque[]): Record<string, string> {
+  const entries = Object.keys(LEGAJO_TITULOS).map((clave) => {
+    const found = bloques.find((bloque) => bloque.clave === clave);
+    return [clave, found?.contenido_md ?? ""] as const;
+  });
+  return Object.fromEntries(entries);
+}
 
 export function AdminMesaRedaccion({
   groups,
   persons,
   articles,
+  initialRadarDraft,
+  initialLegajoBloques,
 }: AdminMesaRedaccionProps) {
   const [subSeccion, setSubSeccion] = useState<SubSeccionRedaccion>("mesa");
   const [filterTipo, setFilterTipo] = useState<string>("TODOS");
@@ -45,22 +96,113 @@ export function AdminMesaRedaccion({
   const [editingGroupId, setEditingGroupId] = useState<number | null>(null);
 
   // Estado para Radar del Mes
-  const [radarData, setRadarData] = useState(HALLAZGO_DEL_MES_ACTUAL);
+  const [radarData, setRadarData] = useState<RadarDraft>(
+    initialRadarDraft ?? createEmptyRadarDraft()
+  );
   const [radarSaved, setRadarSaved] = useState(false);
+  const [radarSaving, setRadarSaving] = useState(false);
+  const [radarError, setRadarError] = useState<string | null>(null);
 
   // Estado para Bloques de Legajo
-  const [bloquesLegajo, setBloquesLegajo] = useState<{ [key: string]: string }>({
-    acta_fundacional: "El colectivo Kumbia Sound nace como iniciativa de coleccionistas e investigadores fonográficos con anterioridad a la creación de este archivo digital...",
-    equipo_peritaje: "Peritos fonográficos, transcriptores y digitalizadores de matrices en vinilo de 33 y 45 RPM.",
-    normas_catalogacion: "1. Preservación del formato físico (Lados A/B). 2. Distinción rigurosa de voz y composición. 3. Notación Camelot armónica. 4. Precisión en cronometraje y tempo.",
-    solicitud_rectificacion: "Procedimiento pericial formal aportando fotografías de galletas matrices o registros notariales de época.",
-    contacto_canales: "Fonoteca oficial en YouTube y Spotify Master.",
-  });
+  const [bloquesLegajo, setBloquesLegajo] = useState<Record<string, string>>(
+    buildLegajoMap(initialLegajoBloques)
+  );
   const [editingLegajoClave, setEditingLegajoClave] = useState<string | null>(null);
+  const [legajoSavingClave, setLegajoSavingClave] = useState<string | null>(null);
+  const [legajoError, setLegajoError] = useState<string | null>(null);
 
   // Persona seleccionada para editar informe
   const selectedPerson = persons.find((p) => p.id === editingPersonId);
   const selectedGroup = groups.find((g) => g.id === editingGroupId);
+
+  const handleSaveRadar = async () => {
+    setRadarError(null);
+    setRadarSaved(false);
+
+    if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(radarData.periodo)) {
+      setRadarError("El periodo debe tener el formato AAAA-MM (ej. 2026-11).");
+      return;
+    }
+
+    if (!radarData.titulo.trim() || !radarData.artista.trim() || !radarData.porQueImporta.trim()) {
+      setRadarError("Título, artista y el texto de por qué importa son obligatorios.");
+      return;
+    }
+
+    setRadarSaving(true);
+    const supabase = createClient();
+    const [year, month] = radarData.periodo.split("-").map(Number);
+    const monthName = new Date(year, month - 1, 1).toLocaleDateString("es-PE", {
+      month: "long",
+    });
+    const nombreMes = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+    const { error } = await supabase.from("radar_hallazgos").upsert(
+      {
+        mes: radarData.periodo,
+        año: year,
+        nombre_mes: nombreMes,
+        categoria: radarData.categoria,
+        titulo: radarData.titulo.trim(),
+        subtitulo: radarData.subtitulo.trim() || null,
+        artista: radarData.artista.trim(),
+        año_grabacion: radarData.añoGrabacion ?? null,
+        sello: radarData.sello?.trim() || null,
+        por_que_importa_md: radarData.porQueImporta.trim(),
+        portada_url: radarData.portadaUrl?.trim() || null,
+        url_youtube: radarData.youtubeUrl?.trim() || null,
+        url_spotify: radarData.spotifyUrl?.trim() || null,
+        destino_tipo: radarData.enlaceExpediente.tipo,
+        destino_url: radarData.enlaceExpediente.url.trim() || "/vinilos",
+        estado: "publicado",
+        publish_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "mes" }
+    );
+
+    setRadarSaving(false);
+
+    if (error) {
+      setRadarError(
+        error.code === "PGRST205"
+          ? "La tabla radar_hallazgos no existe en la base de datos. Aplica la migración editorial."
+          : `No se pudo guardar el hallazgo: ${error.message}`
+      );
+      return;
+    }
+
+    setRadarSaved(true);
+  };
+
+  const handleSaveLegajoBloque = async (clave: string) => {
+    setLegajoError(null);
+    setLegajoSavingClave(clave);
+    const supabase = createClient();
+
+    const { error } = await supabase.from("legajo_bloques").upsert(
+      {
+        clave,
+        titulo: LEGAJO_TITULOS[clave] || clave,
+        contenido_md: bloquesLegajo[clave] ?? "",
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "clave" }
+    );
+
+    setLegajoSavingClave(null);
+
+    if (error) {
+      setLegajoError(
+        error.code === "PGRST205"
+          ? "La tabla legajo_bloques no existe en la base de datos. Aplica la migración editorial."
+          : `No se pudo guardar el bloque: ${error.message}`
+      );
+      return;
+    }
+
+    setEditingLegajoClave(null);
+  };
 
   // Lista consolidada de ítems editoriales
   const todosItems = [
@@ -473,10 +615,26 @@ export function AdminMesaRedaccion({
                 tipoEntidad="grupo"
                 codigoEntidad={`AGR-${String(selectedGroup.id).padStart(3, "0")}`}
                 tituloEntidad={`Historia & Etapas: ${selectedGroup.name}`}
-                initialContent={`# Historia Pericial: ${selectedGroup.name}\n\nFundada bajo la dirección de **${selectedGroup.directorName || "Dirección Colegiada"}**.\n\n## Etapa Fundacional (1974–1976)\nDefinición del timbre identitario en prensajes de vinilo de 33 y 45 RPM.\n\n## Etapa de Tránsito & Re-grabaciones\nEvolución de vocalistas y primeras guitarras con arreglos orquestales contemporáneos.`}
-                onSave={async (data) => {
-                  console.log("Guardando historia de grupo:", selectedGroup.id, data);
-                  alert(`Historia de ${selectedGroup.name} guardada con éxito.`);
+                initialContent=""
+                onSave={async ({ contenidoMd, estado }) => {
+                  const supabase = createClient();
+                  const { error } = await supabase.from("grupo_historias").upsert(
+                    {
+                      id_grupo: selectedGroup.id,
+                      contenido_md: contenidoMd,
+                      estado,
+                      updated_at: new Date().toISOString(),
+                    },
+                    { onConflict: "id_grupo" }
+                  );
+
+                  if (error) {
+                    throw new Error(
+                      error.code === "PGRST205"
+                        ? "La tabla grupo_historias no existe. Aplica la migración editorial."
+                        : error.message
+                    );
+                  }
                 }}
               />
             </div>
@@ -518,6 +676,52 @@ export function AdminMesaRedaccion({
                 <CheckCircle2 className="h-4 w-4" /> Hallazgo Guardado
               </span>
             )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-2 border-[#1F1305] bg-[#EDE0D0] p-4">
+            <div>
+              <label className="block text-[11px] font-bold text-[#5A5245] mb-1">Periodo (AAAA-MM):</label>
+              <input
+                type="text"
+                value={radarData.periodo}
+                onChange={(e) => setRadarData({ ...radarData, periodo: e.target.value })}
+                placeholder="2026-11"
+                className="w-full border-2 border-[#1F1305] p-2 font-mono focus:outline-none focus:ring-2 focus:ring-[#E80000]"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-[#5A5245] mb-1">Año de grabación:</label>
+              <input
+                type="number"
+                value={radarData.añoGrabacion ?? ""}
+                onChange={(e) =>
+                  setRadarData({
+                    ...radarData,
+                    añoGrabacion: e.target.value ? Number(e.target.value) : undefined,
+                  })
+                }
+                className="w-full border-2 border-[#1F1305] p-2 font-mono focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-[#5A5245] mb-1">Sello:</label>
+              <input
+                type="text"
+                value={radarData.sello ?? ""}
+                onChange={(e) => setRadarData({ ...radarData, sello: e.target.value })}
+                className="w-full border-2 border-[#1F1305] p-2 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-[#5A5245] mb-1">Portada (URL):</label>
+              <input
+                type="url"
+                value={radarData.portadaUrl ?? ""}
+                onChange={(e) => setRadarData({ ...radarData, portadaUrl: e.target.value })}
+                placeholder="https://..."
+                className="w-full border-2 border-[#1F1305] p-2 font-mono text-xs focus:outline-none"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -624,16 +828,23 @@ export function AdminMesaRedaccion({
             />
           </div>
 
-          <div className="flex justify-end pt-2">
+          {radarError && (
+            <div className="border-2 border-[#E80000] bg-red-50 p-3 font-mono text-xs font-bold text-[#991B1B]">
+              {radarError}
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+            <p className="font-mono text-[11px] text-[#5A5245]">
+              Al guardar, el hallazgo se publica inmediatamente en `/radar`.
+            </p>
             <button
               type="button"
-              onClick={() => {
-                setRadarSaved(true);
-                setTimeout(() => setRadarSaved(false), 3000);
-              }}
-              className="border-2 border-[#1F1305] bg-[#E80000] text-white px-6 py-2.5 font-black shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] transition-all"
+              onClick={handleSaveRadar}
+              disabled={radarSaving}
+              className="border-2 border-[#1F1305] bg-[#E80000] text-white px-6 py-2.5 font-black shadow-[3px_3px_0px_#1F1305] hover:bg-[#1F1305] transition-all disabled:opacity-50"
             >
-              Guardar Hallazgo del Mes
+              {radarSaving ? "Guardando..." : "Guardar y publicar hallazgo"}
             </button>
           </div>
         </div>
@@ -649,15 +860,24 @@ export function AdminMesaRedaccion({
               Gestión de Bloques del Legajo Institucional
             </h3>
             <p className="text-[#5A5245]">
-              Edita los textos normativos y manifiestos de Kumbia Sound.
+              Edita los textos normativos y manifiestos de Kumbia Sound. Cada bloque se publica
+              en el Legajo institucional.
             </p>
           </div>
+
+          {legajoError && (
+            <div className="border-2 border-[#E80000] bg-red-50 p-3 font-mono text-xs font-bold text-[#991B1B]">
+              {legajoError}
+            </div>
+          )}
 
           <div className="space-y-4">
             {Object.entries(bloquesLegajo).map(([clave, valor]) => (
               <div key={clave} className="border-2 border-[#1F1305] p-4 bg-[#EDE0D0]/30 space-y-2">
-                <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="font-black uppercase text-[#E80000]">{clave.replace("_", " ")}</span>
+                <div className="flex items-center justify-between font-mono text-xs gap-3">
+                  <span className="font-black uppercase text-[#E80000]">
+                    {LEGAJO_TITULOS[clave] || clave.replace(/_/g, " ")}
+                  </span>
                   <button
                     type="button"
                     onClick={() => setEditingLegajoClave(editingLegajoClave === clave ? null : clave)}
@@ -670,24 +890,25 @@ export function AdminMesaRedaccion({
                 {editingLegajoClave === clave ? (
                   <div className="pt-2 space-y-2">
                     <textarea
-                      rows={5}
+                      rows={6}
                       value={valor}
                       onChange={(e) => setBloquesLegajo({ ...bloquesLegajo, [clave]: e.target.value })}
                       className="w-full border-2 border-[#1F1305] p-2 bg-white text-xs"
+                      placeholder="Escribe el contenido en Markdown..."
                     />
                     <button
                       type="button"
-                      onClick={() => {
-                        setEditingLegajoClave(null);
-                        alert("Bloque de Legajo guardado exitosamente.");
-                      }}
-                      className="border border-[#1F1305] bg-[#10B981] text-white px-3 py-1 font-bold"
+                      onClick={() => void handleSaveLegajoBloque(clave)}
+                      disabled={legajoSavingClave === clave}
+                      className="border border-[#1F1305] bg-[#10B981] text-white px-3 py-1 font-bold disabled:opacity-50"
                     >
-                      Guardar Cambios
+                      {legajoSavingClave === clave ? "Guardando..." : "Guardar Cambios"}
                     </button>
                   </div>
                 ) : (
-                  <p className="font-sans text-xs text-[#5A5245] line-clamp-2">{valor}</p>
+                  <p className="font-sans text-xs text-[#5A5245] line-clamp-2">
+                    {valor || "Sin contenido guardado todavía."}
+                  </p>
                 )}
               </div>
             ))}

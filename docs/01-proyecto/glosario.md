@@ -6,7 +6,7 @@
 > **No contiene (ver):** Invariantes y reglas de negocio del dominio → [dominio.md](dominio.md); modelo físico relacional → [../03-arquitectura/modelo-de-datos.md](../03-arquitectura/modelo-de-datos.md).
 > **Depende de:** Ninguno (documento base de terminología).
 > **Entregar a otra IA para:** Estandarización de lenguaje, redacción de interfaces, validación de consultas y mapeo de datos.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** 0.1.0 / commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 0.1.0 / 2026-11-22
 
 ---
 

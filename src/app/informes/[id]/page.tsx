@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BrutalistCoordinator, BrutalistFooter } from "@/features/home-brutalism";
 import { getArbolGenealogicoServer } from "@/features/genealogia/server";
 import { InformeDetailView } from "@/features/informes";
+import { getInformeEditorial } from "@/features/informes/services/informes.server";
 import { JsonLd, buildPersonJsonLd } from "@/components/seo/json-ld";
 
 export const dynamic = "force-dynamic";
@@ -39,7 +40,10 @@ export default async function InformeDetailPage({ params }: InformeDetailPagePro
     notFound();
   }
 
-  const arbol = await getArbolGenealogicoServer(personaId);
+  const [arbol, informeEditorial] = await Promise.all([
+    getArbolGenealogicoServer(personaId),
+    getInformeEditorial(personaId),
+  ]);
 
   if (!arbol?.persona) {
     notFound();
@@ -62,7 +66,7 @@ export default async function InformeDetailPage({ params }: InformeDetailPagePro
       <JsonLd data={jsonLdPerson} />
       <BrutalistCoordinator>
         <main id="contenido" className="container mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-20">
-          <InformeDetailView arbol={arbol} />
+          <InformeDetailView arbol={arbol} informe={informeEditorial} />
         </main>
       </BrutalistCoordinator>
       <BrutalistFooter />

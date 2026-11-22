@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ExpedienteModal } from "@/components/ui/expediente-modal";
-import { Disc, ArrowUpRight, X, Music, ExternalLink, ShieldCheck } from "lucide-react";
+import { Disc, ArrowUpRight, Music, ExternalLink, ShieldCheck } from "lucide-react";
 import type { AlbumItem } from "@/features/albumes";
 
 interface JoyaVinilo {

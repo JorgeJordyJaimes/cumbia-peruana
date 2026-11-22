@@ -6,7 +6,7 @@
 > **No contiene (ver):** Definiciones de vocabulario → [glosario.md](glosario.md); esquema técnico de base de datos → [../03-arquitectura/modelo-de-datos.md](../03-arquitectura/modelo-de-datos.md); reglas operativas de IA → [../../AGENTS.md](../../AGENTS.md).
 > **Depende de:** [glosario.md](glosario.md), [presentacion.md](presentacion.md).
 > **Entregar a otra IA para:** Auditoría de integridad de base de datos, generación de scripts de ingesta fonográfica y resolución de discrepancias discográficas.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** 0.1.0 / commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 0.1.0 / 2026-11-22
 
 ---
 
@@ -76,9 +76,18 @@ Las siguientes invariantes son **leyes del sistema**. No pueden alterarse bajo n
 * **Por qué existe:** Permite a los filtros de la web buscar "Solo instrumentales" con fidelidad matemática.
 
 ### INV-010 · Título Canónico de Singles de 45 RPM (`Lado A / Lado B`)
+
 * **Regla:** Los singles de 45 RPM (`id_tipo_album = 1`) carecen de nombre comercial propio de álbum. Su título canónico se forma obligatoriamente con el título del tema del Lado A y el tema del Lado B separados por `" / "` (ej. `Viento / Te perdí`).
 * **Por qué existe:** Práctica estándar de la industria discográfica analógica de 7''.
 * **Cómo se comprueba:** Trigger en base de datos: `trg_sync_single_title_albumes_temas` ejecutando la función `fn_sync_single_title()`.
+
+### INV-011 · Cero Distribución de Audio Comercial
+
+* **Regla:** El sistema no almacena, reproduce ni distribuye archivos de audio comercial (`.mp3`, `.wav`, `.flac`, `.aac`) ni endpoints de descarga. Solo preserva metadatos, letras, portadas y enlaces externos a canales oficiales.
+* **Por qué existe:** Protege los derechos de autor y conexos de los fonogramas y mantiene la naturaleza documental del archivo.
+* **Qué datos protege:** `public/`, Supabase Storage y cualquier ruta de la aplicación.
+* **Cómo se comprueba:** Revisión de `public/`, del bucket `media` y de las rutas de la aplicación; el bucket solo admite `image/webp`.
+* **Consecuencia de violarla:** Riesgo legal crítico y desnaturalización del archivo. Se relaciona con `DEC-006`.
 
 ---
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Users, Guitar, Building2, Disc, ArrowRight, FileText, Loader2, GitFork } from "lucide-react";
+import { Guitar, Building2, Disc, FileText, Loader2, GitFork } from "lucide-react";
 import { getArbolGenealogicoClient } from "../services/genealogia-service";
 import type { ArbolGenealogicoResult } from "@/types/database";
 
@@ -34,25 +34,28 @@ export function TabRedMusicos({
     }
 
     let isMounted = true;
-    setLoading(true);
-    setError(null);
 
-    getArbolGenealogicoClient(selectedId)
-      .then((res) => {
+    const load = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const res = await getArbolGenealogicoClient(selectedId);
         if (!isMounted) return;
         if (!res || !res.persona) {
           setError("No se encontraron registros de red para este músico.");
         } else {
           setArbolData(res);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         if (!isMounted) return;
         setError(err instanceof Error ? err.message : "Error al consultar la red relacional.");
-      })
-      .finally(() => {
+      } finally {
         if (isMounted) setLoading(false);
-      });
+      }
+    };
+
+    void load();
 
     return () => {
       isMounted = false;
@@ -101,6 +104,12 @@ export function TabRedMusicos({
           <p className="font-mono text-xs font-bold text-[#1F1305]">
             Mapeando conexiones relacionales en PostgreSQL (RPC get_arbol_genealogico)...
           </p>
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="border-2 border-[#E80000] bg-red-50 p-4 font-mono text-xs font-bold text-[#991B1B]">
+          {error}
         </div>
       )}
 

@@ -1,108 +1,260 @@
 "use client";
 
-import { useEffect, useState, useMemo, useDeferredValue, useRef } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, X, Disc3, Music2, Users, BookOpen, ArrowRight } from "lucide-react";
-import { musicosGenealogia, temasDJMock, historiasFondoMock } from "../data/cumbia-mock";
+import { Search, X, Disc3, Music2, User, BookOpen, ArrowRight } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectAction?: (sectionId: string) => void;
+}
+
+type SearchResultType = "album" | "tema" | "persona" | "articulo";
+
+interface SearchResult {
+  id: string;
+  type: SearchResultType;
+  title: string;
+  subtitle: string;
+  href: string;
+  badge?: string;
+}
+
+const TYPE_LABEL: Record<SearchResultType, string> = {
+  album: "Vinilo",
+  tema: "Tema",
+  persona: "Músico",
+  articulo: "Crónica",
+};
+
+const TYPE_ICON: Record<SearchResultType, typeof Disc3> = {
+  album: Disc3,
+  tema: Music2,
+  persona: User,
+  articulo: BookOpen,
+};
+
+function normalizeSearchTerm(value: string): string {
+  // Se eliminan caracteres que PostgREST interpreta como separadores de filtros.
+  return value.replace(/[%,()]/g, " ").replace(/\s+/g, " ").trim();
 }
 
 export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
+  const [results, setResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
 
-  // Guardar foco al abrir y restaurarlo al cerrar
+  const trimmedQuery = deferredQuery.trim();
+  const isSearching = trimmedQuery.length >= 2;
+  const isStale = query.trim() !== trimmedQuery;
+
+  // Búsqueda real contra el catálogo público. No se usa dataset mock.
   useEffect(() => {
-    if (isOpen) {
-      lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+    if (!isOpen || trimmedQuery.length < 2) return;
+
+    let cancelled = false;
+    const term = normalizeSearchTerm(trimmedQuery);
+    if (!term) return;
+
+    const timer = setTimeout(async () => {
+      const supabase = createClient();
+      const pattern = `%${term}%`;
+
+      const [albumsResult, temasResult, personasResult, articlesResult] = await Promise.all([
+        supabase
+          .from("albumes")
+          .select(`
+            id_album,
+            nombre_album,
+            numero_catalogo,
+            grupos (nombre_grupo),
+            tipos_album (nombre_tipo)
+          `)
+          .or(`nombre_album.ilike.${pattern},numero_catalogo.ilike.${pattern}`)
+          .limit(5),
+        supabase
+          .from("temas")
+          .select(`
+            id_tema,
+            titulo_tema,
+            albumes_temas (
+              id_album,
+              lado,
+              albumes (nombre_album)
+            ),
+            temas_grupos (grupos (nombre_grupo))
+          `)
+          .ilike("titulo_tema", pattern)
+          .limit(5),
+        supabase
+          .from("personas")
+          .select("id_persona, nombre, apodo")
+          .or(`nombre.ilike.${pattern},apodo.ilike.${pattern}`)
+          .limit(5),
+        supabase
+          .from("articulos")
+          .select("slug, titulo, categoria, resumen")
+          .eq("publicado", true)
+          .or(`titulo.ilike.${pattern},resumen.ilike.${pattern}`)
+          .limit(5),
+      ]);
+
+      if (cancelled) return;
+
+      const nextResults: SearchResult[] = [];
+
+      for (const album of (albumsResult.data || []) as Array<{
+        id_album: number;
+        nombre_album: string | null;
+        numero_catalogo: string | null;
+        grupos: { nombre_grupo: string } | null;
+        tipos_album: { nombre_tipo: string } | null;
+      }>) {
+        nextResults.push({
+          id: `album-${album.id_album}`,
+          type: "album",
+          title: album.nombre_album || `Single [Cat: ${album.numero_catalogo || album.id_album}]`,
+          subtitle: [
+            album.grupos?.nombre_grupo || "Varios Artistas",
+            album.tipos_album?.nombre_tipo,
+          ]
+            .filter(Boolean)
+            .join(" • "),
+          href: `/album/${album.id_album}`,
+          badge: album.numero_catalogo || undefined,
+        });
+      }
+
+      for (const tema of (temasResult.data || []) as Array<{
+        id_tema: number;
+        titulo_tema: string;
+        albumes_temas: Array<{
+          id_album: number;
+          lado: string | null;
+          albumes: { nombre_album: string | null } | null;
+        }> | null;
+        temas_grupos: Array<{ grupos: { nombre_grupo: string } | null }> | null;
+      }>) {
+        const albumTema = tema.albumes_temas?.[0];
+        const grupo = tema.temas_grupos?.[0]?.grupos?.nombre_grupo;
+        nextResults.push({
+          id: `tema-${tema.id_tema}`,
+          type: "tema",
+          title: tema.titulo_tema,
+          subtitle: [
+            grupo || "Agrupación histórica",
+            albumTema?.albumes?.nombre_album,
+            albumTema?.lado ? `Lado ${albumTema.lado}` : null,
+          ]
+            .filter(Boolean)
+            .join(" • "),
+          href: albumTema ? `/album/${albumTema.id_album}` : "/vinilos",
+        });
+      }
+
+      for (const persona of (personasResult.data || []) as Array<{
+        id_persona: number;
+        nombre: string;
+        apodo: string | null;
+      }>) {
+        nextResults.push({
+          id: `persona-${persona.id_persona}`,
+          type: "persona",
+          title: persona.nombre,
+          subtitle: persona.apodo ? `«${persona.apodo}»` : "Expediente biográfico",
+          href: `/informes/${persona.id_persona}`,
+        });
+      }
+
+      for (const article of (articlesResult.data || []) as Array<{
+        slug: string;
+        titulo: string;
+        categoria: string;
+        resumen: string | null;
+      }>) {
+        nextResults.push({
+          id: `articulo-${article.slug}`,
+          type: "articulo",
+          title: article.titulo,
+          subtitle: article.categoria || article.resumen || "Crónica de archivo",
+          href: `/blog/${article.slug}`,
+        });
+      }
+
+      setResults(nextResults);
       setSelectedIndex(0);
-    } else if (lastActiveElementRef.current && document.body.contains(lastActiveElementRef.current)) {
-      lastActiveElementRef.current.focus();
-    }
+    }, 180);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [isOpen, trimmedQuery]);
+
+  // Foco y bloqueo de scroll. Sin setState síncrono dentro del efecto.
+  useEffect(() => {
+    if (!isOpen) return;
+    lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+      if (lastActiveElementRef.current && document.body.contains(lastActiveElementRef.current)) {
+        lastActiveElementRef.current.focus();
+      }
+    };
   }, [isOpen]);
 
-  // Atajo de teclado global ⌘K o Ctrl+K
+  const visibleResults = useMemo(
+    () => (isSearching ? results : []),
+    [isSearching, results]
+  );
+
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        if (isOpen) {
-          onClose();
-        } else {
-          // Si quisiéramos abrir desde afuera, el padre maneja el estado
-        }
-      } else if (e.key === "Escape" && isOpen) {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
         onClose();
-      } else if (isOpen) {
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
-          setSelectedIndex((prev) => prev + 1);
-        } else if (e.key === "ArrowUp") {
-          e.preventDefault();
-          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+        return;
+      }
+
+      if (!isOpen || visibleResults.length === 0) return;
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setSelectedIndex((prev) => (prev + 1) % visibleResults.length);
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        setSelectedIndex((prev) => (prev - 1 + visibleResults.length) % visibleResults.length);
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        const target = visibleResults[Math.min(selectedIndex, visibleResults.length - 1)];
+        if (target) {
+          router.push(target.href);
+          onClose();
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  // Bloquear scroll al abrir y limpiar apropiadamente al desmontar (client-event-listeners)
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  const searchResults = useMemo(() => {
-    if (!deferredQuery.trim()) return null;
-    const q = deferredQuery.toLowerCase();
-
-    const musicos = musicosGenealogia.filter(
-      (m) =>
-        m.nombre.toLowerCase().includes(q) ||
-        (m.apodo && m.apodo.toLowerCase().includes(q)) ||
-        m.instrumentos.some((i) => i.toLowerCase().includes(q))
-    );
-
-    const temas = temasDJMock.filter(
-      (t) =>
-        t.titulo.toLowerCase().includes(q) ||
-        t.artista.toLowerCase().includes(q) ||
-        t.sello.toLowerCase().includes(q) ||
-        t.bpm.toString().includes(q) ||
-        t.camelot.toLowerCase().includes(q)
-    );
-
-    const cronicas = historiasFondoMock.filter(
-      (h) => h.titulo.toLowerCase().includes(q) || h.categoria.toLowerCase().includes(q)
-    );
-
-    return { musicos, temas, cronicas };
-  }, [query]);
+  }, [isOpen, onClose, router, selectedIndex, visibleResults]);
 
   if (!isOpen) return null;
+
+  const activeIndex = visibleResults.length > 0
+    ? Math.min(selectedIndex, visibleResults.length - 1)
+    : 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-150">
       <div
         className="w-full max-w-2xl border-2 border-[#1F1305] bg-[#EDE0D0] text-[#1F1305] shadow-[8px_8px_0px_#1F1305] overflow-hidden transition-all"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
       >
-        {/* Input Bar */}
         <div className="flex items-center px-4 border-b-2 border-[#1F1305] bg-white">
           <Search className="h-5 w-5 text-[#E80000] shrink-0 mr-3" />
           <input
@@ -113,11 +265,11 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
             aria-controls="command-palette-results"
             aria-autocomplete="list"
             value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
+            onChange={(event) => {
+              setQuery(event.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="Buscar por guitarrista, grupo, tema, sello o BPM..."
+            placeholder="Buscar álbum, tema, músico, sello o crónica..."
             className="w-full py-4 bg-transparent font-sans text-base text-[#1F1305] placeholder-[#746B5C] font-medium focus:outline-none"
             autoFocus
           />
@@ -126,6 +278,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
               type="button"
               onClick={() => setQuery("")}
               className="text-[#665D4F] hover:text-[#1F1305] p-1"
+              aria-label="Limpiar búsqueda"
             >
               <X className="h-4 w-4" />
             </button>
@@ -135,190 +288,93 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
           </kbd>
         </div>
 
-        {/* Results Body */}
         <div id="command-palette-results" role="listbox" className="max-h-[60vh] overflow-y-auto p-4 space-y-4 bg-[#EDE0D0] overscroll-contain">
           {!query.trim() ? (
             <div className="py-6 text-center space-y-3 font-mono text-xs text-[#5A5245]">
               <p className="text-[#1F1305] font-bold uppercase tracking-wider">Apartados directos del archivo:</p>
               <div className="flex flex-wrap justify-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    router.push("/genealogia");
-                    onClose();
-                  }}
-                  className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
-                >
-                  🧬 Explorador Genealógico
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    router.push("/match-bpm");
-                    onClose();
-                  }}
-                  className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
-                >
-                  🎛️ Consola Match BPM
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    router.push("/radar");
-                    onClose();
-                  }}
-                  className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
-                >
-                  📻 Radar Semanal
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    router.push("/blog");
-                    onClose();
-                  }}
-                  className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
-                >
-                  📖 Crónicas & Blog
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    router.push("/legajo");
-                    onClose();
-                  }}
-                  className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
-                >
-                  🛡️ Nosotros & Manifiesto
-                </button>
+                {[
+                  { label: "🧬 Explorador Genealógico", href: "/genealogia" },
+                  { label: "🎛️ Consola Match BPM", href: "/match-bpm" },
+                  { label: "📻 Radar Mensual", href: "/radar" },
+                  { label: "📖 Crónicas & Blog", href: "/blog" },
+                  { label: "🛡️ Legajo Institucional", href: "/legajo" },
+                ].map((item) => (
+                  <button
+                    key={item.href}
+                    type="button"
+                    onClick={() => {
+                      router.push(item.href);
+                      onClose();
+                    }}
+                    className="border-2 border-[#1F1305] bg-white px-3 py-1.5 font-bold text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:bg-[#1F1305] hover:text-[#EDE0D0] hover:shadow-[2px_2px_0px_#E80000] transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
             </div>
+          ) : visibleResults.length > 0 ? (
+            <div className="space-y-1.5">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#665D4F]">
+                Resultados del catálogo
+              </span>
+              {visibleResults.map((result, index) => {
+                const Icon = TYPE_ICON[result.type];
+                return (
+                  <button
+                    key={result.id}
+                    type="button"
+                    role="option"
+                    aria-selected={index === activeIndex}
+                    onMouseEnter={() => setSelectedIndex(index)}
+                    onClick={() => {
+                      router.push(result.href);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center justify-between gap-3 p-3 border-2 border-[#1F1305] text-left transition-all group ${
+                      index === activeIndex
+                        ? "bg-[#1F1305] text-[#EDE0D0] shadow-[3px_3px_0px_#E80000]"
+                        : "bg-white text-[#1F1305] shadow-[2px_2px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000]"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <Icon className={`h-5 w-5 shrink-0 ${index === activeIndex ? "text-[#F8C800]" : "text-[#F1730C]"}`} />
+                      <div className="min-w-0">
+                        <p className="font-cooper text-base font-bold truncate">{result.title}</p>
+                        <p className={`font-mono text-[11px] truncate ${index === activeIndex ? "text-[#EDE0D0]/70" : "text-[#5A5245]"}`}>
+                          {TYPE_LABEL[result.type]} • {result.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {result.badge && (
+                        <span className={`font-mono text-[10px] font-bold px-2 py-0.5 border ${
+                          index === activeIndex
+                            ? "border-[#EDE0D0]/30 text-[#EDE0D0]"
+                            : "border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]"
+                        }`}>
+                          {result.badge}
+                        </span>
+                      )}
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           ) : (
-            <>
-              {/* Resultados Músicos */}
-              {searchResults && searchResults.musicos.length > 0 && (
-                <div className="space-y-1.5">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#E80000] flex items-center gap-1.5">
-                    <Users className="h-3.5 w-3.5" />
-                    Guitarristas & Músicos
-                  </span>
-                  {searchResults.musicos.map((m) => (
-                    <button
-                      key={m.id}
-                      type="button"
-                      onClick={() => {
-                        router.push("/genealogia");
-                        onClose();
-                      }}
-                      className="w-full flex items-center justify-between p-3 border-2 border-[#1F1305] bg-white shadow-[2px_2px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000] text-left transition-all group"
-                    >
-                      <div>
-                        <p className="font-cooper text-[#1F1305] group-hover:text-[#E80000]">
-                          {m.nombre}
-                        </p>
-                        <p className="font-mono text-xs text-[#5A5245]">
-                          {m.apodo ? `"${m.apodo}" • ` : ""}
-                          {m.rolPrincipal}
-                        </p>
-                      </div>
-                      <ArrowRight className="h-4 w-4 text-[#E80000] group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Resultados Temas DJ */}
-              {searchResults && searchResults.temas.length > 0 && (
-                <div className="space-y-1.5">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#10B981] flex items-center gap-1.5">
-                    <Music2 className="h-3.5 w-3.5" />
-                    Pistas & Grabaciones (BPM / Camelot)
-                  </span>
-                  {searchResults.temas.map((t) => (
-                    <button
-                      key={t.id}
-                      type="button"
-                      onClick={() => {
-                        router.push("/match-bpm");
-                        onClose();
-                      }}
-                      className="w-full flex items-center justify-between p-3 border-2 border-[#1F1305] bg-white shadow-[2px_2px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000] text-left transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Disc3 className="h-5 w-5 text-[#F1730C]" />
-                        <div>
-                          <p className="font-cooper text-[#1F1305] group-hover:text-[#E80000]">
-                            {t.titulo}
-                          </p>
-                          <p className="font-mono text-xs text-[#5A5245]">
-                            {t.artista} • {t.ano} • {t.sello}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 font-mono text-xs font-bold">
-                        <span className="px-2 py-0.5 border border-[#1F1305] bg-[#EDE0D0] text-[#1F1305]">
-                          {t.bpm} BPM
-                        </span>
-                        <span className="px-2 py-0.5 border border-[#1F1305] bg-[#10B981] text-white">
-                          {t.camelot}
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Resultados Crónicas */}
-              {searchResults && searchResults.cronicas.length > 0 && (
-                <div className="space-y-1.5">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-[#665D4F] flex items-center gap-1.5">
-                    <BookOpen className="h-3.5 w-3.5 text-[#F1730C]" />
-                    Crónicas Históricas
-                  </span>
-                  {searchResults.cronicas.map((h) => (
-                    <button
-                      key={h.id}
-                      type="button"
-                      onClick={() => {
-                        router.push(`/blog/${h.slug}`);
-                        onClose();
-                      }}
-                      className="w-full flex items-center justify-between p-3 border-2 border-[#1F1305] bg-white shadow-[2px_2px_0px_#1F1305] hover:shadow-[3px_3px_0px_#E80000] text-left transition-all group"
-                    >
-                      <div>
-                        <p className="font-cooper text-[#1F1305] group-hover:text-[#E80000]">
-                          {h.titulo}
-                        </p>
-                        <p className="font-mono text-xs text-[#5A5245]">{h.categoria}</p>
-                      </div>
-                      <ArrowRight className="h-4 w-4 text-[#E80000] group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Sin resultados */}
-              {searchResults &&
-                searchResults.musicos.length === 0 &&
-                searchResults.temas.length === 0 &&
-                searchResults.cronicas.length === 0 && (
-                  <div className="py-8 text-center font-mono text-xs text-[#5A5245] border-2 border-[#1F1305] bg-white p-4">
-                    No se encontraron coincidencias para &quot;{query}&quot;. Prueba buscando
-                    &quot;Mirlos&quot;, &quot;Destellos&quot;, &quot;122 BPM&quot; o &quot;Infopesa&quot;.
-                  </div>
-                )}
-            </>
+            <div className="py-8 text-center font-mono text-xs text-[#5A5245] border-2 border-[#1F1305] bg-white p-4">
+              {isStale || (isSearching && results.length === 0)
+                ? `No se encontraron coincidencias para "${query}".`
+                : "Escribe al menos dos caracteres para buscar en el catálogo."}
+            </div>
           )}
         </div>
 
-        {/* Footer info */}
         <div className="px-4 py-2.5 border-t-2 border-[#1F1305] bg-white flex items-center justify-between font-mono text-[11px] font-bold text-[#5A5245]">
-          <span>Navega con ⌘K o haz clic en cualquier resultado</span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="hover:text-[#E80000] transition-colors"
-          >
+          <span>Busca en el catálogo real del archivo</span>
+          <button type="button" onClick={onClose} className="hover:text-[#E80000] transition-colors">
             Cerrar [ESC]
           </button>
         </div>

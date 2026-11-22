@@ -47,12 +47,41 @@ const DEFAULT_FILES = [
 
 const args = process.argv.slice(2);
 const isReset = args.includes('--clean') || args.includes('--reset');
+const isAppend = args.includes('--append');
 const targetFile = args.find((a) => !a.startsWith('--'));
 
 async function main() {
   console.log('\n======================================================');
   console.log('🪗 KUMBIA SOUND - Sincronizador de Archivos SQL');
   console.log('======================================================\n');
+
+  // Guardia de idempotencia: la carga completa no debe duplicar álbumes.
+  if (!isReset && !isAppend && !targetFile) {
+    if (!url || !anonKey) {
+      console.warn('   ⚠️  No se pudo verificar el catálogo existente (faltan URL/ANON_KEY).');
+    } else {
+      const supabase = createClient(url, anonKey);
+      const { count, error } = await supabase
+        .from('albumes')
+        .select('*', { count: 'exact', head: true });
+
+      if (error) {
+        console.error(`   ❌ No se pudo verificar Álbumes: ${error.message}`);
+        process.exit(1);
+      }
+
+      if ((count ?? 0) > 0) {
+        console.error('\n❌ Carga completa cancelada para evitar duplicados.');
+        console.error(`   La base ya contiene ${count} álbumes y los archivos de ingesta`);
+        console.error('   de álbumes no usan ON CONFLICT.');
+        console.error('\n   Opciones seguras:');
+        console.error('   • npm run db:poblar -- --reset   (vacía y recarga desde cero)');
+        console.error('   • npm run db:poblar -- --append  (carga incremental consciente)');
+        console.error('   • npm run db:poblar -- <archivo.sql> (ejecuta un archivo puntual)\n');
+        process.exit(1);
+      }
+    }
+  }
 
   // Si se solicita --reset, reiniciar tablas para carga limpia desde 1
   if (isReset) {

@@ -8,14 +8,14 @@
 > - ¿Cómo se estructura el marcado JSON-LD Schema.org inyectado en las páginas para SEO patrimonial?
 > **Fuente principal de:** Contratos de RPC SQL, endpoints de Supabase PostgREST, especificación de contratos JSON-LD y códigos de error.
 > **No contiene (ver):**
-> - Estructura física interna de tablas → [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
-> - Capas y flujo general del software → [arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md)
-> - Políticas de seguridad RLS y permisos → [seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md)
+> - Estructura física interna de tablas → [modelo-de-datos.md](./modelo-de-datos.md)
+> - Capas y flujo general del software → [arquitectura.md](./arquitectura.md)
+> - Políticas de seguridad RLS y permisos → [seguridad-y-datos.md](../06-calidad/seguridad-y-datos.md)
 > **Depende de:**
-> - [dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md)
-> - [modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md)
+> - [dominio.md](../01-proyecto/dominio.md)
+> - [modelo-de-datos.md](./modelo-de-datos.md)
 > **Entregar a otra IA para:** Generar clientes de API tipados, programar pruebas de integración de endpoints o integrar un nuevo servicio consumidor.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -42,7 +42,7 @@ Permite obtener en una única llamada atómica el historial biográfico completo
     "id_persona": 1,
     "nombre": "Víctor Casahuamán Bendezú",
     "alias": "Víctor Casahuamán",
-    "foto_url": "portadas/personas/casahuaman.webp"
+    "foto_url": "media/personas/casahuaman.webp"
   },
   "bandas_fundadas": [
     {
@@ -153,10 +153,10 @@ La capa de aplicación interactúa con la base de datos a través del SDK `@supa
 
 ## 3. Contrato de Almacenamiento Multimedia (Supabase Storage)
 
-* **Bucket:** `portadas`
-* **Acceso Público:** Solo lectura vía CDN (`GET /storage/v1/object/public/portadas/{path}`).
+* **Bucket:** `media`
+* **Acceso Público:** Solo lectura vía CDN (`GET /storage/v1/object/public/media/{path}`).
 * **Carga de Archivos (Upload):**
-  - **Endpoint:** `POST /storage/v1/object/portadas/{nombre_archivo}.webp`
+  - **Endpoint:** `POST /storage/v1/object/media/{nombre_archivo}.webp`
   - **Restricción de Tipo MIME:** `Content-Type: image/webp` obligatorio. Cualquier otro MIME (`image/jpeg`, `image/png`, `application/octet-stream`) es rechazado con error `400 / 403` por política de bucket.
   - **Tamaño Máximo:** 1 MB por imagen WebP precomprimida.
 
@@ -184,7 +184,7 @@ Los Server Components inyectan en el elemento `<head>` de las páginas de detall
     "name": "Odeón / IEMPSA"
   },
   "datePublished": "1969",
-  "image": "https://kumbiasound.com/storage/portadas/los_destellos_a_traves_del_espacio.webp",
+  "image": "https://kumbiasound.com/storage/media/los_destellos_a_traves_del_espacio.webp",
   "numTracks": 12,
   "track": [
     {

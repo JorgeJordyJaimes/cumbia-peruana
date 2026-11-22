@@ -18,6 +18,8 @@ import {
   Sliders,
 } from "lucide-react";
 import type { Articulo, ConfiguracionHome } from "@/types/blog";
+import type { RadarDraft } from "@/features/radar/types";
+import type { LegajoBloque } from "@/features/legajo/types";
 
 interface AdminTabsContainerProps {
   initialAlbums: AdminAlbumItem[];
@@ -26,6 +28,8 @@ interface AdminTabsContainerProps {
   initialLabels: AdminLabelItem[];
   initialArticles: Articulo[];
   initialHomeConfig: ConfiguracionHome;
+  initialRadarDraft: RadarDraft | null;
+  initialLegajoBloques: LegajoBloque[];
 }
 
 export type MainTab = "resumen" | "archivo" | "redaccion" | "portada";
@@ -37,6 +41,8 @@ export function AdminTabsContainer({
   initialLabels,
   initialArticles,
   initialHomeConfig,
+  initialRadarDraft,
+  initialLegajoBloques,
 }: AdminTabsContainerProps) {
   const [activeTab, setActiveTab] = useState<MainTab>("resumen");
 
@@ -142,6 +148,8 @@ export function AdminTabsContainer({
           groups={initialGroups}
           persons={initialPersons}
           articles={initialArticles}
+          initialRadarDraft={initialRadarDraft}
+          initialLegajoBloques={initialLegajoBloques}
         />
       )}
 

@@ -7,12 +7,12 @@
 > - ¿Cómo está estructurado el sistema de documentación v1.0 y bajo qué reglas opera?
 > **Fuente principal de:** Mapa de navegación documental, correspondencia entre preguntas y archivos, y tabla de fuentes únicas de verdad.
 > **No contiene (ver):**
-> - Instrucciones operativas para agentes de IA → [AGENTS.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/AGENTS.md)
-> - Visión ejecutiva del producto → [01-proyecto/presentacion.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/presentacion.md)
+> - Instrucciones operativas para agentes de IA → [AGENTS.md](../AGENTS.md)
+> - Visión ejecutiva del producto → [01-proyecto/presentacion.md](./01-proyecto/presentacion.md)
 > **Depende de:**
-> - [_sistema/01-estandares-transversales.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/_sistema/01-estandares-transversales.md)
+> - [_sistema/01-estandares-transversales.md](./_sistema/01-estandares-transversales.md)
 > **Entregar a otra IA para:** Orientarse rápidamente en el repositorio y localizar el documento exacto donde reside cada regla.
-> **Estado:** VIGENTE · **Última revisión:** 2026-10-31 · **Describe la versión:** commit 04ef58c
+> **Estado:** VIGENTE · **Última revisión:** 2026-11-22 · **Describe la versión:** 2026-11-22
 
 ---
 
@@ -50,8 +50,9 @@ docs/
     ├── git.md                          # Ciclo de commits en español y flujo de ramas
     ├── roadmap.md                      # Hitos prioritarios confirmados y backlog técnico
     ├── changelog.md                    # Registro histórico de versiones (Keep a Changelog)
+    ├── estado-actual.md                # Métricas reales del catálogo y estado del esquema
     ├── problemas-conocidos.md          # Deuda técnica (TD), riesgos (RIE) y pendientes (PEND)
-    └── catalogo-skills.md              # Inventario clasificado de las 28 skills instaladas
+    └── catalogo-skills.md              # Inventario de skills instaladas y bloqueadas
 ```
 
 ---
@@ -60,28 +61,29 @@ docs/
 
 | Si te preguntas... | Consulta este documento |
 | :--- | :--- |
-| ¿Qué es Kumbia Sound, qué problema resuelve y qué alcance legal tiene? | [01-proyecto/presentacion.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/presentacion.md) |
-| ¿Por qué los vinilos solo tienen Lado A y B o cómo se catalogan los mosaicos? | [01-proyecto/dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md) |
-| ¿Qué significa un término fonográfico o cómo se llama un campo en la BD? | [01-proyecto/glosario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/glosario.md) |
-| ¿Cuáles son los criterios de aceptación de cada funcionalidad? | [02-requisitos/requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md) |
-| ¿Cuáles son los pasos que realiza un usuario para mezclar temas o auditar un LP? | [02-requisitos/flujos-de-usuario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/flujos-de-usuario.md) |
-| ¿Cómo se comunican el cliente React 19, Next.js y Supabase? | [03-arquitectura/arquitectura.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/arquitectura.md) |
-| ¿Cuáles son las tablas, columnas y tipos de datos en PostgreSQL? | [03-arquitectura/modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md) |
-| ¿Qué parámetros recibe la función RPC `get_arbol_genealogico`? | [03-arquitectura/interfaces.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/interfaces.md) |
-| ¿Por qué no usamos Sharp en el servidor o por qué no alojamos archivos MP3? | [03-arquitectura/decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md) |
-| ¿Cuáles son los colores hexadecimales, tipografías y sombras permitidas? | [04-diseno/sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md) |
-| ¿Cómo está estructurada visualmente la pantalla de detalle de álbum? | [04-diseno/pantallas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/pantallas.md) |
-| ¿Cómo está construido y ordenado el panel de administración (/admin)? | [04-diseno/panel-admin.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/panel-admin.md) |
-| ¿Cómo instalo el proyecto en una máquina limpia desde cero? | [05-entorno-y-operacion/instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md) |
-| ¿Qué variables requiere Vercel en producción y cómo se hace un rollback? | [05-entorno-y-operacion/despliegue.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/despliegue.md) |
-| ¿Qué comandos debo ejecutar antes de hacer commit? | [06-calidad/pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md) |
-| ¿Qué optimizaciones de Vercel Best Practices están aplicadas? | [06-calidad/rendimiento.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/rendimiento.md) |
-| ¿Cómo están configuradas las políticas RLS y la seguridad de datos? | [06-calidad/seguridad-y-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/seguridad-y-datos.md) |
-| ¿Cómo se redacta un mensaje de commit en español? | [07-gestion/git.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/git.md) |
-| ¿Cuáles son los próximos hitos de desarrollo confirmados? | [07-gestion/roadmap.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/roadmap.md) |
-| ¿Qué cambios se hicieron en versiones previas del proyecto? | [07-gestion/changelog.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/changelog.md) |
-| ¿Qué deudas técnicas o decisiones pendientes existen? | [07-gestion/problemas-conocidos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/problemas-conocidos.md) |
-| ¿Qué skills de IA están instaladas en el repositorio? | [07-gestion/catalogo-skills.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/07-gestion/catalogo-skills.md) |
+| ¿Qué es Kumbia Sound, qué problema resuelve y qué alcance legal tiene? | [01-proyecto/presentacion.md](./01-proyecto/presentacion.md) |
+| ¿Por qué los vinilos solo tienen Lado A y B o cómo se catalogan los mosaicos? | [01-proyecto/dominio.md](./01-proyecto/dominio.md) |
+| ¿Qué significa un término fonográfico o cómo se llama un campo en la BD? | [01-proyecto/glosario.md](./01-proyecto/glosario.md) |
+| ¿Cuáles son los criterios de aceptación de cada funcionalidad? | [02-requisitos/requisitos.md](./02-requisitos/requisitos.md) |
+| ¿Cuáles son los pasos que realiza un usuario para mezclar temas o auditar un LP? | [02-requisitos/flujos-de-usuario.md](./02-requisitos/flujos-de-usuario.md) |
+| ¿Cómo se comunican el cliente React 19, Next.js y Supabase? | [03-arquitectura/arquitectura.md](./03-arquitectura/arquitectura.md) |
+| ¿Cuáles son las tablas, columnas y tipos de datos en PostgreSQL? | [03-arquitectura/modelo-de-datos.md](./03-arquitectura/modelo-de-datos.md) |
+| ¿Qué parámetros recibe la función RPC `get_arbol_genealogico`? | [03-arquitectura/interfaces.md](./03-arquitectura/interfaces.md) |
+| ¿Por qué no usamos Sharp en el servidor o por qué no alojamos archivos MP3? | [03-arquitectura/decisiones.md](./03-arquitectura/decisiones.md) |
+| ¿Cuáles son los colores hexadecimales, tipografías y sombras permitidas? | [04-diseno/sistema-visual.md](./04-diseno/sistema-visual.md) |
+| ¿Cómo está estructurada visualmente la pantalla de detalle de álbum? | [04-diseno/pantallas.md](./04-diseno/pantallas.md) |
+| ¿Cómo está construido y ordenado el panel de administración (/admin)? | [04-diseno/panel-admin.md](./04-diseno/panel-admin.md) |
+| ¿Cómo instalo el proyecto en una máquina limpia desde cero? | [05-entorno-y-operacion/instalacion-y-entorno.md](./05-entorno-y-operacion/instalacion-y-entorno.md) |
+| ¿Qué variables requiere Vercel en producción y cómo se hace un rollback? | [05-entorno-y-operacion/despliegue.md](./05-entorno-y-operacion/despliegue.md) |
+| ¿Qué comandos debo ejecutar antes de hacer commit? | [06-calidad/pruebas.md](./06-calidad/pruebas.md) |
+| ¿Qué optimizaciones de Vercel Best Practices están aplicadas? | [06-calidad/rendimiento.md](./06-calidad/rendimiento.md) |
+| ¿Cómo están configuradas las políticas RLS y la seguridad de datos? | [06-calidad/seguridad-y-datos.md](./06-calidad/seguridad-y-datos.md) |
+| ¿Cómo se redacta un mensaje de commit en español? | [07-gestion/git.md](./07-gestion/git.md) |
+| ¿Cuáles son los próximos hitos de desarrollo confirmados? | [07-gestion/roadmap.md](./07-gestion/roadmap.md) |
+| ¿Cuántos álbumes, temas y surcos existen realmente y qué cobertura tiene el catálogo? | [07-gestion/estado-actual.md](./07-gestion/estado-actual.md) |
+| ¿Qué cambios se hicieron en versiones previas del proyecto? | [07-gestion/changelog.md](./07-gestion/changelog.md) |
+| ¿Qué deudas técnicas o decisiones pendientes existen? | [07-gestion/problemas-conocidos.md](./07-gestion/problemas-conocidos.md) |
+| ¿Qué skills de IA están instaladas en el repositorio? | [07-gestion/catalogo-skills.md](./07-gestion/catalogo-skills.md) |
 
 ---
 
@@ -91,14 +93,15 @@ Cada concepto del sistema tiene exactamente **un documento responsable** para ga
 
 | Concepto / Dominio | Fuente Única de Verdad | Regla de Oro |
 | :--- | :--- | :--- |
-| **Definiciones y Glosario** | [01-proyecto/glosario.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/glosario.md) | Ningún documento redefine un término fonográfico o técnico. |
-| **Invariantes del Dominio** | [01-proyecto/dominio.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/01-proyecto/dominio.md) | Las reglas físicas de prensaje (`INV-001` a `INV-010`) son inmutables. |
-| **Requisitos del Sistema** | [02-requisitos/requisitos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/02-requisitos/requisitos.md) | Todo cambio de comportamiento funcional debe tener un `RF-NNN`. |
-| **Esquema de Base de Datos** | [03-arquitectura/modelo-de-datos.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/modelo-de-datos.md) | Todo campo o tabla se describe con tipo, constraint y mapeo aquí. |
-| **Tokens y Estética Visual**| [04-diseno/sistema-visual.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/04-diseno/sistema-visual.md) | Los colores, tipografías y bordes se toman exclusivamente de aquí. |
-| **Instalación y Variables** | [05-entorno-y-operacion/instalacion-y-entorno.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/05-entorno-y-operacion/instalacion-y-entorno.md) | Toda variable de entorno debe documentarse con ejemplo y origen aquí. |
-| **Gate de Verificación** | [06-calidad/pruebas.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/06-calidad/pruebas.md) | Los comandos previos a commit se listan y ejecutan según este archivo. |
-| **Decisiones y "No Hacer"** | [03-arquitectura/decisiones.md](file:///c:/Users/CACTU/Downloads/Proyectos/cumbia-peruana/docs/03-arquitectura/decisiones.md) | Las razones de diseño y alternativas descartadas viven aquí. |
+| **Definiciones y Glosario** | [01-proyecto/glosario.md](./01-proyecto/glosario.md) | Ningún documento redefine un término fonográfico o técnico. |
+| **Invariantes del Dominio** | [01-proyecto/dominio.md](./01-proyecto/dominio.md) | Las reglas físicas de prensaje (`INV-001` a `INV-010`) son inmutables. |
+| **Requisitos del Sistema** | [02-requisitos/requisitos.md](./02-requisitos/requisitos.md) | Todo cambio de comportamiento funcional debe tener un `RF-NNN`. |
+| **Esquema de Base de Datos** | [03-arquitectura/modelo-de-datos.md](./03-arquitectura/modelo-de-datos.md) | Todo campo o tabla se describe con tipo, constraint y mapeo aquí. |
+| **Tokens y Estética Visual**| [04-diseno/sistema-visual.md](./04-diseno/sistema-visual.md) | Los colores, tipografías y bordes se toman exclusivamente de aquí. |
+| **Instalación y Variables** | [05-entorno-y-operacion/instalacion-y-entorno.md](./05-entorno-y-operacion/instalacion-y-entorno.md) | Toda variable de entorno debe documentarse con ejemplo y origen aquí. |
+| **Gate de Verificación** | [06-calidad/pruebas.md](./06-calidad/pruebas.md) | Los comandos previos a commit se listan y ejecutan según este archivo. |
+| **Decisiones y "No Hacer"** | [03-arquitectura/decisiones.md](./03-arquitectura/decisiones.md) | Las razones de diseño y alternativas descartadas viven aquí. |
+| **Métricas y estado operativo** | [07-gestion/estado-actual.md](./07-gestion/estado-actual.md) | Los conteos reales se consultan aquí; ningún otro documento los duplica. |
 
 ---
 

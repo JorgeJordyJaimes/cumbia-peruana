@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import { type AlbumItem } from "@/features/albumes/components/album-card";
@@ -19,24 +19,14 @@ interface VinilosCatalogExplorerProps {
 }
 
 function VinilosCatalogExplorerInner({ initialAlbums, tracksMap = {} }: VinilosCatalogExplorerProps) {
-  const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
-  // Sincronizar álbum abierto con ?album=ID de la URL
-  useEffect(() => {
+  const [selectedAlbum, setSelectedAlbum] = useState<AlbumItem | null>(() => {
     const albumIdParam = searchParams.get("album");
-    if (albumIdParam) {
-      const idNum = parseInt(albumIdParam, 10);
-      const found = initialAlbums.find((a) => a.id === idNum);
-      if (found) {
-        setSelectedAlbum(found);
-      }
-    } else {
-      setSelectedAlbum(null);
-    }
-  }, [searchParams, initialAlbums]);
+    const id = albumIdParam ? parseInt(albumIdParam, 10) : NaN;
+    return Number.isNaN(id) ? null : initialAlbums.find((album) => album.id === id) ?? null;
+  });
 
   const handleSelectAlbum = useCallback(
     (album: AlbumItem) => {
