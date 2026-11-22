@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Anton, Shrikhand } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ToastHost } from "@/components/ui/toast-host";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,6 +33,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Kumbia Sound | Archivo Histórico de la Cumbia Peruana",
   description:
     "Plataforma de preservación discográfica, genealogía musical y consulta armónica para DJs (1968–2005).",

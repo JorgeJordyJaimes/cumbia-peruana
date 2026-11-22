@@ -1,4 +1,5 @@
 import React from "react";
+import { SITE_URL } from "@/lib/site";
 
 export interface JsonLdProps {
   data: Record<string, unknown> | Array<Record<string, unknown>>;
@@ -72,7 +73,7 @@ export function buildMusicAlbumJsonLd(params: BuildAlbumJsonLdParams) {
   return {
     "@context": "https://schema.org",
     "@type": "MusicAlbum",
-    "@id": `https://kumbiasound.pe/album/${id}`,
+    "@id": `${SITE_URL}/album/${id}`,
     name,
     description: description || `Álbum fonográfico histórico de la cumbia peruana: ${name} (${releaseYear || "1968-2005"}).`,
     datePublished: releaseYear ? releaseYear.toString() : undefined,
@@ -104,7 +105,7 @@ export function buildMusicAlbumJsonLd(params: BuildAlbumJsonLdParams) {
               position: track.position ?? idx + 1,
               item: {
                 "@type": "MusicRecording",
-                "@id": track.id ? `https://kumbiasound.pe/tema/${track.id}` : undefined,
+                "@id": track.id ? `${SITE_URL}/tema/${track.id}` : undefined,
                 name: track.title,
                 duration: formatDurationIso(track.durationSeconds),
                 ...(track.artistName || artistName
@@ -151,7 +152,7 @@ export function buildMusicRecordingJsonLd(params: BuildRecordingJsonLdParams) {
   return {
     "@context": "https://schema.org",
     "@type": "MusicRecording",
-    "@id": `https://kumbiasound.pe/tema/${id}`,
+    "@id": `${SITE_URL}/tema/${id}`,
     name: title,
     duration: formatDurationIso(durationSeconds),
     genre: genreName || "Cumbia Peruana",
@@ -204,7 +205,7 @@ export function buildMusicGroupJsonLd(params: BuildMusicGroupJsonLdParams) {
   return {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
-    "@id": `https://kumbiasound.pe/grupo/${id}`,
+    "@id": `${SITE_URL}/grupo/${id}`,
     name,
     genre: "Cumbia Peruana",
     startDate: foundingDate || undefined,
@@ -262,7 +263,7 @@ export function buildPersonJsonLd(params: BuildPersonJsonLdParams) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    "@id": `https://kumbiasound.pe/persona/${id}`,
+    "@id": `${SITE_URL}/persona/${id}`,
     name,
     alternateName: pseudonym || undefined,
     birthDate: birthDate || undefined,

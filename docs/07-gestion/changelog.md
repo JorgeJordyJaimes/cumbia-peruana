@@ -17,6 +17,21 @@
 
 ---
 
+## [1.4.1] - 2026-11-22 (Dominio canónico configurable)
+
+### Añadido
+- `NEXT_PUBLIC_SITE_URL` para centralizar la URL canónica del sitio.
+- `SITE_URL` en `src/lib/site.ts`, usado por `metadataBase` y JSON-LD.
+
+### Cambiado
+- Supabase `site_url` actualizado a `https://kumbiasound.vercel.app`.
+- Redirect URLs ampliadas con `kumbiasound.vercel.app`, `kumbiasound.com` y `www.kumbiasound.com`.
+
+### Nota
+- El dominio definitivo `kumbiasound.com` puede activarse cambiando `NEXT_PUBLIC_SITE_URL` y manteniendo la lista de redirects.
+
+---
+
 ## [1.4.0] - 2026-11-22 (Recuperación de contraseña administrativa)
 
 ### Añadido

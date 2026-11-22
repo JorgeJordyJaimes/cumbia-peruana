@@ -59,12 +59,14 @@ En Supabase → **Authentication → URL Configuration**, la lista de redireccio
 
 ```text
 http://localhost:3000/**
-https://kumbiasound.pe/**
-https://www.kumbiasound.pe/**
+http://127.0.0.1:3000/**
+https://kumbiasound.vercel.app/**
+https://kumbiasound.com/**
+https://www.kumbiasound.com/**
 https://*.vercel.app/**
 ```
 
-La lista fue configurada el 2026-11-22. Si el dominio de producción cambia, añadir el nuevo origen antes de usar “¿Olvidaste tu contraseña?”.
+`site_url` está configurado en `https://kumbiasound.vercel.app`. La lista fue configurada el 2026-11-22. Cuando se active `kumbiasound.com`, solo hay que mantener el dominio anterior en la lista durante la transición y actualizar `NEXT_PUBLIC_SITE_URL`.
 
 El flujo utiliza:
 
