@@ -113,6 +113,19 @@
 * **Prioridad:** Debe tener (`Must`) · **Estado:** `CONFIRMADA` · `IMPLEMENTADO`
 * **Módulo:** `src/components/seo/json-ld.tsx`
 
+### RF-011 · Recuperación de Contraseña Administrativa
+
+* **Descripción:** El panel `/admin/login` ofrece un flujo de recuperación por correo para cuentas existentes, sin reactivar el registro público.
+* **Actor:** Administrador / Curador.
+* **Criterios de Aceptación:**
+  * *Dado* un administrador que olvidó su contraseña.
+  * *Cuando* solicita recuperación desde `/admin/forgot-password`.
+  * *Entonces* Supabase envía un enlace a `/admin/reset-password` y el usuario puede definir una nueva contraseña.
+  * El enlace inválido o expirado muestra un estado de error explícito y permite solicitar uno nuevo.
+  * El flujo no crea usuarios nuevos y no afecta el login de cuentas existentes.
+* **Prioridad:** Debe tener (`Must`) · **Estado:** `CONFIRMADA` · `IMPLEMENTADO`
+* **Módulo / Rutas:** `src/features/auth/components/forgot-password-form.tsx`, `reset-password-form.tsx`, `/admin/forgot-password`, `/admin/reset-password`, `/auth/confirm`.
+
 ---
 
 ## 3. Requisitos No Funcionales (`RNF-NNN`)

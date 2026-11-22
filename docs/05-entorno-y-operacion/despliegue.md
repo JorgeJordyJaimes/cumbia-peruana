@@ -53,6 +53,25 @@ En el panel de configuración de Vercel (*Project Settings -> Environment Variab
 > [!IMPORTANT]
 > Las migraciones editoriales y de RLS están aplicadas (2026-11-22) y el registro público de Supabase Auth está deshabilitado (`disable_signup: true`). El login por correo sigue activo para las cuentas existentes. `public.is_admin()` restringe todas las mutaciones al administrador.
 
+### Redirect URLs de recuperación
+
+En Supabase → **Authentication → URL Configuration**, la lista de redirecciones debe incluir:
+
+```text
+http://localhost:3000/**
+https://kumbiasound.pe/**
+https://www.kumbiasound.pe/**
+https://*.vercel.app/**
+```
+
+La lista fue configurada el 2026-11-22. Si el dominio de producción cambia, añadir el nuevo origen antes de usar “¿Olvidaste tu contraseña?”.
+
+El flujo utiliza:
+
+- `/admin/forgot-password` para solicitar el enlace.
+- `/admin/reset-password` para definir la nueva contraseña.
+- `/auth/confirm` para el intercambio de `token_hash` si se personaliza la plantilla de recuperación.
+
 ---
 
 ## 3. Proceso de Publicación Paso a Paso

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Lock, Mail, Disc3, ArrowRight, Loader2, AlertCircle } from "lucide-react";
@@ -95,6 +96,15 @@ export function LoginForm() {
               className="w-full border-2 border-[#1F1305] bg-[#FAF8F5] py-3 pl-10 pr-4 text-sm text-[#1F1305] placeholder-[#5A5245] focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#E80000] transition-all font-mono"
             />
           </div>
+        </div>
+
+        <div className="text-right">
+          <Link
+            href="/admin/forgot-password"
+            className="font-mono text-[11px] font-bold text-[#5A5245] underline underline-offset-2 hover:text-[#E80000] transition-colors"
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
         </div>
 
         <button

@@ -90,6 +90,7 @@ Migraciones aplicadas:
 
 - El registro público de Supabase Auth está **deshabilitado** (`disable_signup: true`, verificado el 2026-11-22).
 - El login por correo sigue habilitado (`external_email_enabled: true`), por lo que las cuentas existentes pueden iniciar sesión.
+- La recuperación de contraseña está disponible en `/admin/forgot-password` y `/admin/reset-password` para cuentas existentes.
 - Las políticas RLS están endurecidas: las mutaciones de catálogo, CMS y Storage solo las permite `public.is_admin()`.
 - Los borradores editoriales solo son visibles para `public.is_admin()`.
 - El rol `anon` conserva lectura pública del catálogo y ejecución de `public.is_admin()` únicamente para evaluar las políticas; la función devuelve `false` para visitantes.

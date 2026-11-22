@@ -17,6 +17,27 @@
 
 ---
 
+## [1.4.0] - 2026-11-22 (Recuperación de contraseña administrativa)
+
+### Añadido
+- Enlace **“¿Olvidaste tu contraseña?”** en `/admin/login`.
+- Página `/admin/forgot-password` para solicitar el correo de recuperación.
+- Página `/admin/reset-password` para definir una nueva contraseña.
+- Ruta `/auth/confirm` para verificar `token_hash` de recuperación con `verifyOtp`.
+- Componente compartido `AdminAuthShell` para unificar login, solicitud y reset.
+- Redirect URLs de Supabase: localhost, `kumbiasound.pe`, `www.kumbiasound.pe` y previews de Vercel.
+
+### Cambiado
+- El flujo soporta enlaces con `code` (PKCE), `access_token`/`refresh_token` (implícito) y `token_hash`.
+- Tras actualizar la contraseña se cierra la sesión de recuperación y se invita a iniciar sesión de nuevo.
+- Los enlaces inválidos o expirados muestran un estado explícito y permiten solicitar otro.
+
+### Seguridad
+- El flujo no reactiva signups ni crea usuarios.
+- `disable_signup` permanece en `true`.
+
+---
+
 ## [1.3.2] - 2026-11-22 (Registro público desactivado)
 
 ### Cambiado

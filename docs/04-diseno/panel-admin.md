@@ -46,6 +46,7 @@ flowchart TD
    - Las tres rutas administrativas consumen la misma guardia para evitar divergencias.
 3. **Manejo de Sesión:** Cookies seguras HttpOnly gestionadas a través del paquete `@supabase/ssr`.
 4. **Persistencia editorial:** Radar y Legajo escriben en `radar_hallazgos` y `legajo_bloques`. Las tablas ya están aplicadas; si una escritura falla, la UI muestra el error real y no simula un guardado. Estado verificado: [../07-gestion/estado-actual.md](../07-gestion/estado-actual.md).
+5. **Recuperación de contraseña:** `/admin/login` enlaza a `/admin/forgot-password`. El enlace enviado por Supabase redirige a `/admin/reset-password`, que intercambia el código/token, permite definir una nueva contraseña y cierra la sesión de recuperación. El flujo no crea usuarios nuevos.
 4. **Protección RLS contra Filtraciones:**
    - Para tablas editoriales con estados de borrador (`informes_personas`, `grupo_historias`, `grupo_etapas`, `radar_hallazgos`, `articulos`), las consultas anónimas del público filtran estrictamente `(estado = 'publicado' AND (publish_at IS NULL OR publish_at <= now()))`. Los borradores y publicaciones programadas son invisibles para visitantes no autenticados.
 
