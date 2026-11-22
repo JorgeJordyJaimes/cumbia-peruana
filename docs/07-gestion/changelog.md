@@ -17,6 +17,23 @@
 
 ---
 
+## [1.3.1] - 2026-11-22 (Migraciones aplicadas en Supabase y RLS verificada)
+
+### Añadido
+- Migración `20261122000002_admin_read_policies.sql`: los borradores editoriales solo son visibles para `public.is_admin()`.
+- Verificación en instancia remota de las cinco tablas editoriales y de las 14 políticas de administrador.
+
+### Cambiado
+- Migraciones `20261031120000`, `20261122000000` y `20261122000001` aplicadas en Supabase.
+- `public.is_admin()` disponible para `anon` y `authenticated`; para visitantes devuelve `false`, lo que permite evaluar las políticas de lectura sin abrir escritura.
+- El registro público de Auth sigue habilitado; se requiere un token con `project_admin_write` o desactivarlo en el dashboard.
+
+### Corregido
+- Las lecturas públicas de `articulos`, `radar_hallazgos`, `informes_personas` y `grupo_historias` volvieron a funcionar tras ajustar los permisos de `is_admin()`.
+- Los 76 créditos de voz con `credito_como` no nulo quedaron normalizados a `NULL` y el trigger impide futuros alias.
+
+---
+
 ## [1.3.0] - 2026-11-22 (Endurecimiento de seguridad, servicios compartidos y limpieza de mocks)
 
 ### Añadido

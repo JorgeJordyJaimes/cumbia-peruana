@@ -27,7 +27,9 @@ COMMENT ON FUNCTION public.is_admin() IS
   'Retorna true solo para el administrador editorial autorizado.';
 
 REVOKE ALL ON FUNCTION public.is_admin() FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
+-- anon debe poder evaluar la función en las políticas de lectura pública;
+-- para un visitante siempre devuelve false.
+GRANT EXECUTE ON FUNCTION public.is_admin() TO anon, authenticated;
 
 -- 2. Defensa en profundidad: el rol anónimo no necesita mutaciones.
 REVOKE INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public FROM anon;

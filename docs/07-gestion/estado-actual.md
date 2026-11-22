@@ -67,28 +67,34 @@ El resto de agrupaciones tiene apariciones puntuales en temas o singles, pero no
 
 ## 3. Estado del esquema remoto
 
-La instancia configurada responde a las consultas del catálogo, pero **no expone las tablas editoriales** de la migración `20261031120000_modulo_redaccion_editorial.sql`:
+Las migraciones editoriales y de seguridad ya están aplicadas en la instancia remota:
 
-- `informes_personas`: `PGRST205` (no encontrada en el schema cache).
-- `radar_hallazgos`: `PGRST205`.
-- `legajo_bloques`: `PGRST205`.
-- `grupo_historias`: `PGRST205`.
-- `grupo_etapas`: `PGRST205`.
+- `informes_personas`: existe, 0 filas.
+- `radar_hallazgos`: existe, 0 filas.
+- `legajo_bloques`: existe, 0 filas.
+- `grupo_historias`: existe, 0 filas.
+- `grupo_etapas`: existe, 0 filas.
 
-Consecuencia: el código del panel administrativo y las páginas públicas ya tienen el contrato de lectura/escritura, pero la funcionalidad editorial queda inactiva hasta aplicar la migración o recargar el schema cache de PostgREST.
+Las páginas públicas responden correctamente y el panel administrativo ya puede persistir contenido editorial. El contenido está vacío porque todavía no se ha publicado ningún informe, hallazgo o bloque desde la mesa de redacción.
 
-La migración de endurecimiento `20261122000000_admin_rls_hardening.sql` y la de restricciones `20261122000001_domain_constraints_and_voice_normalization.sql` también están pendientes de aplicar en la instancia remota.
+Migraciones aplicadas:
+
+- `20261031120000_modulo_redaccion_editorial.sql`
+- `20261122000000_admin_rls_hardening.sql`
+- `20261122000001_domain_constraints_and_voice_normalization.sql`
+- `20261122000002_admin_read_policies.sql`
 
 ---
 
 ## 4. Estado de seguridad
 
-- El registro público de Supabase Auth está **habilitado** (`disable_signup: false`).
-- Las políticas RLS anteriores concedían mutaciones a **cualquier usuario autenticado**.
-- La nueva migración `20261122000000_admin_rls_hardening.sql` introduce `public.is_admin()` y restringe las mutaciones al administrador.
-- Mientras la migración no se aplique, la brecha persiste en la instancia remota.
+- El registro público de Supabase Auth sigue **habilitado** (`disable_signup: false`).
+- Las políticas RLS ya están endurecidas: las mutaciones de catálogo, CMS y Storage solo las permite `public.is_admin()`.
+- Los borradores editoriales solo son visibles para `public.is_admin()`.
+- El rol `anon` conserva lectura pública del catálogo y ejecución de `public.is_admin()` únicamente para evaluar las políticas; la función devuelve `false` para visitantes.
+- La brecha de escritura quedó cerrada. Queda pendiente desactivar el registro público como capa adicional.
 
-**Acción obligatoria del propietario:** aplicar la migración y deshabilitar el registro público en Supabase Auth.
+**Acción pendiente del propietario:** deshabilitar signups en Supabase Auth (Dashboard → Authentication → Providers → Email) o aportar un token con permiso `project_admin_write`.
 
 ---
 
