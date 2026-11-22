@@ -88,13 +88,13 @@ Migraciones aplicadas:
 
 ## 4. Estado de seguridad
 
-- El registro público de Supabase Auth sigue **habilitado** (`disable_signup: false`).
-- Las políticas RLS ya están endurecidas: las mutaciones de catálogo, CMS y Storage solo las permite `public.is_admin()`.
+- El registro público de Supabase Auth está **deshabilitado** (`disable_signup: true`, verificado el 2026-11-22).
+- El login por correo sigue habilitado (`external_email_enabled: true`), por lo que las cuentas existentes pueden iniciar sesión.
+- Las políticas RLS están endurecidas: las mutaciones de catálogo, CMS y Storage solo las permite `public.is_admin()`.
 - Los borradores editoriales solo son visibles para `public.is_admin()`.
 - El rol `anon` conserva lectura pública del catálogo y ejecución de `public.is_admin()` únicamente para evaluar las políticas; la función devuelve `false` para visitantes.
-- La brecha de escritura quedó cerrada. Queda pendiente desactivar el registro público como capa adicional.
 
-**Acción pendiente del propietario:** deshabilitar signups en Supabase Auth (Dashboard → Authentication → Providers → Email) o aportar un token con permiso `project_admin_write`.
+**Estado:** brecha de escritura cerrada y registro público desactivado.
 
 ---
 

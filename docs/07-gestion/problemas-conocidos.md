@@ -63,7 +63,7 @@
 | **`RIE-001`** | **Saturación del Límite de Almacenamiento Free de Supabase (1 GB)** | Media | Alta | El pipeline obligatorio con Canvas API en `ImageUploader` comprime todas las carátulas a WebP (0.90, máx 1600 px) con un peso medio de 180 KB. 1 GB alberga cómodamente más de 5,500 portadas. |
 | **`RIE-002`** | **Ciclos Infinitos en Grafos Recursivos de Versiones** | Baja | Alta | La función RPC `get_genealogia_versiones` incorpora protección matemática mediante arrays de caminos `NOT (v.id_tema = ANY(av.camino))` que corta cualquier bucle histórico. |
 | **`RIE-003`** | **Reclamaciones de Propiedad Intelectual por Fonogramas** | Baja | Crítica | El sistema tiene prohibición constitucional de alojar o transmitir audio comercial (`INV-011`, `DEC-006`). Solo preserva metadatos técnicos y periciales. |
-| **`RIE-004`** | **Escritura no autorizada por registro público abierto** | Media | Crítica | RLS endurecida y aplicada: las mutaciones exigen `public.is_admin()` y los borradores solo los ve el admin. Queda pendiente deshabilitar signups en Auth como capa adicional. |
+| **`RIE-004`** | **Escritura no autorizada por registro público abierto** | Baja | Crítica | Mitigado y verificado: RLS exige `public.is_admin()`, los borradores solo los ve el admin y `disable_signup` está en `true`. El login de cuentas existentes sigue operativo. |
 
 ---
 

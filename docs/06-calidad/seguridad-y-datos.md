@@ -78,7 +78,7 @@ El acceso a los recursos de Supabase se segmenta en tres roles principales:
   );
   ```
 
-> **Riesgo operativo pendiente:** el registro público de Supabase Auth está habilitado (`disable_signup: false`). Debe deshabilitarse en Authentication > Providers > Email. Aunque la migración RLS ya no concede escritura a cualquier usuario autenticado, cerrar el registro es una capa adicional obligatoria.
+> **Estado verificado:** el registro público de Supabase Auth está deshabilitado (`disable_signup: true`). El login por correo permanece activo para las cuentas existentes. RLS además restringe todas las mutaciones a `public.is_admin()`.
 
 ---
 

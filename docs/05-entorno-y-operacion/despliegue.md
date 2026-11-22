@@ -51,7 +51,7 @@ En el panel de configuración de Vercel (*Project Settings -> Environment Variab
 > `ADMIN_EMAIL` es una variable de servidor recomendada. Si no se define, el código usa el correo propietario histórico como fallback. No debe coincidir con el placeholder público del formulario.
 
 > [!IMPORTANT]
-> Las migraciones editoriales y de RLS ya están aplicadas (2026-11-22). Queda pendiente deshabilitar el registro público en Supabase Auth. Aunque `public.is_admin()` ya bloquea mutaciones de cuentas no autorizadas, cerrar signups sigue siendo la capa recomendada.
+> Las migraciones editoriales y de RLS están aplicadas (2026-11-22) y el registro público de Supabase Auth está deshabilitado (`disable_signup: true`). El login por correo sigue activo para las cuentas existentes. `public.is_admin()` restringe todas las mutaciones al administrador.
 
 ---
 

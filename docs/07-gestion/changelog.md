@@ -17,6 +17,18 @@
 
 ---
 
+## [1.3.2] - 2026-11-22 (Registro público desactivado)
+
+### Cambiado
+- `disable_signup` establecido en `true` en Supabase Auth.
+- Verificado que `external_email_enabled` sigue en `true` y que las cuentas existentes pueden iniciar sesión.
+- RLS y políticas de borradores verificadas en la instancia remota.
+
+### Seguridad
+- La brecha de escritura por registro público queda cerrada en dos capas: RLS con `public.is_admin()` y registro público desactivado.
+
+---
+
 ## [1.3.1] - 2026-11-22 (Migraciones aplicadas en Supabase y RLS verificada)
 
 ### Añadido
